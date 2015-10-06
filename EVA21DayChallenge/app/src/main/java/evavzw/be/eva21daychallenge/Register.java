@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
 
 public class Register extends AppCompatActivity {
 
-    private final String API_URL = "http://evavzwrest.azurewebsites.net/api/Account/Register/";
+    private final String API_URL = "http://10.0.2.2:52072/api/Account/Register/";
     @Bind(R.id.email)
     EditText emailEditText;
     @Bind(R.id.password)
@@ -56,7 +56,15 @@ public class Register extends AppCompatActivity {
                         .setCallback(new FutureCallback<JsonObject>() {
                             @Override
                             public void onCompleted(Exception e, JsonObject result) {
-                                Log.i("log", result.get("ModelState").toString());
+                                try{
+                                    Log.i("log", result.toString());
+                                }
+                                catch(Exception x){};
+                                try {
+                                    Log.i("log", e.getMessage().toString());
+                                }catch(Exception x){
+
+                                }
                             }
                         });
 
