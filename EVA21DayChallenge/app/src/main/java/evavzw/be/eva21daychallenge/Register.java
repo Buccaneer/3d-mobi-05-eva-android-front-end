@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
 
 public class Register extends AppCompatActivity {
 
-    private final String API_URL = "http://10.0.2.2:52072/api/Account/Register/";
+    private final String API_URL = "http://10.0.2.2/api/Account/Register/";
     @Bind(R.id.email)
     EditText emailEditText;
     @Bind(R.id.password)
@@ -52,16 +52,18 @@ public class Register extends AppCompatActivity {
                 Ion.with(getApplicationContext())
                         .load(API_URL)
                         .setJsonObjectBody(json)
-                        .asJsonObject()
-                        .setCallback(new FutureCallback<JsonObject>() {
+                        .asString()
+                        .setCallback(new FutureCallback<String>() {
                             @Override
-                            public void onCompleted(Exception e, JsonObject result) {
+                            public void onCompleted(Exception e, String result) {
+                                Log.i("log0", e.getMessage());
+                                Log.i("log1", result.toString());
                                 try{
-                                    Log.i("log", result.toString());
+                                    Log.i("log2", result.toString());
                                 }
                                 catch(Exception x){};
                                 try {
-                                    Log.i("log", e.getMessage().toString());
+                                    Log.i("log3", e.getMessage().toString());
                                 }catch(Exception x){
 
                                 }
