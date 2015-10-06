@@ -2,15 +2,66 @@ package evavzw.be.eva21daychallenge;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+import com.google.gson.JsonObject;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class Register extends AppCompatActivity {
+
+    private final String API_URL = "http://evavzwrest.azurewebsites.net/api/Account/Register/";
+    @Bind(R.id.email)
+    EditText emailEditText;
+    @Bind(R.id.password)
+    EditText passwordEditText;
+    @Bind(R.id.confirmPassword)
+    EditText confirmPasswordEditText;
+    @Bind(R.id.register)
+    Button register;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        ButterKnife.bind(this);
+
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = emailEditText.getText().toString();
+                String password = passwordEditText.getText().toString();
+                String confirmPassword = confirmPasswordEditText.getText().toString();
+
+                JsonObject json = new JsonObject();
+                json.addProperty("Email", email);
+                json.addProperty("Password", password);
+                json.addProperty("ConfirmPassword", confirmPassword);
+
+                Ion.with(getApplicationContext())
+                        .load(API_URL)
+                        .setJsonObjectBody(json)
+                        .asJsonObject()
+                        .setCallback(new FutureCallback<JsonObject>() {
+                            @Override
+                            public void onCompleted(Exception e, JsonObject result) {
+                                Log.i("log", result.get("ModelState").toString());
+                            }
+                        });
+
+            }
+        });
     }
 
     @Override
