@@ -1,7 +1,10 @@
 package evavzw.be.eva21daychallenge;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,27 +12,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.koushikdutta.ion.Response;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class SignIn extends AppCompatActivity {
 
+    private final String API_URL = "http://evavzwrest.azurewebsites.net/Token";
     @Bind(R.id.email)
     EditText emailEditText;
-
     @Bind(R.id.password)
     EditText passwordEditText;
-
     @Bind(R.id.signIn)
     Button signIn;
-
-    private final String API_URL = "http://evavzwrest.azurewebsites.net/Token/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,30 +41,35 @@ public class SignIn extends AppCompatActivity {
             public void onClick(View v) {
                 String username = emailEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
-                String grant_type = "password";
 
                 Ion.with(getApplicationContext())
                         .load(API_URL)
-                        .setBodyParameter("grant_type", grant_type)
+                        .setBodyParameter("grant_type", "password")
                         .setBodyParameter("username", username)
                         .setBodyParameter("password", password)
-                        .asString()
-                        .setCallback(new FutureCallback<String>() {
+                        .asJsonObject()
+                        .withResponse()
+                        .setCallback(new FutureCallback<Response<JsonObject>>() {
                             @Override
-                            public void onCompleted(Exception e, String result) {
-                                try {
-                                    Log.i("jsonString", result);
-                                    JSONObject json = new JSONObject(result);
-                                    String json_result = json.getString("result");
+                            public void onCompleted(Exception e, Response<JsonObject> result) {
+                                if (result.getHeaders().code() == 200) {
+                                    Log.i("success", "Login after register worked");
 
-                                    if(json_result.equalsIgnoreCase("ok")){
-                                        Log.i("log", "Login success");
-                                    }else{
-                                        String error = json.getString("error");
-                                        Log.i("log", "Login error: " + error);
-                                    }
-                                } catch (JSONException e1) {
-                                    e1.printStackTrace();
+                                    //Save access token in sharedPreferences to make future authorized API calls
+                                    SharedPreferences preferences = getApplicationContext().getSharedPreferences("evavzw.be.eva21daychallenge", Context.MODE_PRIVATE);
+                                    String access_token = result.getResult().get("access_token").toString();
+                                    Log.i("access_token", access_token);
+                                    preferences.edit().putString("access_token", access_token).apply();
+
+                                    Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    finish();
+                                    startActivity(intent);
+                                } else {
+                                    //TODO: make header error logging system which displays the error as a label
+                                    //Something went wrong
+                                    //If error code is 400, the same request should not be sent to the server again before making adjustments
+                                    Log.e("headerError", String.valueOf(result.getHeaders().code()));
                                 }
                             }
                         });
