@@ -1,18 +1,18 @@
 package evavzw.be.eva21daychallenge;
 
-
 import android.content.Intent;
-import android.net.Uri;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.v7.widget.AppCompatButton;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -25,15 +25,36 @@ public class Login extends AppCompatActivity {
     Button signIn;
     @Bind(R.id.loginFacebook)
     Button loginFacebook;
+    @Bind(R.id.eva_logo)
+    ImageView evaLogo;
+    @Bind(R.id.rootLayout)
+    LinearLayout linearLayout;
+
     public final static String EXTRA_MESSAGE = "evavzw.be.eva21daychallenge.MESSAGE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         setContentView(R.layout.activity_login);
 
         ButterKnife.bind(this);
+
+        signIn.getBackground().setColorFilter(Color.parseColor("#afc137"), PorterDuff.Mode.MULTIPLY);
+        createAccount.getBackground().setColorFilter(Color.parseColor("#afc137"), PorterDuff.Mode.MULTIPLY);
+
+        int newHeight = getResources().getDisplayMetrics().heightPixels/ 6;
+        int orgWidth = evaLogo.getDrawable().getIntrinsicWidth();
+        int orgHeight = evaLogo.getDrawable().getIntrinsicHeight();
+
+        //double check my math, this should be right, though
+        double newWidth = Math.floor((orgWidth * newHeight) / orgHeight);
+
+        //Use RelativeLayout.LayoutParams if your parent is a RelativeLayout
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams( (int)newWidth, newHeight);
+        evaLogo.setLayoutParams(params);
+        evaLogo.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
         //Start a new activity when pressing Register
         createAccount.setOnClickListener(new View.OnClickListener() {

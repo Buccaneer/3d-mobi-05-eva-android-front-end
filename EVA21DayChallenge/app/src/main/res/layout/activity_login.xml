@@ -5,7 +5,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context=".Login">
+    tools:context=".Login"
+    android:id="@+id/rootLayout"
+    android:gravity="center_horizontal">
+
+   <ImageView android:id="@+id/eva_logo"
+       android:src="@drawable/eva_logo"
+       android:layout_height="wrap_content"
+       android:layout_width="wrap_content"/>
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -25,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/createAccount"
             android:textAllCaps="false"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
     </LinearLayout>
 
     <TextView
