@@ -1,9 +1,11 @@
-package evavzw.be.eva21daychallenge;
+package evavzw.be.eva21daychallenge.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import evavzw.be.eva21daychallenge.R;
 
 public class MainMenu extends AppCompatActivity {
 

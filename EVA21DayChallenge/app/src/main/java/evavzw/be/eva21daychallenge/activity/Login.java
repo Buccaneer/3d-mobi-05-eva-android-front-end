@@ -1,21 +1,17 @@
-package evavzw.be.eva21daychallenge;
+package evavzw.be.eva21daychallenge.activity;
 
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import evavzw.be.eva21daychallenge.R;
 
 public class Login extends AppCompatActivity {
 

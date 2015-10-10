@@ -1,4 +1,4 @@
-package evavzw.be.eva21daychallenge;
+package evavzw.be.eva21daychallenge.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +19,7 @@ import com.koushikdutta.ion.Response;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import evavzw.be.eva21daychallenge.R;
 
 public class Register extends AppCompatActivity {
 

@@ -9,17 +9,9 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
 
         <activity
-            android:name="com.facebook.FacebookActivity"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity
-            android:name=".Login"
+            android:name=".activity.Login"
             android:label="@string/title_activity_login" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,32 +20,32 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Register"
+            android:name=".activity.Register"
             android:label="@string/title_activity_register"
-            android:parentActivityName=".Login" >
+            android:parentActivityName=".activity.Login" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Login" />
+                android:value=".activity.Login" />
         </activity>
         <activity
-            android:name=".SignIn"
+            android:name=".activity.SignIn"
             android:label="@string/title_activity_sign_in"
-            android:parentActivityName=".Login" >
+            android:parentActivityName=".activity.Login" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Login" />
+                android:value=".activity.Login" />
         </activity>
         <activity
-            android:name=".MainMenu"
+            android:name=".activity.MainMenu"
             android:label="@string/title_activity_main_menu" >
         </activity>
         <activity
-            android:name=".WebviewLogin"
+            android:name=".activity.WebviewLogin"
             android:label="@string/title_activity_webview_login"
-            android:parentActivityName=".Login" >
+            android:parentActivityName=".activity.Login" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="evavzw.be.eva21daychallenge.Login" />
+                android:value=".activity.Login" />
         </activity>
     </application>
 
