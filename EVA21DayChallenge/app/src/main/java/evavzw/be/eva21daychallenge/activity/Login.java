@@ -2,34 +2,70 @@ package evavzw.be.eva21daychallenge.activity;
 
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import evavzw.be.eva21daychallenge.R;
+import evavzw.be.eva21daychallenge.security.UserManager;
+
 
 public class Login extends AppCompatActivity {
 
+    public final static String EXTRA_MESSAGE = "evavzw.be.eva21daychallenge.MESSAGE";
     @Bind(R.id.createAccount)
     Button createAccount;
     @Bind(R.id.signIn)
     Button signIn;
     @Bind(R.id.loginFacebook)
     Button loginFacebook;
-    public final static String EXTRA_MESSAGE = "evavzw.be.eva21daychallenge.MESSAGE";
+    @Bind(R.id.progress_indicator)
+    ProgressBar progressBar;
+    @Bind(R.id.eva_logo)
+    ImageView evaLogo;
+    private UserManager mOAuthManager;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mOAuthManager.isTokenPresent() && mOAuthManager.isTokenValid()) {
+            Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+            finish();
+            startActivity(intent);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_login);
-
         ButterKnife.bind(this);
+
+        mOAuthManager = UserManager.getInstance(this);
+
+        signIn.getBackground().setColorFilter(Color.parseColor("#afc137"), PorterDuff.Mode.MULTIPLY);
+        createAccount.getBackground().setColorFilter(Color.parseColor("#afc137"), PorterDuff.Mode.MULTIPLY);
+
+        int newHeight = getResources().getDisplayMetrics().heightPixels / 6;
+        int orgWidth = evaLogo.getDrawable().getIntrinsicWidth();
+        int orgHeight = evaLogo.getDrawable().getIntrinsicHeight();
+
+        //double check my math, this should be right, though
+        double newWidth = Math.floor((orgWidth * newHeight) / orgHeight);
+
+        //Use RelativeLayout.LayoutParams if your parent is a RelativeLayout
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams((int) newWidth, newHeight);
+        evaLogo.setLayoutParams(params);
+        evaLogo.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
 
         //Start a new activity when pressing Register
         createAccount.setOnClickListener(new View.OnClickListener() {
@@ -58,27 +94,5 @@ public class Login extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_login, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

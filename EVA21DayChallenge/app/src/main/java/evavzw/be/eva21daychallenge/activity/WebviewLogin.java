@@ -12,14 +12,6 @@ import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
-import com.koushikdutta.ion.Response;
-
-import java.util.Iterator;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import evavzw.be.eva21daychallenge.R;
@@ -75,40 +67,7 @@ public class WebviewLogin extends AppCompatActivity {
     }
 
     private void startLoginService(final String loginProvider) {
-        Ion.with(getApplicationContext())
-                .load(API_EXTERNALLOGINS)
-                .asJsonArray()
-                .withResponse()
-                .setCallback(new FutureCallback<Response<JsonArray>>() {
-                    @Override
-                    public void onCompleted(Exception e, Response<JsonArray> result) {
-                        if (result.getHeaders().code() == 200) {
-                            //The Json Array we get back is a collection of Json objects for our login providers,
-                            //these Json objects contain the provider name, login url and state, we need to filter out the url and send our user to it
-                            String loginUrl = getLoginUrl(result.getResult(), loginProvider);
-                            //Todo: probably should throw an exception if it's not found
-                            if (!loginUrl.equals("NotFound")) {
-                                webviewLogin.loadUrl(API_URL + loginUrl);
-                            }
-                        } else {
-                            //TODO: make header error logging system which displays the error as a label
-                            //Something went wrong
-                            //If error code is 400, the same request should not be sent to the server again before making adjustments
-                            Log.e("headerError", String.valueOf(result.getHeaders().code()));
-                        }
-                    }
-                });
-    }
 
-    private String getLoginUrl(JsonArray result, String loginProvider) {
-        Iterator<JsonElement> iterator = result.iterator();
-        while (iterator.hasNext()) {
-            JsonElement jsonElement = iterator.next();
-            if (jsonElement.getAsJsonObject().get("Name").getAsString().equalsIgnoreCase(loginProvider)) {
-                return jsonElement.getAsJsonObject().get("Url").getAsString();
-            }
-        }
-        return "NotFound";
     }
 
     @Override

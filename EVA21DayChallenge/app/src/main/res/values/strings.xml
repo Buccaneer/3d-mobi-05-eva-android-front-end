@@ -18,5 +18,6 @@
 
      <string name="loginFacebook">Login with Facebook</string>
     <string name="title_activity_webview_login">WebviewLogin</string>
+    <string name="logOut">Log out</string>
 
 </resources>

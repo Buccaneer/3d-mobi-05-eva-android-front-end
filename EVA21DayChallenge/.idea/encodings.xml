@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/app/src/main/java/evavzw/be/eva21daychallenge/profile/ProfileConstants.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/evavzw/be/eva21daychallenge/provider/ProfileConstants.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/evavzw/be/eva21daychallenge/rest/AbstractRestMethod.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/evavzw/be/eva21daychallenge/rest/GetProfileRestMethod.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/evavzw/be/eva21daychallenge/rest/GetTimelineRestMethod.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/evavzw/be/eva21daychallenge/rest/Request.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/evavzw/be/eva21daychallenge/rest/Response.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/evavzw/be/eva21daychallenge/rest/Response.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/evavzw/be/eva21daychallenge/rest/RestClient.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/evavzw/be/eva21daychallenge/rest/RestMethod.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/evavzw/be/eva21daychallenge/rest/RestMethodFactory.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/evavzw/be/eva21daychallenge/rest/RestMethodResult.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/evavzw/be/eva21daychallenge/rest/resource/Profile.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/evavzw/be/eva21daychallenge/rest/resource/Resource.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/evavzw/be/eva21daychallenge/rest/resource/Tweet.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/evavzw/be/eva21daychallenge/rest/resource/TwitterTimeline.java" charset="windows-1252" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

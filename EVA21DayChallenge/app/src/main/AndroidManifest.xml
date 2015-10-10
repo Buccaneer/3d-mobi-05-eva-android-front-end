@@ -12,7 +12,8 @@
 
         <activity
             android:name=".activity.Login"
-            android:label="@string/title_activity_login" >
+            android:label="@string/title_activity_login"
+            android:theme="@style/noTitle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,7 +23,8 @@
         <activity
             android:name=".activity.Register"
             android:label="@string/title_activity_register"
-            android:parentActivityName=".activity.Login" >
+            android:parentActivityName=".activity.Login"
+            android:theme="@style/noTitle">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.Login" />
@@ -30,7 +32,8 @@
         <activity
             android:name=".activity.SignIn"
             android:label="@string/title_activity_sign_in"
-            android:parentActivityName=".activity.Login" >
+            android:parentActivityName=".activity.Login"
+            android:theme="@style/noTitle">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.Login" />
