@@ -13,7 +13,6 @@
     <string name="register">Register</string>
     <string name="title_activity_main_menu">MainMenu</string>
     <string name="socialMediaLogin">Or log in with social media</string>
-    <string name="facebook_app_id">1645027742443677</string>
     <string name="title_activity_main">MainActivity</string>
 
      <string name="loginFacebook">Login with Facebook</string>
