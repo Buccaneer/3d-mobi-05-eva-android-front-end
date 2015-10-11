@@ -1,4 +1,4 @@
-package evavzw.be.eva21daychallenge.rest;
+package evavzw.be.eva21daychallenge.rest.framework;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -8,6 +8,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
+
+import evavzw.be.eva21daychallenge.rest.framework.Request;
+import evavzw.be.eva21daychallenge.rest.framework.Response;
 
 public class RestClient {
 
@@ -52,14 +55,12 @@ public class RestClient {
 
             status = conn.getResponseCode();
 
-            if (status == 400) {
-                throw new IllegalArgumentException("400");
-            }
 
-            BufferedInputStream in = new BufferedInputStream(conn.getInputStream());
+
+            BufferedInputStream in = new BufferedInputStream(status == 200 ? conn.getInputStream() : conn.getErrorStream());
             byte[] body = readStream(in);
             response = new Response(conn.getResponseCode(), conn.getHeaderFields(), body);
-
+response.status = status;
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

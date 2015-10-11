@@ -1,16 +1,23 @@
 package evavzw.be.eva21daychallenge.activity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import evavzw.be.eva21daychallenge.R;
+import evavzw.be.eva21daychallenge.models.User;
 import evavzw.be.eva21daychallenge.security.UserManager;
 
 public class MainMenu extends AppCompatActivity {
-
+    @Bind(R.id.lblUserGreet)
+    TextView lblUserGreet;
     private UserManager mOAuthManager;
 
     @Override
@@ -18,6 +25,9 @@ public class MainMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
         mOAuthManager = UserManager.getInstance(getApplicationContext());
+        ButterKnife.bind(this);
+        UserInfoTask uit = new UserInfoTask();
+        uit.execute();
     }
 
     @Override
@@ -47,5 +57,24 @@ public class MainMenu extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private class UserInfoTask extends AsyncTask<Void, Void, User> {
+        @Override
+        protected User doInBackground(Void... params) {
+            try {
+                return mOAuthManager.getUser();
+            } catch (Exception ex) {
+                Log.e("Error", ex.getMessage());
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(User user) {
+            if (user!=null) {
+                lblUserGreet.setText("Hello " + user.getEmail() + "\nRegistred: " + (user.isRegistered() ? "Yes" : "No"));
+            }
+        }
     }
 }

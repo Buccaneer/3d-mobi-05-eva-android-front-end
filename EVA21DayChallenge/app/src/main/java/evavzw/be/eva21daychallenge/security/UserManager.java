@@ -2,25 +2,21 @@ package evavzw.be.eva21daychallenge.security;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import evavzw.be.eva21daychallenge.rest.ExternalLoginsRestMethod;
 import evavzw.be.eva21daychallenge.rest.InternalLoginRestMethod;
-import evavzw.be.eva21daychallenge.rest.Request;
-import evavzw.be.eva21daychallenge.rest.RestMethodResult;
-import evavzw.be.eva21daychallenge.security.RequestSigner;
-import org.scribe.builder.ServiceBuilder;
-import org.scribe.builder.api.TwitterApi;
+import evavzw.be.eva21daychallenge.rest.RegisterExternalRestMethod;
+import evavzw.be.eva21daychallenge.rest.RegisterRestMethod;
+import evavzw.be.eva21daychallenge.rest.framework.Request;
+import evavzw.be.eva21daychallenge.rest.framework.RestMethodResult;
+import evavzw.be.eva21daychallenge.rest.UserInfoRestMethod;
+import evavzw.be.eva21daychallenge.models.User;
+
 import org.scribe.model.Token;
-import org.scribe.model.Verifier;
-import org.scribe.oauth.OAuthService;
-import org.scribe.utils.MapUtils;
-import org.scribe.utils.URLUtils;
+
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.preference.PreferenceManager;
 
 
@@ -80,6 +76,23 @@ public class UserManager implements RequestSigner {
         saveToken();
     }
 
+    /**
+     * Register and authorizes an user.
+     * @param email
+     * @param password
+     * @param confirmPassword
+     */
+    public void register(String email, String password, String confirmPassword) {
+         new RegisterRestMethod.Builder(context)
+                .email(email)
+                .password(password)
+                .repeatPassword(confirmPassword)
+                .build()
+                .execute();
+
+        login(email, password);
+    }
+
 
     private void saveToken() {
         SharedPreferences.Editor editor = prefs.edit();
@@ -107,7 +120,7 @@ public class UserManager implements RequestSigner {
     }
 
     public void invalidateToken() {
-        this.token = null;
+       login(null);
     }
 
     public boolean isTokenPresent() {
@@ -116,7 +129,7 @@ public class UserManager implements RequestSigner {
 
     public boolean isTokenValid() {
         // Check if the present token is valid by requesting the userinfo if it fails then it is not valid otherwise valid.
-        return true;
+       return getUser() != null;
     }
 
     @Override
@@ -125,5 +138,24 @@ public class UserManager implements RequestSigner {
             throw new IllegalArgumentException("Not yet signed in.");
 
         request.addHeader("Authorization", new ArrayList<String>(Arrays.asList(new String[]{"bearer " + token.getToken()})));
+    }
+
+    public User getUser() {
+        return new UserInfoRestMethod(context).execute().getResource();
+    }
+
+    public Map<String, String> getExternalLoginProviders() {
+        return new ExternalLoginsRestMethod(context).execute().getResource();
+    }
+
+    public void registerExternal(String token, String cookie) {
+        login(new Token(token,""));
+
+        User  u = getUser();
+        new RegisterExternalRestMethod(context).setEmail(u.getEmail()).setCookie(cookie).execute();
+        u = getUser();
+        if (!u.isRegistered()) {
+            new RegisterExternalRestMethod(context).setEmail(u.getEmail()).setCookie(cookie).execute();
+        }
     }
 }

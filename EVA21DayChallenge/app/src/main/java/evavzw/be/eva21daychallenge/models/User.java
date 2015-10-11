@@ -1,9 +1,10 @@
-package evavzw.be.eva21daychallenge.rest.resource;
+package evavzw.be.eva21daychallenge.models;
 
 public class User {
     private String userId;
     private String email;
     private String password;
+    private boolean hasRegistered;
 
     public String getEmail() {
         return email;
@@ -27,5 +28,13 @@ public class User {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public boolean isRegistered() {
+        return hasRegistered;
+    }
+
+    public void setHasRegistered(boolean hasRegistered) {
+        this.hasRegistered = hasRegistered;
     }
 }

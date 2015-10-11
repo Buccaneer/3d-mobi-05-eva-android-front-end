@@ -1,4 +1,4 @@
-package evavzw.be.eva21daychallenge.rest;
+package evavzw.be.eva21daychallenge.rest.framework;
 
 import java.util.List;
 import java.util.Map;

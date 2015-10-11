@@ -4,24 +4,32 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.CookieManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import org.scribe.model.Token;
+
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import evavzw.be.eva21daychallenge.R;
+import evavzw.be.eva21daychallenge.security.UserManager;
 
 public class WebviewLogin extends AppCompatActivity {
 
-    private final String API_EXTERNALLOGINS = "http://evavzwrest.azurewebsites.net/api/Account/ExternalLogins?returnUrl=%2F&generateState=true";
-    private final String API_URL = "http://evavzwrest.azurewebsites.net";
+
     @Bind(R.id.webviewLogin)
     WebView webviewLogin;
+
+    private UserManager userManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,45 +37,46 @@ public class WebviewLogin extends AppCompatActivity {
         setContentView(R.layout.activity_webview_login);
         ButterKnife.bind(this);
 
+        userManager = UserManager.getInstance(this);
+
+        CookieManager.getInstance().setAcceptCookie(true);
         webviewLogin.getSettings().setJavaScriptEnabled(true);
         webviewLogin.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                if (url.startsWith("http://evavzwrest.azurewebsites.net/#access_token")){
-                    if(checkIfUserIsRegistered(url)){
 
-                    };
+                if (url.startsWith("http://evavzwrest.azurewebsites.net/#access_token") ){
+                    String cookies = CookieManager.getInstance().getCookie(url);
+                    String token = getToken(url);
+                    if (token != null) {
+                        RegisterExternalLoginTask rel = new RegisterExternalLoginTask();
+                        rel.execute(token, cookies);
+
+                    }
                 }
             }
         });
 
         Intent intent = getIntent();
         String message = intent.getStringExtra(Login.EXTRA_MESSAGE);
-        switch (message) {
-            case "facebook":
-            case "twitter":
-            case "microsoft":
-            case "google":
-                startLoginService(message);
-                return;
-        }
+       startLoginService(message);
     }
 
-    private boolean checkIfUserIsRegistered(String url) {
+    private String getToken(String url) {
         //GetEncodedFragment shows us everything after the first # sign, this is where the access token starts
         //We then split on = and & and take the second element, this is the access token
-        String access_token = Uri.parse(url).getEncodedFragment().split("\\&|=")[1];
+        String[] access_token = Uri.parse(url).getEncodedFragment().split("\\&|=");
+        if (access_token.length <2)
+            return null;
 
 
-        //Save access token in sharedPreferences to make future authorized API calls
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences("evavzw.be.eva21daychallenge", Context.MODE_PRIVATE);
-        preferences.edit().putString("access_token", access_token).apply();
-        return true;
+        return access_token[1];
     }
 
-    private void startLoginService(final String loginProvider) {
-
+    private void startLoginService( String loginProvider) {
+        NavigateToExternalLoginProviderTask ntelp = new NavigateToExternalLoginProviderTask();
+        ntelp.execute(loginProvider);
     }
 
     @Override
@@ -90,5 +99,47 @@ public class WebviewLogin extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private class NavigateToExternalLoginProviderTask extends AsyncTask<String,Void,String> {
+        @Override
+        protected String doInBackground(String... params) {
+          //  try {
+                Map<String, String> mdata = userManager.getExternalLoginProviders();
+                if (mdata.containsKey(params[0]))
+                    return mdata.get(params[0]);
+        //   } catch (Exception ex) {}
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if (s == null) {
+                finish();
+            } else {
+                webviewLogin.loadUrl(s);
+            }
+        }
+    }
+
+    private class RegisterExternalLoginTask extends AsyncTask<String, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(String... params) {
+            try {
+                userManager.registerExternal(params[0], params[1]);
+                return true;
+            } catch (Exception ex) {
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean succeded) {
+            if (succeded) {
+                Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+                WebviewLogin.this.finish();
+                startActivity(intent);
+            }
+        }
     }
 }

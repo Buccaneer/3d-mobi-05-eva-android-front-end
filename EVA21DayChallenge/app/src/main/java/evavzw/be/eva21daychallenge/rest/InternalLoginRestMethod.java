@@ -10,6 +10,10 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import evavzw.be.eva21daychallenge.rest.framework.AbstractRestMethod;
+import evavzw.be.eva21daychallenge.rest.framework.Request;
+import evavzw.be.eva21daychallenge.rest.framework.RestMethodFactory;
+
 /**
  * Created by Jan on 10/10/2015.
  */
@@ -68,5 +72,12 @@ public class InternalLoginRestMethod extends AbstractRestMethod<Token> {
             throw new IllegalArgumentException("Authorization not complete!");
         }
 
+    }
+
+    @Override
+    protected void handleHttpStatus(int status, String responseBody) {
+        if (status == 400) {
+            throw new IllegalArgumentException("Wrong credentials.");
+        }
     }
 }

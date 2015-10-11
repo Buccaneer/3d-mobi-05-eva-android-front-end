@@ -27,6 +27,8 @@ public class Login extends AppCompatActivity {
     Button signIn;
     @Bind(R.id.loginFacebook)
     Button loginFacebook;
+    @Bind(R.id.loginGoogle)
+    Button loginGoogle;
     @Bind(R.id.progress_indicator)
     ProgressBar progressBar;
     @Bind(R.id.eva_logo)
@@ -86,13 +88,23 @@ public class Login extends AppCompatActivity {
         });
 
         loginFacebook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), WebviewLogin.class);
-                String service = "facebook";
-                intent.putExtra(EXTRA_MESSAGE, service);
-                startActivity(intent);
-            }
-        });
+                                           public void onClick(View v) {
+                                               handleExternalLogin("Facebook");
+                                           }
+                                       }
+        );
+
+        loginGoogle.setOnClickListener(new View.OnClickListener() {
+                                          public void onClick(View v) {
+                                              handleExternalLogin("Google");
+                                          }
+                }
+        );
+    }
+
+    private void handleExternalLogin(String service) {
+        Intent intent = new Intent(getApplicationContext(), WebviewLogin.class);
+        intent.putExtra(EXTRA_MESSAGE, service);
+        startActivity(intent);
     }
 }

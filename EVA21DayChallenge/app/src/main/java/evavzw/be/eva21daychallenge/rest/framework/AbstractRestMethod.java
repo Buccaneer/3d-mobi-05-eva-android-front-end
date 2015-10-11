@@ -1,9 +1,10 @@
-package evavzw.be.eva21daychallenge.rest;
+package evavzw.be.eva21daychallenge.rest.framework;
 
 import java.util.List;
 import java.util.Map;
 
 import android.content.Context;
+
 import evavzw.be.eva21daychallenge.security.UserManager;
 import evavzw.be.eva21daychallenge.security.RequestSigner;
 
@@ -41,13 +42,20 @@ public abstract class AbstractRestMethod<T> implements RestMethod<T> {
 
 		try {
 			responseBody = new String(response.body, getCharacterEncoding(response.headers));
-			resource = parseResponseBody(responseBody);
+			if (response.status == 200)
+				resource = parseResponseBody(responseBody);
+			else
+				handleHttpStatus(response.status,responseBody);
 		} catch (Exception ex) {
 		throw new IllegalArgumentException(ex.getMessage());
 		//	status = 506; // spec only defines up to 505
 	//		statusMsg = ex.getMessage();
 		}
 		return new RestMethodResult<T>(status, statusMsg, resource);
+	}
+
+	protected void handleHttpStatus(int status, String responseBody) {
+
 	}
 
 	protected abstract Request buildRequest();

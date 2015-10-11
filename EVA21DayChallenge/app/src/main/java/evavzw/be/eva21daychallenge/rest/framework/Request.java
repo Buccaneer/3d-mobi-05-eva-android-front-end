@@ -1,17 +1,17 @@
-package evavzw.be.eva21daychallenge.rest;
+package evavzw.be.eva21daychallenge.rest.framework;
 
 import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import evavzw.be.eva21daychallenge.rest.RestMethodFactory.Method;
+import evavzw.be.eva21daychallenge.rest.framework.RestMethodFactory.Method;
 
 public class Request {
 	
 	private URI requestUri;
-	private Map<String, List<String>> headers;
+	private Map<String, List<String>> headers = new HashMap<>() ;
 	private byte[] body;
-	private RestMethodFactory.Method method;
+	private Method method;
 	
 	public Request(Method method, URI requestUri, Map<String, List<String>> headers,
 			byte[] body) {
@@ -21,7 +21,13 @@ public class Request {
 		this.headers = headers;
 		this.body = body;
 	}
-	
+
+	public Request(Method method, URI requestUri, byte[] body) {
+		this.method = method;
+		this.requestUri = requestUri;
+		this.body = body;
+	}
+
 	public Method getMethod() {
 		return method;
 	}
