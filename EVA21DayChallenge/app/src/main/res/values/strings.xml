@@ -19,5 +19,7 @@
     <string name="title_activity_webview_login">WebviewLogin</string>
     <string name="logOut">Log out</string>
     <string name="loginGoogle">Login with Google</string>
+    <string name="com_facebook_loginview_log_in_button_long">Log in with Facebook</string>
+    <string name="com_facebook_loginview_log_in_button">Log in</string>
 
 </resources>

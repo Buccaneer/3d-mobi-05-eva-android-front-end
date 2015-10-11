@@ -6,16 +6,22 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+
+
+import com.google.android.gms.common.SignInButton;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import evavzw.be.eva21daychallenge.R;
+import evavzw.be.eva21daychallenge.customComponent.LoginButton;
+import evavzw.be.eva21daychallenge.customComponent.TwitterButton;
 import evavzw.be.eva21daychallenge.security.UserManager;
-
 
 public class Login extends AppCompatActivity {
 
@@ -24,15 +30,18 @@ public class Login extends AppCompatActivity {
     Button createAccount;
     @Bind(R.id.signIn)
     Button signIn;
-    @Bind(R.id.loginFacebook)
-    Button loginFacebook;
-    @Bind(R.id.loginGoogle)
-    Button loginGoogle;
+    @Bind(R.id.loginFacebookButton)
+    LoginButton loginFacebook;
+    @Bind(R.id.loginTwitterButton)
+    TwitterButton loginTwitter;
+    @Bind(R.id.loginGoogleButton)
+    SignInButton loginGoogle;
     @Bind(R.id.progress_indicator)
     ProgressBar progressBar;
     @Bind(R.id.eva_logo)
     ImageView evaLogo;
     private UserManager mOAuthManager;
+
 
     @Override
     protected void onResume() {
@@ -47,6 +56,7 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
@@ -66,6 +76,7 @@ public class Login extends AppCompatActivity {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams((int) newWidth, newHeight);
         evaLogo.setLayoutParams(params);
         evaLogo.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
 
 
         //Start a new activity when pressing Register
@@ -99,6 +110,13 @@ public class Login extends AppCompatActivity {
                                           }
                 }
         );
+
+        loginTwitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handleExternalLogin("Twitter");
+            }
+        });
     }
 
     private void handleExternalLogin(String service) {
