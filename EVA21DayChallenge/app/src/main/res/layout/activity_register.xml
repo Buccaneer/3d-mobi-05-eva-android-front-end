@@ -4,6 +4,21 @@
     android:orientation="vertical"
     tools:context="evavzw.be.eva21daychallenge.activity.Register">
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/logoPosition"
+        android:gravity="center">
+
+
+        <ImageView android:id="@+id/eva_logo"
+
+            android:src="@drawable/eva_logo"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
+
+    </LinearLayout>
+    
     <EditText
         android:id="@+id/email"
         android:hint="@string/email"
@@ -25,6 +40,18 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
 
+    <RadioGroup
+        android:id="@+id/geslacht"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="@string/mannelijkgeslacht"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="@string/vrouwelijkgeslacht"/>
+    </RadioGroup>
+    
     <Button
         android:id="@+id/register"
         android:text="@string/register"

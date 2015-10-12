@@ -40,6 +40,8 @@ public class Login extends AppCompatActivity {
     ProgressBar progressBar;
     @Bind(R.id.eva_logo)
     ImageView evaLogo;
+    @Bind( R.id.rootLayout)
+    LinearLayout root;
     private UserManager mOAuthManager;
 
 
@@ -59,6 +61,7 @@ public class Login extends AppCompatActivity {
 
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
 
         mOAuthManager = UserManager.getInstance(this);
 
