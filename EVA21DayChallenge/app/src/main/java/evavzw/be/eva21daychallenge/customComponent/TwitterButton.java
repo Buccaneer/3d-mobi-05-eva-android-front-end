@@ -33,7 +33,6 @@ public class TwitterButton extends Button {
         super.setCompoundDrawablePadding(res.getDimensionPixelSize(dimen.tw__login_btn_drawable_padding));
         super.setText(string.tw__login_btn_txt);
         super.setTextColor(res.getColor(color.tw__solid_white));
-        super.setTextSize(0, (float)res.getDimensionPixelSize(dimen.tw__login_btn_text_size));
         super.setTypeface(Typeface.DEFAULT_BOLD);
         super.setPadding(res.getDimensionPixelSize(dimen.tw__login_btn_left_padding), 0, res.getDimensionPixelSize(dimen.tw__login_btn_right_padding), 0);
         super.setBackgroundResource(drawable.tw__login_btn);

@@ -3,20 +3,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Login"
-    android:id="@+id/rootLayout"
-    android:gravity="center_horizontal"
-    >
+    android:gravity="center_horizontal">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/logoPosition">
         <ImageView android:id="@+id/eva_logo"
-
             android:src="@drawable/eva_logo"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"/>
-
     </LinearLayout>
 
     <LinearLayout
@@ -40,40 +36,32 @@
             android:layout_weight="1" />
     </LinearLayout>
 
-
-
     <TextView
         android:text="@string/socialMediaLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
         android:layout_gravity="center"
-        style="@style/textPosition"
-        />
-
-
+        style="@style/socialButton"/>
 
     <evavzw.be.eva21daychallenge.customComponent.LoginButton
         android:background="@drawable/facebookbutton"
         android:id="@+id/loginFacebookButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/textPosition"/>
+        android:layout_width="184dp"
+        android:layout_height="37dp"
+        style="@style/socialButton"/>
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/loginGoogleButton"
-        android:layout_width="184dp"
-        android:layout_height="37dp"
-        style="@style/textPosition"
-        />
+        android:layout_width="191dp"
+        android:layout_height="44dp"
+        style="@style/socialButton"/>
 
     <evavzw.be.eva21daychallenge.customComponent.TwitterButton
         android:id="@+id/loginTwitterButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scaleX="0.82"
-        android:scaleY="0.80"
-        style="@style/textPosition"/>
+        android:layout_width="184dp"
+        android:layout_height="37dp"
+        style="@style/socialButton"/>
 
     <ProgressBar
         android:id="@+id/progress_indicator"
@@ -81,6 +69,5 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:visibility="invisible"/>
-
 
 </LinearLayout>
