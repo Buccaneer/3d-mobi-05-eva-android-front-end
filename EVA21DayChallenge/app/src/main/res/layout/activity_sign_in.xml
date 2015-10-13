@@ -2,7 +2,18 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="evavzw.be.eva21daychallenge.activity.SignIn">
+    tools:context="evavzw.be.eva21daychallenge.activity.SignIn"
+    android:gravity="center_horizontal">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/logoPosition">
+        <ImageView android:id="@+id/eva_logo"
+            android:src="@drawable/eva_logo"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
+    </LinearLayout>
 
     <EditText
         android:id="@+id/email"

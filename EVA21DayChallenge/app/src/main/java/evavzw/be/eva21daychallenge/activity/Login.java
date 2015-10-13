@@ -1,13 +1,20 @@
 package evavzw.be.eva21daychallenge.activity;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,6 +22,8 @@ import android.widget.ProgressBar;
 
 
 import com.google.android.gms.common.SignInButton;
+
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -40,19 +49,24 @@ public class Login extends AppCompatActivity {
     ProgressBar progressBar;
     @Bind(R.id.eva_logo)
     ImageView evaLogo;
-    @Bind( R.id.rootLayout)
-    LinearLayout root;
+    private WebView webView;
     private UserManager mOAuthManager;
 
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (mOAuthManager.isTokenPresent() && mOAuthManager.isTokenValid()) {
-            Intent intent = new Intent(getApplicationContext(), MainMenu.class);
-            finish();
-            startActivity(intent);
-        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (mOAuthManager.isTokenPresent() && mOAuthManager.isTokenValid()) {
+                    Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+                    finish();
+                    startActivity(intent);
+                }
+            }
+        });
+
     }
 
     @Override
@@ -79,8 +93,6 @@ public class Login extends AppCompatActivity {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams((int) newWidth, newHeight);
         evaLogo.setLayoutParams(params);
         evaLogo.setScaleType(ImageView.ScaleType.CENTER_CROP);
-
-
 
         //Start a new activity when pressing Register
         createAccount.setOnClickListener(new View.OnClickListener() {
@@ -123,8 +135,97 @@ public class Login extends AppCompatActivity {
     }
 
     private void handleExternalLogin(String service) {
-        Intent intent = new Intent(getApplicationContext(), WebviewLogin.class);
-        intent.putExtra(EXTRA_MESSAGE, service);
-        startActivity(intent);
+        //Intent intent = new Intent(getApplicationContext(), WebviewLogin.class);
+        //intent.putExtra(EXTRA_MESSAGE, service);
+        //startActivity(intent);
+        AlertDialog.Builder alert = new AlertDialog.Builder(this, R.style.Base_Theme_AppCompat_Light_Dialog_Alert);
+        webView = new WebView(this);
+
+        CookieManager.getInstance().setAcceptCookie(true);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+
+                if (url.startsWith("http://evavzwrest.azurewebsites.net/#access_token")) {
+                    String cookies = CookieManager.getInstance().getCookie(url);
+                    String token = getToken(url);
+                    if (token != null) {
+                        RegisterExternalLoginTask rel = new RegisterExternalLoginTask();
+                        rel.execute(token, cookies);
+                    }
+                }
+            }
+        });
+
+        alert.setView(webView);
+        alert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        alert.show();
+        startLoginService(service);
+    }
+
+    private String getToken(String url) {
+        //GetEncodedFragment shows us everything after the first # sign, this is where the access token starts
+        //We then split on = and & and take the second element, this is the access token
+        String[] access_token = Uri.parse(url).getEncodedFragment().split("\\&|=");
+        if (access_token.length <2)
+            return null;
+
+
+        return access_token[1];
+    }
+
+    private void startLoginService( String loginProvider) {
+        NavigateToExternalLoginProviderTask ntelp = new NavigateToExternalLoginProviderTask();
+        ntelp.execute(loginProvider);
+    }
+
+    private class NavigateToExternalLoginProviderTask extends AsyncTask<String,Void,String> {
+        @Override
+        protected String doInBackground(String... params) {
+            //  try {
+            Map<String, String> mdata = mOAuthManager.getExternalLoginProviders();
+            if (mdata.containsKey(params[0]))
+                return mdata.get(params[0]);
+            //   } catch (Exception ex) {}
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if (s == null) {
+                finish();
+            } else {
+                webView.loadUrl(s);
+            }
+        }
+    }
+
+    private class RegisterExternalLoginTask extends AsyncTask<String, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(String... params) {
+            try {
+                mOAuthManager.registerExternal(params[0], params[1]);
+                return true;
+            } catch (Exception ex) {
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean succeded) {
+            if (succeded) {
+                Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+                Login.this.finish();
+                startActivity(intent);
+            }
+        }
     }
 }

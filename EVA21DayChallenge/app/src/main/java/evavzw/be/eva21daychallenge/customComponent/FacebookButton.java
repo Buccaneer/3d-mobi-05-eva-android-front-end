@@ -21,10 +21,6 @@ import evavzw.be.eva21daychallenge.R;
  * A base class for a facebook button.
  */
 public abstract class FacebookButton extends Button {
-    private boolean overrideCompoundPadding;
-    private int overrideCompoundPaddingLeft;
-    private int overrideCompoundPaddingRight;
-    private Fragment parentFragment;
 
     protected FacebookButton(
             final Context context,
@@ -37,97 +33,8 @@ public abstract class FacebookButton extends Button {
         configureButton(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    protected abstract int getDefaultRequestCode();
-
-    /**
-     * Sets the fragment that contains this control. This allows the button to be embedded inside a
-     * Fragment, and will allow the fragment to receive the
-     * {@link Fragment#onActivityResult(int, int, android.content.Intent) onActivityResult}
-     * call rather than the Activity.
-     *
-     * @param fragment the fragment that contains this control
-     */
-    public void setFragment(final Fragment fragment) {
-        parentFragment = fragment;
-    }
-
-    /**
-     * Gets the fragment that contains this control.
-     * @return The fragment that contains this control.
-     */
-    public Fragment getFragment() {
-        return parentFragment;
-    }
-
-    /**
-     * Returns the request code used for this Button.
-     *
-     * @return the request code.
-     */
-    public int getRequestCode() {
-        return getDefaultRequestCode();
-    }
-
-    @Override
-    protected void onDraw(Canvas canvas) {
-        boolean centered = (this.getGravity() & Gravity.CENTER_HORIZONTAL) != 0;
-        if (centered) {
-            // if the text is centered, we need to adjust the frame for the titleLabel based on the
-            // size of the text in order to keep the text centered in the button without adding
-            // extra blank space to the right when unnecessary
-            // 1. the text fits centered within the button without colliding with the image
-            //    (imagePaddingWidth)
-            // 2. the text would run into the image, so adjust the insets to effectively left align
-            //    it (textPaddingWidth)
-            final int compoundPaddingLeft = getCompoundPaddingLeft();
-            final int compoundPaddingRight = getCompoundPaddingRight();
-            final int compoundDrawablePadding = getCompoundDrawablePadding();
-            final int textX = compoundPaddingLeft + compoundDrawablePadding;
-            final int textContentWidth = getWidth() - textX - compoundPaddingRight;
-            final int textWidth = measureTextWidth(getText().toString());
-            final int textPaddingWidth = (textContentWidth - textWidth) / 2;
-            final int imagePaddingWidth = (compoundPaddingLeft - getPaddingLeft()) / 2;
-            final int inset = Math.min(textPaddingWidth, imagePaddingWidth);
-            this.overrideCompoundPaddingLeft = compoundPaddingLeft - inset;
-            this.overrideCompoundPaddingRight = compoundPaddingRight + inset;
-            this.overrideCompoundPadding = true;
-        }
-        super.onDraw(canvas);
-        this.overrideCompoundPadding = false;
-    }
-
-    @Override
-    public int getCompoundPaddingLeft() {
-        return (this.overrideCompoundPadding ?
-                this.overrideCompoundPaddingLeft :
-                super.getCompoundPaddingLeft());
-    }
-
-    @Override
-    public int getCompoundPaddingRight() {
-        return (this.overrideCompoundPadding ?
-                this.overrideCompoundPaddingRight :
-                super.getCompoundPaddingRight());
-    }
-/*
-    protected Activity getActivity() {
-        Context context = getContext();
-        while (!(context instanceof Activity) && context instanceof ContextWrapper) {
-            context = ((ContextWrapper) context).getBaseContext();
-        }
-
-        if (context instanceof Activity) {
-            return (Activity) context;
-        }
-        throw new FacebookException("Unable to get Activity.");
-    }
-*/
     protected int getDefaultStyleResource() {
         return 0;
-    }
-
-    protected int measureTextWidth(final String text) {
-        return (int)Math.ceil(getPaint().measureText(text));
     }
 
     protected void configureButton(

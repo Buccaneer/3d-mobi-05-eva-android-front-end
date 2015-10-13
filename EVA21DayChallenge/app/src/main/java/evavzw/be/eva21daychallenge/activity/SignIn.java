@@ -3,6 +3,8 @@ package evavzw.be.eva21daychallenge.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,6 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 
 import butterknife.Bind;
@@ -29,6 +33,8 @@ public class SignIn extends AppCompatActivity {
     EditText passwordEditText;
     @Bind(R.id.signIn)
     Button signIn;
+    @Bind(R.id.eva_logo)
+    ImageView evaLogo;
     private UserManager mOauthManager;
 
     @Override
@@ -36,6 +42,20 @@ public class SignIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         ButterKnife.bind(this);
+
+        signIn.getBackground().setColorFilter(Color.parseColor("#afc137"), PorterDuff.Mode.MULTIPLY);
+
+        int newHeight = getResources().getDisplayMetrics().heightPixels / 6;
+        int orgWidth = evaLogo.getDrawable().getIntrinsicWidth();
+        int orgHeight = evaLogo.getDrawable().getIntrinsicHeight();
+
+        //double check my math, this should be right, though
+        double newWidth = Math.floor((orgWidth * newHeight) / orgHeight);
+
+        //Use RelativeLayout.LayoutParams if your parent is a RelativeLayout
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams((int) newWidth, newHeight);
+        evaLogo.setLayoutParams(params);
+        evaLogo.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
         mOauthManager = UserManager.getInstance(this);
 
