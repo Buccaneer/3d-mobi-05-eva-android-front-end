@@ -25,14 +25,13 @@ import android.preference.PreferenceManager;
  *
  */
 public class UserManager implements RequestSigner {
-// Singleton van maken
+
     private static UserManager instance;
     private Context context;
     private final SharedPreferences prefs;
-
-
     private Token token;
 
+    // Singleton van maken
     public static UserManager getInstance(Context context) {
         if (instance ==null) {
             instance = new UserManager(context);
