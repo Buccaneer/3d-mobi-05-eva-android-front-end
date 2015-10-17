@@ -10,13 +10,13 @@ import evavzw.be.eva21daychallenge.R;
 import evavzw.be.eva21daychallenge.security.UserManager;
 
 public class MainMenu extends AppCompatActivity {
-    private UserManager mOAuthManager;
+    private UserManager userManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-        mOAuthManager = UserManager.getInstance(getApplicationContext());
+        userManager = UserManager.getInstance(getApplicationContext());
         ButterKnife.bind(this);
 
     }
@@ -41,7 +41,7 @@ public class MainMenu extends AppCompatActivity {
         }
 
         if(id == R.id.logOut){
-            mOAuthManager.invalidateToken();
+            userManager.invalidateToken();
             Intent intent = new Intent(getApplicationContext(), Login.class);
             finish();
             startActivity(intent);

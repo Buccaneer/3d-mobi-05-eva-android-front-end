@@ -119,7 +119,7 @@ public class UserManager implements RequestSigner {
     }
 
     public void invalidateToken() {
-       login(null);
+        login(null);
     }
 
     public boolean isTokenPresent() {

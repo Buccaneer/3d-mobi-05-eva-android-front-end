@@ -4,13 +4,13 @@ package evavzw.be.eva21daychallenge.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.WebView;
@@ -27,6 +27,7 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import evavzw.be.eva21daychallenge.R;
 import evavzw.be.eva21daychallenge.customComponent.LoginButton;
 import evavzw.be.eva21daychallenge.customComponent.TwitterButton;
@@ -34,39 +35,20 @@ import evavzw.be.eva21daychallenge.security.UserManager;
 
 public class Login extends AppCompatActivity {
 
-    public final static String EXTRA_MESSAGE = "evavzw.be.eva21daychallenge.MESSAGE";
     @Bind(R.id.createAccount)
     Button createAccount;
     @Bind(R.id.signIn)
     Button signIn;
-    @Bind(R.id.loginFacebookButton)
-    LoginButton loginFacebook;
-    @Bind(R.id.loginTwitterButton)
-    TwitterButton loginTwitter;
-    @Bind(R.id.loginGoogleButton)
-    SignInButton loginGoogle;
-    @Bind(R.id.progress_indicator)
-    ProgressBar progressBar;
     @Bind(R.id.eva_logo)
     ImageView evaLogo;
     private WebView webView;
-    private UserManager mOAuthManager;
-
+    private UserManager userManager;
+    private AlertDialog alertDialog;
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (mOAuthManager.isTokenPresent() && mOAuthManager.isTokenValid()) {
-                    Intent intent = new Intent(getApplicationContext(), MainMenu.class);
-                    finish();
-                    startActivity(intent);
-                }
-            }
-        });
-
+    protected void onStart() {
+        super.onStart();
+        new CheckIfCurrentTokenIsValidTask().execute();
     }
 
     @Override
@@ -75,9 +57,7 @@ public class Login extends AppCompatActivity {
 
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-
-
-        mOAuthManager = UserManager.getInstance(this);
+        userManager = UserManager.getInstance(getApplicationContext());
 
         signIn.getBackground().setColorFilter(Color.parseColor("#afc137"), PorterDuff.Mode.MULTIPLY);
         createAccount.getBackground().setColorFilter(Color.parseColor("#afc137"), PorterDuff.Mode.MULTIPLY);
@@ -85,80 +65,43 @@ public class Login extends AppCompatActivity {
         int newHeight = getResources().getDisplayMetrics().heightPixels / 6;
         int orgWidth = evaLogo.getDrawable().getIntrinsicWidth();
         int orgHeight = evaLogo.getDrawable().getIntrinsicHeight();
-
-        //double check my math, this should be right, though
         double newWidth = Math.floor((orgWidth * newHeight) / orgHeight);
 
-        //Use RelativeLayout.LayoutParams if your parent is a RelativeLayout
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams((int) newWidth, newHeight);
         evaLogo.setLayoutParams(params);
         evaLogo.setScaleType(ImageView.ScaleType.CENTER_CROP);
+    }
 
-        //Start a new activity when pressing Register
-        createAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), Register.class);
-                startActivity(intent);
-            }
-        });
+    @OnClick(R.id.createAccount)
+    public void createAccountOnClick(View v){
+        Intent intent = new Intent(v.getContext(), Register.class);
+        startActivity(intent);
+    }
 
-        //Start a new activity when pressing Sign in
-        signIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), SignIn.class);
-                startActivity(intent);
-            }
-        });
+    @OnClick(R.id.signIn)
+    public void signInOnClick(View v){
+        Intent intent = new Intent(v.getContext(), SignIn.class);
+        startActivity(intent);
+    }
 
-        loginFacebook.setOnClickListener(new View.OnClickListener() {
-                                           public void onClick(View v) {
-                                               handleExternalLogin("Facebook");
-                                           }
-                                       }
-        );
+    @OnClick(R.id.loginFacebookButton)
+    public void loginFacebookOnClick(){
+        handleExternalLogin("Facebook");
+    }
 
-        loginGoogle.setOnClickListener(new View.OnClickListener() {
-                                          public void onClick(View v) {
-                                              handleExternalLogin("Google");
-                                          }
-                }
-        );
+    @OnClick(R.id.loginGoogleButton)
+    public void loginGoogleOnClick(){
+        handleExternalLogin("Google");
+    }
 
-        loginTwitter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handleExternalLogin("Twitter");
-            }
-        });
+    @OnClick(R.id.loginTwitterButton)
+    public void loginTwitterOnClick(){
+        handleExternalLogin("Twitter");
     }
 
     private void handleExternalLogin(String service) {
-        //Intent intent = new Intent(getApplicationContext(), WebviewLogin.class);
-        //intent.putExtra(EXTRA_MESSAGE, service);
-        //startActivity(intent);
         AlertDialog.Builder alert = new AlertDialog.Builder(this, R.style.Base_Theme_AppCompat_Light_Dialog_Alert);
         webView = new WebView(this);
-
-        CookieManager.getInstance().setAcceptCookie(true);
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-
-                if (url.startsWith("http://evavzwrest.azurewebsites.net/#access_token")) {
-                    String cookies = CookieManager.getInstance().getCookie(url);
-                    String token = getToken(url);
-                    if (token != null) {
-                        RegisterExternalLoginTask rel = new RegisterExternalLoginTask();
-                        rel.execute(token, cookies);
-                    }
-                }
-            }
-        });
-
         alert.setView(webView);
         alert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
             @Override
@@ -167,7 +110,35 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        alert.show();
+        alertDialog = alert.create();
+
+        CookieManager.getInstance().setAcceptCookie(true);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                if(url.startsWith("http://evavzwrest.azurewebsites.net")){
+                    if (url.contains("#access_token=")) {
+                        String cookies = CookieManager.getInstance().getCookie(url);
+                        String token = getToken(url);
+                        if (token != null) {
+                            RegisterExternalLoginTask rel = new RegisterExternalLoginTask();
+                            rel.execute(token, cookies);
+                        }
+                    } if (url.contains("#error=")) {
+                        alertDialog.dismiss();
+                    }
+                }
+            }
+        });
+        alertDialog.show();
         startLoginService(service);
     }
 
@@ -177,7 +148,6 @@ public class Login extends AppCompatActivity {
         String[] access_token = Uri.parse(url).getEncodedFragment().split("\\&|=");
         if (access_token.length <2)
             return null;
-
 
         return access_token[1];
     }
@@ -191,7 +161,7 @@ public class Login extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             //  try {
-            Map<String, String> mdata = mOAuthManager.getExternalLoginProviders();
+            Map<String, String> mdata = userManager.getExternalLoginProviders();
             if (mdata.containsKey(params[0]))
                 return mdata.get(params[0]);
             //   } catch (Exception ex) {}
@@ -212,7 +182,7 @@ public class Login extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(String... params) {
             try {
-                mOAuthManager.registerExternal(params[0], params[1]);
+                userManager.registerExternal(params[0], params[1]);
                 return true;
             } catch (Exception ex) {
                 return false;
@@ -220,8 +190,26 @@ public class Login extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(Boolean succeded) {
-            if (succeded) {
+        protected void onPostExecute(Boolean succeeded) {
+            if (succeeded) {
+                alertDialog.dismiss();
+                Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+                Login.this.finish();
+                startActivity(intent);
+            }
+        }
+    }
+
+    private class CheckIfCurrentTokenIsValidTask extends AsyncTask<Void, Void, Boolean>{
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            return userManager.isTokenPresent() && userManager.isTokenValid();
+        }
+
+        @Override
+        protected void onPostExecute(Boolean succeeded) {
+            if(succeeded){
                 Intent intent = new Intent(getApplicationContext(), MainMenu.class);
                 Login.this.finish();
                 startActivity(intent);

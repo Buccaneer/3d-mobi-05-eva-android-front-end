@@ -42,14 +42,6 @@
             android:name=".activity.MainMenu"
             android:label="@string/title_activity_main_menu" >
         </activity>
-        <activity
-            android:name=".activity.WebviewLogin"
-            android:label="@string/title_activity_webview_login"
-            android:parentActivityName=".activity.Login" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.Login" />
-        </activity>
     </application>
 
 </manifest>
