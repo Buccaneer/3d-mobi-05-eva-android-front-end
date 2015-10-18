@@ -75,6 +75,8 @@ public class LoginButton extends FacebookButton {
             final AttributeSet attrs,
             final int defStyleAttr,
             final int defStyleRes) {
+        final Resources resources = getResources();
+
         super.configureButton(context, attrs, defStyleAttr, defStyleRes);
 
         parseLoginButtonAttributes(context, attrs, defStyleAttr, defStyleRes);
@@ -85,7 +87,8 @@ public class LoginButton extends FacebookButton {
         setBackgroundColor(getResources().getColor(R.color.com_facebook_blue));
         // hardcoding in edit mode as getResources().getString() doesn't seem to work in
         // IntelliJ
-        loginText = "Log in with Facebook";
+        loginText = resources.getString(
+                R.string.com_facebook_loginview_log_in_button_long);
 
 
         setButtonText();
