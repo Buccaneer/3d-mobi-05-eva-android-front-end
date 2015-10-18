@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -20,7 +21,7 @@ import evavzw.be.eva21daychallenge.R;
 /**
  * A base class for a facebook button.
  */
-public abstract class FacebookButton extends Button {
+public abstract class FacebookButton extends AppCompatButton {
 
     protected FacebookButton(
             final Context context,

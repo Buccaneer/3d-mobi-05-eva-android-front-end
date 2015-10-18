@@ -1,37 +1,29 @@
 package evavzw.be.eva21daychallenge.activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import org.json.*;
-
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import evavzw.be.eva21daychallenge.R;
+import evavzw.be.eva21daychallenge.activity.base.RESTfulActivity;
 import evavzw.be.eva21daychallenge.rest.RegisterFailedException;
 import evavzw.be.eva21daychallenge.security.UserManager;
 
-public class Register extends AppCompatActivity {
+public class Register extends RESTfulActivity {
 
-    //Maybe we can define our API URL's in the values/strings.xml, is this a good practice or not?
-    private final String API_URL_REGISTER = "http://evavzwrest.azurewebsites.net/api/Account/Register/";
-    private final String API_URL_LOGIN = "http://evavzwrest.azurewebsites.net/Token";
     @Bind(R.id.email)
     EditText emailEditText;
     @Bind(R.id.password)
@@ -46,9 +38,8 @@ public class Register extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        super.setContentResId(R.layout.activity_register);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
 
         register.getBackground().setColorFilter(Color.parseColor("#afc137"), PorterDuff.Mode.MULTIPLY);
@@ -56,11 +47,7 @@ public class Register extends AppCompatActivity {
         int newHeight = getResources().getDisplayMetrics().heightPixels / 6;
         int orgWidth = evaLogo.getDrawable().getIntrinsicWidth();
         int orgHeight = evaLogo.getDrawable().getIntrinsicHeight();
-
-        //double check my math, this should be right, though
         double newWidth = Math.floor((orgWidth * newHeight) / orgHeight);
-
-        //Use RelativeLayout.LayoutParams if your parent is a RelativeLayout
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams((int) newWidth, newHeight);
         evaLogo.setLayoutParams(params);
         evaLogo.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -75,10 +62,17 @@ public class Register extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_no_actions, menu);
+        return true;
+    }
+
     private void registerUser() {
         //Get string values inside the EditTexts
-         String email = emailEditText.getText().toString();
-         String password = passwordEditText.getText().toString();
+        String email = emailEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
         String confirmPassword = confirmPasswordEditText.getText().toString();
 
         RegisterTask rt = new RegisterTask();
@@ -87,6 +81,11 @@ public class Register extends AppCompatActivity {
     }
 
     class RegisterTask extends AsyncTask<String, String, Boolean> {
+
+        @Override
+        protected void onPreExecute() {
+            setRefresh(true);
+        }
 
         @Override
         protected Boolean doInBackground(String... objects) {
@@ -112,6 +111,7 @@ public class Register extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Boolean succeed) {
+            setRefresh(false);
             if(succeed){
                 Intent intent = new Intent(getApplicationContext(), MainMenu.class);
                 Register.this.finish();
@@ -120,5 +120,12 @@ public class Register extends AppCompatActivity {
         }
     }
 
-
+    private void setRefresh(final boolean toggle){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                toggleProgressBar(toggle);
+            }
+        });
+    }
 }

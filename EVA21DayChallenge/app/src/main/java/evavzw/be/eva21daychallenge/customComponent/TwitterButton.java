@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
 import android.widget.Button;
 import com.twitter.sdk.android.core.R.color;
@@ -12,7 +13,7 @@ import com.twitter.sdk.android.core.R.drawable;
 import com.twitter.sdk.android.core.R.string;
 import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 
-public class TwitterButton extends Button {
+public class TwitterButton extends AppCompatButton {
 
     public TwitterButton(Context context) {
         this(context, (AttributeSet)null);

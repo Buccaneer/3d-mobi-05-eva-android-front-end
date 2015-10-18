@@ -1,6 +1,5 @@
 package evavzw.be.eva21daychallenge.activity;
 
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,7 +9,8 @@ import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.WebView;
@@ -18,22 +18,16 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-
-
-import com.google.android.gms.common.SignInButton;
-
 import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import evavzw.be.eva21daychallenge.R;
-import evavzw.be.eva21daychallenge.customComponent.LoginButton;
-import evavzw.be.eva21daychallenge.customComponent.TwitterButton;
+import evavzw.be.eva21daychallenge.activity.base.RESTfulActivity;
 import evavzw.be.eva21daychallenge.security.UserManager;
 
-public class Login extends AppCompatActivity {
+public class Login extends RESTfulActivity {
 
     @Bind(R.id.createAccount)
     Button createAccount;
@@ -53,9 +47,9 @@ public class Login extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.setContentResId(R.layout.activity_login);
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         userManager = UserManager.getInstance(getApplicationContext());
 
@@ -70,6 +64,13 @@ public class Login extends AppCompatActivity {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams((int) newWidth, newHeight);
         evaLogo.setLayoutParams(params);
         evaLogo.setScaleType(ImageView.ScaleType.CENTER_CROP);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_no_actions, menu);
+        return true;
     }
 
     @OnClick(R.id.createAccount)
@@ -152,12 +153,18 @@ public class Login extends AppCompatActivity {
         return access_token[1];
     }
 
-    private void startLoginService( String loginProvider) {
+    private void startLoginService(String loginProvider) {
         NavigateToExternalLoginProviderTask ntelp = new NavigateToExternalLoginProviderTask();
         ntelp.execute(loginProvider);
     }
 
     private class NavigateToExternalLoginProviderTask extends AsyncTask<String,Void,String> {
+
+        @Override
+        protected void onPreExecute() {
+            setRefresh(true);
+        }
+
         @Override
         protected String doInBackground(String... params) {
             //  try {
@@ -170,6 +177,7 @@ public class Login extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
+            setRefresh(false);
             if (s == null) {
                 finish();
             } else {
@@ -179,6 +187,12 @@ public class Login extends AppCompatActivity {
     }
 
     private class RegisterExternalLoginTask extends AsyncTask<String, Void, Boolean> {
+
+        @Override
+        protected void onPreExecute() {
+            setRefresh(true);
+        }
+
         @Override
         protected Boolean doInBackground(String... params) {
             try {
@@ -191,6 +205,7 @@ public class Login extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Boolean succeeded) {
+            setRefresh(false);
             if (succeeded) {
                 alertDialog.dismiss();
                 Intent intent = new Intent(getApplicationContext(), MainMenu.class);
@@ -215,5 +230,14 @@ public class Login extends AppCompatActivity {
                 startActivity(intent);
             }
         }
+    }
+
+    private void setRefresh(final boolean refresh){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                toggleProgressBar(refresh);
+            }
+        });
     }
 }

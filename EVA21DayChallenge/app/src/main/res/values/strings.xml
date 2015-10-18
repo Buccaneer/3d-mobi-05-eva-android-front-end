@@ -24,5 +24,6 @@
     <string name="mannelijkGeslacht">Man</string>
     <string name="mannelijkgeslacht">Man</string>
     <string name="vrouwelijkgeslacht">Woman</string>
+    <string name="progress">Loading...</string>
 
 </resources>

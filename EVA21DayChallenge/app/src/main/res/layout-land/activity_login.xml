@@ -44,23 +44,29 @@
         android:layout_gravity="center"
         style="@style/socialButton"/>
 
-    <evavzw.be.eva21daychallenge.customComponent.LoginButton
-        android:background="@drawable/facebookbutton"
-        android:id="@+id/loginFacebookButton"
-        android:layout_width="184dp"
-        android:layout_height="37dp"
-        style="@style/socialButton"/>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+        <evavzw.be.eva21daychallenge.customComponent.LoginButton
+            android:background="@drawable/facebookbutton"
+            android:id="@+id/loginFacebookButton"
+            android:layout_width="184dp"
+            android:layout_height="37dp"
+            style="@style/socialButton"/>
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/loginGoogleButton"
-        android:layout_width="191dp"
-        android:layout_height="44dp"
-        style="@style/socialButton"/>
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/loginGoogleButton"
+            android:layout_width="191dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="7dp"
+            style="@style/socialButton"/>
 
-    <evavzw.be.eva21daychallenge.customComponent.TwitterButton
-        android:id="@+id/loginTwitterButton"
-        android:layout_width="184dp"
-        android:layout_height="37dp"
-        style="@style/socialButton"/>
-
+        <evavzw.be.eva21daychallenge.customComponent.TwitterButton
+            android:id="@+id/loginTwitterButton"
+            android:layout_width="184dp"
+            android:layout_height="37dp"
+            style="@style/socialButton"/>
+    </LinearLayout>
 </LinearLayout>
