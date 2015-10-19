@@ -1,8 +1,58 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="evavzw.be.eva21daychallenge.activity.MainMenu">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="6dip">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+            <Button android:id="@+id/home_btn_feature1"
+                style="@style/HomeButton"
+                android:text="title feature 1"
+                android:drawableTop="@drawable/home_button1"/>
+            <Button android:id="@+id/home_btn_feature2"
+                style="@style/HomeButton"
+                android:text="title feature 2"
+                android:drawableTop="@drawable/home_button2"/>
+        </LinearLayout>
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+            <Button android:id="@+id/home_btn_feature3"
+                style="@style/HomeButton"
+                android:text="title feature 3"
+                android:drawableTop="@drawable/home_button3"/>
+            <Button android:id="@+id/home_btn_feature4"
+                style="@style/HomeButton"
+                android:text="title feature 4"
+                android:drawableTop="@drawable/home_button4"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+            <Button android:id="@+id/home_btn_feature5"
+                style="@style/HomeButton"
+                android:text="title feature 5"
+                android:drawableTop="@drawable/home_button5"/>
+            <Button android:id="@+id/home_btn_feature6"
+                style="@style/HomeButton"
+                android:text="title feature 6"
+                android:drawableTop="@drawable/home_button6"/>
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

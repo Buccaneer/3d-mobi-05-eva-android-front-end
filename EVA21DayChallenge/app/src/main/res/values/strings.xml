@@ -25,5 +25,8 @@
     <string name="mannelijkgeslacht">Man</string>
     <string name="vrouwelijkgeslacht">Woman</string>
     <string name="progress">Loading...</string>
+    <string name="challenges">Challenges</string>
+    <string name="evasite">EVA Website</string>
+    <string name="recipes">Recipes</string>
 
 </resources>
