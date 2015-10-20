@@ -21,12 +21,11 @@
     <string name="loginGoogle">Login with Google</string>
     <string name="com_facebook_loginview_log_in_button_long">Log in with Facebook</string>
     <string name="com_facebook_loginview_log_in_button">Log in</string>
-    <string name="mannelijkGeslacht">Man</string>
-    <string name="mannelijkgeslacht">Man</string>
-    <string name="vrouwelijkgeslacht">Woman</string>
     <string name="progress">Loading...</string>
     <string name="challenges">Challenges</string>
-    <string name="evasite">EVA Website</string>
     <string name="recipes">Recipes</string>
+    <string name="gotoChallenges">Go to challenges</string>
+    <string name="gotoEva">EVA site</string>
+    <string name="about">About</string>
 
 </resources>

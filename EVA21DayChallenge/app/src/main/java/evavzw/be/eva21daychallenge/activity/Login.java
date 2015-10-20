@@ -101,7 +101,7 @@ public class Login extends RESTfulActivity {
     }
 
     private void handleExternalLogin(String service) {
-        AlertDialog.Builder alert = new AlertDialog.Builder(this, R.style.Base_Theme_AppCompat_Light_Dialog_Alert);
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this, R.style.Base_Theme_AppCompat_Light_Dialog_Alert);
         webView = new WebView(this);
         alert.setView(webView);
         alert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
@@ -130,6 +130,7 @@ public class Login extends RESTfulActivity {
                         String cookies = CookieManager.getInstance().getCookie(url);
                         String token = getToken(url);
                         if (token != null) {
+                            alertDialog.dismiss();
                             RegisterExternalLoginTask rel = new RegisterExternalLoginTask();
                             rel.execute(token, cookies);
                         }
