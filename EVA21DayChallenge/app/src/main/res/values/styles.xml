@@ -34,7 +34,7 @@
     <color name="com_facebook_button_background_color_pressed">#2f477a</color>
     <color name="com_facebook_blue">#3B5998</color>
 
-    <style name="ProgressBar">
+   <!--<style name="ProgressBar">
         <item name="android:indeterminateOnly">true</item>
         <item name="android:indeterminateDrawable">@drawable/progress</item>
         <item name="android:indeterminateBehavior">repeat</item>
@@ -43,23 +43,5 @@
         <item name="android:maxWidth">32dip</item>
         <item name="android:minHeight">32dip</item>
         <item name="android:maxHeight">32dip</item>
-    </style>
-
-    <style name="HomeButton">
-        <item name="android:layout_gravity">center_vertical</item>
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:gravity">center_horizontal</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:textColor">#ff355689</item>
-        <item name="android:background">@null</item>
-    </style>
-
-    <style name="TextBody">
-        <item name="android:textSize">15sp</item>
-        <item name="android:lineSpacingMultiplier">1.1</item>
-        <item name="android:textColor">@android:color/secondary_text_light</item>
-    </style>
+    </style>-->
 </resources>
