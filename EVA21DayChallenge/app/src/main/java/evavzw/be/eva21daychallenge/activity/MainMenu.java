@@ -4,30 +4,21 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import evavzw.be.eva21daychallenge.R;
 import evavzw.be.eva21daychallenge.activity.base.RESTfulActivity;
 import evavzw.be.eva21daychallenge.security.UserManager;
 
 public class MainMenu extends RESTfulActivity {
-    /*@Bind(R.id.btnChallenges)
-    Button btnChallenges;
-    @Bind(R.id.btnEvaSite)
-    Button btnEvaSite;
-    @Bind(R.id.btnRecipes)
-    Button btnRecipes;
-    @Bind(R.id.btnPH1)
-    Button btnPH1;
-    @Bind(R.id.btnPH2)
-    Button btnPH2;*/
-    @Bind(R.id.challengeCountdown)
-    TextView txvChallengeCountdown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +35,24 @@ public class MainMenu extends RESTfulActivity {
         int width = metrics.widthPixels;
   */
 
+    }
+
+    @OnClick(R.id.tileFAQ)
+    public void tileFAQClicked(){
+        //Intent intent = new Intent(this, FrequentlyAskedQuestions.class);
+        //startActivity(intent);
+    }
+
+    @OnClick(R.id.tileTipsTricks)
+    public void tileTipsTricksClicked(){
+        //Intent intent = new Intent(this, TipsTricks.class);
+        //startActivity(intent);
+    }
+
+    @OnClick(R.id.tileRecipes)
+    public void tileRecipesclicked(){
+        //Intent intent = new Intent(this, Recipes.class);
+        //startActivity(intent);
     }
 
     @Override
