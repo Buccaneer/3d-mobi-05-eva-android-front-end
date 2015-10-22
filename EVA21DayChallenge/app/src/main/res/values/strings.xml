@@ -13,22 +13,15 @@
     <string name="register">Register</string>
     <string name="title_activity_main_menu">MainMenu</string>
     <string name="socialMediaLogin">Or log in with social media</string>
-    <string name="title_activity_main">MainActivity</string>
 
      <string name="loginFacebook">Login with Facebook</string>
-    <string name="title_activity_webview_login">WebviewLogin</string>
     <string name="logOut">Log out</string>
-    <string name="loginGoogle">Login with Google</string>
     <string name="com_facebook_loginview_log_in_button_long">Log in with Facebook</string>
-    <string name="com_facebook_loginview_log_in_button">Log in</string>
     <string name="progress">Loading...</string>
-    <string name="challenges">Challenges</string>
     <string name="recipes">Recipes</string>
     <string name="gotoChallenges">Go to challenges</string>
     <string name="gotoEva">EVA site</string>
-    <string name="about">About</string>
     <string name="faq">FAQ</string>
-    <string name="ideetjes"><![CDATA[Tips & Tricks]]></string>
     <string name="ideas"><![CDATA[Tips & Tricks]]></string>
 
 </resources>
