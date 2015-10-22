@@ -19,7 +19,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="#e1cd00">
+                android:background="@drawable/snellelunch">
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -28,14 +28,19 @@
                     android:paddingBottom="10dp"
                     android:singleLine="false"
                     android:text="@string/gotoChallenges"
+                    android:textColor="@color/tw__solid_white"
                     android:textSize="18sp" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <TextView
+                    android:id="@+id/challengeCountdown"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:textSize="40sp"
                     android:paddingBottom="25dp"
-                    android:src="@drawable/koe"/>
+                    android:text="21 MORE DAYS"
+                    android:textColor="@color/tw__solid_white"/>
             </RelativeLayout>
         </TableRow>
 
@@ -49,7 +54,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                android:background="#e03c31"
+                android:background="#032d18"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="5dp"
@@ -63,6 +68,7 @@
                     android:paddingBottom="10dp"
                     android:singleLine="false"
                     android:text="@string/gotoEva"
+                    android:textColor="@color/tw__solid_white"
                     android:textSize="18sp" />
 
                 <ImageView
@@ -70,14 +76,16 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:paddingBottom="25dp"
-                    android:src="@drawable/schaap"/>
+                    android:src="@drawable/eva_logo_wit"
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp"/>
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                android:background="#005a70"
+                android:background="#006990"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
@@ -91,6 +99,7 @@
                     android:paddingBottom="10dp"
                     android:singleLine="false"
                     android:text="@string/recipes"
+                    android:textColor="@color/tw__solid_white"
                     android:textSize="18sp" />
 
                 <ImageView
@@ -98,7 +107,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:paddingBottom="25dp"
-                    android:src="@drawable/schaap" />
+                    android:src="@drawable/knifefork" />
             </RelativeLayout>
         </TableRow>
 
@@ -116,7 +125,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="10dp"
-                android:background="#183028">
+                android:background="#009ca6">
 
                 <Button
                     android:layout_width="match_parent"
@@ -125,22 +134,24 @@
                     android:gravity="center|bottom"
                     android:paddingBottom="10dp"
                     android:singleLine="false"
-                    android:text="Button 1"
+                    android:text="@string/ideas"
+                    android:textColor="@color/tw__solid_white"
                     android:textSize="18sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:paddingBottom="25dp"
-                    android:src="@drawable/koe" />
+                    android:paddingBottom="35dp"
+                    android:src="@drawable/lightbulb"
+                    android:paddingTop="5dp" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                android:background="#009ca6"
+                android:background="#f15c23"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"
@@ -153,14 +164,15 @@
                     android:gravity="center|bottom"
                     android:paddingBottom="10dp"
                     android:singleLine="false"
-                    android:text="@string/about"
+                    android:text="@string/faq"
+                    android:textColor="@color/tw__solid_white"
                     android:textSize="18sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:paddingBottom="25dp"
+                    android:paddingBottom="30dp"
                     android:src="@drawable/varken"/>
             </RelativeLayout>
         </TableRow>

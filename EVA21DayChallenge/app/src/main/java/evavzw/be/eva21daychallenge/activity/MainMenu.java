@@ -1,11 +1,13 @@
 package evavzw.be.eva21daychallenge.activity;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -24,6 +26,8 @@ public class MainMenu extends RESTfulActivity {
     Button btnPH1;
     @Bind(R.id.btnPH2)
     Button btnPH2;*/
+    @Bind(R.id.challengeCountdown)
+    TextView txvChallengeCountdown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +35,8 @@ public class MainMenu extends RESTfulActivity {
         super.onCreate(savedInstanceState);
 
         ButterKnife.bind(this);
+
+        //txvChallengeCountdown.setTypeface(Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/ArtistampMedium.ttf"));
 /*
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
