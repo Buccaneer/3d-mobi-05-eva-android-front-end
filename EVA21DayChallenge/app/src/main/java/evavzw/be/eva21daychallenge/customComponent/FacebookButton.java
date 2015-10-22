@@ -184,7 +184,8 @@ public abstract class FacebookButton extends Button {
         try {
             setTextSize(TypedValue.COMPLEX_UNIT_PX, a.getDimensionPixelSize(0, 0));
             setTypeface(Typeface.defaultFromStyle(a.getInt(1, Typeface.BOLD)));
-            setText(a.getString(2));
+            //setText(a.getString(2));
+
         } finally {
             a.recycle();
         }

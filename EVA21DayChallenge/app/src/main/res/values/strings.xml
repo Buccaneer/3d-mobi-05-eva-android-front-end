@@ -15,11 +15,11 @@
     <string name="socialMediaLogin">Of meld aan met social media</string>
     <string name="title_activity_main">Hoofdactiviteit</string>
 
-     <string name="loginFacebook">Aanmelden met Facebook</string>
+     <string name="loginFacebook">Log in met Facebook</string>
     <string name="title_activity_webview_login">Webview Login</string>
     <string name="logOut">Uitloggen</string>
     <string name="loginGoogle">Aanmelden met Google</string>
-    <string name="com_facebook_loginview_log_in_button_long">Aanmelden met Facebook</string>
+    <string name="com_facebook_loginview_log_in_button_long">Log in met Facebook</string>
     <string name="com_facebook_loginview_log_in_button">Aanmelden</string>
     <string name="mannelijkgeslacht">Man</string>
     <string name="vrouwelijkgeslacht">Woman</string>
