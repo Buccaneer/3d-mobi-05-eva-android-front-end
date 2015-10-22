@@ -9,19 +9,28 @@
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="0.5"
-        android:weightSum="1">
+        android:weightSum="1"
+        >
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/snellelunch">
+            android:background="@drawable/snellelunch"
+            android:layout_marginBottom="2.5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp">
+
+
+
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/tw__transparent"
                 android:gravity="center|bottom"
+
                 android:paddingBottom="10dp"
                 android:singleLine="false"
                 android:text="@string/gotoChallenges"
@@ -50,10 +59,11 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="2.5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="2.5dp"
+            android:layout_marginTop="2.5dp"
+
             android:layout_weight="0.5"
             android:background="#032d18">
 
@@ -64,7 +74,7 @@
                 android:gravity="center|bottom"
                 android:paddingBottom="10dp"
                 android:singleLine="false"
-                android:text="@string/gotoEva"
+                android:text="@string/gotoAchievements"
                 android:textColor="@color/tw__solid_white"
                 android:textSize="18sp" />
 
@@ -82,12 +92,13 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="2.5dp"
+            android:layout_marginLeft="2.5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="2.5dp"
             android:layout_weight="0.5"
-            android:background="#006990">
+            android:background="#afbd1f">
+
 
             <Button
                 android:id="@+id/tileRecipes"
@@ -101,12 +112,13 @@
                 android:textColor="@color/tw__solid_white"
                 android:textSize="18sp" />
 
-            <ImageView
+        <!--    <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:paddingBottom="25dp"
-                android:src="@drawable/knifefork" />
+                android:src="@drawable/knifefork"/>-->
+
         </RelativeLayout>
     </TableRow>
 
@@ -119,12 +131,13 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="2.5dp"
+            android:layout_marginTop="2.5dp"
             android:layout_weight="0.5"
-            android:background="#009ca6">
+            android:background="#006c68">
+
 
             <Button
                 android:id="@+id/tileTipsTricks"
@@ -150,12 +163,14 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="2.5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="2.5dp"
             android:layout_weight="0.5"
-            android:background="#f15c23">
+            android:background="#f15c23"
+            >
+
 
             <Button
                 android:id="@+id/tileFAQ"
@@ -167,7 +182,8 @@
                 android:singleLine="false"
                 android:text="@string/faq"
                 android:textColor="@color/tw__solid_white"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                />
 
             <ImageView
                 android:layout_width="wrap_content"

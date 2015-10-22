@@ -23,5 +23,6 @@
     <string name="gotoEva">EVA site</string>
     <string name="faq">FAQ</string>
     <string name="ideas"><![CDATA[Tips & Tricks]]></string>
+    <string name="gotoAchievements">Beloningen</string>
 
 </resources>
