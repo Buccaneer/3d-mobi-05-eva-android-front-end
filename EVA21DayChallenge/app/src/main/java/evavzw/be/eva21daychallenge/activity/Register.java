@@ -62,13 +62,6 @@ public class Register extends RESTfulActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_no_actions, menu);
-        return true;
-    }
-
     private void registerUser() {
         //Get string values inside the EditTexts
         String email = emailEditText.getText().toString();

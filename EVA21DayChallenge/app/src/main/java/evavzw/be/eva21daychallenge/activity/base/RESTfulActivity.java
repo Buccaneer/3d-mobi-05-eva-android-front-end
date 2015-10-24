@@ -10,8 +10,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
@@ -21,28 +23,40 @@ import evavzw.be.eva21daychallenge.R;
  * Created by Jan on 17/10/2015.
  */
 public abstract class RESTfulActivity extends AppCompatActivity {
-
     private int mContentResId;
-    private MenuItem menuItem;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(mContentResId);
-	}
+
+        progressBar = new ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal);
+        progressBar.setLayoutParams(new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 34));
+        progressBar.setProgress(65);
+        final FrameLayout decorView = (FrameLayout) getWindow().getDecorView();
+        decorView.addView(progressBar);
+
+        ViewTreeObserver observer = progressBar.getViewTreeObserver();
+        observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                View contentView = decorView.findViewById(android.R.id.content);
+                progressBar.setY(contentView.getY() +55);
+
+                ViewTreeObserver observer = progressBar.getViewTreeObserver();
+                observer.removeGlobalOnLayoutListener(this);
+            }
+        });
+        progressBar.setIndeterminate(true);
+        progressBar.setVisibility(View.INVISIBLE);
+    }
 
     protected void setContentResId(int id) {
         mContentResId = id;
     }
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        menuItem = menu.findItem(R.id.menu_progress);
-        ProgressBar progressBar = (ProgressBar) MenuItemCompat.getActionView(menuItem);
-        return super.onPrepareOptionsMenu(menu);
-    }
-
     public void toggleProgressBar(boolean toggle){
-        menuItem.setVisible(toggle);
+        progressBar.setVisibility(toggle ? View.VISIBLE : View.INVISIBLE);
     }
 }
