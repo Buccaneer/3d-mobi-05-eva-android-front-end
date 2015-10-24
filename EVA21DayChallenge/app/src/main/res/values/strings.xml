@@ -24,5 +24,7 @@
     <string name="faq">FAQ</string>
     <string name="ideas"><![CDATA[Tips & Tricks]]></string>
     <string name="gotoAchievements">Beloningen</string>
+    <string name="drawer_open">Openen</string>
+    <string name="drawer_close">Sluiten</string>
 
 </resources>
