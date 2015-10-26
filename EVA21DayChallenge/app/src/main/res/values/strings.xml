@@ -26,5 +26,12 @@
     <string name="gotoAchievements">Beloningen</string>
     <string name="drawer_open">Openen</string>
     <string name="drawer_close">Sluiten</string>
+    <string name="navigation_drawer_open">Open navigatie</string>
+    <string name="navigation_drawer_close">Sluit navigatie</string>
+    <string name="restaurants">Restaurants</string>
+    <string name="FAQ">FAQ</string>
+    <string name="informatie">Informatie</string>
+    <string name="over">Over</string>
+    <string name="instellingen">Instellingen</string>
 
 </resources>
