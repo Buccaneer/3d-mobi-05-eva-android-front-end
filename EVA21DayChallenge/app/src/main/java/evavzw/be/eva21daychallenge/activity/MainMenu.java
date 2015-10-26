@@ -5,12 +5,21 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import evavzw.be.eva21daychallenge.R;
 import evavzw.be.eva21daychallenge.activity.base.RESTfulActivity;
+import evavzw.be.eva21daychallenge.activity.challenges.ChallengeActivity;
 import evavzw.be.eva21daychallenge.security.UserManager;
 
 public class MainMenu extends RESTfulActivity {
     private UserManager userManager;
+
+    @OnClick(R.id.button_challenge)
+    public void pickChallenge()
+    {
+        Intent intent = new Intent(MainMenu.this, ChallengeActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

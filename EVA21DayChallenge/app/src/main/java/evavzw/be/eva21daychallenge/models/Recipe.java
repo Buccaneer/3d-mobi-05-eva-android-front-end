@@ -3,13 +3,14 @@ package evavzw.be.eva21daychallenge.models;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Jan on 15/10/2015.
  */
-public class Recipe {
+public class Recipe implements Serializable {
     private List<Ingredient> ingredients;
     private String name;
     private String description;

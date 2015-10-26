@@ -26,4 +26,6 @@
     <string name="vrouwelijkgeslacht">Woman</string>
     <string name="progress">Loading...</string>
 
+    <string name="action_challenge">Challenge</string>
+    <string name="title_activity_challenge">Challenge</string>
 </resources>

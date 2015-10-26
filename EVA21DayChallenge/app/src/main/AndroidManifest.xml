@@ -39,6 +39,12 @@
                 android:value=".activity.Login" />
         </activity>
         <activity
+            android:name=".activity.challenges.ChallengeActivity"
+            android:label="@string/title_activity_challenge"
+            android:parentActivityName=".activity.MainMenu"
+            android:theme="@style/AppTheme">
+        </activity>
+        <activity
             android:name=".activity.MainMenu"
             android:label="@string/title_activity_main_menu" >
         </activity>

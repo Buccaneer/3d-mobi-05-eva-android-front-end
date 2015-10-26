@@ -1,0 +1,26 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="top"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <!--fragment android:name="com.example.challengespreview.CategoryListFragment"
+              android:id="@+id/category_list_fragment"
+              android:layout_width="match_parent"
+              android:layout_height="0dp"/>
+
+    <fragment android:name="com.example.challengespreview.ChallengeListFragment"
+              android:id="@+id/challenge_list_fragment"
+              android:layout_width="match_parent"
+              android:layout_height="0dp"/>
+
+    <fragment android:name="com.example.challengespreview.ChallengeFragment"
+              android:id="@+id/challenge_fragment"
+              android:layout_width="match_parent"
+              android:layout_height="0dp"/-->
+
+</FrameLayout>
