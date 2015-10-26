@@ -21,7 +21,7 @@ import evavzw.be.eva21daychallenge.models.RecipeProperty;
 /**
  * Created by Pieter-Jan on 24/10/2015.
  */
-public class ChallengeFragment extends Fragment
+public class RecipeChallengeFragment extends Fragment
 {
     final static String ARG_RECIPE = "recipe";
 

@@ -11,12 +11,9 @@ import evavzw.be.eva21daychallenge.R;
 import evavzw.be.eva21daychallenge.models.Recipe;
 
 
-public class ChallengeActivity extends AppCompatActivity implements CategoryListFragment.OnCategorySelectedListener, ChallengeListFragment.OnChallengeSelectedListener
+public class ChallengeActivity extends AppCompatActivity implements CategoryListFragment.OnCategorySelectedListener, RecipeChallengeListFragment.OnRecipeSelectedListener, RestaurantChallengeListFragment.OnRestaurantSelectedListener
 {
     FragmentManager fragmentManager;
-    CategoryListFragment categoryListFragment;
-    ChallengeListFragment challengeListFragment;
-    ChallengeFragment challengeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -37,8 +34,8 @@ public class ChallengeActivity extends AppCompatActivity implements CategoryList
             if (savedInstanceState != null)
             {
                 categoryListFragment = (CategoryListFragment) fragmentManager.getFragment(savedInstanceState, "categoryListFragment");
-                challengeListFragment = (ChallengeListFragment) fragmentManager.getFragment(savedInstanceState, "challengeListFragment");
-                challengeFragment = (ChallengeFragment) fragmentManager.getFragment(savedInstanceState, "challengeFragment");
+                challengeListFragment = (RecipeChallengeListFragment) fragmentManager.getFragment(savedInstanceState, "challengeListFragment");
+                challengeFragment = (RecipeChallengeFragment) fragmentManager.getFragment(savedInstanceState, "challengeFragment");
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 if (categoryListFragment != null)
                     fragmentTransaction.add(R.id.fragment_container, categoryListFragment);
@@ -61,7 +58,7 @@ public class ChallengeActivity extends AppCompatActivity implements CategoryList
         if (savedInstanceState == null)
         {
             Log.e("ACTIVITY", "SAVED INSTANCE IS NULL");
-            categoryListFragment = new CategoryListFragment();
+            CategoryListFragment categoryListFragment = new CategoryListFragment();
             categoryListFragment.setArguments(getIntent().getExtras());
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.add(R.id.fragment_container, categoryListFragment, "categoryListFragment");
@@ -71,8 +68,8 @@ public class ChallengeActivity extends AppCompatActivity implements CategoryList
         /*else
         {
             categoryListFragment = (CategoryListFragment) fragmentManager.getFragment(savedInstanceState, "categoryListFragment");
-            challengeListFragment = (ChallengeListFragment) fragmentManager.getFragment(savedInstanceState, "challengeListFragment");
-            challengeFragment = (ChallengeFragment) fragmentManager.getFragment(savedInstanceState, "challengeFragment");
+            challengeListFragment = (RecipeChallengeListFragment) fragmentManager.getFragment(savedInstanceState, "challengeListFragment");
+            challengeFragment = (RecipeChallengeFragment) fragmentManager.getFragment(savedInstanceState, "challengeFragment");
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             if (categoryListFragment != null)
                 fragmentTransaction.add(R.id.fragment_container, categoryListFragment);
@@ -87,27 +84,49 @@ public class ChallengeActivity extends AppCompatActivity implements CategoryList
     @Override
     public void onCategorySelected(int category)
     {
-        //Create list with challenges
-        challengeListFragment = new ChallengeListFragment();
-        Bundle args = new Bundle();
-        args.putInt(ChallengeListFragment.ARG_CATEGORY, category);
-        challengeListFragment.setArguments(args);
+        // TODO make these check for actual categories rather than position once API supports categories
+        switch (category)
+        {
+            case 0:
+                //Create list with challenges
+                RecipeChallengeListFragment recipeListFragment = new RecipeChallengeListFragment();
+                Bundle args0 = new Bundle();
+                args0.putInt(RecipeChallengeListFragment.ARG_CATEGORY, category);
+                recipeListFragment.setArguments(args0);
 
-        //Fragment transaction to show list with challenges
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.fragment_container, challengeListFragment, "challengeListFragment");
-        transaction.addToBackStack(null);
-        transaction.commit();
+                //Fragment transaction to show list with challenges
+                FragmentTransaction transaction0 = fragmentManager.beginTransaction();
+                transaction0.replace(R.id.fragment_container, recipeListFragment, "challengeListFragment");
+                transaction0.addToBackStack(null);
+                transaction0.commit();
+                break;
+            case 1:
+                //Create list with challenges
+                RestaurantChallengeListFragment restaurantListFragment = new RestaurantChallengeListFragment();
+                Bundle args1 = new Bundle();
+                args1.putInt(RecipeChallengeListFragment.ARG_CATEGORY, category);
+                restaurantListFragment.setArguments(args1);
+
+                //Fragment transaction to show list with challenges
+                FragmentTransaction transaction1 = fragmentManager.beginTransaction();
+                transaction1.replace(R.id.fragment_container, restaurantListFragment, "challengeListFragment");
+                transaction1.addToBackStack(null);
+                transaction1.commit();
+                break;
+            default:
+                break;
+        }
+
     }
 
     /*@Override
-    public void onChallengeSelected(int category, int challenge)
+    public void onRecipeSelected(int category, int challenge)
     {
         //Create list with challenges
-        challengeFragment = new ChallengeFragment();
+        challengeFragment = new RecipeChallengeFragment();
         Bundle args = new Bundle();
-        args.putInt(ChallengeFragment.ARG_CATEGORY, category);
-        args.putInt(ChallengeFragment.ARG_CHALLENGE, challenge);
+        args.putInt(RecipeChallengeFragment.ARG_CATEGORY, category);
+        args.putInt(RecipeChallengeFragment.ARG_CHALLENGE, challenge);
         challengeFragment.setArguments(args);
 
         //Fragment transaction to show list with challenges
@@ -116,17 +135,34 @@ public class ChallengeActivity extends AppCompatActivity implements CategoryList
         transaction.addToBackStack(null);
         transaction.commit();
     }*/
+
     @Override
-    public void onChallengeSelected(Recipe recipe)
+    public void onRecipeSelected(Recipe recipe)
     {
         //Create list with challenges
-        challengeFragment = new ChallengeFragment();
+        RecipeChallengeFragment challengeFragment = new RecipeChallengeFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ChallengeFragment.ARG_RECIPE, recipe);
-        /*args.put(ChallengeFragment.ARG_INGREDIENTS, recipe.getIngredients().);
-        args.putString(ChallengeFragment.ARG_PROPERTIES, recipe.getName());
-        args.putString(ChallengeFragment.ARG_DESCRIPTION, recipe.getName());
-        args.putString(ChallengeFragment.ARG_IMAGE, recipe.getImage());*/
+        args.putSerializable(RecipeChallengeFragment.ARG_RECIPE, recipe);
+        /*args.put(RecipeChallengeFragment.ARG_INGREDIENTS, recipe.getIngredients().);
+        args.putString(RecipeChallengeFragment.ARG_PROPERTIES, recipe.getName());
+        args.putString(RecipeChallengeFragment.ARG_DESCRIPTION, recipe.getName());
+        args.putString(RecipeChallengeFragment.ARG_IMAGE, recipe.getImage());*/
+
+        challengeFragment.setArguments(args);
+
+        //Fragment transaction to show list with challenges
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, challengeFragment, "challengeFragment");
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    @Override
+    public void onRestaurantSelected()
+    {
+        //Create list with challenges
+        RestaurantChallengeFragment challengeFragment = new RestaurantChallengeFragment();
+        Bundle args = new Bundle();
 
         challengeFragment.setArguments(args);
 
@@ -157,12 +193,12 @@ public class ChallengeActivity extends AppCompatActivity implements CategoryList
     {
         Log.e("ACTIVITY", "SAVE INSTANCE STATE CALLED");
         super.onSaveInstanceState(outState);
-        if (categoryListFragment != null && categoryListFragment.isAdded())
+        /*if (categoryListFragment != null && categoryListFragment.isAdded())
             fragmentManager.putFragment(outState, "categoryListFragment", categoryListFragment);
         if (challengeListFragment != null && challengeListFragment.isAdded())
             fragmentManager.putFragment(outState, "challengeListFragment", challengeListFragment);
         if (challengeFragment != null && challengeFragment.isAdded())
-            fragmentManager.putFragment(outState, "challengeFragment", challengeFragment);
+            fragmentManager.putFragment(outState, "challengeFragment", challengeFragment);*/
     }
 
 }

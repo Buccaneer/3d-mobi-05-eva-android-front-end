@@ -13,12 +13,12 @@
               android:layout_width="match_parent"
               android:layout_height="0dp"/>
 
-    <fragment android:name="com.example.challengespreview.ChallengeListFragment"
+    <fragment android:name="com.example.challengespreview.RecipeChallengeListFragment"
               android:id="@+id/challenge_list_fragment"
               android:layout_width="match_parent"
               android:layout_height="0dp"/>
 
-    <fragment android:name="com.example.challengespreview.ChallengeFragment"
+    <fragment android:name="com.example.challengespreview.RecipeChallengeFragment"
               android:id="@+id/challenge_fragment"
               android:layout_width="match_parent"
               android:layout_height="0dp"/-->

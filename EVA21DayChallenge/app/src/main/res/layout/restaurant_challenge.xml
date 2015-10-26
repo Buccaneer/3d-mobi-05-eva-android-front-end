@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/recipeChallenge"
+        android:id="@+id/restaurantChallenge"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -12,7 +12,7 @@
         android:padding="15dp">
 
         <TextView
-            android:id="@+id/ingredientsTitle"
+            android:id="@+id/restaurantTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/abc_text_size_medium_material"
@@ -25,13 +25,13 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/ingredientsLeft"
+                android:id="@+id/restaurantAddress"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
 
             <TextView
-                android:id="@+id/ingredientsRight"
+                android:id="@+id/restaurantProperties"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
@@ -39,44 +39,11 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/extraTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/abc_text_size_medium_material"
             android:textStyle="bold"
-            />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/extraLeft"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-
-            <TextView
-                android:id="@+id/extraRight"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/descriptionTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/abc_text_size_medium_material"
-            android:textStyle="bold"
-            />
-
-        <TextView
-            android:id="@+id/description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:text="Placeholder map"
             />
 
     </LinearLayout>
