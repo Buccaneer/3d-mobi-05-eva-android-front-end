@@ -15,6 +15,8 @@ public class ChallengeActivity extends AppCompatActivity implements CategoryList
 {
     FragmentManager fragmentManager;
 
+    private boolean large = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -23,7 +25,7 @@ public class ChallengeActivity extends AppCompatActivity implements CategoryList
         //fragmentManager.addOnBackStackChangedListener(this);
 
         setContentView(R.layout.activity_challenge);
-
+        large = findViewById(R.id.challengeListFrame) != null;
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null)
@@ -96,8 +98,13 @@ public class ChallengeActivity extends AppCompatActivity implements CategoryList
 
                 //Fragment transaction to show list with challenges
                 FragmentTransaction transaction0 = fragmentManager.beginTransaction();
-                transaction0.replace(R.id.fragment_container, recipeListFragment, "challengeListFragment");
-                transaction0.addToBackStack(null);
+                if (large)
+                {
+                    transaction0.replace(R.id.challengeListFrame, recipeListFragment, "challengeListFragment");
+                } else {
+                    transaction0.replace(R.id.fragment_container, recipeListFragment, "challengeListFragment");
+                    transaction0.addToBackStack(null);
+                }
                 transaction0.commit();
                 break;
             case 1:
@@ -109,8 +116,15 @@ public class ChallengeActivity extends AppCompatActivity implements CategoryList
 
                 //Fragment transaction to show list with challenges
                 FragmentTransaction transaction1 = fragmentManager.beginTransaction();
-                transaction1.replace(R.id.fragment_container, restaurantListFragment, "challengeListFragment");
-                transaction1.addToBackStack(null);
+                if (large)
+                {
+                    Log.e("ACTIVITY", "ACTING LIKE A TABLET");
+                    transaction1.replace(R.id.challengeListFrame, restaurantListFragment, "challengeListFragment");
+                } else {
+                    Log.e("ACTIVITY", "ACTING LIKE A PHONE");
+                    transaction1.replace(R.id.fragment_container, restaurantListFragment, "challengeListFragment");
+                    transaction1.addToBackStack(null);
+                }
                 transaction1.commit();
                 break;
             default:
@@ -152,8 +166,13 @@ public class ChallengeActivity extends AppCompatActivity implements CategoryList
 
         //Fragment transaction to show list with challenges
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.fragment_container, challengeFragment, "challengeFragment");
-        transaction.addToBackStack(null);
+        if (large)
+        {
+            transaction.replace(R.id.challengeDetailFrame, challengeFragment, "challengeFragment");
+        } else {
+            transaction.replace(R.id.fragment_container, challengeFragment, "challengeFragment");
+            transaction.addToBackStack(null);
+        }
         transaction.commit();
     }
 
@@ -168,8 +187,13 @@ public class ChallengeActivity extends AppCompatActivity implements CategoryList
 
         //Fragment transaction to show list with challenges
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.fragment_container, challengeFragment, "challengeFragment");
-        transaction.addToBackStack(null);
+        if (large)
+        {
+            transaction.replace(R.id.challengeDetailFrame, challengeFragment, "challengeFragment");
+        } else {
+            transaction.replace(R.id.fragment_container, challengeFragment, "challengeFragment");
+            transaction.addToBackStack(null);
+        }
         transaction.commit();
     }
 

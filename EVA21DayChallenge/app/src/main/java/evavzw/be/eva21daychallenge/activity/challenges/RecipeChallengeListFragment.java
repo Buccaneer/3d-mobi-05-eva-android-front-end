@@ -1,6 +1,7 @@
 package evavzw.be.eva21daychallenge.activity.challenges;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.ListView;
 
 import java.util.List;
 
+import evavzw.be.eva21daychallenge.R;
 import evavzw.be.eva21daychallenge.activity.base.RESTfulFragment;
 import evavzw.be.eva21daychallenge.models.Recipe;
 import evavzw.be.eva21daychallenge.security.RecipeManager;
@@ -152,7 +154,7 @@ public class RecipeChallengeListFragment extends RESTfulFragment
             }
         };
         listView.setOnItemClickListener(mMessageClickedHandler);
-        listView.setBackgroundColor(Color.CYAN);
+        listView.setBackgroundColor(Color.WHITE);
     }
 
     private void fetchChallenges() {
@@ -189,7 +191,15 @@ public class RecipeChallengeListFragment extends RESTfulFragment
                 items = new String[list.size()];
                 for (int i = 0; i < list.size(); i++)
                     items[i] = list.get(i).getName();
-                adapter = new ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, items);
+                adapter = new ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, items) {
+                    @Override
+                    public View getView(int position, View convertView, ViewGroup parent) {
+                        Resources resources = getResources();
+                        View view = super.getView(position, convertView, parent);
+                        view.setBackgroundColor(position % 2 == 0 ? resources.getColor(R.color.eva_wit) : resources.getColor(R.color.eva_lichtgroen));
+                        return view;
+                    }
+                };
                 listView.setAdapter(adapter);
             }
         }

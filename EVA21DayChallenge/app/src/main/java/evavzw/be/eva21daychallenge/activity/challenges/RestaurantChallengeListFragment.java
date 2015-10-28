@@ -1,6 +1,7 @@
 package evavzw.be.eva21daychallenge.activity.challenges;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import evavzw.be.eva21daychallenge.R;
 import evavzw.be.eva21daychallenge.activity.base.RESTfulFragment;
 
 /**
@@ -104,7 +106,15 @@ public class RestaurantChallengeListFragment extends RESTfulFragment
         // TODO API
         //fetchChallenges();
         items = Mock.Restaurants;
-        adapter = new ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, items);
+        adapter = new ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, items) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                Resources resources = getResources();
+                View view = super.getView(position, convertView, parent);
+                view.setBackgroundColor(position % 2 == 0 ? resources.getColor(R.color.eva_wit) : resources.getColor(R.color.eva_lichtgroen));
+                return view;
+            }
+        };
         listView.setAdapter(adapter);
         currentCategory = position;
     }
@@ -133,7 +143,6 @@ public class RestaurantChallengeListFragment extends RESTfulFragment
     private void init()
     {
         activity = getActivity();
-        //restaurantManager = RestaurantManager.getInstance(activity.getApplicationContext());
         listView = new ListView(activity);
         listView.setId(View.generateViewId());
         ListView.OnItemClickListener mMessageClickedHandler = new ListView.OnItemClickListener()
@@ -146,7 +155,8 @@ public class RestaurantChallengeListFragment extends RESTfulFragment
             }
         };
         listView.setOnItemClickListener(mMessageClickedHandler);
-        listView.setBackgroundColor(Color.CYAN);
+        listView.setBackgroundColor(Color.WHITE);
+        //restaurantManager = RestaurantManager.getInstance(activity.getApplicationContext());
     }
 
     /*private void fetchChallenges() {

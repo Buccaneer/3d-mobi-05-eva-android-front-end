@@ -8,21 +8,42 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="15dp">
+        android:orientation="vertical">
+
+        <!--FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_pattern_chalkboard_green"/-->
 
         <TextView
             android:id="@+id/ingredientsTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/eva_oranje"
+            android:paddingBottom="20dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="20dp"
+            android:textColor="@color/eva_wit"
             android:textSize="@dimen/abc_text_size_medium_material"
-            android:textStyle="bold"
-            />
+            android:textStyle="bold"/>
+
+        <!--/FrameLayout-->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="10dp">
 
             <TextView
                 android:id="@+id/ingredientsLeft"
@@ -38,18 +59,40 @@
 
         </LinearLayout>
 
+        <!--FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_pattern_cloth_orange"/-->
+
         <TextView
             android:id="@+id/extraTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/eva_lichtgroen"
+            android:paddingBottom="20dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="20dp"
+            android:textColor="@color/eva_wit"
             android:textSize="@dimen/abc_text_size_medium_material"
-            android:textStyle="bold"
-            />
+            android:textStyle="bold"/>
+
+        <!--/FrameLayout-->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="10dp">
 
             <TextView
                 android:id="@+id/extraLeft"
@@ -69,15 +112,23 @@
             android:id="@+id/descriptionTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/eva_blauw"
+            android:paddingBottom="20dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="20dp"
+            android:textColor="@color/eva_wit"
             android:textSize="@dimen/abc_text_size_medium_material"
-            android:textStyle="bold"
-            />
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="10dp"/>
 
     </LinearLayout>
 </ScrollView>

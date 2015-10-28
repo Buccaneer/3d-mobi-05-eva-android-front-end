@@ -2,6 +2,7 @@ package evavzw.be.eva21daychallenge.activity.challenges;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import java.util.ResourceBundle;
+
+import evavzw.be.eva21daychallenge.R;
 
 /**
  * Created by Pieter-Jan on 24/10/2015.
@@ -97,12 +102,20 @@ public class CategoryListFragment extends Fragment
     {
         activity = getActivity();
         items = Mock.Categories;
-        adapter = new ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, items);
+        adapter = new ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, items) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                Resources resources = getResources();
+                View view = super.getView(position, convertView, parent);
+                view.setBackgroundColor(position % 2 == 0 ? resources.getColor(R.color.eva_wit) : resources.getColor(R.color.eva_lichtgroen));
+                return view;
+            }
+        };
         listView = new ListView(activity);
         listView.setId(View.generateViewId());
         //listView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         listView.setAdapter(adapter);
-        listView.setBackgroundColor(Color.BLUE);
+        listView.setBackgroundColor(Color.WHITE);
         // Create a message handling object as an anonymous class.
         ListView.OnItemClickListener mMessageClickedHandler = new ListView.OnItemClickListener()
         {

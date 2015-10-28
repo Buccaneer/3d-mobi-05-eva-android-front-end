@@ -116,9 +116,9 @@ public class RecipeChallengeFragment extends Fragment
         for (int i = 0; i < ingredients.length; i++)
         {
             if (i % 2 == 0)
-                ingredients1 += "• " + ingredients[i] + "\n";
+                ingredients1 += "• " + ingredients[i] + (i < ingredients.length - 2 ? "\n" : "");
             else
-                ingredients2 += "• " + ingredients[i] + "\n";
+                ingredients2 += "• " + ingredients[i] + (i < ingredients.length - 2 ? "\n" : "");
         }
         ingredientsTitle.setText("Ingredients");
         ingredientsLeft.setText(ingredients1);
@@ -144,9 +144,9 @@ public class RecipeChallengeFragment extends Fragment
         for (int i = 0; i < info.length; i++)
         {
             if (i % 2 == 0)
-                info1 += info[i] + "\n";
+                info1 += info[i] + (i < info.length - 2 ? "\n" : "");
             else
-                info2 += info[i] + "\n";
+                info2 += info[i] + (i < info.length - 2 ? "\n" : "");
         }
         extraTitle.setText("Extra information");
         extraLeft.setText(info1);

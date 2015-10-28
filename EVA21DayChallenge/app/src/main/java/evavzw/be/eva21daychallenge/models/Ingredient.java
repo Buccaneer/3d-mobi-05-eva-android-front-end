@@ -13,6 +13,14 @@ public class Ingredient {
     private String name, unit;
     private int ingredientId, quantity;
 
+    public Ingredient(int ingredientId, String name, String unit, int quantity)
+    {
+        this.ingredientId = ingredientId;
+        this.name = name;
+        this.unit = unit;
+        this.quantity = quantity;
+    }
+
     public Ingredient(JSONObject jsonObject) throws Exception{
         parseJson(jsonObject);
     }

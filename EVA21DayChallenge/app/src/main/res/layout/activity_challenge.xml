@@ -7,20 +7,4 @@
     android:gravity="top"
     android:orientation="vertical"
     tools:context=".MainActivity">
-
-    <!--fragment android:name="com.example.challengespreview.CategoryListFragment"
-              android:id="@+id/category_list_fragment"
-              android:layout_width="match_parent"
-              android:layout_height="0dp"/>
-
-    <fragment android:name="com.example.challengespreview.RecipeChallengeListFragment"
-              android:id="@+id/challenge_list_fragment"
-              android:layout_width="match_parent"
-              android:layout_height="0dp"/>
-
-    <fragment android:name="com.example.challengespreview.RecipeChallengeFragment"
-              android:id="@+id/challenge_fragment"
-              android:layout_width="match_parent"
-              android:layout_height="0dp"/-->
-
 </FrameLayout>
