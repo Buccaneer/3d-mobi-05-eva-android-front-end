@@ -1,39 +1,25 @@
 package evavzw.be.eva21daychallenge.activity;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.content.Intent;
-import android.content.res.Configuration;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.design.widget.NavigationView;
-import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
-import android.util.Log;
+import android.os.Handler;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import evavzw.be.eva21daychallenge.R;
 import evavzw.be.eva21daychallenge.activity.base.RESTfulActivity;
-import evavzw.be.eva21daychallenge.security.UserManager;
 
 public class MainMenu extends RESTfulActivity {
 
-
+    private int mProgressStatus = 0;
+    private final double CUTOFF = 100.0/21.0;
+    private Handler mHandler = new Handler();
+    @Bind(R.id.progressBar)
+    ProgressBar progressBar;
+    @Bind(R.id.textViewProgress)
+    TextView textViewProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,10 +45,34 @@ public class MainMenu extends RESTfulActivity {
 
         //NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         //navigationView.setNavigationItemSelectedListener(this);
-        toggleProgressBar(true);
+
+        progressBar.setProgress(100);
+        setProgress();
     }
 
+    public void setProgress() {
 
+        new Thread(new Runnable() {
+            public void run() {
+                while (mProgressStatus <= 60) {
+                    mProgressStatus += 1;
+                    // Update the progress bar
+                    mHandler.post(new Runnable() {
+                        public void run() {
+                            progressBar.setProgress(mProgressStatus);
+                            int progress = (int) (mProgressStatus/CUTOFF);
+                            textViewProgress.setText(String.valueOf(21 - progress));
+                        }
+                    });
+                    try {
+                        Thread.sleep(50);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

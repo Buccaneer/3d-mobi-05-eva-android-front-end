@@ -23,15 +23,18 @@
     <string name="gotoEva">EVA site</string>
     <string name="faq">FAQ</string>
     <string name="ideas"><![CDATA[Tips & Tricks]]></string>
-    <string name="gotoAchievements">Beloningen</string>
-    <string name="drawer_open">Openen</string>
-    <string name="drawer_close">Sluiten</string>
-    <string name="navigation_drawer_open">Open navigatie</string>
-    <string name="navigation_drawer_close">Sluit navigatie</string>
+    <string name="gotoAchievements">Achievements</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+    <string name="navigation_drawer_open">Open navigation</string>
+    <string name="navigation_drawer_close">Close navigation</string>
     <string name="restaurants">Restaurants</string>
     <string name="FAQ">FAQ</string>
-    <string name="informatie">Informatie</string>
-    <string name="over">Over</string>
-    <string name="instellingen">Instellingen</string>
+    <string name="info">Information</string>
+    <string name="about">About</string>
+    <string name="settings">Settings</string>
+    <string name="evasite">www.evavzw.be</string>
+    <string name="days">days</string>
+    <string name="welcome">Welcome to the EVA 21 Day Challenge!</string>
 
 </resources>
