@@ -7,6 +7,36 @@
     android:fitsSystemWindows="true"
     tools:context=".MainMenu"
     tools:openDrawer="start">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#032d18"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:singleLine="false"
+            android:text="@string/gotoChallenges"
+
+            android:textColor="@color/tw__solid_white"
+            android:textSize="18sp"
+            android:layout_marginTop="100dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:padding="5dp"
+            />
+    </LinearLayout>
+
+
     <!-- The navigation drawer -->
 
 
