@@ -1,53 +1,116 @@
 package evavzw.be.eva21daychallenge.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import evavzw.be.eva21daychallenge.R;
 import evavzw.be.eva21daychallenge.activity.base.RESTfulActivity;
-import evavzw.be.eva21daychallenge.security.UserManager;
 
 public class MainMenu extends RESTfulActivity {
-    private UserManager userManager;
+
+    private int mProgressStatus = 0;
+    private final double CUTOFF = 100.0/21.0;
+    private Handler mHandler = new Handler();
+    @Bind(R.id.progressDaysRemaining)
+    ProgressBar progressBar;
+    @Bind(R.id.textViewProgress)
+    TextView textViewProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.setContentResId(R.layout.activity_main_menu);
         super.onCreate(savedInstanceState);
 
-        userManager = UserManager.getInstance(getApplicationContext());
-        ButterKnife.bind(this);
 
+        ButterKnife.bind(this);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+  //      Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+
+       /* FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });*/
+
+
+        //NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        //navigationView.setNavigationItemSelectedListener(this);
+
+        progressBar.setProgress(100);
+        setProgress();
+    }
+
+    public void setProgress() {
+
+        if(progressBar != null){
+            new Thread(new Runnable() {
+                public void run() {
+                    while (mProgressStatus <= 60) {
+                        mProgressStatus += 1;
+                        // Update the progress bar
+                        mHandler.post(new Runnable() {
+                            public void run() {
+                                progressBar.setProgress(mProgressStatus);
+                                int progress = (int) (mProgressStatus/CUTOFF);
+                                textViewProgress.setText(String.valueOf(21 - progress));
+                            }
+                        });
+                        try {
+                            Thread.sleep(50);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }).start();
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_with_actions, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        //txvChallengeCountdown.setTypeface(Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/ArtistampMedium.ttf"));
+/*
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int height = metrics.heightPixels;
+        int width = metrics.widthPixels;
+  */
 
-        if(id == R.id.logOut){
-            userManager.invalidateToken();
-            Intent intent = new Intent(getApplicationContext(), Login.class);
-            finish();
-            startActivity(intent);
-        }
 
-        return super.onOptionsItemSelected(item);
+
+/*    @OnClick(R.id.tileFAQ)
+    public void tileFAQClicked(){
+        //Intent intent = new Intent(this, FrequentlyAskedQuestions.class);
+        //startActivity(intent);
     }
+
+    @OnClick(R.id.tileTipsTricks)
+    public void tileTipsTricksClicked(){
+        //Intent intent = new Intent(this, TipsTricks.class);
+        //startActivity(intent);
+    }
+
+    @OnClick(R.id.tileRecipes)
+    public void tileRecipesclicked(){
+        //Intent intent = new Intent(this, Recipes.class);
+        //startActivity(intent);
+    }*/
+
+
 }
