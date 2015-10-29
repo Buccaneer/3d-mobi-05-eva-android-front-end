@@ -47,7 +47,7 @@ public class Request {
 	public void addHeader(String key, List<String> value) {
 		
 		if (headers == null) {
-			headers = new HashMap<String, List<String>>();
+			headers = new HashMap<>();
 		}
 		headers.put(key, value);
 	}

@@ -1,6 +1,7 @@
 package evavzw.be.eva21daychallenge.rest.framework;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import android.content.Context;
@@ -12,18 +13,32 @@ import evavzw.be.eva21daychallenge.security.RequestSigner;
 public abstract class AbstractRestMethod<T> implements RestMethod<T> {
 
 	private static final String DEFAULT_ENCODING = "UTF-8";
+	protected static String locale;
 
 	public RestMethodResult<T> execute() {
+		setLocale();
 
 		Request request = buildRequest();
 		if (requiresAuthorization()) {
 			RequestSigner signer = UserManager.getInstance(getContext());
 			signer.authorize(request);
 		}
+
 		Response response = doRequest(request);
 		return buildResult(response);
 	}
-	
+
+	private void setLocale(){
+		Locale locale = getContext().getResources().getConfiguration().locale;
+		String lang = locale.getLanguage();
+		switch(lang){
+			case "nl": this.locale = "nl-BE"; return;
+			case "en": this.locale = "en-GB"; return;
+			case "fr": this.locale = "fr-FR"; return;
+			default: this.locale = "nl-BE"; return;
+		}
+	}
+
 	protected abstract Context getContext();
 
 	/**

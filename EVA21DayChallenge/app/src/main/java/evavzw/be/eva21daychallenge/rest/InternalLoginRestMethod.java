@@ -56,6 +56,7 @@ public class InternalLoginRestMethod extends AbstractRestMethod<Token> {
 
             Request r = new Request(RestMethodFactory.Method.POST, TOKENURI, null, ("grant_type=password&Username=" +URLEncoder.encode(email, "UTF-8") + "&Password=" + URLEncoder.encode(password, "UTF-8")).getBytes());
             r.addHeader("Content-Type", new ArrayList<>(Arrays.asList("application/x-www-form-urlencoded")));
+            r.addHeader("Accept-Language", Arrays.asList(locale));
             return r;
         } catch (Exception ex) {
             throw new IllegalArgumentException("Cannot build request see nested exception.", ex);

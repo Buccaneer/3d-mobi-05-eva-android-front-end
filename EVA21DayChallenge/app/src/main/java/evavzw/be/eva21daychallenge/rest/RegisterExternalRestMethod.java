@@ -50,6 +50,7 @@ public class RegisterExternalRestMethod extends AbstractRestMethod<Void> {
             Request r= new Request(RestMethodFactory.Method.POST,REQURI, json.toString().getBytes());
             r.addHeader("Content-Type", Arrays.asList("application/json"));
             r.addHeader("Cookie",Arrays.asList(cookie));
+            r.addHeader("Accept-Language", Arrays.asList(locale));
             return r;
         } catch (Exception ex) {
             throw new IllegalArgumentException("Could not make Request.");

@@ -39,6 +39,7 @@ public class GetAllRecipesRestMethod extends AbstractRestMethod<List<Recipe>> {
     protected Request buildRequest() {
         try {
             Request r = new Request(RestMethodFactory.Method.GET, RECIPEURI, null, null);
+            r.addHeader("Accept-Language", Arrays.asList(locale));
             return r;
         } catch (Exception ex) {
             throw new IllegalArgumentException("Cannot build request see nested exception.", ex);
