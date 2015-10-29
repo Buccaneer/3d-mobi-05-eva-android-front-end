@@ -102,7 +102,7 @@ public class CategoryListFragment extends Fragment
     {
         super.onSaveInstanceState(outState);
         //Save the fragment's state here
-        outState.putStringArray("items", items);
+        //outState.putStringArray("items", items);
     }
 
     private void init()
