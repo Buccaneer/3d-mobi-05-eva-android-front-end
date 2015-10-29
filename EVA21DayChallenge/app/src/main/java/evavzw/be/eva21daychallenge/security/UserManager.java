@@ -2,6 +2,7 @@ package evavzw.be.eva21daychallenge.security;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Map;
 
 import evavzw.be.eva21daychallenge.rest.ExternalLoginsRestMethod;
@@ -18,6 +19,7 @@ import org.scribe.model.Token;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 
 /**

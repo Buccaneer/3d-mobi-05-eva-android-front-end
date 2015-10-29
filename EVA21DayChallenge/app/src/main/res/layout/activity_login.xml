@@ -62,5 +62,4 @@
         android:layout_width="184dp"
         android:layout_height="37dp"
         style="@style/socialButton"/>
-
 </LinearLayout>

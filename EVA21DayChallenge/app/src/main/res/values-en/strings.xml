@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EVA 21 Day Challenge</string>
+    <string name="title_activity_login">EVA 21 Day Challenge</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="signIn">Sign in</string>
+    <string name="createAccount">Create account</string>
+    <string name="title_activity_register">register</string>
+    <string name="title_activity_sign_in">SignIn</string>
+    <string name="email">Email address</string>
+    <string name="password">Password</string>
+    <string name="confirmPassword">Confirm password</string>
+    <string name="register">Register</string>
+    <string name="title_activity_main_menu">MainMenu</string>
+    <string name="socialMediaLogin">Or log in with social media</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="loginFacebook">Login with Facebook</string>
+    <string name="title_activity_webview_login">WebviewLogin</string>
+    <string name="logOut">Log out</string>
+    <string name="loginGoogle">Login with Google</string>
+    <string name="com_facebook_loginview_log_in_button_long">Log in with Facebook</string>
+    <string name="com_facebook_loginview_log_in_button">Log in</string>
+    <string name="mannelijkGeslacht">Male</string>
+    <string name="mannelijkgeslacht">Male</string>
+    <string name="vrouwelijkgeslacht">Woman</string>
+    <string name="FAQ">FAQ</string>
+    <string name="about">About</string>
+    <string name="days">days</string>
+    <string name="drawer_close">Close</string>
+    <string name="drawer_open">Open</string>
+    <string name="evasite">www.evavzw.be</string>
+    <string name="faq">FAQ</string>
+    <string name="gotoAchievements">Achievements</string>
+    <string name="gotoChallenges">Go to challenges</string>
+    <string name="gotoEva">EVA site</string>
+    <string name="ideas"><![CDATA[Tips & Tricks]]></string>
+    <string name="info">Information</string>
+    <string name="navigation_drawer_open">Open navigation</string>
+    <string name="navigation_drawer_close">Close navigation</string>
+    <string name="progress">Loading...</string>
+    <string name="recipes">Recipes</string>
+    <string name="restaurants">Restaurants</string>
+    <string name="settings">Settings</string>
+    <string name="welcome">Welcome to the EVA 21 Day Challenge!</string>
+
+</resources>
