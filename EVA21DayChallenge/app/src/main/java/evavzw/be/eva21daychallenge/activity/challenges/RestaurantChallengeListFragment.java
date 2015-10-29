@@ -144,8 +144,8 @@ public class RestaurantChallengeListFragment extends RESTfulFragment
     {
         super.onSaveInstanceState(outState);
         //Save the fragment's state here
-        outState.putStringArray("items", items);
-        outState.putInt("category", currentCategory);
+        //outState.putStringArray("items", items);
+        //outState.putInt("category", currentCategory);
     }
 
     private void init()
