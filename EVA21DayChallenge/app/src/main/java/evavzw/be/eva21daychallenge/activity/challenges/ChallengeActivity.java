@@ -11,7 +11,7 @@ import evavzw.be.eva21daychallenge.R;
 import evavzw.be.eva21daychallenge.models.Recipe;
 
 
-public class ChallengeActivity extends AppCompatActivity implements CategoryListFragment.OnCategorySelectedListener, RecipeChallengeListFragment.OnRecipeSelectedListener, RestaurantChallengeListFragment.OnRestaurantSelectedListener
+public class ChallengeActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener, CategoryListFragment.OnCategorySelectedListener, RecipeChallengeListFragment.OnRecipeSelectedListener, RestaurantChallengeListFragment.OnRestaurantSelectedListener
 {
     FragmentManager fragmentManager;
 
@@ -22,14 +22,14 @@ public class ChallengeActivity extends AppCompatActivity implements CategoryList
     {
         super.onCreate(savedInstanceState);
         fragmentManager = getFragmentManager();
-        //fragmentManager.addOnBackStackChangedListener(this);
-
-        setContentView(R.layout.activity_challenge);
-        large = findViewById(R.id.challengeListFrame) != null;
+        fragmentManager.addOnBackStackChangedListener(this);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null)
             actionBar.setDisplayHomeAsUpEnabled(true);
+
+        setContentView(R.layout.activity_challenge);
+        large = findViewById(R.id.challengeListFrame) != null;
 
         /*if (findViewById(R.id.fragment_container) != null)
         {
@@ -200,8 +200,12 @@ public class ChallengeActivity extends AppCompatActivity implements CategoryList
     @Override
     public boolean onSupportNavigateUp()
     {
-        //This method is called when the up button is pressed. Just the pop back stack.
-        fragmentManager.popBackStack();
+        if (fragmentManager.getBackStackEntryCount() > 0)
+        {
+            fragmentManager.popBackStack();
+        } else {
+            finish();
+        }
         return true;
     }
 
@@ -225,4 +229,17 @@ public class ChallengeActivity extends AppCompatActivity implements CategoryList
             fragmentManager.putFragment(outState, "challengeFragment", challengeFragment);*/
     }
 
+    @Override
+    public void onBackStackChanged()
+    {
+        /*ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            if (fragmentManager.getBackStackEntryCount() > 0)
+            {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+            } else {
+                actionBar.setDisplayHomeAsUpEnabled(false);
+            }
+        }*/
+    }
 }

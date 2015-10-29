@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +26,7 @@ public class RestaurantChallengeListFragment extends RESTfulFragment
     final static String ARG_RESTAURANT = "restaurant";
     int currentCategory = -1;
 
-    Activity activity;
+    AppCompatActivity activity;
     ArrayAdapter<String> adapter;
     ListView listView;
     String[] items;
@@ -91,6 +92,13 @@ public class RestaurantChallengeListFragment extends RESTfulFragment
     }
 
     @Override
+    public void onResume()
+    {
+        super.onResume();
+        activity.getSupportActionBar().setTitle(R.string.title_restaurantList);
+    }
+
+    @Override
     public void onPause ()
     {
         super.onPause();
@@ -142,7 +150,7 @@ public class RestaurantChallengeListFragment extends RESTfulFragment
 
     private void init()
     {
-        activity = getActivity();
+        activity = (AppCompatActivity) getActivity();
         listView = new ListView(activity);
         listView.setId(View.generateViewId());
         ListView.OnItemClickListener mMessageClickedHandler = new ListView.OnItemClickListener()

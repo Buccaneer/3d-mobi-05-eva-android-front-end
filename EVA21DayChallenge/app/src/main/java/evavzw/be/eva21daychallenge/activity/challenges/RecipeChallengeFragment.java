@@ -3,6 +3,7 @@ package evavzw.be.eva21daychallenge.activity.challenges;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,7 @@ public class RecipeChallengeFragment extends Fragment
 {
     final static String ARG_RECIPE = "recipe";
 
-    Activity activity;
+    AppCompatActivity activity;
 
     @Bind(R.id.ingredientsTitle)
     TextView ingredientsTitle;
@@ -80,6 +81,14 @@ public class RecipeChallengeFragment extends Fragment
             //updateChallenge(currentCategory, currentChallenge);
             // TODO
         }*/
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        Bundle args = getArguments();
+        activity.getSupportActionBar().setTitle(((Recipe) args.getSerializable(ARG_RECIPE)).getName());
     }
 
     @Override
@@ -196,7 +205,7 @@ public class RecipeChallengeFragment extends Fragment
 
     private void init()
     {
-        activity = getActivity();
+        activity = (AppCompatActivity) getActivity();
     }
 
     class Vergelijker implements Comparator<String>

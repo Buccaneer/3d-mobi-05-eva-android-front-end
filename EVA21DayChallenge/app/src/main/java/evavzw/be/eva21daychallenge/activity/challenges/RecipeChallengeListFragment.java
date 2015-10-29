@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +31,7 @@ public class RecipeChallengeListFragment extends RESTfulFragment
     final static String ARG_CATEGORY = "category";
     int currentCategory = -1;
 
-    Activity activity;
+    AppCompatActivity activity;
     ArrayAdapter<String> adapter;
     ListView listView;
     String[] items;
@@ -97,6 +98,13 @@ public class RecipeChallengeListFragment extends RESTfulFragment
     }
 
     @Override
+    public void onResume()
+    {
+        super.onResume();
+        activity.getSupportActionBar().setTitle(R.string.title_recipeList);
+    }
+
+    @Override
     public void onPause ()
     {
         super.onPause();
@@ -140,7 +148,7 @@ public class RecipeChallengeListFragment extends RESTfulFragment
 
     private void init()
     {
-        activity = getActivity();
+        activity = (AppCompatActivity) getActivity();
         recipeManager = RecipeManager.getInstance(activity.getApplicationContext());
         listView = new ListView(activity);
         listView.setId(View.generateViewId());

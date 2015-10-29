@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +23,7 @@ import evavzw.be.eva21daychallenge.R;
  */
 public class CategoryListFragment extends Fragment
 {
-    Activity activity;
+    AppCompatActivity activity;
     ArrayAdapter<String> adapter;
     ListView listView;
     String[] items;
@@ -60,6 +61,12 @@ public class CategoryListFragment extends Fragment
         init();
     }
 
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        activity.getSupportActionBar().setTitle(R.string.title_categoryList);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -100,7 +107,7 @@ public class CategoryListFragment extends Fragment
 
     private void init()
     {
-        activity = getActivity();
+        activity = (AppCompatActivity) getActivity();
         items = Mock.Categories;
         adapter = new ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, items) {
             @Override

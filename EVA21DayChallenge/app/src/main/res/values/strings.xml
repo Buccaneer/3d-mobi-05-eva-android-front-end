@@ -28,4 +28,7 @@
 
     <string name="action_challenge">Challenge</string>
     <string name="title_activity_challenge">Challenge</string>
+    <string name="title_categoryList">Pick a category</string>
+    <string name="title_recipeList">Pick a recipe</string>
+    <string name="title_restaurantList">Pick a restaurant</string>
 </resources>

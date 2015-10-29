@@ -2,6 +2,7 @@ package evavzw.be.eva21daychallenge.activity.challenges;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import evavzw.be.eva21daychallenge.R;
 public class RestaurantChallengeFragment extends Fragment
 {
     final static String ARG_RESTAURANT = "restaurant";
+
+    AppCompatActivity activity;
 
     @Bind(R.id.restaurantTitle)
     TextView restaurantTitle;
@@ -59,6 +62,13 @@ public class RestaurantChallengeFragment extends Fragment
     }
 
     @Override
+    public void onResume()
+    {
+        super.onResume();
+        activity.getSupportActionBar().setTitle("Qorn'r");
+    }
+
+    @Override
     public void onPause ()
     {
         super.onPause();
@@ -95,7 +105,7 @@ public class RestaurantChallengeFragment extends Fragment
 
     private void init()
     {
-
+        activity = (AppCompatActivity) getActivity();
     }
 
 }
