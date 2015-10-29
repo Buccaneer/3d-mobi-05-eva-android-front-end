@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.net.URI;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,7 +34,9 @@ public class ExternalLoginsRestMethod extends AbstractRestMethod<Map<String,Stri
 
     @Override
     protected Request buildRequest() {
-        return new Request(RestMethodFactory.Method.GET, REQURI, new byte[] {});
+        Request r = new Request(RestMethodFactory.Method.GET, REQURI, new byte[] {});
+        r.addHeader("Accept-Language", Arrays.asList(locale));
+        return r;
     }
 
     @Override

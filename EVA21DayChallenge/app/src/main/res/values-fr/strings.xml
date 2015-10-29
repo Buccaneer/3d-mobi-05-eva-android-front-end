@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EVA 21 Day Challenge</string>
+    <string name="title_activity_login">EVA 21 Day Challenge</string>
+
+    <string name="action_settings">Paramètres</string>
+    <string name="signIn">Connexion</string>
+    <string name="createAccount">Inscription</string>
+    <string name="title_activity_register">Inscription</string>
+    <string name="title_activity_sign_in">Connexion</string>
+    <string name="email">Adresse e-mail</string>
+    <string name="password">Mot de passe</string>
+    <string name="confirmPassword">Confirme le mot de passe</string>
+    <string name="register">Inscription</string>
+    <string name="title_activity_main_menu">MainMenuFR</string>
+    <string name="socialMediaLogin">Connexion avec les médias sociaux</string>
+    <string name="title_activity_main">MainActivityFR</string>
+
+    <string name="loginFacebook">Connexion Facebook</string>
+    <string name="title_activity_webview_login">WebviewLogin</string>
+    <string name="logOut">Déconnecter</string>
+    <string name="loginGoogle">Connexion Google</string>
+    <string name="com_facebook_loginview_log_in_button_long">Connexion Facebook</string>
+    <string name="com_facebook_loginview_log_in_button">Connexion</string>
+    <string name="mannelijkgeslacht">Homme</string>
+    <string name="vrouwelijkgeslacht">Femme</string>
+    <string name="FAQ">FAQ</string>
+    <string name="about">À propos</string>
+    <string name="days">jours</string>
+    <string name="drawer_close">Ferme</string>
+    <string name="drawer_open">Ouvre</string>
+    <string name="evasite">www.evavzw.be</string>
+    <string name="faq">FAQ</string>
+    <string name="gotoAchievements">Accomplissements</string>
+    <string name="gotoChallenges">Go to challenges</string>
+    <string name="gotoEva">EVA site</string>
+    <string name="ideas"><![CDATA[Tips & Tricks]]></string>
+    <string name="info">Information</string>
+    <string name="mannelijkGeslacht">Homme</string>
+    <string name="navigation_drawer_open">Ouvrir navigation</string>
+    <string name="navigation_drawer_close">Fermer navigation</string>
+    <string name="progress">Chargement...</string>
+    <string name="recipes">Recipes</string>
+    <string name="restaurants">Restaurants</string>
+    <string name="settings">Settings</string>
+    <string name="welcome">Bienvenue au EVA 21 Day Challenge!</string>
+    <string name="title_activity_challenge">Challenge</string>
+    <string name="title_restaurantList">Choisis un restaurant</string>
+    <string name="title_recipeList">Choisis une recette</string>
+    <string name="title_categoryList">Choisis une catégorie</string>
+    <string name="descriptionTitle">Préparation</string>
+    <string name="extraTitle">Informations supplémentaires</string>
+    <string name="ingredientsTitle">Ingrédients</string>
+
+</resources>

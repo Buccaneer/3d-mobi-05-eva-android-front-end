@@ -36,6 +36,7 @@ public class RegisterRestMethod extends AbstractRestMethod<Void> {
 
             Request r = new Request(RestMethodFactory.Method.POST,REQURL,json.toString().getBytes());
             r.addHeader("Content-Type", Arrays.asList("application/json"));
+            r.addHeader("Accept-Language", Arrays.asList(locale));
             return r;
 
         } catch (Exception ex) {

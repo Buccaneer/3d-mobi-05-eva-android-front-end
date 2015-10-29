@@ -5,6 +5,7 @@ import android.content.Context;
 import org.json.JSONObject;
 
 import java.net.URI;
+import java.util.Arrays;
 
 import evavzw.be.eva21daychallenge.rest.framework.AbstractRestMethod;
 import evavzw.be.eva21daychallenge.rest.framework.Request;
@@ -29,7 +30,9 @@ public class UserInfoRestMethod extends AbstractRestMethod<User> {
 
     @Override
     protected Request buildRequest() {
-        return new Request(RestMethodFactory.Method.GET, REQURI, new byte[] {});
+        Request r = new Request(RestMethodFactory.Method.GET, REQURI, new byte[] {});
+        r.addHeader("Accept-Language", Arrays.asList(locale));
+        return r;
     }
 
     @Override

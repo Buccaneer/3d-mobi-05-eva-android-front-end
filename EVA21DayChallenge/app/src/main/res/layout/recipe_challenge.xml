@@ -23,6 +23,7 @@
 
         <TextView
             android:id="@+id/ingredientsTitle"
+            android:text="@string/ingredientsTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/eva_oranje"
@@ -72,6 +73,7 @@
 
         <TextView
             android:id="@+id/extraTitle"
+            android:text="@string/extraTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/eva_lichtgroen"
@@ -110,6 +112,7 @@
 
         <TextView
             android:id="@+id/descriptionTitle"
+            android:text="@string/descriptionTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/eva_blauw"

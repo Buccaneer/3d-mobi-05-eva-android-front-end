@@ -162,7 +162,7 @@ public class RecipeChallengeListFragment extends RESTfulFragment
             }
         };
         listView.setOnItemClickListener(mMessageClickedHandler);
-        listView.setBackgroundColor(Color.WHITE);
+        listView.setBackgroundColor(getResources().getColor(R.color.eva_lichtgrijs));
     }
 
     private void fetchChallenges() {
@@ -192,7 +192,7 @@ public class RecipeChallengeListFragment extends RESTfulFragment
 
         @Override
         protected void onPostExecute(Boolean succeed) {
-            setRefresh(false);
+            //setRefresh(false);
             if(succeed){
                 recipes = new Recipe[list.size()];
                 recipes = list.toArray(recipes);
@@ -204,7 +204,7 @@ public class RecipeChallengeListFragment extends RESTfulFragment
                     public View getView(int position, View convertView, ViewGroup parent) {
                         Resources resources = getResources();
                         View view = super.getView(position, convertView, parent);
-                        view.setBackgroundColor(position % 2 == 0 ? resources.getColor(R.color.eva_wit) : resources.getColor(R.color.eva_lichtgroen));
+                        view.setBackgroundColor(position % 2 == 0 ? resources.getColor(R.color.eva_lichtgrijs) : resources.getColor(R.color.eva_lichtgroen));
                         return view;
                     }
                 };
@@ -213,7 +213,7 @@ public class RecipeChallengeListFragment extends RESTfulFragment
         }
     }
 
-    private void setRefresh(final boolean toggle){
+    /*private void setRefresh(final boolean toggle){
         activity.runOnUiThread(new Runnable()
         {
             @Override
@@ -222,6 +222,6 @@ public class RecipeChallengeListFragment extends RESTfulFragment
                 toggleProgressBar(toggle);
             }
         });
-    }
+    }*/
 
 }

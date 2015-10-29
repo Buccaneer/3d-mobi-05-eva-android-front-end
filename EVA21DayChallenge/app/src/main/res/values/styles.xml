@@ -4,6 +4,13 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
     </style>
 
+    <style name="AppTheme.NoActionbar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
     <style name="com_facebook_button" parent="@android:style/Widget.Button">
         <item name="android:background">@drawable/facebookbutton</item>
         <item name="android:drawablePadding">6dp</item>
@@ -34,7 +41,7 @@
     <color name="com_facebook_button_background_color_pressed">#2f477a</color>
     <color name="com_facebook_blue">#3B5998</color>
 
-    <style name="ProgressBar">
+   <!--<style name="ProgressBar">
         <item name="android:indeterminateOnly">true</item>
         <item name="android:indeterminateDrawable">@drawable/progress</item>
         <item name="android:indeterminateBehavior">repeat</item>
@@ -43,5 +50,5 @@
         <item name="android:maxWidth">32dip</item>
         <item name="android:minHeight">32dip</item>
         <item name="android:maxHeight">32dip</item>
-    </style>
+    </style>-->
 </resources>

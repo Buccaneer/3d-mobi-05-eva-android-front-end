@@ -15,7 +15,7 @@ import evavzw.be.eva21daychallenge.R;
 public abstract class RESTfulFragment extends Fragment
 {
 
-    //private int mContentResId;
+    /*//private int mContentResId;
     private MenuItem menuItem;
 
     @Override
@@ -36,5 +36,5 @@ public abstract class RESTfulFragment extends Fragment
 
     public void toggleProgressBar(boolean toggle){
         //menuItem.setVisible(toggle);
-    }
+    }*/
 }

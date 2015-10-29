@@ -114,7 +114,7 @@ public class CategoryListFragment extends Fragment
             public View getView(int position, View convertView, ViewGroup parent) {
                 Resources resources = getResources();
                 View view = super.getView(position, convertView, parent);
-                view.setBackgroundColor(position % 2 == 0 ? resources.getColor(R.color.eva_wit) : resources.getColor(R.color.eva_lichtgroen));
+                view.setBackgroundColor(position % 2 == 0 ? resources.getColor(R.color.eva_lichtgrijs) : resources.getColor(R.color.eva_lichtgroen));
                 return view;
             }
         };
@@ -122,7 +122,7 @@ public class CategoryListFragment extends Fragment
         listView.setId(View.generateViewId());
         //listView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         listView.setAdapter(adapter);
-        listView.setBackgroundColor(Color.WHITE);
+        listView.setBackgroundColor(getResources().getColor(R.color.eva_lichtgrijs));
         // Create a message handling object as an anonymous class.
         ListView.OnItemClickListener mMessageClickedHandler = new ListView.OnItemClickListener()
         {

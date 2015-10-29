@@ -6,6 +6,7 @@
     <color name="selected">#FF2A7997</color>
     <color name="android_default_text_gray">#6d6d6d</color>
     <color name="eva_wit">#ffffff</color>
+    <color name="eva_lichtgrijs">#eeeeee</color>
     <color name="eva_lichtgroen">#afbd1f</color>
     <color name="eva_grijs">#b3a59f</color>
     <color name="eva_donkergroen">#032d18</color>

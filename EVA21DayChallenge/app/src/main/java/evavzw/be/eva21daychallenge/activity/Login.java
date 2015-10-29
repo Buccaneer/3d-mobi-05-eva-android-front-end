@@ -1,5 +1,6 @@
 package evavzw.be.eva21daychallenge.activity;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,12 +13,17 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.webkit.CookieManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+
 import java.util.Map;
 
 import butterknife.Bind;
@@ -66,13 +72,6 @@ public class Login extends RESTfulActivity {
         evaLogo.setScaleType(ImageView.ScaleType.CENTER_CROP);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_no_actions, menu);
-        return true;
-    }
-
     @OnClick(R.id.createAccount)
     public void createAccountOnClick(View v){
         Intent intent = new Intent(v.getContext(), Register.class);
@@ -101,7 +100,7 @@ public class Login extends RESTfulActivity {
     }
 
     private void handleExternalLogin(String service) {
-        AlertDialog.Builder alert = new AlertDialog.Builder(this, R.style.Base_Theme_AppCompat_Light_Dialog_Alert);
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this, R.style.Base_Theme_AppCompat_Light_Dialog_Alert);
         webView = new WebView(this);
         alert.setView(webView);
         alert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
@@ -130,6 +129,7 @@ public class Login extends RESTfulActivity {
                         String cookies = CookieManager.getInstance().getCookie(url);
                         String token = getToken(url);
                         if (token != null) {
+                            alertDialog.dismiss();
                             RegisterExternalLoginTask rel = new RegisterExternalLoginTask();
                             rel.execute(token, cookies);
                         }
