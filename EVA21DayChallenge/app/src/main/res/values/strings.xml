@@ -42,5 +42,6 @@
     <string name="mannelijkgeslacht">Man</string>
     <string name="vrouwelijkgeslacht">Woman</string>
     <string name="mannelijkGeslacht">Man</string>
+    <string name="UNamePwdIncorrect">Het e-mail of wachtwoord is verkeerd</string>
 
 </resources>

@@ -44,5 +44,9 @@
     <string name="restaurants">Restaurants</string>
     <string name="settings">Settings</string>
     <string name="welcome">Welcome to the EVA 21 Day Challenge!</string>
+    <string name="UNamePwdIncorrect">The email or password is incorrect</string>
+    <string name="passwordsNotEqual">Passwords are not equal</string>
+    <string name="couldntRetrieveErrors">Requst to server failed, failed to load error</string>
+    <string name="emailTaken">Email is already taken</string>
 
 </resources>
