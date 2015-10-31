@@ -21,7 +21,7 @@ import evavzw.be.eva21daychallenge.R;
  */
 public class InternalLoginRestMethod extends AbstractRestMethod<Token> {
     private static final URI TOKENURI = URI.create("http://evavzwrest.azurewebsites.net/Token");
-    private Context applicatonContext;
+    private Context context;
     private String email;
     private String password;
 
@@ -31,8 +31,8 @@ public class InternalLoginRestMethod extends AbstractRestMethod<Token> {
         return false;
     }
 
-    public InternalLoginRestMethod(Context applicatonContext) {
-        this.applicatonContext = applicatonContext.getApplicationContext();
+    public InternalLoginRestMethod(Context context) {
+        this.context = context.getApplicationContext();
     }
 
     public InternalLoginRestMethod(String email, String password) {
@@ -42,7 +42,7 @@ public class InternalLoginRestMethod extends AbstractRestMethod<Token> {
 
     @Override
     protected Context getContext() {
-        return applicatonContext;
+        return context;
     }
 
     public void setCredentails(String email, String password) {
@@ -83,7 +83,7 @@ public class InternalLoginRestMethod extends AbstractRestMethod<Token> {
             try {
                 JSONObject jsonObject = new JSONObject(responseBody);
                 if(jsonObject.getString("error").equals("invalid_grant")){
-                    String message = applicatonContext.getResources().getString(R.string.UNamePwdIncorrect);
+                    String message = context.getResources().getString(R.string.UNamePwdIncorrect);
                     throw new IllegalArgumentException(message);
                 }else if(jsonObject.get("error").equals("unsupported_grant_type")){
                     throw new Exception("Unsupported grant type, this shouldn't happen");
@@ -93,7 +93,8 @@ public class InternalLoginRestMethod extends AbstractRestMethod<Token> {
             }
         }
         if(status == 500){
-            throw new Exception("Internal server error");
+            String message = context.getResources().getString(R.string.error500);
+            throw new Exception(message);
         }
     }
 }

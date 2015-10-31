@@ -1,17 +1,18 @@
-package be.evavzw.eva21daychallenge.rest;
+package be.evavzw.eva21daychallenge.exceptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Jasper De Vrient on 11/10/2015.
  */
 public class RegisterFailedException extends IllegalArgumentException{
 
-    private List<String> messages = new ArrayList<>();
-    private String singleMessage = "";
+    private Map<String, List<String>> messages = new HashMap<>();
 
-    public List<String> getMessages() {
+    public Map<String, List<String>> getMessages() {
         return messages;
     }
 
@@ -27,31 +28,22 @@ public class RegisterFailedException extends IllegalArgumentException{
         super(cause);
     }
 
-    public RegisterFailedException(List<String> messages) {
+    public RegisterFailedException(Map<String, List<String>> messages) {
         this.messages = messages;
     }
 
-    public String getSingleMessage() {
-        return singleMessage;
-    }
-
-    public RegisterFailedException(String detailMessage, List<String> messages) {
+    public RegisterFailedException(String detailMessage, Map<String, List<String>> messages) {
         super(detailMessage);
         this.messages = messages;
     }
 
-    public RegisterFailedException(String message, Throwable cause, List<String> messages) {
+    public RegisterFailedException(String message, Throwable cause, HashMap<String, List<String>> messages) {
         super(message, cause);
         this.messages = messages;
     }
 
-    public RegisterFailedException(Throwable cause, List<String> messages) {
+    public RegisterFailedException(Throwable cause, Map<String, List<String>> messages) {
         super(cause);
         this.messages = messages;
-    }
-
-    public RegisterFailedException(String cause, String message) {
-        super(cause);
-        this.singleMessage = message;
     }
 }

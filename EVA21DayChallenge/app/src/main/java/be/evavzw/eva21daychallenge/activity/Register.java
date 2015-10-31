@@ -5,20 +5,21 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import evavzw.be.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.activity.base.RESTfulActivity;
-import be.evavzw.eva21daychallenge.rest.RegisterFailedException;
+import be.evavzw.eva21daychallenge.exceptions.RegisterFailedException;
 import be.evavzw.eva21daychallenge.security.UserManager;
 
 public class Register extends RESTfulActivity {
@@ -68,7 +69,7 @@ public class Register extends RESTfulActivity {
         String confirmPassword = confirmPasswordEditText.getText().toString();
 
         RegisterTask rt = new RegisterTask();
-        rt.execute(email,password,confirmPassword);
+        rt.execute(email, password, confirmPassword);
 
     }
 
@@ -85,21 +86,49 @@ public class Register extends RESTfulActivity {
                 userManager.register(objects[0], objects[1], objects[2]);
                 return true;
             } catch (RegisterFailedException rex) {
-                if(rex.getMessage().equals("email")){
-                    setEmailError(rex.getSingleMessage());
-                }
-                else if(rex.getMessage().equals("Register failed")){
-                    List<String> errors = rex.getMessages();
-                    StringBuilder builder = new StringBuilder();
-                    for(String err: errors){
-                        builder.append(err).append("\n");
+                Map<String, List<String>> errors = rex.getMessages();
+                if(errors.containsKey("email")){
+                    StringBuilder errorDetails = new StringBuilder();
+                    for(String error : errors.get("email")){
+                        if(errorDetails.length()== 0){
+                            errorDetails.append(error);
+                        }else{
+                            errorDetails.append("\n").append(error);
+                        }
                     }
-                    setPasswordError(builder.toString());
+                    setEmailError(errorDetails.toString());
+                }
+                if(errors.containsKey("password")){
+                    StringBuilder errorDetails = new StringBuilder();
+                    for(String error : errors.get("password")){
+                        if(errorDetails.length()== 0){
+                            errorDetails.append(error);
+                        }else{
+                            errorDetails.append("\n").append(error);
+                        }
+                    }
+                    setPasswordError(errorDetails.toString());
+                }
+                if(errors.containsKey("confirmPassword")){
+                    StringBuilder errorDetails = new StringBuilder();
+                    for(String error : errors.get("confirmPassword")){
+                        if(errorDetails.length()== 0){
+                            errorDetails.append(error);
+                        }else{
+                            errorDetails.append("\n").append(error);
+                        }
+                    }
+                    setConfirmPasswordError(errorDetails.toString());
+
                 }
                 return false;
-            } catch (IllegalArgumentException aex) {
-                return false;
-            } catch  (Exception ex) {
+            } catch  (final Exception ex) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
                 return false;
             }
         }
@@ -120,6 +149,14 @@ public class Register extends RESTfulActivity {
             @Override
             public void run() {
                 passwordEditText.setError(error);
+            }
+        });
+    }
+
+    private void setConfirmPasswordError(final String error){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
                 confirmPasswordEditText.setError(error);
             }
         });

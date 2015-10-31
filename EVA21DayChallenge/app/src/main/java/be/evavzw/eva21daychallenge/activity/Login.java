@@ -16,6 +16,7 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.Map;
 
@@ -160,11 +161,18 @@ public class Login extends RESTfulActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            //  try {
+             try {
             Map<String, String> mdata = userManager.getExternalLoginProviders();
             if (mdata.containsKey(params[0]))
                 return mdata.get(params[0]);
-            //   } catch (Exception ex) {}
+               } catch (final Exception ex) {
+                 runOnUiThread(new Runnable() {
+                     @Override
+                     public void run() {
+                         Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                     }
+                 });
+             }
             return null;
         }
 
@@ -191,7 +199,13 @@ public class Login extends RESTfulActivity {
             try {
                 userManager.registerExternal(params[0], params[1]);
                 return true;
-            } catch (Exception ex) {
+            } catch (final Exception ex) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
                 return false;
             }
         }
@@ -212,7 +226,17 @@ public class Login extends RESTfulActivity {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            return userManager.isTokenPresent() && userManager.isTokenValid();
+            try{
+                return userManager.isTokenPresent() && userManager.isTokenValid();
+            }catch(final Exception ex){
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return false;
+            }
         }
 
         @Override

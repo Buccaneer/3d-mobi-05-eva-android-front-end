@@ -2,15 +2,18 @@ package be.evavzw.eva21daychallenge.rest;
 
 import android.content.Context;
 
-import org.json.JSONArray;
-import org.json.JSONException;
+import com.google.gson.JsonParseException;
+
 import org.json.JSONObject;
 
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import be.evavzw.eva21daychallenge.exceptions.RegisterFailedException;
 import be.evavzw.eva21daychallenge.rest.framework.AbstractRestMethod;
 import be.evavzw.eva21daychallenge.rest.framework.Request;
 import be.evavzw.eva21daychallenge.rest.framework.RestMethodFactory;
@@ -53,34 +56,49 @@ public class RegisterRestMethod extends AbstractRestMethod<Void> {
     }
 
     @Override
-    protected void handleHttpStatus(int status, String responseBody) {
+    protected void handleHttpStatus(int status, String responseBody) throws Exception{
         if (status == 400) {
             try {
                 JSONObject json = new JSONObject(responseBody);
-                List<String> errors = new ArrayList<>();
+                Map<String, List<String>> errors = new HashMap<>();
                 if(json.has("ModelState")){
                     JSONObject modelState = json.getJSONObject("ModelState");
                     if(modelState.has("")){
                         String modelStateErrors = modelState.getJSONArray("").toString();
                         if(modelStateErrors.contains("is already taken")){
+                            List<String> errorDetails = new ArrayList<>();
                             String emailTaken = context.getResources().getString(R.string.emailTaken);
-                            throw new RegisterFailedException("email", emailTaken);
+                            errorDetails.add(emailTaken);
+                            errors.put("email", errorDetails);
+                        }if(modelStateErrors.contains("is invalid")){
+                            List<String> errorDetails = new ArrayList<>();
+                            String emailTaken = context.getResources().getString(R.string.emailInvalid);
+                            errorDetails.add(emailTaken);
+                            errors.put("email", errorDetails);
                         }
                     }
                     if(modelState.has("model.Password")){
-                        errors.add(modelState.getString("model.Password"));
+                        List<String> errorDetails = new ArrayList<>();
+                        errorDetails.add(modelState.getJSONArray("model.Password").get(0).toString());
+                        errors.put("password", errorDetails);
                     }
                     if(modelState.has("model.ConfirmPassword")){
-                        errors.add(modelState.getString("model.ConfirmPassword"));
+                        List<String> errorDetails = new ArrayList<>();
+                        errorDetails.add(modelState.getString("model.ConfirmPassword"));
+                        errors.put("confirmPassword", errorDetails);
                     }
                 }
                 if(errors.size() != 0){
-                    throw new RegisterFailedException("Register failed", errors);
+                    throw new RegisterFailedException(errors);
                 }
-            } catch (Exception ex) {
+            } catch (JsonParseException ex) {
                 String message = context.getResources().getString(R.string.couldntRetrieveErrors);
                 throw new RegisterFailedException(message);
             }
+        }
+        if(status == 500){
+            String message = context.getResources().getString(R.string.error500);
+            throw new Exception(message);
         }
     }
 
@@ -118,8 +136,12 @@ public class RegisterRestMethod extends AbstractRestMethod<Void> {
 
         public RegisterRestMethod build() {
             if (!p1.equals(p2)){
+                Map<String, List<String>> errors = new HashMap<>();
+                List<String> errorDetails = new ArrayList<>();
                 String message = context.getResources().getString(R.string.passwordsNotEqual);
-                throw new IllegalArgumentException(message);
+                errorDetails.add(message);
+                errors.put("confirmPassword", errorDetails);
+                throw new RegisterFailedException(errors);
             }
 
             RegisterRestMethod rrm = new RegisterRestMethod(context);

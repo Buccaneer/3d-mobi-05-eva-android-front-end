@@ -13,6 +13,7 @@ import java.util.Map;
 import be.evavzw.eva21daychallenge.rest.framework.AbstractRestMethod;
 import be.evavzw.eva21daychallenge.rest.framework.RestMethodFactory;
 import be.evavzw.eva21daychallenge.rest.framework.Request;
+import evavzw.be.eva21daychallenge.R;
 
 /**
  * Created by Jasper De Vrient on 11/10/2015.

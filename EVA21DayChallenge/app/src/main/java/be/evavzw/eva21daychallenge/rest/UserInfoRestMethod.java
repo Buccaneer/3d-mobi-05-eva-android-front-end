@@ -11,6 +11,7 @@ import be.evavzw.eva21daychallenge.rest.framework.AbstractRestMethod;
 import be.evavzw.eva21daychallenge.rest.framework.Request;
 import be.evavzw.eva21daychallenge.rest.framework.RestMethodFactory;
 import be.evavzw.eva21daychallenge.models.User;
+import evavzw.be.eva21daychallenge.R;
 
 /**
  * Created by Jasper De Vrient on 11/10/2015.
@@ -33,13 +34,6 @@ public class UserInfoRestMethod extends AbstractRestMethod<User> {
         Request r = new Request(RestMethodFactory.Method.GET, REQURI, new byte[] {});
         r.addHeader("Accept-Language", Arrays.asList(locale));
         return r;
-    }
-
-    @Override
-    protected void handleHttpStatus(int status, String responseBody) {
-        if (status == 401) {
-            throw new IllegalArgumentException("Not authorized");
-        }
     }
 
     @Override

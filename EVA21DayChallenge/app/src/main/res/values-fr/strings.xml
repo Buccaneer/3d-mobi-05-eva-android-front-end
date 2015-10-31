@@ -45,5 +45,11 @@
     <string name="settings">Settings</string>
     <string name="welcome">Welcome to the EVA 21 Day Challenge!</string>
     <string name="UNamePwdIncorrect">The email or password is incorrect</string>
+    <string name="couldntRetrieveErrors">Request to server failed, failed to load error</string>
+    <string name="emailInvalid">This isn\'t a valid email address</string>
+    <string name="emailTaken">Email is already taken</string>
+    <string name="error500">Something went wrong, please try again</string>
+    <string name="notAuthorized">Your account isn\'t authorized, please try logging back in</string>
+    <string name="passwordsNotEqual">Passwords are not equal</string>
 
 </resources>

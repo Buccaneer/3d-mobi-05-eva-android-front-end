@@ -14,6 +14,7 @@ import be.evavzw.eva21daychallenge.models.Recipe;
 import be.evavzw.eva21daychallenge.rest.framework.AbstractRestMethod;
 import be.evavzw.eva21daychallenge.rest.framework.Request;
 import be.evavzw.eva21daychallenge.rest.framework.RestMethodFactory;
+import evavzw.be.eva21daychallenge.R;
 
 /**
  * Created by Jan on 15/10/2015.
@@ -56,10 +57,5 @@ public class GetAllRecipesRestMethod extends AbstractRestMethod<List<Recipe>> {
         }
 
         return recipes;
-    }
-
-    @Override
-    protected void handleHttpStatus(int status, String responseBody) {
-        // Hier komt hij als hij status anders dan 200 heeft.
     }
 }

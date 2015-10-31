@@ -106,8 +106,13 @@ public class SignIn extends RESTfulActivity {
                 setEmailError(aex.getMessage());
                 setPasswordError(aex.getMessage());
                 return false;
-            } catch (Exception ex) {
-                Toast.makeText(getApplicationContext(), "Something went wrong while communicating with the server", Toast.LENGTH_SHORT).show();
+            } catch (final Exception ex) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
                 return false;
             }
         }

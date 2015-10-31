@@ -64,11 +64,6 @@ public class RegisterExternalRestMethod extends AbstractRestMethod<Void> {
         return null;
     }
 
-    @Override
-    protected void handleHttpStatus(int status, String responseBody) {
-        //RegisterFailedException rex = new RegisterFailedException();
-    }
-
     public RegisterExternalRestMethod(Context context) {
         this.context = context;
     }

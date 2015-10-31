@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import be.evavzw.eva21daychallenge.exceptions.RegisterFailedException;
 import be.evavzw.eva21daychallenge.security.RequestSigner;
 import be.evavzw.eva21daychallenge.security.UserManager;
+import evavzw.be.eva21daychallenge.R;
 
 
 public abstract class AbstractRestMethod<T> implements RestMethod<T> {
@@ -69,6 +71,8 @@ public abstract class AbstractRestMethod<T> implements RestMethod<T> {
                 resource = parseResponseBody(responseBody);
             else
                 handleHttpStatus(response.status, responseBody);
+        } catch (RegisterFailedException ex) {
+            throw ex;
         } catch (Exception ex) {
             throw new IllegalArgumentException(ex.getMessage());
         }
@@ -76,7 +80,13 @@ public abstract class AbstractRestMethod<T> implements RestMethod<T> {
     }
 
     protected void handleHttpStatus(int status, String responseBody) throws Exception {
-        throw new Exception("Something went wrong");
+        if (status == 401) {
+            String message = getContext().getResources().getString(R.string.notAuthorized);
+            throw new Exception(message);
+        }else{
+            String message = getContext().getResources().getString(R.string.error500);
+            throw new Exception(message);
+        }
     }
 
     protected abstract Request buildRequest();
