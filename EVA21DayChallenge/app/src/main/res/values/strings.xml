@@ -49,4 +49,5 @@
     <string name="ingredientsTitle">Ingrediënten</string>
     <string name="extraTitle">Extra informatie</string>
     <string name="descriptionTitle">Bereiding</string>
+    <string name="passwoordVergeten">Passwoord Vergeten?</string>
 </resources>

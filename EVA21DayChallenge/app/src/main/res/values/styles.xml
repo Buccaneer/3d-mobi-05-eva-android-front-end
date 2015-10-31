@@ -29,6 +29,7 @@
     
     <style name="logoPosition" parent="AppTheme">
         <item name="android:layout_marginBottom">5pt</item>
+        <item name="android:layout_marginTop">35dp</item>
     </style>
 
     <style name="socialButton" parent="AppTheme">

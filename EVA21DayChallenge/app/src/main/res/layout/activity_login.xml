@@ -3,7 +3,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Login"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+   android:id="@+id/loginScreen"
+    android:background="@drawable/achtergrond_login">
+
+<!--
+    <ImageView
+        android:id="@+id/loginScreen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+-->
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -13,36 +22,66 @@
             android:src="@drawable/eva_logo"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"/>
+<!--
+
+-->
     </LinearLayout>
+
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginLeft="40dp"
+    android:layout_marginRight="40dp"
+    android:background="@color/tw__solid_white">
+
+    <EditText
+        android:id="@+id/email"
+        android:hint="@string/email"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_height="1dp"
+        android:background="#afc137" />
+
+    <EditText
+        android:id="@+id/password"
+        android:hint="@string/password"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"/>
+
+</LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/createAccount"
-            android:text="@string/createAccount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textAllCaps="false"
-            android:layout_weight="1"/>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="27dp"
+        android:layout_marginRight="27dp"
+       >
 
         <Button
             android:id="@+id/signIn"
             android:text="@string/signIn"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/createAccount"
+
             android:textAllCaps="false"
-            android:layout_weight="1" />
+            android:layout_margin="10dp"
+            />
     </LinearLayout>
 
-    <TextView
-        android:text="@string/socialMediaLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
+    <View
+        android:layout_width="fill_parent"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
         android:layout_gravity="center"
-        style="@style/socialButton"/>
+        android:layout_height="1dp"
+        android:background="#afc137" />
 
     <evavzw.be.eva21daychallenge.customComponent.LoginButton
         android:background="@drawable/facebookbutton"
@@ -62,4 +101,24 @@
         android:layout_width="184dp"
         android:layout_height="37dp"
         style="@style/socialButton"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/passwoordVergeten"
+            android:textColor="#afc137"
+            android:layout_weight="1"
+            android:layout_gravity="left"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/createAccount"
+            android:textColor="#afc137"
+            android:layout_gravity="right"
+            android:layout_weight="1"/>
+    </LinearLayout>
 </LinearLayout>

@@ -7,6 +7,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -24,6 +27,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+
 import java.util.Map;
 
 import butterknife.Bind;
@@ -35,8 +41,8 @@ import evavzw.be.eva21daychallenge.security.UserManager;
 
 public class Login extends RESTfulActivity {
 
-    @Bind(R.id.createAccount)
-    Button createAccount;
+ /*   @Bind(R.id.createAccount)
+    Button createAccount;*/
     @Bind(R.id.signIn)
     Button signIn;
     @Bind(R.id.eva_logo)
@@ -44,6 +50,10 @@ public class Login extends RESTfulActivity {
     private WebView webView;
     private UserManager userManager;
     private AlertDialog alertDialog;
+    @Bind(R.id.loginScreen)
+    LinearLayout login;
+
+
 
     @Override
     protected void onStart() {
@@ -60,7 +70,9 @@ public class Login extends RESTfulActivity {
         userManager = UserManager.getInstance(getApplicationContext());
 
         signIn.getBackground().setColorFilter(Color.parseColor("#afc137"), PorterDuff.Mode.MULTIPLY);
+/*
         createAccount.getBackground().setColorFilter(Color.parseColor("#afc137"), PorterDuff.Mode.MULTIPLY);
+*/
 
         int newHeight = getResources().getDisplayMetrics().heightPixels / 6;
         int orgWidth = evaLogo.getDrawable().getIntrinsicWidth();
@@ -70,13 +82,14 @@ public class Login extends RESTfulActivity {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams((int) newWidth, newHeight);
         evaLogo.setLayoutParams(params);
         evaLogo.setScaleType(ImageView.ScaleType.CENTER_CROP);
+     //   loadBackground();
     }
 
-    @OnClick(R.id.createAccount)
+ /*   @OnClick(R.id.createAccount)
     public void createAccountOnClick(View v){
         Intent intent = new Intent(v.getContext(), Register.class);
         startActivity(intent);
-    }
+    }*/
 
     @OnClick(R.id.signIn)
     public void signInOnClick(View v){
@@ -240,4 +253,16 @@ public class Login extends RESTfulActivity {
             }
         });
     }
+
+
+    //Nodig voor Picasso
+
+/*
+    private void loadBackground() {
+
+        Picasso.with(this).load(R.drawable.achtergrond_login).into(loginScreen);
+    }
+*/
+
+
 }
