@@ -17,12 +17,10 @@ import be.evavzw.eva21daychallenge.rest.framework.Request;
 import be.evavzw.eva21daychallenge.R;
 
 /**
- * Created by Jasper De Vrient on 11/10/2015.
+ * Handles external registration on our service eg Facebook
  */
 public class RegisterExternalRestMethod extends AbstractRestMethod<Void> {
     private static final URI REQURI = URI.create("http://evavzwrest.azurewebsites.net/api/Account/RegisterExternal");
-
-
     private String cookie;
     private Context context;
     private String email;
@@ -31,7 +29,6 @@ public class RegisterExternalRestMethod extends AbstractRestMethod<Void> {
         this.email = email;
         return this;
     }
-
 
     public RegisterExternalRestMethod setCookie(String cookie) {
         this.cookie = cookie;
@@ -43,6 +40,10 @@ public class RegisterExternalRestMethod extends AbstractRestMethod<Void> {
         return context;
     }
 
+    /**
+     * Builds the {@link Request}
+     * @return returns the built {@link Request}
+     */
     @Override
     protected Request buildRequest() {
         try {
@@ -52,13 +53,18 @@ public class RegisterExternalRestMethod extends AbstractRestMethod<Void> {
             Request r= new Request(RestMethodFactory.Method.POST,REQURI, json.toString().getBytes());
             r.addHeader("Content-Type", Arrays.asList("application/json"));
             r.addHeader("Cookie",Arrays.asList(cookie));
-            r.addHeader("Accept-Language", Arrays.asList(locale));
             return r;
         } catch (Exception ex) {
             throw new IllegalArgumentException("Could not make Request.");
         }
     }
 
+    /**
+     * There's no return for this request
+     * @param responseBody JSON string returned by the server
+     * @return <code>Void</code>
+     * @throws Exception
+     */
     @Override
     protected Void parseResponseBody(String responseBody) throws Exception {
         return null;

@@ -42,8 +42,10 @@ public class Register extends RESTfulActivity {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
 
+        // Set button background color
         register.getBackground().setColorFilter(Color.parseColor("#afc137"), PorterDuff.Mode.MULTIPLY);
 
+        // Set size for EVA logo
         int newHeight = getResources().getDisplayMetrics().heightPixels / 6;
         int orgWidth = evaLogo.getDrawable().getIntrinsicWidth();
         int orgHeight = evaLogo.getDrawable().getIntrinsicHeight();
@@ -52,8 +54,10 @@ public class Register extends RESTfulActivity {
         evaLogo.setLayoutParams(params);
         evaLogo.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
+        // Get instance of user manager
         userManager  = UserManager.getInstance(this);
 
+        // TODO: Replace this with a Butterknife onclick method
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,6 +66,9 @@ public class Register extends RESTfulActivity {
         });
     }
 
+    /**
+     * Starts the register service once the user clicks the button
+     */
     private void registerUser() {
         //Get string values inside the EditTexts
         String email = emailEditText.getText().toString();
@@ -70,7 +77,6 @@ public class Register extends RESTfulActivity {
 
         RegisterTask rt = new RegisterTask();
         rt.execute(email, password, confirmPassword);
-
     }
 
     class RegisterTask extends AsyncTask<String, String, Boolean> {
@@ -171,6 +177,10 @@ public class Register extends RESTfulActivity {
         });
     }
 
+    /**
+     * Sets the ProgressBar visible or invisible, is called in the AsyncTasks at <code>onPreExecute()</code> or <code>onPostExecute()</code>
+     * @param toggle
+     */
     private void setRefresh(final boolean toggle){
         runOnUiThread(new Runnable() {
             @Override

@@ -3,6 +3,9 @@ package be.evavzw.eva21daychallenge.rest.framework;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class which represents a server response
+ */
 public class Response {
     
     /**

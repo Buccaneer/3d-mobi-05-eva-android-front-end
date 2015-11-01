@@ -9,8 +9,18 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Handles the actual communication with the server, needs a valid {@link Request} to execute
+ */
 public class RestClient {
 
+    /**
+     * Reads the body returned by the server
+     *
+     * @param in InputStream for the response body
+     * @return byte array of the response body
+     * @throws IOException
+     */
     private static byte[] readStream(InputStream in) throws IOException {
         byte[] buf = new byte[1024];
         int count = 0;
@@ -20,14 +30,24 @@ public class RestClient {
         return out.toByteArray();
     }
 
+    /**
+     * Executes a given {@link Request}
+     *
+     * @param request {@link Request} to be executed
+     * @return returns {@link Response}
+     */
     public Response execute(Request request) {
         HttpURLConnection conn = null;
         Response response = null;
         int status = -1;
         try {
-
+            // Parse the URI to an URL
             URL url = request.getRequestUri().toURL();
+
+            // Open the URL into an HTTP connection
             conn = (HttpURLConnection) url.openConnection();
+
+            // Add the headers to the connection object
             if (request.getHeaders() != null) {
                 for (String header : request.getHeaders().keySet()) {
                     for (String value : request.getHeaders().get(header)) {
@@ -36,6 +56,7 @@ public class RestClient {
                 }
             }
 
+            //TODO: add PUT and DELETE support
             switch (request.getMethod()) {
                 case GET:
                     conn.setDoOutput(false);
@@ -52,12 +73,11 @@ public class RestClient {
 
             status = conn.getResponseCode();
 
-
-
-            BufferedInputStream in = new BufferedInputStream(status == 200 ? conn.getInputStream() : conn.getErrorStream());
+            //Get the input stream for the body or error stream if there's an error
+            BufferedInputStream in = new BufferedInputStream(status/100 == 2 ? conn.getInputStream() : conn.getErrorStream());
             byte[] body = readStream(in);
             response = new Response(conn.getResponseCode(), conn.getHeaderFields(), body);
-response.status = status;
+            response.status = status;
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

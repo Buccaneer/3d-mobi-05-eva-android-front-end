@@ -7,6 +7,9 @@ import android.content.UriMatcher;
 import android.net.Uri;
 import android.content.Context;
 
+/**
+ * Factory to help the Rest Methods, we don't really use any of this except the enum
+ */
 public class RestMethodFactory {
 
 	private static RestMethodFactory instance;
@@ -45,5 +48,4 @@ public class RestMethodFactory {
 	public static enum Method {
 		GET, POST, PUT, DELETE
 	}
-
 }

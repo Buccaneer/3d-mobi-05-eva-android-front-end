@@ -14,7 +14,7 @@ import be.evavzw.eva21daychallenge.models.User;
 import be.evavzw.eva21daychallenge.R;
 
 /**
- * Created by Jasper De Vrient on 11/10/2015.
+ * Rest method to retrieve User information from the server
  */
 public class UserInfoRestMethod extends AbstractRestMethod<User> {
     private static final URI REQURI = URI.create("http://evavzwrest.azurewebsites.net/api/Account/UserInfo");
@@ -29,13 +29,24 @@ public class UserInfoRestMethod extends AbstractRestMethod<User> {
         return context;
     }
 
+    /**
+     * Builds the {@link Request}
+     *
+     * @return returns the built {@link Request}
+     */
     @Override
     protected Request buildRequest() {
         Request r = new Request(RestMethodFactory.Method.GET, REQURI, new byte[] {});
-        r.addHeader("Accept-Language", Arrays.asList(locale));
         return r;
     }
 
+    /**
+     * Parses the returned string from the request into their respective objects
+     *
+     * @param responseBody JSON string returned by the server
+     * @return returns a {@link User} object
+     * @throws Exception
+     */
     @Override
     protected User parseResponseBody(String responseBody) throws Exception {
         try {

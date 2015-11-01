@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Jan on 15/10/2015.
+ * Class that represents a Recipe
  */
 public class Recipe implements Serializable {
     private List<Ingredient> ingredients;
@@ -18,12 +18,22 @@ public class Recipe implements Serializable {
     private int recipeId;
     private List<RecipeProperty> properties;
 
+    /**
+     * Let the class build itself with a given {@link JSONObject}
+     * @param jsonObject content for the class and for {@link Ingredient} and {@link RecipeProperty}
+     * @throws Exception
+     */
     public Recipe(JSONObject jsonObject) throws Exception{
         ingredients = new ArrayList<>();
         properties = new ArrayList<>();
         parseJson(jsonObject);
     }
 
+    /**
+     * Parses the {@link JSONObject} into objects and properties
+     * @param jsonObject content for this class and sub classes
+     * @throws Exception
+     */
     private void parseJson(JSONObject jsonObject) throws Exception{
         name = jsonObject.getString("Name");
         description = jsonObject.getString("Description");

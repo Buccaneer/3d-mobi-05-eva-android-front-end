@@ -17,11 +17,9 @@ import be.evavzw.eva21daychallenge.rest.framework.RestMethodFactory;
 import be.evavzw.eva21daychallenge.R;
 
 /**
- * Created by Jan on 15/10/2015.
+ * Rest method that returns all recipes from the server
  */
 public class GetAllRecipesRestMethod extends AbstractRestMethod<List<Recipe>> {
-
-
     private static final URI RECIPEURI = URI.create("http://evavzwrest.azurewebsites.net/api/Recipes");
     private Context context;
 
@@ -34,23 +32,32 @@ public class GetAllRecipesRestMethod extends AbstractRestMethod<List<Recipe>> {
         return context;
     }
 
+    /**
+     * Builds the {@link Request}
+     * @return returns the {@link Request}
+     */
     @Override
     protected Request buildRequest() {
         try {
             Request r = new Request(RestMethodFactory.Method.GET, RECIPEURI, null, null);
-            r.addHeader("Accept-Language", Arrays.asList(locale));
             return r;
         } catch (Exception ex) {
             throw new IllegalArgumentException("Cannot build request see nested exception.", ex);
         }
     }
 
+    /**
+     * Parses the http response body into their respective objects (recipes)
+     * @param responseBody JSON string returned by the server
+     * @return returns a list of available {@link Recipe}s
+     * @throws Exception
+     */
     @Override
     protected List<Recipe> parseResponseBody(String responseBody) throws Exception {
         JSONArray obj = new JSONArray(responseBody);
         List<Recipe> recipes = new ArrayList<>();
 
-        //voor elk object in de json (dus elk recept) de constructor van recept aanroepen met json stukje
+        //Let the objects themselves handle the JSON parsing
         for(int i = 0; i < obj.length(); i++){
             JSONObject jsonRow = obj.getJSONObject(i);
             recipes.add(new Recipe(jsonRow));

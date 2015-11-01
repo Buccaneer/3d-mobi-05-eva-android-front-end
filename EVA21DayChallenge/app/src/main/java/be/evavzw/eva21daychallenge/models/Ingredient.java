@@ -3,7 +3,7 @@ package be.evavzw.eva21daychallenge.models;
 import org.json.JSONObject;
 
 /**
- * Created by Jan on 15/10/2015.
+ * Ingredients for a {@link Recipe}
  */
 public class Ingredient {
 
@@ -18,10 +18,20 @@ public class Ingredient {
         this.quantity = quantity;
     }
 
+    /**
+     * Let the class build itself with a {@link JSONObject}
+     * @param jsonObject content for this class
+     * @throws Exception
+     */
     public Ingredient(JSONObject jsonObject) throws Exception{
         parseJson(jsonObject);
     }
 
+    /**
+     * Sets the content for this class
+     * @param jsonObject JSON passed by {@link Recipe}
+     * @throws Exception
+     */
     private void parseJson(JSONObject jsonObject) throws Exception{
         name = jsonObject.getJSONObject("Ingredient").getString("Name");
         unit = jsonObject.getJSONObject("Ingredient").getString("Unit");

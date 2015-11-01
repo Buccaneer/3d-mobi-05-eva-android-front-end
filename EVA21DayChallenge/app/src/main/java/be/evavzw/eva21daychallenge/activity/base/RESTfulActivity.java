@@ -21,7 +21,7 @@ import be.evavzw.eva21daychallenge.activity.Login;
 import be.evavzw.eva21daychallenge.security.UserManager;
 
 /**
- * Created by Jan on 17/10/2015.
+ * Superclass for all of our activities that need the {@link DrawerLayout} or/and {@link ProgressBar}
  */
 public abstract class RESTfulActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -33,13 +33,16 @@ public abstract class RESTfulActivity extends AppCompatActivity implements Navig
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(mContentResId);
+
+        // Retrieve an instance of the UserManager
         userManager = UserManager.getInstance(getApplicationContext());
 
+        // Instantiate the NavigationView and set the listener to this class if present
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         if (navigationView != null)
             navigationView.setNavigationItemSelectedListener(this);
 
-
+        // Instantiate the Toolbar and DrawerLayout and configure them if they're present
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (toolbar != null && drawer != null) {
@@ -49,12 +52,12 @@ public abstract class RESTfulActivity extends AppCompatActivity implements Navig
             toggle.syncState();
         }
 
+        // Set the ProgressBar properties, this is shown right under the Action Bar if an AsyncMethod is in progress
         progressBar = new ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal);
         progressBar.setLayoutParams(new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 34));
         progressBar.setProgress(65);
         final FrameLayout decorView = (FrameLayout) getWindow().getDecorView();
         decorView.addView(progressBar);
-
         ViewTreeObserver observer = progressBar.getViewTreeObserver();
         observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -114,6 +117,10 @@ public abstract class RESTfulActivity extends AppCompatActivity implements Navig
         }
     }
 
+    /**
+     * Makes the ProgressBar visible or invisible, this is called by sub classes
+     * @param toggle <code>if(true) show progressbar, else hide progressbar</code>
+     */
     public void toggleProgressBar(boolean toggle) {
         progressBar.setVisibility(toggle ? View.VISIBLE : View.INVISIBLE);
     }

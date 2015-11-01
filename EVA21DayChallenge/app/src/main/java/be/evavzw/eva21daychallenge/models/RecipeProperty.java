@@ -3,17 +3,27 @@ package be.evavzw.eva21daychallenge.models;
 import org.json.JSONObject;
 
 /**
- * Created by Jan on 15/10/2015.
+ * Properties that belong to a {@link Recipe}
  */
 public class RecipeProperty {
 
     private String value, type;
     private int propertyId;
 
+    /**
+     * Let the class build itself with a given {@link JSONObject}
+     * @param jsonObject content for this class
+     * @throws Exception
+     */
     public RecipeProperty(JSONObject jsonObject) throws Exception{
         parseJson(jsonObject);
     }
 
+    /**
+     * Parses the JSON passed by {@link Recipe}
+     * @param jsonObject JSON object with content for this class
+     * @throws Exception
+     */
     private void parseJson(JSONObject jsonObject) throws Exception{
         value = jsonObject.getString("Value");
         type = jsonObject.getString("Type");

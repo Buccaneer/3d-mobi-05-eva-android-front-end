@@ -6,19 +6,17 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.net.URI;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import be.evavzw.eva21daychallenge.rest.framework.AbstractRestMethod;
-import be.evavzw.eva21daychallenge.rest.framework.RestMethodFactory;
 import be.evavzw.eva21daychallenge.rest.framework.Request;
-import be.evavzw.eva21daychallenge.R;
+import be.evavzw.eva21daychallenge.rest.framework.RestMethodFactory;
 
 /**
- * Created by Jasper De Vrient on 11/10/2015.
+ * Rest Method which returns all links for available external login providers
  */
-public class ExternalLoginsRestMethod extends AbstractRestMethod<Map<String,String>> {
+public class ExternalLoginsRestMethod extends AbstractRestMethod<Map<String, String>> {
 
     private static final URI REQURI = URI.create("http://evavzwrest.azurewebsites.net/api/Account/ExternalLogins?returnUrl=%2F&generateState=true");
     private static final String PRE = "http://evavzwrest.azurewebsites.net";
@@ -33,16 +31,27 @@ public class ExternalLoginsRestMethod extends AbstractRestMethod<Map<String,Stri
         return context;
     }
 
+    /**
+     * Builds the {@link Request}
+     *
+     * @return returns the built {@link Request}
+     */
     @Override
     protected Request buildRequest() {
-        Request r = new Request(RestMethodFactory.Method.GET, REQURI, new byte[] {});
-        r.addHeader("Accept-Language", Arrays.asList(locale));
+        Request r = new Request(RestMethodFactory.Method.GET, REQURI, new byte[]{});
         return r;
     }
 
+    /**
+     * Parses the returned string from the request into their respective objects
+     *
+     * @param responseBody JSON string returned by the server
+     * @return returns all available login provider URLs
+     * @throws Exception
+     */
     @Override
     protected Map<String, String> parseResponseBody(String responseBody) throws Exception {
-        Map<String,String> outputMap = new HashMap<>();
+        Map<String, String> outputMap = new HashMap<>();
         try {
             JSONArray arr = new JSONArray(responseBody);
 
@@ -50,18 +59,22 @@ public class ExternalLoginsRestMethod extends AbstractRestMethod<Map<String,Stri
                 try {
                     JSONObject provider = arr.getJSONObject(i);
 
-                    outputMap.put(provider.getString("Name"),PRE +  provider.getString("Url"));
-                } catch (Exception ex) { // Genest voor te zorgen dat niet alles faalt.
-
+                    outputMap.put(provider.getString("Name"), PRE + provider.getString("Url"));
+                } catch (Exception ex) {
+                    throw ex;
                 }
             }
         } catch (Exception ex) {
-
+            throw new Exception(ex);
         }
 
         return outputMap;
     }
 
+    /**
+     * Overwrite hook {@link AbstractRestMethod#requiresAuthorization()}, this request doesn't require authorization
+     * @return
+     */
     @Override
     protected boolean requiresAuthorization() {
         return false;
