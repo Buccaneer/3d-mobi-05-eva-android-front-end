@@ -26,6 +26,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -41,8 +42,8 @@ import evavzw.be.eva21daychallenge.security.UserManager;
 
 public class Login extends RESTfulActivity {
 
- /*   @Bind(R.id.createAccount)
-    Button createAccount;*/
+  @Bind(R.id.createAccount)
+  TextView createAccount;
     @Bind(R.id.signIn)
     Button signIn;
     @Bind(R.id.eva_logo)
@@ -52,6 +53,7 @@ public class Login extends RESTfulActivity {
     private AlertDialog alertDialog;
     @Bind(R.id.loginScreen)
     LinearLayout login;
+
 
 
 
@@ -85,11 +87,11 @@ public class Login extends RESTfulActivity {
      //   loadBackground();
     }
 
- /*   @OnClick(R.id.createAccount)
+   @OnClick(R.id.createAccount)
     public void createAccountOnClick(View v){
         Intent intent = new Intent(v.getContext(), Register.class);
         startActivity(intent);
-    }*/
+    }
 
     @OnClick(R.id.signIn)
     public void signInOnClick(View v){
