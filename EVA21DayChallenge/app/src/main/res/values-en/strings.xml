@@ -51,5 +51,13 @@
     <string name="descriptionTitle">Preparation</string>
     <string name="extraTitle">Extra information</string>
     <string name="ingredientsTitle">Ingredients</string>
+    <string name="UNamePwdIncorrect">The email or password is incorrect</string>
+    <string name="passwordsNotEqual">Passwords are not equal</string>
+    <string name="couldntRetrieveErrors">Request to server failed, failed to load error</string>
+    <string name="emailTaken">Email is already taken</string>
+    <string name="error500">Something went wrong, please try again</string>
+    <string name="emailInvalid">This isn\'t a valid email address</string>
+    <string name="notAuthorized">Your account isn\'t authorized, please try logging back in</string>
+    <string name="close">Close</string>
 
 </resources>
