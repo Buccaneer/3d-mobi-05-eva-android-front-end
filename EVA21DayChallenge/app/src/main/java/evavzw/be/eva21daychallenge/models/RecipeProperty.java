@@ -2,10 +2,13 @@ package evavzw.be.eva21daychallenge.models;
 
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 /**
  * Created by Jan on 15/10/2015.
  */
-public class RecipeProperty {
+public class RecipeProperty implements Serializable
+{
 
     private String value, type;
     private int propertyId;

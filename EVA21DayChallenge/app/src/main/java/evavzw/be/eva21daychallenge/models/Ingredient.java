@@ -5,10 +5,13 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 /**
  * Created by Jan on 15/10/2015.
  */
-public class Ingredient {
+public class Ingredient implements Serializable
+{
 
     private String name, unit;
     private int ingredientId, quantity;
