@@ -85,7 +85,7 @@
         android:layout_height="1dp"
         android:background="#afc137" />
 
-    <evavzw.be.eva21daychallenge.customComponent.LoginButton
+    <be.evavzw.eva21daychallenge.customComponent.LoginButton
         android:background="@drawable/facebookbutton"
         android:id="@+id/loginFacebookButton"
         android:layout_width="184dp"
@@ -98,7 +98,7 @@
         android:layout_height="44dp"
         style="@style/socialButton"/>
 
-    <evavzw.be.eva21daychallenge.customComponent.TwitterButton
+    <be.evavzw.eva21daychallenge.customComponent.TwitterButton
         android:id="@+id/loginTwitterButton"
         android:layout_width="184dp"
         android:layout_height="37dp"
