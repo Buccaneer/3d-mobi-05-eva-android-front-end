@@ -1,8 +1,11 @@
 package be.evavzw.eva21daychallenge.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +14,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 
 import java.util.List;
 import java.util.Map;
@@ -34,7 +41,14 @@ public class Register extends RESTfulActivity {
     Button register;
     @Bind(R.id.eva_logo)
     ImageView evaLogo;
+    @Bind(R.id.register_layout)
+    LinearLayout registerLayout;
     private UserManager userManager;
+    @Bind(R.id.blaadjes_achtergrond)
+    ImageView img;
+
+    private AnimationDrawable frameAnimation;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +66,28 @@ public class Register extends RESTfulActivity {
         evaLogo.setLayoutParams(params);
         evaLogo.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-        userManager  = UserManager.getInstance(this);
+        userManager = UserManager.getInstance(this);
+
+        Glide.with(getApplicationContext())
+                .load(R.drawable.achtergrond_login)
+                .asBitmap()
+                .into(new SimpleTarget<Bitmap>(this.getResources().getDisplayMetrics().widthPixels, this.getResources().getDisplayMetrics().heightPixels) {
+                    @Override
+                    public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
+                        BitmapDrawable background = new BitmapDrawable(bitmap);
+                        registerLayout.setBackgroundDrawable(background);
+                    }
+                });
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 registerUser();
+                img.setVisibility(View.VISIBLE);
+                register.setText("");
+                img.setBackgroundResource(R.drawable.blaadjes_progress);
+                frameAnimation = (AnimationDrawable) img.getBackground();
+                frameAnimation.start();
             }
         });
     }
@@ -87,34 +117,35 @@ public class Register extends RESTfulActivity {
                 return true;
             } catch (RegisterFailedException rex) {
                 Map<String, List<String>> errors = rex.getMessages();
-                if(errors.containsKey("email")){
+                stopAnimation();
+                if (errors.containsKey("email")) {
                     StringBuilder errorDetails = new StringBuilder();
-                    for(String error : errors.get("email")){
-                        if(errorDetails.length()== 0){
+                    for (String error : errors.get("email")) {
+                        if (errorDetails.length() == 0) {
                             errorDetails.append(error);
-                        }else{
+                        } else {
                             errorDetails.append("\n").append(error);
                         }
                     }
                     setEmailError(errorDetails.toString());
                 }
-                if(errors.containsKey("password")){
+                if (errors.containsKey("password")) {
                     StringBuilder errorDetails = new StringBuilder();
-                    for(String error : errors.get("password")){
-                        if(errorDetails.length()== 0){
+                    for (String error : errors.get("password")) {
+                        if (errorDetails.length() == 0) {
                             errorDetails.append(error);
-                        }else{
+                        } else {
                             errorDetails.append("\n").append(error);
                         }
                     }
                     setPasswordError(errorDetails.toString());
                 }
-                if(errors.containsKey("confirmPassword")){
+                if (errors.containsKey("confirmPassword")) {
                     StringBuilder errorDetails = new StringBuilder();
-                    for(String error : errors.get("confirmPassword")){
-                        if(errorDetails.length()== 0){
+                    for (String error : errors.get("confirmPassword")) {
+                        if (errorDetails.length() == 0) {
                             errorDetails.append(error);
-                        }else{
+                        } else {
                             errorDetails.append("\n").append(error);
                         }
                     }
@@ -122,11 +153,12 @@ public class Register extends RESTfulActivity {
 
                 }
                 return false;
-            } catch  (final Exception ex) {
+            } catch (final Exception ex) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                        stopAnimation();
                     }
                 });
                 return false;
@@ -136,7 +168,7 @@ public class Register extends RESTfulActivity {
         @Override
         protected void onPostExecute(Boolean succeed) {
             setRefresh(false);
-            if(succeed){
+            if (succeed) {
                 Intent intent = new Intent(getApplicationContext(), MainMenu.class);
                 Register.this.finish();
                 startActivity(intent);
@@ -144,7 +176,7 @@ public class Register extends RESTfulActivity {
         }
     }
 
-    private void setPasswordError(final String error){
+    private void setPasswordError(final String error) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -153,7 +185,7 @@ public class Register extends RESTfulActivity {
         });
     }
 
-    private void setConfirmPasswordError(final String error){
+    private void setConfirmPasswordError(final String error) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -162,7 +194,7 @@ public class Register extends RESTfulActivity {
         });
     }
 
-    private void setEmailError(final String error){
+    private void setEmailError(final String error) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -171,12 +203,24 @@ public class Register extends RESTfulActivity {
         });
     }
 
-    private void setRefresh(final boolean toggle){
+    private void setRefresh(final boolean toggle) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 toggleProgressBar(toggle);
             }
         });
+    }
+
+    private void stopAnimation() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                frameAnimation.stop();
+                img.setVisibility(View.INVISIBLE);
+                register.setText(R.string.register);
+            }
+        });
+
     }
 }

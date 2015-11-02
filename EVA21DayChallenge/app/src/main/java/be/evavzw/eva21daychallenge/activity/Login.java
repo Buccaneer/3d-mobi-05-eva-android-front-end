@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
@@ -13,14 +14,20 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.webkit.CookieManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import android.widget.Toast;
@@ -42,11 +49,20 @@ public class Login extends RESTfulActivity {
     Button signIn;
     @Bind(R.id.eva_logo)
     ImageView evaLogo;
+    @Bind(R.id.email)
+    EditText emailEditText;
+    @Bind(R.id.password)
+    EditText passwordEditText;
     private WebView webView;
     private UserManager userManager;
     private AlertDialog alertDialog;
     @Bind(R.id.loginScreen)
     LinearLayout login;
+    @Bind(R.id.blaadjes_achtergrond)
+    ImageView img;
+
+    private AnimationDrawable frameAnimation;
+
 
 
 
@@ -60,7 +76,9 @@ public class Login extends RESTfulActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.setContentResId(R.layout.activity_login);
+
         super.onCreate(savedInstanceState);
+
 
         ButterKnife.bind(this);
         userManager = UserManager.getInstance(getApplicationContext());
@@ -79,17 +97,37 @@ public class Login extends RESTfulActivity {
         evaLogo.setLayoutParams(params);
         evaLogo.setScaleType(ImageView.ScaleType.CENTER_CROP);
      //   loadBackground();
+
+        Glide.with(getApplicationContext())
+        .load(R.drawable.achtergrond_login)
+                .asBitmap()
+                .into(new SimpleTarget<Bitmap>(this.getResources().getDisplayMetrics().widthPixels, this.getResources().getDisplayMetrics().heightPixels) {
+                    @Override
+                    public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
+                        BitmapDrawable background = new BitmapDrawable(bitmap);
+                        login.setBackgroundDrawable(background);
+                    }
+                });
+
+        signIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String username = emailEditText.getText().toString();
+                String password = passwordEditText.getText().toString();
+                signIn(username, password);
+                img.setVisibility(View.VISIBLE);
+                signIn.setText("");
+                img.setBackgroundResource(R.drawable.blaadjes_progress);
+                frameAnimation = (AnimationDrawable) img.getBackground();
+                frameAnimation.start();
+
+            }
+        });
     }
 
    @OnClick(R.id.createAccount)
     public void createAccountOnClick(View v){
         Intent intent = new Intent(v.getContext(), Register.class);
-        startActivity(intent);
-    }
-
-    @OnClick(R.id.signIn)
-    public void signInOnClick(View v){
-        Intent intent = new Intent(v.getContext(), SignIn.class);
         startActivity(intent);
     }
 
@@ -166,6 +204,71 @@ public class Login extends RESTfulActivity {
     private void startLoginService(String loginProvider) {
         NavigateToExternalLoginProviderTask ntelp = new NavigateToExternalLoginProviderTask();
         ntelp.execute(loginProvider);
+    }
+
+    private void signIn(String email, String password) {
+        AuthorizeTask authorizeTask = new AuthorizeTask();
+        authorizeTask.execute(new String[]{email, password});
+    }
+
+    private void setEmailError(final String error) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                emailEditText.setError(error);
+            }
+        });
+
+    }
+
+    private void setPasswordError(final String error) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                passwordEditText.setError(error);
+            }
+        });
+    }
+
+    private class AuthorizeTask extends AsyncTask<String, String, Boolean> {
+
+        @Override
+        protected void onPreExecute() {
+            setRefresh(true);
+        }
+
+        @Override
+        protected Boolean doInBackground(String... objects) {
+            try {
+                userManager.login(objects[0], objects[1]);
+                return true;
+            } catch (final IllegalArgumentException aex) {
+                setEmailError(aex.getMessage());
+                setPasswordError(aex.getMessage());
+
+                return false;
+            } catch (final Exception ex) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean succeed) {
+            setRefresh(false);
+            stopAnimation();
+            if (succeed) {
+                Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+                Login.this.finish();
+                startActivity(intent);
+
+            }
+        }
     }
 
     private class NavigateToExternalLoginProviderTask extends AsyncTask<String,Void,String> {
@@ -274,6 +377,21 @@ public class Login extends RESTfulActivity {
         });
     }
 
+
+    private void stopAnimation(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                frameAnimation.stop();
+                img.setVisibility(View.INVISIBLE);
+signIn.setText(R.string.signIn);
+            }
+        });
+
+
+
+
+    }
 
     //Nodig voor Picasso
 

@@ -13,7 +13,7 @@
         <activity
             android:name="be.evavzw.eva21daychallenge.activity.Login"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme.NoActionbar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,15 +23,6 @@
         <activity
             android:name="be.evavzw.eva21daychallenge.activity.Register"
             android:label="@string/title_activity_register"
-            android:parentActivityName="be.evavzw.eva21daychallenge.activity.Login"
-            android:theme="@style/AppTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="be.evavzw.eva21daychallenge.activity.Login" />
-        </activity>
-        <activity
-            android:name="be.evavzw.eva21daychallenge.activity.SignIn"
-            android:label="@string/title_activity_sign_in"
             android:parentActivityName="be.evavzw.eva21daychallenge.activity.Login"
             android:theme="@style/AppTheme">
             <meta-data
