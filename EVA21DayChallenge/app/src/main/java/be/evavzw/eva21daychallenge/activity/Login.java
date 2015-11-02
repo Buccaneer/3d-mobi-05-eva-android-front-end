@@ -21,6 +21,7 @@ import android.widget.Toast;
 import java.util.Map;
 
 import be.evavzw.eva21daychallenge.activity.base.RESTfulActivity;
+import be.evavzw.eva21daychallenge.activity.profile_setup.ProfileSetup;
 import be.evavzw.eva21daychallenge.security.UserManager;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -270,7 +271,7 @@ public class Login extends RESTfulActivity {
         @Override
         protected void onPostExecute(Boolean succeeded) {
             if(succeeded){
-                Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+                Intent intent = new Intent(getApplicationContext(), ProfileSetup.class);
                 Login.this.finish();
                 startActivity(intent);
             }

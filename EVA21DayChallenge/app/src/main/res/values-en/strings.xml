@@ -59,5 +59,24 @@
     <string name="emailInvalid">This isn\'t a valid email address</string>
     <string name="notAuthorized">Your account isn\'t authorized, please try logging back in</string>
     <string name="close">Close</string>
+    <string name="prev">Previous</string>
+    <string name="next">Next</string>
+    <string name="submit_confirm_message">Place the order with the deli? You will receive an email confirmation.</string>
+    <string name="submit_confirm_button">Place order</string>
+    <string name="finish">Submit order</string>
+    <string name="review">Review</string>
+    <string name="surname">Your surname</string>
+    <string name="givenname">Your given name</string>
+    <string name="personalInfo">Personal info</string>
+    <string name="typeOfVegetarian">What type of vegetarian are you?</string>
+    <string name="omnivore">Omnivore</string>
+    <string name="pescetarian">Pescetarian</string>
+    <string name="parttimeVegetarian">Parttime vegetarian</string>
+    <string name="vegetarian">Vegetarian</string>
+    <string name="vegan">Vegan</string>
+    <string name="other">Other</string>
+    <string name="numberHousehold">Number of people in your household</string>
+    <string name="age">Age</string>
+    <string name="yourAge">Your age</string>
 
 </resources>

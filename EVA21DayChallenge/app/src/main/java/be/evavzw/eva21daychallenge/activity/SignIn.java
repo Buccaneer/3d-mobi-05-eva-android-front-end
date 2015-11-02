@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import be.evavzw.eva21daychallenge.activity.base.RESTfulActivity;
+import be.evavzw.eva21daychallenge.activity.profile_setup.ProfileSetup;
 import be.evavzw.eva21daychallenge.security.UserManager;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -121,7 +122,7 @@ public class SignIn extends RESTfulActivity {
         protected void onPostExecute(Boolean succeed) {
             setRefresh(false);
             if (succeed) {
-                Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+                Intent intent = new Intent(getApplicationContext(), ProfileSetup.class);
                 SignIn.this.finish();
                 startActivity(intent);
             }

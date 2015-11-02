@@ -56,4 +56,7 @@
     <string name="error500">Er is iets verkeerd gegaan, probeer opnieuw a.u.b.</string>
     <string name="notAuthorized">Uw gebruiker heeft is niet geauthoriseerd, probeer opnieuw in te loggen</string>
     <string name="passwordsNotEqual">Wachtwoorden komen niet overeen</string>
+    <string name="title_activity_profile_setup">profile_setup</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>
