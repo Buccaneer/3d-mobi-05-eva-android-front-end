@@ -57,6 +57,34 @@
     <string name="notAuthorized">Uw gebruiker heeft is niet geauthoriseerd, probeer opnieuw in te loggen</string>
     <string name="passwordsNotEqual">Wachtwoorden komen niet overeen</string>
     <string name="title_activity_profile_setup">profile_setup</string>
-
-    <string name="hello_world">Hello world!</string>
+    <string name="age">Leeftijd</string>
+    <string name="close">Sluiten</string>
+    <string name="finish">Bevestigen</string>
+    <string name="givenname">Voornaam</string>
+    <string name="next">Volgende</string>
+    <string name="numberHousehold">Aantal gezinsleden</string>
+    <string name="omnivore">Omnivoor</string>
+    <string name="other">Ander</string>
+    <string name="parttimeVegetarian">Deeltijds vegetariër</string>
+    <string name="personalInfo">Persoonlijke info</string>
+    <string name="pescetarian">Pescetariaan</string>
+    <string name="prev">Vorige</string>
+    <string name="review">Herzien</string>
+    <string name="submit_confirm_button">Bevestigen</string>
+    <string name="submit_confirm_message">Bevestigen? U kunt dit later nog aanpassen in de instellingen.</string>
+    <string name="surname">Familienaam</string>
+    <string name="typeOfVegetarian">Welk type vegetariër bent u?</string>
+    <string name="vegan">Veganist</string>
+    <string name="vegetarian">Vegetariër</string>
+    <string name="yourAge">Leeftijd</string>
+    <string name="budgetAmount">Wat is uw budget?</string>
+    <string name="notShared">Niet gedeeld</string>
+    <string name="large">Hoog</string>
+    <string name="medium">Gemiddeld</string>
+    <string name="low">Laag</string>
+    <string name="allergicTo">Uw allergieën</string>
+    <string name="glutenFree">Glutenvrij</string>
+    <string name="sugarFree">Suikervrij</string>
+    <string name="peanuts">Pindanoten</string>
+    <string name="nuts">Noten</string>
 </resources>

@@ -170,7 +170,6 @@ public class RecipeChallengeListFragment extends RESTfulFragment {
                 list = recipeManager.getAllRecipes();
                 return true;
             } catch (Exception ex) {
-                // connectie mislukt
                 return false;
             }
         }

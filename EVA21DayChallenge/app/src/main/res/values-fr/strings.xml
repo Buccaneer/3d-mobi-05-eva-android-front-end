@@ -58,5 +58,36 @@
     <string name="error500">Something went wrong, please try again</string>
     <string name="notAuthorized">Your account isn\'t authorized, please try logging back in</string>
     <string name="passwordsNotEqual">Passwords are not equal</string>
+    <string name="glutenFree">Gluten</string>
+    <string name="givenname">Nom donné</string>
+    <string name="finish">Confirmer</string>
+    <string name="large">Haut</string>
+    <string name="low">Bas</string>
+    <string name="medium">Moyen</string>
+    <string name="next">Suivant</string>
+    <string name="numberHousehold">Nombre de personnes de votre ménage</string>
+    <string name="notShared">Non partagé</string>
+    <string name="allergicTo">Vos allergies</string>
+    <string name="age">Âge</string>
+    <string name="budgetAmount">Quel est votre budget?</string>
+    <string name="close">Fermer</string>
+    <string name="nuts">Noix</string>
+    <string name="omnivore">Omnivore</string>
+    <string name="other">Autre</string>
+    <string name="parttimeVegetarian">Végétarien à temps partiel</string>
+    <string name="peanuts">Cacahuètes</string>
+    <string name="personalInfo">Informations personnelles</string>
+    <string name="pescetarian">Pescetarian</string>
+    <string name="prev">Précédent</string>
+    <string name="review">Revue</string>
+    <string name="submit_confirm_button">Confirmer</string>
+    <string name="submit_confirm_message">Proposer? Vous pouvez changer cela plus tard dans les paramètres.</string>
+    <string name="sugarFree">Sans sucre</string>
+    <string name="surname">Surnom</string>
+    <string name="title_activity_profile_setup">profile_setup</string>
+    <string name="typeOfVegetarian">Quel type de végétarien êtes-vous?</string>
+    <string name="vegan">Végétalien</string>
+    <string name="vegetarian">Végétarien</string>
+    <string name="yourAge">Âge</string>
 
 </resources>

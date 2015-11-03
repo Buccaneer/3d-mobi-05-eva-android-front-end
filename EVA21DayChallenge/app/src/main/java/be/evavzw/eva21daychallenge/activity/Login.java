@@ -274,7 +274,7 @@ public class Login extends RESTfulActivity {
         @Override
         protected void onPostExecute(Boolean succeeded) {
             if (succeeded) {
-                Intent intent = new Intent(getApplicationContext(), ProfileSetup.class);
+                Intent intent = new Intent(getApplicationContext(), MainMenu.class);
                 Login.this.finish();
                 startActivity(intent);
             }

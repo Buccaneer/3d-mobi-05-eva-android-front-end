@@ -122,7 +122,7 @@ public class SignIn extends RESTfulActivity {
         protected void onPostExecute(Boolean succeed) {
             setRefresh(false);
             if (succeed) {
-                Intent intent = new Intent(getApplicationContext(), ProfileSetup.class);
+                Intent intent = new Intent(getApplicationContext(), MainMenu.class);
                 SignIn.this.finish();
                 startActivity(intent);
             }

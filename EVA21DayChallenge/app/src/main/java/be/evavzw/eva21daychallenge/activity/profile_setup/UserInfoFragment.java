@@ -25,6 +25,9 @@ public class UserInfoFragment extends Fragment {
     private TextView mSurnameView;
     private TextView mAgeView;
 
+    public UserInfoFragment() {
+    }
+
     public static UserInfoFragment create(String key) {
         Bundle args = new Bundle();
         args.putString(ARG_KEY, key);
@@ -32,9 +35,6 @@ public class UserInfoFragment extends Fragment {
         UserInfoFragment fragment = new UserInfoFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    public UserInfoFragment() {
     }
 
     @Override
@@ -134,6 +134,7 @@ public class UserInfoFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable editable) {
                 mPage.getData().putString(UserInfoPage.AGE_DATA_KEY, (editable != null) ? editable.toString() : null);
+                mPage.notifyDataChanged();
             }
         });
     }

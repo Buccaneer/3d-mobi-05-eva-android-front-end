@@ -4,6 +4,7 @@ import android.content.Context;
 
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.models.profile_setup.AbstractWizardModel;
+import be.evavzw.eva21daychallenge.models.profile_setup.MultipleFixedChoicePage;
 import be.evavzw.eva21daychallenge.models.profile_setup.PageList;
 import be.evavzw.eva21daychallenge.models.profile_setup.SingleFixedChoicePage;
 import be.evavzw.eva21daychallenge.models.profile_setup.UserInfoPage;
@@ -24,9 +25,24 @@ public class ProfileWizardModel extends AbstractWizardModel {
         String vegan = mContext.getResources().getString(R.string.vegan);
         String other = mContext.getResources().getString(R.string.other);
         String numberHousehold = mContext.getResources().getString(R.string.numberHousehold);
+        String budgetAmount = mContext.getResources().getString(R.string.budgetAmount);
+        String low = mContext.getResources().getString(R.string.low);
+        String medium = mContext.getResources().getString(R.string.medium);
+        String large = mContext.getResources().getString(R.string.large);
+        String notShared = mContext.getResources().getString(R.string.notShared);
+        String allergicTo = mContext.getResources().getString(R.string.allergicTo);
+        String glutenFree = mContext.getResources().getString(R.string.glutenFree);
+        String sugarFree = mContext.getResources().getString(R.string.sugarFree);
+        String peanuts = mContext.getResources().getString(R.string.peanuts);
+        String nuts = mContext.getResources().getString(R.string.nuts);
 
         return new PageList(
                 new UserInfoPage(this, personalInfo, mContext)
+                        .setRequired(true),
+                new MultipleFixedChoicePage(this, allergicTo)
+                        .setChoices(glutenFree, sugarFree, peanuts, nuts),
+                new SingleFixedChoicePage(this, budgetAmount)
+                        .setChoices(low, medium, large, notShared)
                         .setRequired(true),
                 new SingleFixedChoicePage(this, typeOfVegetarian)
                         .setChoices(omnivore, pescetarian, parttimeVegetarian, vegetarian, vegan, other)

@@ -17,6 +17,7 @@ import java.util.Map;
 
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.activity.base.RESTfulActivity;
+import be.evavzw.eva21daychallenge.activity.profile_setup.ProfileSetup;
 import be.evavzw.eva21daychallenge.exceptions.RegisterFailedException;
 import be.evavzw.eva21daychallenge.security.UserManager;
 import butterknife.Bind;
@@ -143,7 +144,7 @@ public class Register extends RESTfulActivity {
         protected void onPostExecute(Boolean succeed) {
             setRefresh(false);
             if (succeed) {
-                Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+                Intent intent = new Intent(getApplicationContext(), ProfileSetup.class);
                 Register.this.finish();
                 startActivity(intent);
             }

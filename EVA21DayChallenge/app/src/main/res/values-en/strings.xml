@@ -61,12 +61,12 @@
     <string name="close">Close</string>
     <string name="prev">Previous</string>
     <string name="next">Next</string>
-    <string name="submit_confirm_message">Place the order with the deli? You will receive an email confirmation.</string>
-    <string name="submit_confirm_button">Place order</string>
-    <string name="finish">Submit order</string>
+    <string name="submit_confirm_message">Submit? You can change this later in the settings.</string>
+    <string name="submit_confirm_button">Submit</string>
+    <string name="finish">Submit</string>
     <string name="review">Review</string>
-    <string name="surname">Your surname</string>
-    <string name="givenname">Your given name</string>
+    <string name="surname">Surname</string>
+    <string name="givenname">Given name</string>
     <string name="personalInfo">Personal info</string>
     <string name="typeOfVegetarian">What type of vegetarian are you?</string>
     <string name="omnivore">Omnivore</string>
@@ -77,6 +77,17 @@
     <string name="other">Other</string>
     <string name="numberHousehold">Number of people in your household</string>
     <string name="age">Age</string>
-    <string name="yourAge">Your age</string>
+    <string name="yourAge">Age</string>
+    <string name="glutenFree">Gluten free</string>
+    <string name="large">High</string>
+    <string name="low">Low</string>
+    <string name="medium">Medium</string>
+    <string name="notShared">Not shared</string>
+    <string name="allergicTo">Your allergies</string>
+    <string name="budgetAmount">What is your budget?</string>
+    <string name="nuts">Nuts</string>
+    <string name="peanuts">Peanuts</string>
+    <string name="sugarFree">Sugar free</string>
+    <string name="title_activity_profile_setup">profile_setup</string>
 
 </resources>
