@@ -28,6 +28,7 @@ import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.activity.base.RESTfulActivity;
 import be.evavzw.eva21daychallenge.exceptions.RegisterFailedException;
 import be.evavzw.eva21daychallenge.security.UserManager;
+import butterknife.OnClick;
 
 public class Register extends RESTfulActivity {
 
@@ -90,6 +91,13 @@ public class Register extends RESTfulActivity {
                 frameAnimation.start();
             }
         });
+    }
+
+    @OnClick(R.id.hidden_button)
+    public void showText(View v){
+        emailEditText.setText("fien@eva.be");
+        passwordEditText.setText("testje");
+        confirmPasswordEditText.setText("testje");
     }
 
     private void registerUser() {

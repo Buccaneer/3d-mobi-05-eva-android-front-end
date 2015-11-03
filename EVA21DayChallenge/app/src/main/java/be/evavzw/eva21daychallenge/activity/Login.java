@@ -61,6 +61,7 @@ public class Login extends RESTfulActivity {
     @Bind(R.id.blaadjes_achtergrond)
     ImageView img;
 
+
     private AnimationDrawable frameAnimation;
 
 
@@ -123,6 +124,13 @@ public class Login extends RESTfulActivity {
 
             }
         });
+    }
+
+
+    @OnClick(R.id.hidden_button)
+    public void showText(View v){
+        emailEditText.setText("fien@eva.be");
+        passwordEditText.setText("testje");
     }
 
    @OnClick(R.id.createAccount)
