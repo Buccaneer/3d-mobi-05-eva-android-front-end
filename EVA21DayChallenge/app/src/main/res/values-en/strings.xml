@@ -59,5 +59,6 @@
     <string name="emailInvalid">This isn\'t a valid email address</string>
     <string name="notAuthorized">Your account isn\'t authorized, please try logging back in</string>
     <string name="close">Close</string>
+    <string name="passwoordVergeten">Forgot password?</string>
 
 </resources>

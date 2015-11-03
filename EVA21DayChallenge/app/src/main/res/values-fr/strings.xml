@@ -58,5 +58,7 @@
     <string name="error500">Something went wrong, please try again</string>
     <string name="notAuthorized">Your account isn\'t authorized, please try logging back in</string>
     <string name="passwordsNotEqual">Passwords are not equal</string>
+    <string name="close">Fermer</string>
+    <string name="passwoordVergeten">Oublier mot de passe?</string>
 
 </resources>

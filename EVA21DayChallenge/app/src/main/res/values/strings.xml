@@ -49,6 +49,7 @@
     <string name="ingredientsTitle">Ingrediënten</string>
     <string name="extraTitle">Extra informatie</string>
     <string name="descriptionTitle">Bereiding</string>
+    <string name="passwoordVergeten">Wachtwoord vergeten?</string>
     <string name="UNamePwdIncorrect">Het e-mail of wachtwoord is verkeerd</string>
     <string name="couldntRetrieveErrors">Verzoek aan de server is mislukt, kan geen fouten laden</string>
     <string name="emailInvalid">Dit is geen geldig e-mail adres</string>
@@ -56,4 +57,5 @@
     <string name="error500">Er is iets verkeerd gegaan, probeer opnieuw a.u.b.</string>
     <string name="notAuthorized">Uw gebruiker heeft is niet geauthoriseerd, probeer opnieuw in te loggen</string>
     <string name="passwordsNotEqual">Wachtwoorden komen niet overeen</string>
+    <string name="close">Sluiten</string>
 </resources>
