@@ -47,7 +47,7 @@ public class Register extends RESTfulActivity {
     private UserManager userManager;
     @Bind(R.id.blaadjes_achtergrond)
     ImageView img;
-
+    //For custom progress circle
     private AnimationDrawable frameAnimation;
 
 
@@ -69,6 +69,7 @@ public class Register extends RESTfulActivity {
 
         userManager = UserManager.getInstance(this);
 
+        //This is done to get the background loaded
         Glide.with(getApplicationContext())
                 .load(R.drawable.achtergrond_login)
                 .asBitmap()
@@ -93,8 +94,9 @@ public class Register extends RESTfulActivity {
         });
     }
 
+    //hidden button for demo
     @OnClick(R.id.hidden_button)
-    public void showText(View v){
+    public void showText(View v) {
         emailEditText.setText("fien@eva.be");
         passwordEditText.setText("testje");
         confirmPasswordEditText.setText("testje");
@@ -220,6 +222,7 @@ public class Register extends RESTfulActivity {
         });
     }
 
+    //nodig om de personal progress circle te stoppen
     private void stopAnimation() {
         runOnUiThread(new Runnable() {
             @Override

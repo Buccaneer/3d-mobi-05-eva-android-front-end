@@ -30,6 +30,7 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
+
 import android.widget.Toast;
 
 import java.util.Map;
@@ -43,8 +44,7 @@ import be.evavzw.eva21daychallenge.R;
 
 public class Login extends RESTfulActivity {
 
-  @Bind(R.id.createAccount)
-  TextView createAccount;
+    
     @Bind(R.id.signIn)
     Button signIn;
     @Bind(R.id.eva_logo)
@@ -61,11 +61,8 @@ public class Login extends RESTfulActivity {
     @Bind(R.id.blaadjes_achtergrond)
     ImageView img;
 
-
+    //For custom progress circle
     private AnimationDrawable frameAnimation;
-
-
-
 
 
     @Override
@@ -85,9 +82,6 @@ public class Login extends RESTfulActivity {
         userManager = UserManager.getInstance(getApplicationContext());
 
         signIn.getBackground().setColorFilter(Color.parseColor("#afc137"), PorterDuff.Mode.MULTIPLY);
-/*
-        createAccount.getBackground().setColorFilter(Color.parseColor("#afc137"), PorterDuff.Mode.MULTIPLY);
-*/
 
         int newHeight = getResources().getDisplayMetrics().heightPixels / 6;
         int orgWidth = evaLogo.getDrawable().getIntrinsicWidth();
@@ -97,10 +91,10 @@ public class Login extends RESTfulActivity {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams((int) newWidth, newHeight);
         evaLogo.setLayoutParams(params);
         evaLogo.setScaleType(ImageView.ScaleType.CENTER_CROP);
-     //   loadBackground();
 
+        //This is done to get the background loaded
         Glide.with(getApplicationContext())
-        .load(R.drawable.achtergrond_login)
+                .load(R.drawable.achtergrond_login)
                 .asBitmap()
                 .into(new SimpleTarget<Bitmap>(this.getResources().getDisplayMetrics().widthPixels, this.getResources().getDisplayMetrics().heightPixels) {
                     @Override
@@ -126,31 +120,32 @@ public class Login extends RESTfulActivity {
         });
     }
 
-
+    //hidden button for demo
     @OnClick(R.id.hidden_button)
-    public void showText(View v){
+    public void showText(View v) {
         emailEditText.setText("fien@eva.be");
         passwordEditText.setText("testje");
     }
 
-   @OnClick(R.id.createAccount)
-    public void createAccountOnClick(View v){
+    @OnClick(R.id.createAccount)
+    public void createAccountOnClick(View v) {
         Intent intent = new Intent(v.getContext(), Register.class);
         startActivity(intent);
+        this.finish();
     }
 
     @OnClick(R.id.loginFacebookButton)
-    public void loginFacebookOnClick(){
+    public void loginFacebookOnClick() {
         handleExternalLogin("Facebook");
     }
 
     @OnClick(R.id.loginGoogleButton)
-    public void loginGoogleOnClick(){
+    public void loginGoogleOnClick() {
         handleExternalLogin("Google");
     }
 
     @OnClick(R.id.loginTwitterButton)
-    public void loginTwitterOnClick(){
+    public void loginTwitterOnClick() {
         handleExternalLogin("Twitter");
     }
 
@@ -180,7 +175,7 @@ public class Login extends RESTfulActivity {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
-                if(url.startsWith("http://evavzwrest.azurewebsites.net")){
+                if (url.startsWith("http://evavzwrest.azurewebsites.net")) {
                     if (url.contains("#access_token=")) {
                         String cookies = CookieManager.getInstance().getCookie(url);
                         String token = getToken(url);
@@ -189,7 +184,8 @@ public class Login extends RESTfulActivity {
                             RegisterExternalLoginTask rel = new RegisterExternalLoginTask();
                             rel.execute(token, cookies);
                         }
-                    } if (url.contains("#error=")) {
+                    }
+                    if (url.contains("#error=")) {
                         alertDialog.dismiss();
                     }
                 }
@@ -203,7 +199,7 @@ public class Login extends RESTfulActivity {
         //GetEncodedFragment shows us everything after the first # sign, this is where the access token starts
         //We then split on = and & and take the second element, this is the access token
         String[] access_token = Uri.parse(url).getEncodedFragment().split("\\&|=");
-        if (access_token.length <2)
+        if (access_token.length < 2)
             return null;
 
         return access_token[1];
@@ -279,7 +275,7 @@ public class Login extends RESTfulActivity {
         }
     }
 
-    private class NavigateToExternalLoginProviderTask extends AsyncTask<String,Void,String> {
+    private class NavigateToExternalLoginProviderTask extends AsyncTask<String, Void, String> {
 
         @Override
         protected void onPreExecute() {
@@ -288,18 +284,18 @@ public class Login extends RESTfulActivity {
 
         @Override
         protected String doInBackground(String... params) {
-             try {
-            Map<String, String> mdata = userManager.getExternalLoginProviders();
-            if (mdata.containsKey(params[0]))
-                return mdata.get(params[0]);
-               } catch (final Exception ex) {
-                 runOnUiThread(new Runnable() {
-                     @Override
-                     public void run() {
-                         Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
-                     }
-                 });
-             }
+            try {
+                Map<String, String> mdata = userManager.getExternalLoginProviders();
+                if (mdata.containsKey(params[0]))
+                    return mdata.get(params[0]);
+            } catch (final Exception ex) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
             return null;
         }
 
@@ -349,13 +345,13 @@ public class Login extends RESTfulActivity {
         }
     }
 
-    private class CheckIfCurrentTokenIsValidTask extends AsyncTask<Void, Void, Boolean>{
+    private class CheckIfCurrentTokenIsValidTask extends AsyncTask<Void, Void, Boolean> {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            try{
+            try {
                 return userManager.isTokenPresent() && userManager.isTokenValid();
-            }catch(final Exception ex){
+            } catch (final Exception ex) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -368,7 +364,7 @@ public class Login extends RESTfulActivity {
 
         @Override
         protected void onPostExecute(Boolean succeeded) {
-            if(succeeded){
+            if (succeeded) {
                 Intent intent = new Intent(getApplicationContext(), MainMenu.class);
                 Login.this.finish();
                 startActivity(intent);
@@ -376,7 +372,7 @@ public class Login extends RESTfulActivity {
         }
     }
 
-    private void setRefresh(final boolean refresh){
+    private void setRefresh(final boolean refresh) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -385,30 +381,19 @@ public class Login extends RESTfulActivity {
         });
     }
 
-
-    private void stopAnimation(){
+    //nodig om de personal progress circle te stoppen
+    private void stopAnimation() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 frameAnimation.stop();
                 img.setVisibility(View.INVISIBLE);
-signIn.setText(R.string.signIn);
+                signIn.setText(R.string.signIn);
             }
         });
 
 
-
-
     }
-
-    //Nodig voor Picasso
-
-/*
-    private void loadBackground() {
-
-        Picasso.with(this).load(R.drawable.achtergrond_login).into(loginScreen);
-    }
-*/
 
 
 }
