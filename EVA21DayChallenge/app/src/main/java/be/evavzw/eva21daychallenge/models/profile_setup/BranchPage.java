@@ -2,6 +2,7 @@ package be.evavzw.eva21daychallenge.models.profile_setup;
 
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class BranchPage extends SingleFixedChoicePage {
         mBranches.add(new Branch(choice, childPageList));
         return this;
     }
-    
+
     public BranchPage addBranch(String choice) {
         mBranches.add(new Branch(choice, new PageList()));
         return this;

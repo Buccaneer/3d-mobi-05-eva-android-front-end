@@ -17,26 +17,28 @@ public class RecipeManager {
 
     /**
      * Singleton class
+     *
      * @param context
      * @return instance of itself
      */
-    public static RecipeManager getInstance(Context context){
-        if(recipeManager == null){
+    public static RecipeManager getInstance(Context context) {
+        if (recipeManager == null) {
             recipeManager = new RecipeManager(context);
         }
 
         return recipeManager;
     }
 
-    private RecipeManager(Context context){
-        this.context=context;
+    private RecipeManager(Context context) {
+        this.context = context;
     }
 
     /**
      * Method to get all {@link Recipe}s from the server
+     *
      * @return a list of available {@link Recipe}s
      */
-    public List<Recipe> getAllRecipes(){
+    public List<Recipe> getAllRecipes() {
         return new GetAllRecipesRestMethod(context).execute().getResource();
     }
 }

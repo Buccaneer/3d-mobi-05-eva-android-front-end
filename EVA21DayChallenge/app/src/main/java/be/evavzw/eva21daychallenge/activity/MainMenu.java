@@ -6,17 +6,17 @@ import android.os.Handler;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.activity.base.RESTfulActivity;
+import be.evavzw.eva21daychallenge.activity.challenges.ChallengeActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import be.evavzw.eva21daychallenge.R;
-import be.evavzw.eva21daychallenge.activity.challenges.ChallengeActivity;
 
 public class MainMenu extends RESTfulActivity {
 
     private int mProgressStatus = 0;
-    private final double CUTOFF = 100.0/21.0;
+    private final double CUTOFF = 100.0 / 21.0;
     private Handler mHandler = new Handler();
     @Bind(R.id.progressDaysRemaining)
     ProgressBar progressBar;
@@ -24,8 +24,7 @@ public class MainMenu extends RESTfulActivity {
     TextView textViewProgress;
 
     @OnClick(R.id.button_challenge)
-    public void pickChallenge()
-    {
+    public void pickChallenge() {
         Intent intent = new Intent(MainMenu.this, ChallengeActivity.class);
         startActivity(intent);
     }
@@ -39,7 +38,7 @@ public class MainMenu extends RESTfulActivity {
         ButterKnife.bind(this);
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-  //      Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //      Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
 
        /* FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -61,7 +60,7 @@ public class MainMenu extends RESTfulActivity {
 
     public void setProgress() {
 
-        if(progressBar != null){
+        if (progressBar != null) {
             new Thread(new Runnable() {
                 public void run() {
                     while (mProgressStatus <= 60) {
@@ -70,7 +69,7 @@ public class MainMenu extends RESTfulActivity {
                         mHandler.post(new Runnable() {
                             public void run() {
                                 progressBar.setProgress(mProgressStatus);
-                                int progress = (int) (mProgressStatus/CUTOFF);
+                                int progress = (int) (mProgressStatus / CUTOFF);
                                 textViewProgress.setText(String.valueOf(21 - progress));
                             }
                         });
@@ -85,7 +84,7 @@ public class MainMenu extends RESTfulActivity {
         }
     }
 
-        //txvChallengeCountdown.setTypeface(Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/ArtistampMedium.ttf"));
+    //txvChallengeCountdown.setTypeface(Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/ArtistampMedium.ttf"));
 /*
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);

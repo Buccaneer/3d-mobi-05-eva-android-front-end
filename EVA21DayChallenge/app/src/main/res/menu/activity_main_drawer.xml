@@ -3,21 +3,27 @@
 
     <!--android:icon="@android:drawable/ic_menu_slideshow"-->
     <group android:checkableBehavior="single">
-        <item android:id="@+id/nav_recipes"
+        <item
+            android:id="@+id/nav_recipes"
             android:title="@string/recipes" />
-        <item android:id="@+id/nav_restaurants"
+        <item
+            android:id="@+id/nav_restaurants"
             android:title="@string/restaurants" />
     </group>
 
     <item android:title="@string/info">
         <menu>
-            <item android:id="@+id/nav_FAQ"
+            <item
+                android:id="@+id/nav_FAQ"
                 android:title="@string/FAQ" />
-            <item android:id="@+id/nav_about"
+            <item
+                android:id="@+id/nav_about"
                 android:title="@string/about" />
-            <item android:id="@+id/nav_settings"
+            <item
+                android:id="@+id/nav_settings"
                 android:title="@string/settings" />
-            <item android:id="@+id/nav_logout"
+            <item
+                android:id="@+id/nav_logout"
                 android:title="@string/logOut" />
         </menu>
     </item>

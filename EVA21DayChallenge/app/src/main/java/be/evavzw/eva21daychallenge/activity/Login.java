@@ -20,13 +20,13 @@ import android.widget.Toast;
 
 import java.util.Map;
 
+import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.activity.base.RESTfulActivity;
 import be.evavzw.eva21daychallenge.activity.profile_setup.ProfileSetup;
 import be.evavzw.eva21daychallenge.security.UserManager;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import be.evavzw.eva21daychallenge.R;
 
 /**
  * Main activity which the user sees upon login
@@ -45,7 +45,7 @@ public class Login extends RESTfulActivity {
 
     /**
      * Check if there's a token present and validate it, if it's valid this will redirect the user to the {@link MainMenu}
-      */
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -77,34 +77,35 @@ public class Login extends RESTfulActivity {
     }
 
     @OnClick(R.id.createAccount)
-    public void createAccountOnClick(View v){
+    public void createAccountOnClick(View v) {
         Intent intent = new Intent(v.getContext(), Register.class);
         startActivity(intent);
     }
 
     @OnClick(R.id.signIn)
-    public void signInOnClick(View v){
+    public void signInOnClick(View v) {
         Intent intent = new Intent(v.getContext(), SignIn.class);
         startActivity(intent);
     }
 
     @OnClick(R.id.loginFacebookButton)
-    public void loginFacebookOnClick(){
+    public void loginFacebookOnClick() {
         handleExternalLogin("Facebook");
     }
 
     @OnClick(R.id.loginGoogleButton)
-    public void loginGoogleOnClick(){
+    public void loginGoogleOnClick() {
         handleExternalLogin("Google");
     }
 
     @OnClick(R.id.loginTwitterButton)
-    public void loginTwitterOnClick(){
+    public void loginTwitterOnClick() {
         handleExternalLogin("Twitter");
     }
 
     /**
      * Handles login for external services, eg Facebook, Twitter, Google
+     *
      * @param service the service to be used for login
      */
     private void handleExternalLogin(String service) {
@@ -139,7 +140,7 @@ public class Login extends RESTfulActivity {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
-                if(url.startsWith("http://evavzwrest.azurewebsites.net")){
+                if (url.startsWith("http://evavzwrest.azurewebsites.net")) {
                     if (url.contains("#access_token=")) {
                         String cookies = CookieManager.getInstance().getCookie(url);
                         String token = getToken(url);
@@ -149,7 +150,8 @@ public class Login extends RESTfulActivity {
                             RegisterExternalLoginTask rel = new RegisterExternalLoginTask();
                             rel.execute(token, cookies);
                         }
-                    } if (url.contains("#error=")) {
+                    }
+                    if (url.contains("#error=")) {
                         alertDialog.dismiss();
                     }
                 }
@@ -163,6 +165,7 @@ public class Login extends RESTfulActivity {
 
     /**
      * Retrieves the token out of the WebView URL
+     *
      * @param url webview URL
      * @return Access token
      */
@@ -170,7 +173,7 @@ public class Login extends RESTfulActivity {
         //GetEncodedFragment shows us everything after the first # sign, this is where the access token starts
         //We then split on = and & and take the second element, this is the access token
         String[] access_token = Uri.parse(url).getEncodedFragment().split("\\&|=");
-        if (access_token.length <2)
+        if (access_token.length < 2)
             return null;
 
         return access_token[1];
@@ -182,7 +185,7 @@ public class Login extends RESTfulActivity {
     }
 
 
-    private class NavigateToExternalLoginProviderTask extends AsyncTask<String,Void,String> {
+    private class NavigateToExternalLoginProviderTask extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
             setRefresh(true);
@@ -190,18 +193,18 @@ public class Login extends RESTfulActivity {
 
         @Override
         protected String doInBackground(String... params) {
-             try {
-            Map<String, String> mdata = userManager.getExternalLoginProviders();
-            if (mdata.containsKey(params[0]))
-                return mdata.get(params[0]);
-               } catch (final Exception ex) {
-                 runOnUiThread(new Runnable() {
-                     @Override
-                     public void run() {
-                         Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
-                     }
-                 });
-             }
+            try {
+                Map<String, String> mdata = userManager.getExternalLoginProviders();
+                if (mdata.containsKey(params[0]))
+                    return mdata.get(params[0]);
+            } catch (final Exception ex) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
             return null;
         }
 
@@ -251,13 +254,13 @@ public class Login extends RESTfulActivity {
         }
     }
 
-    private class CheckIfCurrentTokenIsValidTask extends AsyncTask<Void, Void, Boolean>{
+    private class CheckIfCurrentTokenIsValidTask extends AsyncTask<Void, Void, Boolean> {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            try{
+            try {
                 return userManager.isTokenPresent() && userManager.isTokenValid();
-            }catch(final Exception ex){
+            } catch (final Exception ex) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -270,7 +273,7 @@ public class Login extends RESTfulActivity {
 
         @Override
         protected void onPostExecute(Boolean succeeded) {
-            if(succeeded){
+            if (succeeded) {
                 Intent intent = new Intent(getApplicationContext(), ProfileSetup.class);
                 Login.this.finish();
                 startActivity(intent);
@@ -280,9 +283,10 @@ public class Login extends RESTfulActivity {
 
     /**
      * Sets the ProgressBar visible or invisible, is called in the AsyncTasks at <code>onPreExecute()</code> or <code>onPostExecute()</code>
+     *
      * @param refresh
      */
-    private void setRefresh(final boolean refresh){
+    private void setRefresh(final boolean refresh) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

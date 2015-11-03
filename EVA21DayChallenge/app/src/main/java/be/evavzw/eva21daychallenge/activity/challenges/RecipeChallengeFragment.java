@@ -1,6 +1,5 @@
 package be.evavzw.eva21daychallenge.activity.challenges;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,18 +11,17 @@ import android.widget.TextView;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.models.Ingredient;
 import be.evavzw.eva21daychallenge.models.Recipe;
 import be.evavzw.eva21daychallenge.models.RecipeProperty;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by Pieter-Jan on 24/10/2015.
  */
-public class RecipeChallengeFragment extends Fragment
-{
+public class RecipeChallengeFragment extends Fragment {
     final static String ARG_RECIPE = "recipe";
 
     AppCompatActivity activity;
@@ -53,15 +51,13 @@ public class RecipeChallengeFragment extends Fragment
     TextView description;
 
     @Override
-    public void onCreate (Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recipe_challenge, null);
         ButterKnife.bind(this, view);
         return view;
@@ -84,23 +80,20 @@ public class RecipeChallengeFragment extends Fragment
     }
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
         Bundle args = getArguments();
         activity.getSupportActionBar().setTitle(((Recipe) args.getSerializable(ARG_RECIPE)).getName());
     }
 
     @Override
-    public void onPause ()
-    {
+    public void onPause() {
         super.onPause();
         // TODO
     }
 
     @Override
-    public void onStop ()
-    {
+    public void onStop() {
         super.onStop();
         // TODO
     }
@@ -115,15 +108,13 @@ public class RecipeChallengeFragment extends Fragment
 
         String[] ingredients = new String[recipe.getIngredients().size()];
         int counter = 0;
-        for (Ingredient i : recipe.getIngredients())
-        {
+        for (Ingredient i : recipe.getIngredients()) {
             ingredients[counter++] = (i.getQuantity() == 0 ? "" : i.getQuantity() + " ") + (i.getUnit().trim().equals("") ? "" : i.getUnit().trim() + " ") + i.getName().trim();
         }
         Arrays.sort(ingredients, new Vergelijker());
         String ingredients1 = "";
         String ingredients2 = "";
-        for (int i = 0; i < ingredients.length; i++)
-        {
+        for (int i = 0; i < ingredients.length; i++) {
             if (i % 2 == 0)
                 ingredients1 += "• " + ingredients[i] + (i < ingredients.length - 2 ? "\n" : "");
             else
@@ -143,15 +134,13 @@ public class RecipeChallengeFragment extends Fragment
         };*/
         String[] info = new String[recipe.getProperties().size()];
         counter = 0;
-        for (RecipeProperty p : recipe.getProperties())
-        {
+        for (RecipeProperty p : recipe.getProperties()) {
             info[counter++] = p.getType().trim() + ": " + p.getValue().trim();
         }
         Arrays.sort(info, new Vergelijker());
         String info1 = "";
         String info2 = "";
-        for (int i = 0; i < info.length; i++)
-        {
+        for (int i = 0; i < info.length; i++) {
             if (i % 2 == 0)
                 info1 += info[i] + (i < info.length - 2 ? "\n" : "");
             else
@@ -172,8 +161,7 @@ public class RecipeChallengeFragment extends Fragment
         String desc = recipe.getDescription();
         String[] descArray = desc.split("\\.");
         String formatted = "";
-        for (int i = 0; i < descArray.length; i++)
-        {
+        for (int i = 0; i < descArray.length; i++) {
             formatted += i + 1 + ". " + descArray[i] + ".\n";
         }
         //descriptionTitle.setText("Preparation");
@@ -181,8 +169,7 @@ public class RecipeChallengeFragment extends Fragment
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState)
-    {
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         /*if (savedInstanceState != null)
         {
@@ -194,8 +181,7 @@ public class RecipeChallengeFragment extends Fragment
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState)
-    {
+    public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         //Save the fragment's state here
         /*outState.putString("text", text);
@@ -203,25 +189,17 @@ public class RecipeChallengeFragment extends Fragment
         outState.putInt("challenge", currentChallenge);*/
     }
 
-    private void init()
-    {
+    private void init() {
         activity = (AppCompatActivity) getActivity();
     }
 
-    class Vergelijker implements Comparator<String>
-    {
-        public int compare(String o1, String o2)
-        {
-            if (o1.length() > o2.length())
-            {
+    class Vergelijker implements Comparator<String> {
+        public int compare(String o1, String o2) {
+            if (o1.length() > o2.length()) {
                 return 1;
-            }
-            else if (o1.length() < o2.length())
-            {
+            } else if (o1.length() < o2.length()) {
                 return -1;
-            }
-            else
-            {
+            } else {
                 return 0;
             }
         }

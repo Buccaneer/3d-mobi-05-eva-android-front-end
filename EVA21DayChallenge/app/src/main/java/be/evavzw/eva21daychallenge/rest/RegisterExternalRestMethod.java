@@ -1,20 +1,15 @@
 package be.evavzw.eva21daychallenge.rest;
 
 import android.content.Context;
-import android.util.Log;
 
-import com.google.gson.Gson;
-
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URI;
 import java.util.Arrays;
 
-import be.evavzw.eva21daychallenge.rest.framework.RestMethodFactory;
 import be.evavzw.eva21daychallenge.rest.framework.AbstractRestMethod;
 import be.evavzw.eva21daychallenge.rest.framework.Request;
-import be.evavzw.eva21daychallenge.R;
+import be.evavzw.eva21daychallenge.rest.framework.RestMethodFactory;
 
 /**
  * Handles external registration on our service eg Facebook
@@ -42,6 +37,7 @@ public class RegisterExternalRestMethod extends AbstractRestMethod<Void> {
 
     /**
      * Builds the {@link Request}
+     *
      * @return returns the built {@link Request}
      */
     @Override
@@ -50,9 +46,9 @@ public class RegisterExternalRestMethod extends AbstractRestMethod<Void> {
             JSONObject json = new JSONObject();
 
             json.put("Email", email);
-            Request r= new Request(RestMethodFactory.Method.POST,REQURI, json.toString().getBytes());
+            Request r = new Request(RestMethodFactory.Method.POST, REQURI, json.toString().getBytes());
             r.addHeader("Content-Type", Arrays.asList("application/json"));
-            r.addHeader("Cookie",Arrays.asList(cookie));
+            r.addHeader("Cookie", Arrays.asList(cookie));
             return r;
         } catch (Exception ex) {
             throw new IllegalArgumentException("Could not make Request.");
@@ -61,6 +57,7 @@ public class RegisterExternalRestMethod extends AbstractRestMethod<Void> {
 
     /**
      * There's no return for this request
+     *
      * @param responseBody JSON string returned by the server
      * @return <code>Void</code>
      * @throws Exception

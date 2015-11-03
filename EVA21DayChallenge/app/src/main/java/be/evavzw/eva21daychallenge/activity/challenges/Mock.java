@@ -3,8 +3,7 @@ package be.evavzw.eva21daychallenge.activity.challenges;
 /**
  * Created by Pieter-Jan on 24/10/2015.
  */
-public class Mock
-{
+public class Mock {
 
     static final String[] Categories = {"Cooking", "Restaurant", "Category3", "Category4", "Category5"};
 

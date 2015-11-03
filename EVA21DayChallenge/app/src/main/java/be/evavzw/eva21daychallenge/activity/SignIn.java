@@ -12,12 +12,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.activity.base.RESTfulActivity;
 import be.evavzw.eva21daychallenge.activity.profile_setup.ProfileSetup;
 import be.evavzw.eva21daychallenge.security.UserManager;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import be.evavzw.eva21daychallenge.R;
 
 public class SignIn extends RESTfulActivity {
 

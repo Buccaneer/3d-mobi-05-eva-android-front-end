@@ -18,8 +18,7 @@ import be.evavzw.eva21daychallenge.R;
 /**
  * Created by Pieter-Jan on 24/10/2015.
  */
-public class CategoryListFragment extends Fragment
-{
+public class CategoryListFragment extends Fragment {
     AppCompatActivity activity;
     ArrayAdapter<String> adapter;
     ListView listView;
@@ -28,82 +27,68 @@ public class CategoryListFragment extends Fragment
     OnCategorySelectedListener mCallback;
 
     // Container Activity must implement this interface
-    public interface OnCategorySelectedListener
-    {
+    public interface OnCategorySelectedListener {
         void onCategorySelected(int category);
     }
 
     @Override
-    public void onAttach(Activity activity)
-    {
+    public void onAttach(Activity activity) {
         super.onAttach(activity);
 
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
-        try
-        {
+        try {
             mCallback = (OnCategorySelectedListener) activity;
-        }
-        catch (ClassCastException e)
-        {
+        } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnHeadlineSelectedListener");
         }
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
     }
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
         activity.getSupportActionBar().setTitle(R.string.title_categoryList);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return listView;
     }
 
     @Override
-    public void onPause()
-    {
+    public void onPause() {
         super.onPause();
     }
 
     @Override
-    public void onStop()
-    {
+    public void onStop() {
         super.onStop();
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState)
-    {
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (savedInstanceState != null)
-        {
+        if (savedInstanceState != null) {
             //Restore the fragment's state here
             items = savedInstanceState.getStringArray("items");
         }
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState)
-    {
+    public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         //Save the fragment's state here
         //outState.putStringArray("items", items);
     }
 
-    private void init()
-    {
+    private void init() {
         activity = (AppCompatActivity) getActivity();
         items = Mock.Categories;
         adapter = new ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, items) {
@@ -121,10 +106,8 @@ public class CategoryListFragment extends Fragment
         listView.setAdapter(adapter);
         listView.setBackgroundColor(getResources().getColor(R.color.eva_lichtgrijs));
         // Create a message handling object as an anonymous class.
-        ListView.OnItemClickListener mMessageClickedHandler = new ListView.OnItemClickListener()
-        {
-            public void onItemClick(AdapterView parent, View v, int position, long id)
-            {
+        ListView.OnItemClickListener mMessageClickedHandler = new ListView.OnItemClickListener() {
+            public void onItemClick(AdapterView parent, View v, int position, long id) {
                 Log.e("ITEM", "ID=" + id + "\tPOSITION=" + position);
                 mCallback.onCategorySelected(position);
             }

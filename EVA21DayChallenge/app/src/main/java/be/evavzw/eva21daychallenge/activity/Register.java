@@ -15,12 +15,12 @@ import android.widget.Toast;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.activity.base.RESTfulActivity;
 import be.evavzw.eva21daychallenge.exceptions.RegisterFailedException;
 import be.evavzw.eva21daychallenge.security.UserManager;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class Register extends RESTfulActivity {
 
@@ -55,7 +55,7 @@ public class Register extends RESTfulActivity {
         evaLogo.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
         // Get instance of user manager
-        userManager  = UserManager.getInstance(this);
+        userManager = UserManager.getInstance(this);
 
         // TODO: Replace this with a Butterknife onclick method
         register.setOnClickListener(new View.OnClickListener() {
@@ -93,34 +93,34 @@ public class Register extends RESTfulActivity {
                 return true;
             } catch (RegisterFailedException rex) {
                 Map<String, List<String>> errors = rex.getMessages();
-                if(errors.containsKey("email")){
+                if (errors.containsKey("email")) {
                     StringBuilder errorDetails = new StringBuilder();
-                    for(String error : errors.get("email")){
-                        if(errorDetails.length()== 0){
+                    for (String error : errors.get("email")) {
+                        if (errorDetails.length() == 0) {
                             errorDetails.append(error);
-                        }else{
+                        } else {
                             errorDetails.append("\n").append(error);
                         }
                     }
                     setEmailError(errorDetails.toString());
                 }
-                if(errors.containsKey("password")){
+                if (errors.containsKey("password")) {
                     StringBuilder errorDetails = new StringBuilder();
-                    for(String error : errors.get("password")){
-                        if(errorDetails.length()== 0){
+                    for (String error : errors.get("password")) {
+                        if (errorDetails.length() == 0) {
                             errorDetails.append(error);
-                        }else{
+                        } else {
                             errorDetails.append("\n").append(error);
                         }
                     }
                     setPasswordError(errorDetails.toString());
                 }
-                if(errors.containsKey("confirmPassword")){
+                if (errors.containsKey("confirmPassword")) {
                     StringBuilder errorDetails = new StringBuilder();
-                    for(String error : errors.get("confirmPassword")){
-                        if(errorDetails.length()== 0){
+                    for (String error : errors.get("confirmPassword")) {
+                        if (errorDetails.length() == 0) {
                             errorDetails.append(error);
-                        }else{
+                        } else {
                             errorDetails.append("\n").append(error);
                         }
                     }
@@ -128,7 +128,7 @@ public class Register extends RESTfulActivity {
 
                 }
                 return false;
-            } catch  (final Exception ex) {
+            } catch (final Exception ex) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -142,7 +142,7 @@ public class Register extends RESTfulActivity {
         @Override
         protected void onPostExecute(Boolean succeed) {
             setRefresh(false);
-            if(succeed){
+            if (succeed) {
                 Intent intent = new Intent(getApplicationContext(), MainMenu.class);
                 Register.this.finish();
                 startActivity(intent);
@@ -150,7 +150,7 @@ public class Register extends RESTfulActivity {
         }
     }
 
-    private void setPasswordError(final String error){
+    private void setPasswordError(final String error) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -159,7 +159,7 @@ public class Register extends RESTfulActivity {
         });
     }
 
-    private void setConfirmPasswordError(final String error){
+    private void setConfirmPasswordError(final String error) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -168,7 +168,7 @@ public class Register extends RESTfulActivity {
         });
     }
 
-    private void setEmailError(final String error){
+    private void setEmailError(final String error) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -179,9 +179,10 @@ public class Register extends RESTfulActivity {
 
     /**
      * Sets the ProgressBar visible or invisible, is called in the AsyncTasks at <code>onPreExecute()</code> or <code>onPostExecute()</code>
+     *
      * @param toggle
      */
-    private void setRefresh(final boolean toggle){
+    private void setRefresh(final boolean toggle) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

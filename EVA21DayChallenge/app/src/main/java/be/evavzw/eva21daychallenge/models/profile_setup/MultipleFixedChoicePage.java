@@ -1,6 +1,7 @@
 package be.evavzw.eva21daychallenge.models.profile_setup;
 
 import android.support.v4.app.Fragment;
+
 import java.util.ArrayList;
 
 import be.evavzw.eva21daychallenge.activity.profile_setup.MultipleChoiceFragment;

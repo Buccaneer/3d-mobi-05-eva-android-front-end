@@ -1,5 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="be.evavzw.eva21daychallenge.activity.Register"
@@ -9,12 +10,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/logoPosition">
-        <ImageView android:id="@+id/eva_logo"
+
+        <ImageView
+            android:id="@+id/eva_logo"
             android:src="@drawable/eva_logo"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"/>
+            android:layout_width="wrap_content" />
     </LinearLayout>
-    
+
     <EditText
         android:id="@+id/email"
         android:hint="@string/email"
@@ -47,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:text="@string/vrouwelijkgeslacht"/>
     </RadioGroup>-->
-    
+
     <Button
         android:id="@+id/register"
         android:text="@string/register"

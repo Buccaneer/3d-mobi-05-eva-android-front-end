@@ -18,8 +18,7 @@ import be.evavzw.eva21daychallenge.activity.base.RESTfulFragment;
 /**
  * Created by Pieter-Jan on 26/10/2015.
  */
-public class RestaurantChallengeListFragment extends RESTfulFragment
-{
+public class RestaurantChallengeListFragment extends RESTfulFragment {
     //RestaurantManager restaurantManager; DOES NOT EXIST YET
 
     final static String ARG_RESTAURANT = "restaurant";
@@ -34,8 +33,7 @@ public class RestaurantChallengeListFragment extends RESTfulFragment
     OnRestaurantSelectedListener mCallback;
 
     // Container Activity must implement this interface
-    public interface OnRestaurantSelectedListener
-    {
+    public interface OnRestaurantSelectedListener {
         void onRestaurantSelected(/*Restaurant restaurant*/);
     }
 
@@ -54,15 +52,13 @@ public class RestaurantChallengeListFragment extends RESTfulFragment
     }
 
     @Override
-    public void onCreate (Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // If activity recreated (such as from screen rotate), restore
         // the previous article selection set by onSaveInstanceState().
         // This is primarily necessary when in the two-pane layout.
@@ -91,21 +87,18 @@ public class RestaurantChallengeListFragment extends RESTfulFragment
     }
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
         activity.getSupportActionBar().setTitle(R.string.title_restaurantList);
     }
 
     @Override
-    public void onPause ()
-    {
+    public void onPause() {
         super.onPause();
     }
 
     @Override
-    public void onStop ()
-    {
+    public void onStop() {
         super.onStop();
     }
 
@@ -127,11 +120,9 @@ public class RestaurantChallengeListFragment extends RESTfulFragment
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState)
-    {
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (savedInstanceState != null)
-        {
+        if (savedInstanceState != null) {
             //Restore the fragment's state here
             items = savedInstanceState.getStringArray("items");
             currentCategory = savedInstanceState.getInt("category");
@@ -139,23 +130,19 @@ public class RestaurantChallengeListFragment extends RESTfulFragment
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState)
-    {
+    public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         //Save the fragment's state here
         //outState.putStringArray("items", items);
         //outState.putInt("category", currentCategory);
     }
 
-    private void init()
-    {
+    private void init() {
         activity = (AppCompatActivity) getActivity();
         listView = new ListView(activity);
         listView.setId(View.generateViewId());
-        ListView.OnItemClickListener mMessageClickedHandler = new ListView.OnItemClickListener()
-        {
-            public void onItemClick(AdapterView parent, View v, int challenge, long id)
-            {
+        ListView.OnItemClickListener mMessageClickedHandler = new ListView.OnItemClickListener() {
+            public void onItemClick(AdapterView parent, View v, int challenge, long id) {
                 Log.e("ITEM", "ID=" + id + "\tVIEWID=" + v.getId());
                 //mCallback.onRecipeSelected(currentCategory, challenge);
                 mCallback.onRestaurantSelected(/*restaurants[challenge]*/);

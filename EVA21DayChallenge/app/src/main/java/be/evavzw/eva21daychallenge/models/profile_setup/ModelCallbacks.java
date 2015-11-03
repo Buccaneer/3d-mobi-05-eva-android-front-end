@@ -6,5 +6,6 @@ package be.evavzw.eva21daychallenge.models.profile_setup;
  */
 public interface ModelCallbacks {
     void onPageDataChanged(Page page);
+
     void onPageTreeChanged();
 }

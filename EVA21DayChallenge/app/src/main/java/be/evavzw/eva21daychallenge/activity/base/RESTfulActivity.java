@@ -63,7 +63,7 @@ public abstract class RESTfulActivity extends AppCompatActivity implements Navig
             @Override
             public void onGlobalLayout() {
                 View contentView = decorView.findViewById(android.R.id.content);
-                progressBar.setY(contentView.getY() +55);
+                progressBar.setY(contentView.getY() + 55);
 
                 ViewTreeObserver observer = progressBar.getViewTreeObserver();
                 observer.removeGlobalOnLayoutListener(this);
@@ -119,6 +119,7 @@ public abstract class RESTfulActivity extends AppCompatActivity implements Navig
 
     /**
      * Makes the ProgressBar visible or invisible, this is called by sub classes
+     *
      * @param toggle <code>if(true) show progressbar, else hide progressbar</code>
      */
     public void toggleProgressBar(boolean toggle) {

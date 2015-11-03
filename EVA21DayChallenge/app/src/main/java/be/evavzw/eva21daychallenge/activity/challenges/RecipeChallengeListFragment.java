@@ -23,8 +23,7 @@ import be.evavzw.eva21daychallenge.security.RecipeManager;
 /**
  * Created by Pieter-Jan on 24/10/2015.
  */
-public class RecipeChallengeListFragment extends RESTfulFragment
-{
+public class RecipeChallengeListFragment extends RESTfulFragment {
     RecipeManager recipeManager;
 
     final static String ARG_CATEGORY = "category";
@@ -39,8 +38,7 @@ public class RecipeChallengeListFragment extends RESTfulFragment
     OnRecipeSelectedListener mCallback;
 
     // Container Activity must implement this interface
-    public interface OnRecipeSelectedListener
-    {
+    public interface OnRecipeSelectedListener {
         //void onRecipeSelected(int category, int challenge);
         void onRecipeSelected(Recipe recipe);
     }
@@ -60,15 +58,13 @@ public class RecipeChallengeListFragment extends RESTfulFragment
     }
 
     @Override
-    public void onCreate (Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // If activity recreated (such as from screen rotate), restore
         // the previous article selection set by onSaveInstanceState().
         // This is primarily necessary when in the two-pane layout.
@@ -97,21 +93,18 @@ public class RecipeChallengeListFragment extends RESTfulFragment
     }
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
         activity.getSupportActionBar().setTitle(R.string.title_recipeList);
     }
 
     @Override
-    public void onPause ()
-    {
+    public void onPause() {
         super.onPause();
     }
 
     @Override
-    public void onStop ()
-    {
+    public void onStop() {
         super.onStop();
     }
 
@@ -125,11 +118,9 @@ public class RecipeChallengeListFragment extends RESTfulFragment
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState)
-    {
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (savedInstanceState != null)
-        {
+        if (savedInstanceState != null) {
             //Restore the fragment's state here
             items = savedInstanceState.getStringArray("items");
             currentCategory = savedInstanceState.getInt("category");
@@ -137,24 +128,20 @@ public class RecipeChallengeListFragment extends RESTfulFragment
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState)
-    {
+    public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         //Save the fragment's state here
         outState.putStringArray("items", items);
         outState.putInt("category", currentCategory);
     }
 
-    private void init()
-    {
+    private void init() {
         activity = (AppCompatActivity) getActivity();
         recipeManager = RecipeManager.getInstance(activity.getApplicationContext());
         listView = new ListView(activity);
         listView.setId(View.generateViewId());
-        ListView.OnItemClickListener mMessageClickedHandler = new ListView.OnItemClickListener()
-        {
-            public void onItemClick(AdapterView parent, View v, int challenge, long id)
-            {
+        ListView.OnItemClickListener mMessageClickedHandler = new ListView.OnItemClickListener() {
+            public void onItemClick(AdapterView parent, View v, int challenge, long id) {
                 Log.e("ITEM", "ID=" + id + "\tVIEWID=" + v.getId());
                 //mCallback.onRecipeSelected(currentCategory, challenge);
                 mCallback.onRecipeSelected(recipes[challenge]);
@@ -169,8 +156,7 @@ public class RecipeChallengeListFragment extends RESTfulFragment
         fetch.execute();
     }
 
-    class FetchChallengesTask extends AsyncTask<String, String, Boolean>
-    {
+    class FetchChallengesTask extends AsyncTask<String, String, Boolean> {
         List<Recipe> list;
 
         @Override
@@ -183,7 +169,7 @@ public class RecipeChallengeListFragment extends RESTfulFragment
             try {
                 list = recipeManager.getAllRecipes();
                 return true;
-            } catch  (Exception ex) {
+            } catch (Exception ex) {
                 // connectie mislukt
                 return false;
             }
@@ -192,7 +178,7 @@ public class RecipeChallengeListFragment extends RESTfulFragment
         @Override
         protected void onPostExecute(Boolean succeed) {
             //setRefresh(false);
-            if(succeed){
+            if (succeed) {
                 recipes = new Recipe[list.size()];
                 recipes = list.toArray(recipes);
                 items = new String[list.size()];

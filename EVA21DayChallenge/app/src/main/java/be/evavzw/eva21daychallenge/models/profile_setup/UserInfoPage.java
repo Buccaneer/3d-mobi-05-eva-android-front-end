@@ -3,6 +3,7 @@ package be.evavzw.eva21daychallenge.models.profile_setup;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+
 import java.util.ArrayList;
 
 import be.evavzw.eva21daychallenge.R;

@@ -1,5 +1,4 @@
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -33,7 +32,7 @@
             android:paddingTop="20dp"
             android:textColor="@color/eva_wit"
             android:textSize="@dimen/abc_text_size_medium_material"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <!--/FrameLayout-->
 
@@ -50,13 +49,13 @@
                 android:id="@+id/ingredientsLeft"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/ingredientsRight"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
         </LinearLayout>
 
@@ -83,7 +82,7 @@
             android:paddingTop="20dp"
             android:textColor="@color/eva_wit"
             android:textSize="@dimen/abc_text_size_medium_material"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <!--/FrameLayout-->
 
@@ -100,13 +99,13 @@
                 android:id="@+id/extraLeft"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/extraRight"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
         </LinearLayout>
 
@@ -122,7 +121,7 @@
             android:paddingTop="20dp"
             android:textColor="@color/eva_wit"
             android:textSize="@dimen/abc_text_size_medium_material"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/description"
@@ -131,7 +130,7 @@
             android:paddingBottom="10dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:paddingTop="10dp"/>
+            android:paddingTop="10dp" />
 
     </LinearLayout>
 </ScrollView>

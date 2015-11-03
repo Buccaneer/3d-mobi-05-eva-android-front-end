@@ -2,24 +2,22 @@ package be.evavzw.eva21daychallenge.activity.challenges;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.models.Recipe;
 
 
-public class ChallengeActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener, CategoryListFragment.OnCategorySelectedListener, RecipeChallengeListFragment.OnRecipeSelectedListener, RestaurantChallengeListFragment.OnRestaurantSelectedListener
-{
+public class ChallengeActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener, CategoryListFragment.OnCategorySelectedListener, RecipeChallengeListFragment.OnRecipeSelectedListener, RestaurantChallengeListFragment.OnRestaurantSelectedListener {
     FragmentManager fragmentManager;
 
     private boolean large = false;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fragmentManager = getFragmentManager();
         fragmentManager.addOnBackStackChangedListener(this);
@@ -57,8 +55,7 @@ public class ChallengeActivity extends AppCompatActivity implements FragmentMana
             }
         }*/
 
-        if (savedInstanceState == null)
-        {
+        if (savedInstanceState == null) {
             Log.e("ACTIVITY", "SAVED INSTANCE IS NULL");
             CategoryListFragment categoryListFragment = new CategoryListFragment();
             categoryListFragment.setArguments(getIntent().getExtras());
@@ -84,11 +81,9 @@ public class ChallengeActivity extends AppCompatActivity implements FragmentMana
     }
 
     @Override
-    public void onCategorySelected(int category)
-    {
+    public void onCategorySelected(int category) {
         // TODO make these check for actual categories rather than position once API supports categories
-        switch (category)
-        {
+        switch (category) {
             case 0:
                 //Create list with challenges
                 RecipeChallengeListFragment recipeListFragment = new RecipeChallengeListFragment();
@@ -98,8 +93,7 @@ public class ChallengeActivity extends AppCompatActivity implements FragmentMana
 
                 //Fragment transaction to show list with challenges
                 FragmentTransaction transaction0 = fragmentManager.beginTransaction();
-                if (large)
-                {
+                if (large) {
                     transaction0.replace(R.id.challengeListFrame, recipeListFragment, "challengeListFragment");
                 } else {
                     transaction0.replace(R.id.fragment_container, recipeListFragment, "challengeListFragment");
@@ -116,8 +110,7 @@ public class ChallengeActivity extends AppCompatActivity implements FragmentMana
 
                 //Fragment transaction to show list with challenges
                 FragmentTransaction transaction1 = fragmentManager.beginTransaction();
-                if (large)
-                {
+                if (large) {
                     Log.e("ACTIVITY", "ACTING LIKE A TABLET");
                     transaction1.replace(R.id.challengeListFrame, restaurantListFragment, "challengeListFragment");
                 } else {
@@ -151,8 +144,7 @@ public class ChallengeActivity extends AppCompatActivity implements FragmentMana
     }*/
 
     @Override
-    public void onRecipeSelected(Recipe recipe)
-    {
+    public void onRecipeSelected(Recipe recipe) {
         //Create list with challenges
         RecipeChallengeFragment challengeFragment = new RecipeChallengeFragment();
         Bundle args = new Bundle();
@@ -166,8 +158,7 @@ public class ChallengeActivity extends AppCompatActivity implements FragmentMana
 
         //Fragment transaction to show list with challenges
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        if (large)
-        {
+        if (large) {
             transaction.replace(R.id.challengeDetailFrame, challengeFragment, "challengeFragment");
         } else {
             transaction.replace(R.id.fragment_container, challengeFragment, "challengeFragment");
@@ -177,8 +168,7 @@ public class ChallengeActivity extends AppCompatActivity implements FragmentMana
     }
 
     @Override
-    public void onRestaurantSelected()
-    {
+    public void onRestaurantSelected() {
         //Create list with challenges
         RestaurantChallengeFragment challengeFragment = new RestaurantChallengeFragment();
         Bundle args = new Bundle();
@@ -187,8 +177,7 @@ public class ChallengeActivity extends AppCompatActivity implements FragmentMana
 
         //Fragment transaction to show list with challenges
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        if (large)
-        {
+        if (large) {
             transaction.replace(R.id.challengeDetailFrame, challengeFragment, "challengeFragment");
         } else {
             transaction.replace(R.id.fragment_container, challengeFragment, "challengeFragment");
@@ -198,10 +187,8 @@ public class ChallengeActivity extends AppCompatActivity implements FragmentMana
     }
 
     @Override
-    public boolean onSupportNavigateUp()
-    {
-        if (fragmentManager.getBackStackEntryCount() > 0)
-        {
+    public boolean onSupportNavigateUp() {
+        if (fragmentManager.getBackStackEntryCount() > 0) {
             fragmentManager.popBackStack();
         } else {
             finish();
@@ -210,15 +197,13 @@ public class ChallengeActivity extends AppCompatActivity implements FragmentMana
     }
 
     @Override
-    protected void onPause()
-    {
+    protected void onPause() {
         super.onPause();
         // TODO : Save here?
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState)
-    {
+    protected void onSaveInstanceState(Bundle outState) {
         Log.e("ACTIVITY", "SAVE INSTANCE STATE CALLED");
         super.onSaveInstanceState(outState);
         /*if (categoryListFragment != null && categoryListFragment.isAdded())
@@ -230,8 +215,7 @@ public class ChallengeActivity extends AppCompatActivity implements FragmentMana
     }
 
     @Override
-    public void onBackStackChanged()
-    {
+    public void onBackStackChanged() {
         /*ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             if (fragmentManager.getBackStackEntryCount() > 0)

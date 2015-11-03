@@ -20,10 +20,11 @@ public class Recipe implements Serializable {
 
     /**
      * Let the class build itself with a given {@link JSONObject}
+     *
      * @param jsonObject content for the class and for {@link Ingredient} and {@link RecipeProperty}
      * @throws Exception
      */
-    public Recipe(JSONObject jsonObject) throws Exception{
+    public Recipe(JSONObject jsonObject) throws Exception {
         ingredients = new ArrayList<>();
         properties = new ArrayList<>();
         parseJson(jsonObject);
@@ -31,10 +32,11 @@ public class Recipe implements Serializable {
 
     /**
      * Parses the {@link JSONObject} into objects and properties
+     *
      * @param jsonObject content for this class and sub classes
      * @throws Exception
      */
-    private void parseJson(JSONObject jsonObject) throws Exception{
+    private void parseJson(JSONObject jsonObject) throws Exception {
         name = jsonObject.getString("Name");
         description = jsonObject.getString("Description");
         image = jsonObject.getString("Image");
@@ -42,14 +44,14 @@ public class Recipe implements Serializable {
 
         JSONArray ingredientsArray = jsonObject.getJSONArray("Ingredients");
 
-        for(int i = 0; i < ingredientsArray.length(); i++){
+        for (int i = 0; i < ingredientsArray.length(); i++) {
             JSONObject jsonRow = ingredientsArray.getJSONObject(i);
             ingredients.add(new Ingredient(jsonRow));
         }
 
         JSONArray propertiesArray = jsonObject.getJSONArray("Properties");
 
-        for(int i = 0; i < propertiesArray.length(); i++){
+        for (int i = 0; i < propertiesArray.length(); i++) {
             JSONObject jsonRow = propertiesArray.getJSONObject(i);
             properties.add(new RecipeProperty(jsonRow));
         }

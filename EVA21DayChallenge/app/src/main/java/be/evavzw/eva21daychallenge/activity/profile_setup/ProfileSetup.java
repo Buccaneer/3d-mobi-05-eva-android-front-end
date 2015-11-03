@@ -2,12 +2,12 @@ package be.evavzw.eva21daychallenge.activity.profile_setup;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;

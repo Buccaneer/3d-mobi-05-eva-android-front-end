@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.models.profile_setup.UserInfoPage;
 
@@ -47,7 +48,7 @@ public class UserInfoFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_page_user_info, container, false);
         ((TextView) rootView.findViewById(R.id.pageTitle)).setText(mPage.getTitle());
 

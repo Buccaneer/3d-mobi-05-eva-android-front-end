@@ -8,15 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import be.evavzw.eva21daychallenge.R;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import be.evavzw.eva21daychallenge.R;
 
 /**
  * Created by Pieter-Jan on 26/10/2015.
  */
-public class RestaurantChallengeFragment extends Fragment
-{
+public class RestaurantChallengeFragment extends Fragment {
     final static String ARG_RESTAURANT = "restaurant";
 
     AppCompatActivity activity;
@@ -31,15 +30,13 @@ public class RestaurantChallengeFragment extends Fragment
     TextView restaurantProperties;
 
     @Override
-    public void onCreate (Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.restaurant_challenge, null);
         ButterKnife.bind(this, view);
         return view;
@@ -62,22 +59,19 @@ public class RestaurantChallengeFragment extends Fragment
     }
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
         activity.getSupportActionBar().setTitle("Qorn'r");
     }
 
     @Override
-    public void onPause ()
-    {
+    public void onPause() {
         super.onPause();
         // TODO
     }
 
     @Override
-    public void onStop ()
-    {
+    public void onStop() {
         super.onStop();
         // TODO
     }
@@ -92,19 +86,16 @@ public class RestaurantChallengeFragment extends Fragment
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState)
-    {
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState)
-    {
+    public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
     }
 
-    private void init()
-    {
+    private void init() {
         activity = (AppCompatActivity) getActivity();
     }
 

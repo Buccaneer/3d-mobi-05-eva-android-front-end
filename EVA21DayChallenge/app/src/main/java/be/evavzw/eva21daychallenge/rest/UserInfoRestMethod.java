@@ -5,13 +5,11 @@ import android.content.Context;
 import org.json.JSONObject;
 
 import java.net.URI;
-import java.util.Arrays;
 
+import be.evavzw.eva21daychallenge.models.User;
 import be.evavzw.eva21daychallenge.rest.framework.AbstractRestMethod;
 import be.evavzw.eva21daychallenge.rest.framework.Request;
 import be.evavzw.eva21daychallenge.rest.framework.RestMethodFactory;
-import be.evavzw.eva21daychallenge.models.User;
-import be.evavzw.eva21daychallenge.R;
 
 /**
  * Rest method to retrieve User information from the server
@@ -36,7 +34,7 @@ public class UserInfoRestMethod extends AbstractRestMethod<User> {
      */
     @Override
     protected Request buildRequest() {
-        Request r = new Request(RestMethodFactory.Method.GET, REQURI, new byte[] {});
+        Request r = new Request(RestMethodFactory.Method.GET, REQURI, new byte[]{});
         return r;
     }
 

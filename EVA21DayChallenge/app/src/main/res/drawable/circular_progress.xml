@@ -11,7 +11,7 @@
             android:angle="0"
             android:type="sweep"
             android:thicknessRatio="19.0">
-            <solid android:color="#032d18"/>
+            <solid android:color="#032d18" />
         </shape>
 
     </item>
@@ -25,7 +25,7 @@
                 android:angle="0"
                 android:type="sweep"
                 android:thicknessRatio="15.0">
-                <solid android:color="#afbd1f"/>
+                <solid android:color="#afbd1f" />
             </shape>
         </rotate>
     </item>

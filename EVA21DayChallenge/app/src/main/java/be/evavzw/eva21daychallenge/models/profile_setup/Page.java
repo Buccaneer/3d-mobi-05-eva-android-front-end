@@ -31,7 +31,7 @@ public abstract class Page implements PageTreeNode {
         mTitle = title;
     }
 
-    protected Page(ModelCallbacks callbacks, String title, Context context){
+    protected Page(ModelCallbacks callbacks, String title, Context context) {
         mCallbacks = callbacks;
         mTitle = title;
         mContext = context;
@@ -69,7 +69,10 @@ public abstract class Page implements PageTreeNode {
         return (mParentKey != null) ? mParentKey + ":" + mTitle : mTitle;
     }
 
-    public void getReviewItems(ArrayList<ReviewItem> dest){};
+    public void getReviewItems(ArrayList<ReviewItem> dest) {
+    }
+
+    ;
 
     public boolean isCompleted() {
         return true;

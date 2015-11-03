@@ -7,14 +7,12 @@ import org.json.JSONObject;
 
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import be.evavzw.eva21daychallenge.models.Recipe;
 import be.evavzw.eva21daychallenge.rest.framework.AbstractRestMethod;
 import be.evavzw.eva21daychallenge.rest.framework.Request;
 import be.evavzw.eva21daychallenge.rest.framework.RestMethodFactory;
-import be.evavzw.eva21daychallenge.R;
 
 /**
  * Rest method that returns all recipes from the server
@@ -23,7 +21,7 @@ public class GetAllRecipesRestMethod extends AbstractRestMethod<List<Recipe>> {
     private static final URI RECIPEURI = URI.create("http://evavzwrest.azurewebsites.net/api/Recipes");
     private Context context;
 
-    public GetAllRecipesRestMethod(Context context){
+    public GetAllRecipesRestMethod(Context context) {
         this.context = context;
     }
 
@@ -34,6 +32,7 @@ public class GetAllRecipesRestMethod extends AbstractRestMethod<List<Recipe>> {
 
     /**
      * Builds the {@link Request}
+     *
      * @return returns the {@link Request}
      */
     @Override
@@ -48,6 +47,7 @@ public class GetAllRecipesRestMethod extends AbstractRestMethod<List<Recipe>> {
 
     /**
      * Parses the http response body into their respective objects (recipes)
+     *
      * @param responseBody JSON string returned by the server
      * @return returns a list of available {@link Recipe}s
      * @throws Exception
@@ -58,7 +58,7 @@ public class GetAllRecipesRestMethod extends AbstractRestMethod<List<Recipe>> {
         List<Recipe> recipes = new ArrayList<>();
 
         //Let the objects themselves handle the JSON parsing
-        for(int i = 0; i < obj.length(); i++){
+        for (int i = 0; i < obj.length(); i++) {
             JSONObject jsonRow = obj.getJSONObject(i);
             recipes.add(new Recipe(jsonRow));
         }

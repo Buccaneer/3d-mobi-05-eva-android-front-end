@@ -4,8 +4,6 @@ import android.content.Context;
 
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.models.profile_setup.AbstractWizardModel;
-import be.evavzw.eva21daychallenge.models.profile_setup.BranchPage;
-import be.evavzw.eva21daychallenge.models.profile_setup.MultipleFixedChoicePage;
 import be.evavzw.eva21daychallenge.models.profile_setup.PageList;
 import be.evavzw.eva21daychallenge.models.profile_setup.SingleFixedChoicePage;
 import be.evavzw.eva21daychallenge.models.profile_setup.UserInfoPage;
@@ -20,10 +18,10 @@ public class ProfileWizardModel extends AbstractWizardModel {
         String personalInfo = mContext.getResources().getString(R.string.personalInfo);
         String typeOfVegetarian = mContext.getResources().getString(R.string.typeOfVegetarian);
         String omnivore = mContext.getResources().getString(R.string.omnivore);
-        String pescetarian =mContext.getResources().getString(R.string.pescetarian);
-        String parttimeVegetarian =mContext.getResources().getString(R.string.parttimeVegetarian);
-        String vegetarian =mContext.getResources().getString(R.string.vegetarian);
-        String vegan =mContext.getResources().getString(R.string.vegan);
+        String pescetarian = mContext.getResources().getString(R.string.pescetarian);
+        String parttimeVegetarian = mContext.getResources().getString(R.string.parttimeVegetarian);
+        String vegetarian = mContext.getResources().getString(R.string.vegetarian);
+        String vegan = mContext.getResources().getString(R.string.vegan);
         String other = mContext.getResources().getString(R.string.other);
         String numberHousehold = mContext.getResources().getString(R.string.numberHousehold);
 
