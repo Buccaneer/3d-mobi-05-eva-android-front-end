@@ -2,6 +2,9 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">#afbd1f</item>
+        <item name="colorPrimaryDark">#74a818</item>
+        <item name="colorAccent">#f25b21</item>
     </style>
 
     <style name="AppTheme.NoActionbar">
@@ -21,6 +24,14 @@
         <item name="android:paddingTop">5dp</item>
         <item name="android:textColor">#ffffff</item>
         <item name="android:textSize">14.0dp</item>
+    </style>
+
+    <style name="Widget.CardContent" parent="android:Widget">
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingTop">24dp</item>
+        <item name="android:paddingBottom">24dp</item>
+        <item name="android:orientation">vertical</item>
     </style>
 
     <style name="com_facebook_loginview_default_style" parent="com_facebook_button">

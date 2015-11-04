@@ -42,7 +42,13 @@
             android:name=".activity.challenges.ChallengeActivity"
             android:label="@string/title_activity_challenge"
             android:parentActivityName=".activity.MainMenu"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme.NoActionbar">
+        </activity>
+        <activity
+            android:name=".activity.challenges.ChallengeDetailActivity"
+            android:label="@string/title_activity_challenge"
+            android:parentActivityName=".activity.challenges.ChallengeActivity"
+            android:theme="@style/AppTheme.NoActionbar">
         </activity>
         <activity
             android:name=".activity.MainMenu"
