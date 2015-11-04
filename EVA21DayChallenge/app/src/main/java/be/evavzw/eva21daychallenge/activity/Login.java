@@ -140,7 +140,7 @@ public class Login extends RESTfulActivity {
     public void createAccountOnClick(View v) {
         Intent intent = new Intent(v.getContext(), Register.class);
         startActivity(intent);
-        
+
     }
 
     @OnClick(R.id.loginFacebookButton)

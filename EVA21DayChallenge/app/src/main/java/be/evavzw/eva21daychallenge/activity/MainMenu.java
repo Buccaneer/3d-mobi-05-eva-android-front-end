@@ -1,10 +1,19 @@
 package be.evavzw.eva21daychallenge.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ClipDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.widget.DrawerLayout;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 
 import be.evavzw.eva21daychallenge.activity.base.RESTfulActivity;
 import butterknife.Bind;
@@ -22,6 +31,10 @@ public class MainMenu extends RESTfulActivity {
     ProgressBar progressBar;
     @Bind(R.id.textViewProgress)
     TextView textViewProgress;
+    @Bind(R.id.drawer_layout)
+    DrawerLayout main;
+
+
 
     @OnClick(R.id.button_challenge)
     public void pickChallenge()
@@ -57,7 +70,21 @@ public class MainMenu extends RESTfulActivity {
 
         progressBar.setProgress(100);
         setProgress();
+
+        Glide.with(getApplicationContext())
+                .load(R.drawable.csillagoszold)
+                .asBitmap()
+                .into(new SimpleTarget<Bitmap>(this.getResources().getDisplayMetrics().widthPixels, this.getResources().getDisplayMetrics().heightPixels) {
+                    @Override
+                    public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
+                        BitmapDrawable background = new BitmapDrawable(bitmap);
+                        main.setBackgroundDrawable(background);
+                    }
+                });
+
+
     }
+
 
     public void setProgress() {
 
