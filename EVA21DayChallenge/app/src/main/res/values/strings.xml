@@ -51,12 +51,17 @@
     <string name="ingredientsTitle">Ingrediënten</string>
     <string name="extraTitle">Extra informatie</string>
     <string name="descriptionTitle">Bereiding</string>
-
-    <string name="cheese_ipsum">Jarlsberg lancashire edam. Dolcelatte hard cheese brie st. agur blue
-        cheese caerphilly bavarian bergkase cheese and biscuits mascarpone. Cheeseburger swiss bavarian
-    bergkase cream cheese fromage frais cheesy feet port-salut airedale. St. agur blue cheese rubber
-    cheese caerphilly cheddar cheesecake cream cheese manchego lancashire. Roquefort squirty cheese
-    the big cheese.</string>
+    <string name="category_cooking">Koken</string>
+    <string name="category_restaurant">Uit eten</string>
+    <string name="category_sugarfree">Suikervrij</string>
+    <string name="category_cooking_descr">Bij deze challenge is het de bedoeling dat je iets plantaardig kookt. We maken hier even een lange tekst van zodat we de invloed van lange teksten op de layout kunnen testen. Dit is erg belangrijk. Deze tekst komt uit de strings.xml file.</string>
+    <string name="category_restaurant_descr">Bij deze challenge is het de bedoeling dat je ergens plantaardig uit eten gaat. Deze tekst komt uit de strings.xml file.</string>
+    <string name="category_sugarfree_descr">Bij deze challenge is het de bedoeling dat je een hele dag lang suikervrij leeft. Deze tekst komt uit de strings.xml file.</string>
+    <string name="address">Adres</string>
+    <string name="properties">Gegevens</string>
+    <string name="description">Beschrijving</string>
+    <string name="phone">Tel.</string>
+    <string name="website">Website</string>
     <string name="checkin">Checkin</string>
     <string name="menu_settings">Settings</string>
 </resources>

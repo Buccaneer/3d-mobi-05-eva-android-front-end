@@ -28,7 +28,81 @@ public class Mock
             "Qorn'r", "Qorn'r", "Qorn'r", "Qorn'r", "Qorn'r"
     };
 
-    static final String json =
+    static final String restaurants =
+                    "   [ {  "  +
+                    "     \"Name\": \"Water en vuur\",  "  +
+                    "     \"Longitute\": 2.8532383,  "  +
+                    "     \"Latitude\": 51.0244082,  "  +
+                    "     \"Description\": \"Kroket van Keiems Bloempje, salade met gefrituurde oesterzwammen, rijkelijk gevulde tortilla, ... Alle wijnen zijn bio, er zijn versgeperste vruchtensapjes, streekbiertjes (nat en straf) verkrijgbaar.\r\nBinnenruim voor 50 personen en dekterras voor 40 personen.\",  "  +
+                    "     \"Website\": \"http://www.waterenvuur.be\",  "  +
+                    "     \"Email\": \"info@waterenvuur.be\",  "  +
+                    "     \"Phone\": \"0498/56.55.55\",  "  +
+                    "     \"Street\": \"IJzerdijk 48\",  "  +
+                    "     \"Postal\": 8600,  "  +
+                    "     \"City\": \"Diksmuide \",  "  +
+                    "     \"RestaurantId\": 24  "  +
+                    "  },  "  +
+                    "   {  "  +
+                    "     \"Name\": \"Red Rooster Fast Food\",  "  +
+                    "     \"Longitute\": 3.1045063,  "  +
+                    "     \"Latitude\": 51.0647155,  "  +
+                    "     \"Description\": \"Vegetarische pizza's, schnitzels natuur of met broccoli, vegetarische\r\nnuggets, veggie balletjes, nasi goreng rollen, broccoli nuggets, veggie\r\nloempia's, groentenschijven, diverse veggieburgers.\",  "  +
+                    "     \"Website\": \"http://www.redrooster.be\",  "  +
+                    "     \"Email\": \"\",  "  +
+                    "     \"Phone\": \"050/217541\",  "  +
+                    "     \"Street\": \"Stationsstraat 15\",  "  +
+                    "     \"Postal\": 8820,  "  +
+                    "     \"City\": \"Torhout\",  "  +
+                    "     \"RestaurantId\": 156  "  +
+                    "  }  ]" ;
+
+    static final String restaurant24 =
+                    "   {  "  +
+                    "     \"Name\": \"Water en vuur\",  "  +
+                    "     \"Longitute\": 2.8532383,  "  +
+                    "     \"Latitude\": 51.0244082,  "  +
+                    "     \"Description\": \"Kroket van Keiems Bloempje, salade met gefrituurde oesterzwammen, rijkelijk gevulde tortilla, ... Alle wijnen zijn bio, er zijn versgeperste vruchtensapjes, streekbiertjes (nat en straf) verkrijgbaar.\r\nBinnenruim voor 50 personen en dekterras voor 40 personen.\",  "  +
+                    "     \"Website\": \"http://www.waterenvuur.be\",  "  +
+                    "     \"Email\": \"info@waterenvuur.be\",  "  +
+                    "     \"Phone\": \"0498/56.55.55\",  "  +
+                    "     \"Street\": \"IJzerdijk 48\",  "  +
+                    "     \"Postal\": 8600,  "  +
+                    "     \"City\": \"Diksmuide \",  "  +
+                    "     \"RestaurantId\": 24  "  +
+                    "  }  " ;
+
+    static final String restaurant156 =
+                    "   {  "  +
+                    "     \"Name\": \"Red Rooster Fast Food\",  "  +
+                    "     \"Longitute\": 3.1045063,  "  +
+                    "     \"Latitude\": 51.0647155,  "  +
+                    "     \"Description\": \"Vegetarische pizza's, schnitzels natuur of met broccoli, vegetarische\r\nnuggets, veggie balletjes, nasi goreng rollen, broccoli nuggets, veggie\r\nloempia's, groentenschijven, diverse veggieburgers.\",  "  +
+        "     \"Website\": \"http://www.redrooster.be\",  "  +
+        "     \"Email\": \"\",  "  +
+        "     \"Phone\": \"050/217541\",  "  +
+        "     \"Street\": \"Stationsstraat 15\",  "  +
+        "     \"Postal\": 8820,  "  +
+        "     \"City\": \"Torhout\",  "  +
+        "     \"RestaurantId\": 156  "  +
+        "  }  " ;
+
+    static final String restaurantLocations =
+            "   [  "  +
+            "     {  "  +
+            "       \"Latitude\": 51.0244082,  "  +
+            "       \"Longitude\": 2.8532383,  "  +
+            "       \"Id\": 24,  "  +
+            "       \"Distance\": 17.600443832471996  "  +
+            "     },  "  +
+            "     {  "  +
+            "       \"Latitude\": 51.0647155,  "  +
+            "       \"Longitude\": 3.1045063,  "  +
+            "       \"Id\": 156,  "  +
+            "       \"Distance\": 9.948271896831985  "  +
+            "     }  "  +
+            "  ]  " ;
+
+    static final String recipes =
             "   [  "  +
                     "     "  +
                     "       {  "  +

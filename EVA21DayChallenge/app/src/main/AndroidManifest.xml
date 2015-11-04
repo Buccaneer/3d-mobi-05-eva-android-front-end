@@ -45,7 +45,13 @@
             android:theme="@style/AppTheme.NoActionbar">
         </activity>
         <activity
-            android:name=".activity.challenges.ChallengeDetailActivity"
+            android:name=".activity.challenges.RecipeDetailActivity"
+            android:label="@string/title_activity_challenge"
+            android:parentActivityName=".activity.challenges.ChallengeActivity"
+            android:theme="@style/AppTheme.NoActionbar">
+        </activity>
+        <activity
+            android:name=".activity.challenges.RestaurantDetailActivity"
             android:label="@string/title_activity_challenge"
             android:parentActivityName=".activity.challenges.ChallengeActivity"
             android:theme="@style/AppTheme.NoActionbar">

@@ -28,7 +28,7 @@ import evavzw.be.eva21daychallenge.models.RecipeProperty;
 /**
  * Created by Pieter-Jan on 2/11/2015.
  */
-public class ChallengeDetailActivity extends AppCompatActivity {
+public class RecipeDetailActivity extends AppCompatActivity {
 
     public static final String RECIPE = "recipe";
 
@@ -70,7 +70,7 @@ public class ChallengeDetailActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_challenge_detail);
+        setContentView(R.layout.recipe_details);
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         ((NestedScrollView)findViewById(R.id.nestedScrollView)).addView(inflater.inflate(R.layout.recipe_challenge, null));
@@ -123,7 +123,7 @@ public class ChallengeDetailActivity extends AppCompatActivity {
 
     private void loadBackdrop() {
         final ImageView imageView = (ImageView) findViewById(R.id.backdrop);
-        Glide.with(this).load(recipe.getImage()/*Cheeses.getRandomCheeseDrawable()*/).centerCrop().into(imageView);
+        Glide.with(this).load(recipe.getImage()/*Images.getRandomCheeseDrawable()*/).centerCrop().into(imageView);
     }
 
     @Override
