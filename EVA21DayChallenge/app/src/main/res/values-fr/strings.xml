@@ -68,7 +68,7 @@
     <string name="numberHousehold">Nombre de personnes de votre ménage</string>
     <string name="notShared">Non partagé</string>
     <string name="allergicTo">Vos allergies</string>
-    <string name="age">Âge</string>
+    <string name="age">Date de naissance</string>
     <string name="budgetAmount">Quel est votre budget?</string>
     <string name="close">Fermer</string>
     <string name="nuts">Noix</string>
@@ -85,9 +85,9 @@
     <string name="sugarFree">Sans sucre</string>
     <string name="surname">Surnom</string>
     <string name="title_activity_profile_setup">profile_setup</string>
-    <string name="typeOfVegetarian">Quel type de végétarien êtes-vous?</string>
+    <string name="typeOfVegetarian">Êtes-vous végétarien?</string>
     <string name="vegan">Végétalien</string>
     <string name="vegetarian">Végétarien</string>
-    <string name="yourAge">Âge</string>
+    <string name="yourAge">Date de naissance</string>
 
 </resources>

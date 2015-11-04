@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -130,7 +131,7 @@ public class ProfileSetup extends android.support.v4.app.FragmentActivity implem
         Bundle bundle = new Bundle();
         Bundle bundle1 = new Bundle();
         String personalInfo = getApplicationContext().getResources().getString(R.string.personalInfo);
-        bundle1.putString(UserInfoPage.AGE_DATA_KEY, String.valueOf(23));
+        bundle1.putString(UserInfoPage.AGE_DATA_KEY, "27-05-1992");
         bundle1.putString(UserInfoPage.SURNAME_DATA_KEY, "Louwagie");
         bundle1.putString(UserInfoPage.GIVEN_NAME_DATA_KEY, "Fien");
         bundle.putBundle(personalInfo, bundle1);

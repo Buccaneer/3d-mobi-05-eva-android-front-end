@@ -1,6 +1,7 @@
 package be.evavzw.eva21daychallenge.activity.profile_setup;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,7 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.Calendar;
 
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.models.profile_setup.UserInfoPage;
@@ -60,8 +65,41 @@ public class UserInfoFragment extends Fragment {
 
         mAgeView = ((TextView) rootView.findViewById(R.id.agePicker));
         mAgeView.setText(mPage.getData().getString(UserInfoPage.AGE_DATA_KEY));
+
+        mAgeView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePicker();
+            }
+        });
+
         return rootView;
     }
+
+    private void showDatePicker(){
+        DatePickerFragment date = new DatePickerFragment();
+        /**
+         * Set Up Current Date Into dialog
+         */
+        Calendar calender = Calendar.getInstance();
+        Bundle args = new Bundle();
+        args.putInt("year", calender.get(Calendar.YEAR));
+        args.putInt("month", calender.get(Calendar.MONTH));
+        args.putInt("day", calender.get(Calendar.DAY_OF_MONTH));
+        date.setArguments(args);
+        /**
+         * Set Call back to capture selected date
+         */
+        date.setCallBack(ondate);
+        date.show(getFragmentManager(), "Date Picker");
+    }
+
+    DatePickerDialog.OnDateSetListener ondate = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            mAgeView.setText(dayOfMonth + "-" + monthOfYear + "-" + year);
+        }
+    };
 
     @Override
     public void onAttach(Activity activity) {

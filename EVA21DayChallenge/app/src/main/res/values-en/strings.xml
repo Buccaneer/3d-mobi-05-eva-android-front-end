@@ -68,7 +68,7 @@
     <string name="surname">Surname</string>
     <string name="givenname">Given name</string>
     <string name="personalInfo">Personal info</string>
-    <string name="typeOfVegetarian">What type of vegetarian are you?</string>
+    <string name="typeOfVegetarian">Are you vegetarian?</string>
     <string name="omnivore">Omnivore</string>
     <string name="pescetarian">Pescetarian</string>
     <string name="parttimeVegetarian">Parttime vegetarian</string>
@@ -76,8 +76,8 @@
     <string name="vegan">Vegan</string>
     <string name="other">Other</string>
     <string name="numberHousehold">Number of people in your household</string>
-    <string name="age">Age</string>
-    <string name="yourAge">Age</string>
+    <string name="age">Date of birth</string>
+    <string name="yourAge">Date of birth</string>
     <string name="glutenFree">Gluten free</string>
     <string name="large">High</string>
     <string name="low">Low</string>
