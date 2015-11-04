@@ -72,7 +72,7 @@ public class MainMenu extends RESTfulActivity {
         setProgress();
 
         Glide.with(getApplicationContext())
-                .load(R.drawable.csillagoszold)
+                .load(R.drawable.testje2)
                 .asBitmap()
                 .into(new SimpleTarget<Bitmap>(this.getResources().getDisplayMetrics().widthPixels, this.getResources().getDisplayMetrics().heightPixels) {
                     @Override
@@ -98,7 +98,7 @@ public class MainMenu extends RESTfulActivity {
                             public void run() {
                                 progressBar.setProgress(mProgressStatus);
                                 int progress = (int) (mProgressStatus/CUTOFF);
-                                textViewProgress.setText(String.valueOf(21 - progress));
+                                textViewProgress.setText(String.valueOf(progress));
                             }
                         });
                         try {

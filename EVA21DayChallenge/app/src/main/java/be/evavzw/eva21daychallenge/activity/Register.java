@@ -1,6 +1,7 @@
 package be.evavzw.eva21daychallenge.activity;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -72,17 +73,8 @@ public class Register extends RESTfulActivity {
         // Get instance of user manager
         userManager  = UserManager.getInstance(this);
 
-        //This is done to get the background loaded
-        Glide.with(getApplicationContext())
-                .load(R.drawable.achtergrond_login)
-                .asBitmap()
-                .into(new SimpleTarget<Bitmap>(this.getResources().getDisplayMetrics().widthPixels, this.getResources().getDisplayMetrics().heightPixels) {
-                    @Override
-                    public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
-                        BitmapDrawable background = new BitmapDrawable(bitmap);
-                        registerLayout.setBackgroundDrawable(background);
-                    }
-                });
+
+        loadBackground();
 
         // TODO: Replace this with a Butterknife onclick method
         register.setOnClickListener(new View.OnClickListener() {
@@ -96,6 +88,31 @@ public class Register extends RESTfulActivity {
                 frameAnimation.start();
             }
         });
+    }
+    //Needed for portrait/landscape background
+    private void loadBackground() {
+        int orientation=this.getResources().getConfiguration().orientation;
+        if(orientation== Configuration.ORIENTATION_PORTRAIT){
+            Glide.with(getApplicationContext())
+                    .load(R.drawable.achtergrond_login)
+                    .asBitmap()
+                    .into(new SimpleTarget<Bitmap>(this.getResources().getDisplayMetrics().widthPixels, this.getResources().getDisplayMetrics().heightPixels) {
+                        @Override
+                        public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
+                            BitmapDrawable background = new BitmapDrawable(bitmap);
+                            registerLayout.setBackgroundDrawable(background);
+                        }
+                    });
+        }
+        else{
+            Glide.with(getApplicationContext()).load(R.drawable.landscapeachtergrond).asBitmap().into(new SimpleTarget<Bitmap>(this.getResources().getDisplayMetrics().widthPixels, this.getResources().getDisplayMetrics().heightPixels) {
+                @Override
+                public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
+                    BitmapDrawable background = new BitmapDrawable(bitmap);
+                    registerLayout.setBackgroundDrawable(background);
+                }
+            });
+        }
     }
 
     /**

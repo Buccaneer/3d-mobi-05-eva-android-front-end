@@ -43,7 +43,7 @@
     <string name="recipes">Recipes</string>
     <string name="restaurants">Restaurants</string>
     <string name="settings">Settings</string>
-    <string name="welcome">Bienvenue au EVA 21 Day Challenge!</string>
+    <string name="welcome">EVA 21 Day Challenge!</string>
     <string name="title_activity_challenge">Challenge</string>
     <string name="title_restaurantList">Choisis un restaurant</string>
     <string name="title_recipeList">Choisis une recette</string>
@@ -60,5 +60,7 @@
     <string name="passwordsNotEqual">Passwords are not equal</string>
     <string name="close">Fermer</string>
     <string name="passwoordVergeten">Oublier mot de passe?</string>
+    <string name="slogan">Explorer la nature</string>
+    <string name="viewDagen">jours</string>
 
 </resources>

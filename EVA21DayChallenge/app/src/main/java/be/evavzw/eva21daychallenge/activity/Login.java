@@ -3,12 +3,14 @@ package be.evavzw.eva21daychallenge.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.media.Image;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -101,17 +103,11 @@ public class Login extends RESTfulActivity {
         evaLogo.setLayoutParams(params);
         evaLogo.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-        //This is done to get the background loaded
-        Glide.with(getApplicationContext())
-                .load(R.drawable.achtergrond_login)
-                .asBitmap()
-                .into(new SimpleTarget<Bitmap>(this.getResources().getDisplayMetrics().widthPixels, this.getResources().getDisplayMetrics().heightPixels) {
-                    @Override
-                    public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
-                        BitmapDrawable background = new BitmapDrawable(bitmap);
-                        login.setBackgroundDrawable(background);
-                    }
-                });
+//This is done to get the background loaded
+
+        loadBackground();
+
+
 
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,6 +123,32 @@ public class Login extends RESTfulActivity {
 
             }
         });
+    }
+
+    //Needed for portrait/landscape background
+    private void loadBackground() {
+        int orientation=this.getResources().getConfiguration().orientation;
+        if(orientation== Configuration.ORIENTATION_PORTRAIT){
+            Glide.with(getApplicationContext())
+                    .load(R.drawable.achtergrond_login)
+                    .asBitmap()
+                    .into(new SimpleTarget<Bitmap>(this.getResources().getDisplayMetrics().widthPixels, this.getResources().getDisplayMetrics().heightPixels) {
+                        @Override
+                        public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
+                            BitmapDrawable background = new BitmapDrawable(bitmap);
+                            login.setBackgroundDrawable(background);
+                        }
+                    });
+        }
+        else{
+            Glide.with(getApplicationContext()).load(R.drawable.landscapeachtergrond).asBitmap().into(new SimpleTarget<Bitmap>(this.getResources().getDisplayMetrics().widthPixels, this.getResources().getDisplayMetrics().heightPixels) {
+                @Override
+                public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
+                    BitmapDrawable background = new BitmapDrawable(bitmap);
+                    login.setBackgroundDrawable(background);
+                }
+            });
+        }
     }
 
     //hidden button for demo

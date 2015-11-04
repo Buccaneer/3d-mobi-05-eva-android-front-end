@@ -20,7 +20,7 @@
     <string name="settings">Instellingen</string>
     <string name="evasite">www.evavzw.be</string>
     <string name="days">dagen</string>
-    <string name="welcome">Welkom bij de EVA 21 Day Challenge!</string>
+    <string name="welcome">EVA 21 Day Challenge!</string>
     <string name="action_settings">Instellingen</string>
     <string name="signIn">Aanmelden</string>
     <string name="createAccount">Nieuw account</string>
@@ -58,4 +58,6 @@
     <string name="notAuthorized">Uw gebruiker heeft is niet geauthoriseerd, probeer opnieuw in te loggen</string>
     <string name="passwordsNotEqual">Wachtwoorden komen niet overeen</string>
     <string name="close">Sluiten</string>
+    <string name="viewDagen"> dagen</string>
+    <string name="slogan">Ontdek de natuur</string>
 </resources>
