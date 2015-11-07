@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,9 +30,9 @@ import be.evavzw.eva21daychallenge.models.RestaurantTemp;
 
 /**
  * Created by Pieter-Jan on 4/11/2015.
+ * TODO: Add actual map and comments
  */
-public class RestaurantListFragment extends ChallengeFragment
-{
+public class RestaurantListFragment extends ChallengeFragment {
 
     //RestaurantManager restaurantManager;
 
@@ -39,8 +40,7 @@ public class RestaurantListFragment extends ChallengeFragment
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.restaurant_challenge, container, false);
         //setupTitle(layout);
         RecyclerView rv = (RecyclerView) layout.findViewById(R.id.restaurantList);
@@ -61,28 +61,24 @@ public class RestaurantListFragment extends ChallengeFragment
         tv.setText("Title");
     }*/
 
-    private void setupRecyclerView(RecyclerView recyclerView)
-    {
+    private void setupRecyclerView(RecyclerView recyclerView) {
         //recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(), restaurants, getString(R.string.category_restaurant_descr)));
     }
 
-    public static class SimpleStringRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
-    {
+    public static class SimpleStringRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private final TypedValue mTypedValue = new TypedValue();
         private int mBackground;
         private List<RestaurantTemp> mValues;
         private String description;
 
-        public static class Description extends RecyclerView.ViewHolder
-        {
+        public static class Description extends RecyclerView.ViewHolder {
 
             public final View mView;
             public final ImageView mImageView;
             public final TextView mTextView;
 
-            public Description(View view)
-            {
+            public Description(View view) {
                 super(view);
                 mView = view;
                 mImageView = (ImageView) view.findViewById(R.id.categoryAvatar);
@@ -90,22 +86,19 @@ public class RestaurantListFragment extends ChallengeFragment
             }
 
             @Override
-            public String toString()
-            {
+            public String toString() {
                 return super.toString() + " '" + mTextView.getText();
             }
         }
 
-        public static class ViewHolder extends RecyclerView.ViewHolder
-        {
+        public static class ViewHolder extends RecyclerView.ViewHolder {
             public RestaurantTemp mRestaurant;
 
             public final View mView;
             public final ImageView mImageView;
             public final TextView mTextView;
 
-            public ViewHolder(View view)
-            {
+            public ViewHolder(View view) {
                 super(view);
                 mView = view;
                 mImageView = (ImageView) view.findViewById(R.id.avatar);
@@ -113,25 +106,21 @@ public class RestaurantListFragment extends ChallengeFragment
             }
 
             @Override
-            public String toString()
-            {
+            public String toString() {
                 return super.toString() + " '" + mTextView.getText();
             }
         }
 
         @Override
-        public int getItemViewType(int position)
-        {
+        public int getItemViewType(int position) {
             return position == 0 ? 0 : 1;
         }
 
-        public RestaurantTemp getValueAt(int position)
-        {
+        public RestaurantTemp getValueAt(int position) {
             return mValues.get(position);
         }
 
-        public SimpleStringRecyclerViewAdapter(Context context, List<RestaurantTemp> restaurants, String description)
-        {
+        public SimpleStringRecyclerViewAdapter(Context context, List<RestaurantTemp> restaurants, String description) {
             context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
             mBackground = mTypedValue.resourceId;
             mValues = restaurants;
@@ -145,15 +134,11 @@ public class RestaurantListFragment extends ChallengeFragment
         }
 
         @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
-        {
-            if (viewType == 0)
-            {
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            if (viewType == 0) {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_description, parent, false);
                 return new Description(view);
-            }
-            else
-            {
+            } else {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
                 view.setBackgroundResource(mBackground);
                 return new ViewHolder(view);
@@ -161,19 +146,15 @@ public class RestaurantListFragment extends ChallengeFragment
         }
 
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holderr, final int position)
-        {
-            if (holderr instanceof ViewHolder)
-            {
+        public void onBindViewHolder(RecyclerView.ViewHolder holderr, final int position) {
+            if (holderr instanceof ViewHolder) {
                 final ViewHolder holder = (ViewHolder) holderr;
                 holder.mRestaurant = mValues.get(position);
                 holder.mTextView.setText(mValues.get(position).getName());
 
-                holder.mView.setOnClickListener(new View.OnClickListener()
-                {
+                holder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v)
-                    {
+                    public void onClick(View v) {
                         Context context = v.getContext();
                         Intent intent = new Intent(context, RestaurantDetailActivity.class);
                         intent.putExtra(RestaurantDetailActivity.RESTAURANT, holder.mRestaurant);
@@ -192,7 +173,7 @@ public class RestaurantListFragment extends ChallengeFragment
                             .load(Images.getRandomCheeseDrawable())
                             .fitCenter()
                             .into(holder.mImageView);*/
-            } else if (holderr instanceof  Description){
+            } else if (holderr instanceof Description) {
                 final Description holder = (Description) holderr;
                 holder.mTextView.setText(description);
                 Glide.with(holder.mImageView.getContext())
@@ -205,47 +186,35 @@ public class RestaurantListFragment extends ChallengeFragment
         }
 
         @Override
-        public int getItemCount()
-        {
+        public int getItemCount() {
             return mValues.size();
         }
     }
 
-    private void fetchChallenges(RecyclerView rv)
-    {
+    private void fetchChallenges(RecyclerView rv) {
         //FetchChallengesTask fetch = new FetchChallengesTask(rv);
         //fetch.execute();
 
         /** TIJDELIJK **/
         JSONArray obj = null;
-        try
-        {
+        try {
             obj = new JSONArray(Mock.restaurants);
-        }
-        catch (JSONException e)
-        {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         List<RestaurantTemp> restaurants = new ArrayList<>();
 
         //voor elk object in de recipes (dus elk recept) de constructor van recept aanroepen met recipes stukje
-        for (int i = 0; i < obj.length(); i++)
-        {
+        for (int i = 0; i < obj.length(); i++) {
             JSONObject jsonRow = null;
-            try
-            {
+            try {
                 jsonRow = obj.getJSONObject(i);
-            }
-            catch (JSONException e)
-            {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
-            try
-            {
+            try {
                 restaurants.add(new RestaurantTemp(jsonRow));
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -255,46 +224,37 @@ public class RestaurantListFragment extends ChallengeFragment
         setupRecyclerView(rv);
     }
 
-    class FetchChallengesTask extends AsyncTask<String, String, Boolean>
-    {
+    class FetchChallengesTask extends AsyncTask<String, String, Boolean> {
         List<RestaurantTemp> list;
         RecyclerView recyclerView;
 
-        public FetchChallengesTask(RecyclerView recyclerView)
-        {
+        public FetchChallengesTask(RecyclerView recyclerView) {
             super();
             this.recyclerView = recyclerView;
         }
 
         @Override
-        protected void onPreExecute()
-        {
+        protected void onPreExecute() {
 
         }
 
         @Override
-        protected Boolean doInBackground(String... objects)
-        {
-            try
-            {
+        protected Boolean doInBackground(String... objects) {
+            try {
                 //list = restaurantManager.getAllRestaurants();
                 Log.e("RecipeListFragment", "Got recipes");
                 return true;
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 // connectie mislukt
                 return false;
             }
         }
 
         @Override
-        protected void onPostExecute(Boolean succeed)
-        {
+        protected void onPostExecute(Boolean succeed) {
             //setRefresh(false);
             Log.e("RecipeListFragment", "Post Execute called");
-            if (succeed)
-            {
+            if (succeed) {
                 //restaurants = list;
                 setupRecyclerView(recyclerView);
             }

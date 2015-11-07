@@ -1,6 +1,7 @@
 package be.evavzw.eva21daychallenge.activity.challenges;
 
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,24 +9,36 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import be.evavzw.eva21daychallenge.R;
-import be.evavzw.eva21daychallenge.models.Recipe;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import be.evavzw.eva21daychallenge.R;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-
+/**
+ * Activity which allows the user to pick challenges
+ * Contains a TabLayout with a Tab for every category of Challenges
+ * Each Tab contains a list with the available challenges in that category
+ */
 public class ChallengeActivity extends AppCompatActivity
 {
     private FragmentManager fragmentManager;
+
+    /*
+     *  Config is used to keep track of the screen and layout used
+     *  e.g. Portait and Land for smartphones, Large for tablets
+     */
     private String config = "undefined";
     private final String PORTRAIT = "portrait";
     private final String LAND = "land";
     private final String LARGE = "large";
+
+
+    //Position is used to keep track of the current Tab position
     public static String POSITION = "POSITION";
     private int pos = -1;
 
@@ -37,14 +50,21 @@ public class ChallengeActivity extends AppCompatActivity
 
     private SharedPreferences mPrefs;
 
+    /**
+     * Saves the current Tab position on pause
+     */
     @Override
-    public void onPause() {
+    public void onPause()
+    {
         super.onPause();
         SharedPreferences.Editor ed = mPrefs.edit();
         ed.putInt(POSITION, pos);
         ed.commit();
     }
 
+    /**
+     * Loads the last known Tab position if any
+     */
     @Override
     protected void onResume()
     {
@@ -60,9 +80,11 @@ public class ChallengeActivity extends AppCompatActivity
         setContentView(R.layout.activity_challenge);
         ButterKnife.bind(this);
 
+        // Load last Tab position from preferences
         mPrefs = getSharedPreferences("tab", MODE_PRIVATE);
         pos = mPrefs.getInt(POSITION, -1);
 
+        // Set the config based on XML used
         config = getString(R.string.selected_config);
         fragmentManager = getSupportFragmentManager();
 
@@ -70,7 +92,6 @@ public class ChallengeActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         final ActionBar ab = getSupportActionBar();
-        //ab.setHomeAsUpIndicator(R.drawable.ic_menu);
         ab.setDisplayHomeAsUpEnabled(true);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -98,6 +119,11 @@ public class ChallengeActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * Sets the ViewPager up by adding Fragments for every category of challenges
+     *
+     * @param viewPager
+     */
     private void setupViewPager(ViewPager viewPager)
     {
         Adapter adapter = new Adapter(getSupportFragmentManager());
@@ -115,6 +141,7 @@ public class ChallengeActivity extends AppCompatActivity
             @Override
             public void onPageSelected(int position)
             {
+                // Update position when a new Tab / Page is selected
                 pos = position;
             }
 
@@ -125,12 +152,15 @@ public class ChallengeActivity extends AppCompatActivity
         });
     }
 
+    /**
+     * An adapter.
+     */
     static class Adapter extends FragmentPagerAdapter
     {
         private final List<Fragment> mFragments = new ArrayList<>();
         private final List<String> mFragmentTitles = new ArrayList<>();
 
-        public Adapter(android.support.v4.app.FragmentManager fm)
+        public Adapter(FragmentManager fm)
         {
             super(fm);
         }
