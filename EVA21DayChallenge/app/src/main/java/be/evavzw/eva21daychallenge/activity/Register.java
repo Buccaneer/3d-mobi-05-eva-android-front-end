@@ -146,6 +146,7 @@ public class Register extends RESTfulActivity {
             if (succeed) {
                 Intent intent = new Intent(getApplicationContext(), ProfileSetup.class);
                 Register.this.finish();
+                intent.putExtra("CALLED_FROM", "register");
                 startActivity(intent);
             }
         }

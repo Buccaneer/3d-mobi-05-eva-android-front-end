@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,16 +44,21 @@ public class ProfileSetup extends android.support.v4.app.FragmentActivity implem
     private List<Page> mCurrentPageSequence;
     private StepPagerStrip mStepPagerStrip;
 
+    private String calledFrom = "";
+
     public void onCreate(Bundle savedInstanceState) {
         mWizardModel = new ProfileWizardModel(getApplicationContext());
 
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_profile_setup);
+        calledFrom = getIntent().getExtras().getString("CALLED_FROM");
 
         if (savedInstanceState != null) {
             mWizardModel.load(savedInstanceState.getBundle("model"));
+            calledFrom = savedInstanceState.getString("CALLED_FROM");
         }
+
+        setContentView(R.layout.activity_profile_setup);
 
         mWizardModel.registerListener(this);
 
@@ -107,7 +113,7 @@ public class ProfileSetup extends android.support.v4.app.FragmentActivity implem
                                     .create();
                         }
                     };
-                    dg.show(getSupportFragmentManager(), "place_order_dialog");
+                    dg.show(getSupportFragmentManager(), "submit_settings_dialog");
                 } else {
                     if (mEditingAfterReview) {
                         mPager.setCurrentItem(mPagerAdapter.getCount() - 1);
@@ -202,6 +208,7 @@ public class ProfileSetup extends android.support.v4.app.FragmentActivity implem
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBundle("model", mWizardModel.save());
+        outState.putString("CALLED_FROM", calledFrom);
     }
 
     @Override
