@@ -15,7 +15,6 @@
     <string name="title_activity_main_menu">MainMenuFR</string>
     <string name="socialMediaLogin">Connexion avec les médias sociaux</string>
     <string name="title_activity_main">MainActivityFR</string>
-
     <string name="loginFacebook">Connexion Facebook</string>
     <string name="title_activity_webview_login">WebviewLogin</string>
     <string name="logOut">Déconnecter</string>
@@ -51,16 +50,28 @@
     <string name="descriptionTitle">Préparation</string>
     <string name="extraTitle">Informations supplémentaires</string>
     <string name="ingredientsTitle">Ingrédients</string>
-    <string name="UNamePwdIncorrect">The email or password is incorrect</string>
-    <string name="couldntRetrieveErrors">Request to server failed, failed to load error</string>
-    <string name="emailInvalid">This isn\'t a valid email address</string>
-    <string name="emailTaken">Email is already taken</string>
-    <string name="error500">Something went wrong, please try again</string>
-    <string name="notAuthorized">Your account isn\'t authorized, please try logging back in</string>
-    <string name="passwordsNotEqual">Passwords are not equal</string>
+    <string name="UNamePwdIncorrect">L\'e-mail ou mot de passe est incorrect</string>
+    <string name="couldntRetrieveErrors">Demande de serveur défaillant, n\'a pas réussi à charger erreur</string>
+    <string name="emailInvalid">Cela ne veut pas d\'une adresse email valide</string>
+    <string name="emailTaken">Cet e-mail est déjà pris</string>
+    <string name="error500">Une erreur s\'est produite. Veuillez réessayer</string>
+    <string name="notAuthorized">Votre compte est pas autorisé, s\'il vous plaît essayez de vous connecter avant</string>
+    <string name="passwordsNotEqual">Les mots de passe ne sont pas égaux</string>
     <string name="close">Fermer</string>
     <string name="passwoordVergeten">Oublier mot de passe?</string>
     <string name="slogan">Explorer la nature</string>
     <string name="viewDagen">jours</string>
-
+    <string name="address">Adresse</string>
+    <string name="category_cooking">Cuisinier</string>
+    <string name="category_sugarfree">Sans sucre</string>
+    <string name="category_restaurant">Manger à l\'extérieur</string>
+    <string name="description">Description</string>
+    <string name="menu_settings">Paramètres</string>
+    <string name="phone">Tel.</string>
+    <string name="properties">Données</string>
+    <string name="selected_config">portrait</string>
+    <string name="website">Site web</string>
+    <string name="category_cooking_descr">Dans ce défi, il est prévu que vous faites cuire quelque chose végétalien.</string>
+    <string name="category_restaurant_descr">Dans ce défi, il est prévu que vous allez dans un restaurant et manger végétalien.</string>
+    <string name="category_sugarfree_descr">Dans ce défi, il est prévu que vous mangez du sucre gratuitement pendant une journée entière.</string>
 </resources>

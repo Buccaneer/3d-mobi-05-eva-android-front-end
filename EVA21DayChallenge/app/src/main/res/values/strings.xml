@@ -1,4 +1,6 @@
 <resources>
+    <string name="selected_config">portrait</string>
+
     <string name="app_name">EVA 21 Day Challenge</string>
     <string name="title_activity_login">EVA 21 Day Challenge</string>
 
@@ -60,4 +62,17 @@
     <string name="close">Sluiten</string>
     <string name="viewDagen"> dagen</string>
     <string name="slogan">Ontdek de natuur</string>
+    <string name="category_cooking">Koken</string>
+    <string name="category_restaurant">Uit eten</string>
+    <string name="category_sugarfree">Suikervrij</string>
+    <string name="category_cooking_descr">Bij deze challenge is het de bedoeling dat je iets plantaardig kookt.</string>
+    <string name="category_restaurant_descr">Bij deze challenge is het de bedoeling dat je uit eten gaat en plantaardig eet.</string>
+    <string name="category_sugarfree_descr">Bij deze challenge is het de bedoeling dat je een hele dag lang suikervrij leeft.</string>
+    <string name="address">Adres</string>
+    <string name="properties">Gegevens</string>
+    <string name="description">Beschrijving</string>
+    <string name="phone">Tel.</string>
+    <string name="website">Website</string>
+    <string name="checkin">Checkin</string>
+    <string name="menu_settings">Settings</string>
 </resources>

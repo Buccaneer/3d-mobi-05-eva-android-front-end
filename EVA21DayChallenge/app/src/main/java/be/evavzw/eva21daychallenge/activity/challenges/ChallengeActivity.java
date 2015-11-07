@@ -1,245 +1,163 @@
 package be.evavzw.eva21daychallenge.activity.challenges;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.content.SharedPreferences;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.models.Recipe;
+import java.util.ArrayList;
+import java.util.List;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 
-public class ChallengeActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener, CategoryListFragment.OnCategorySelectedListener, RecipeChallengeListFragment.OnRecipeSelectedListener, RestaurantChallengeListFragment.OnRestaurantSelectedListener
+public class ChallengeActivity extends AppCompatActivity
 {
-    FragmentManager fragmentManager;
+    private FragmentManager fragmentManager;
+    private String config = "undefined";
+    private final String PORTRAIT = "portrait";
+    private final String LAND = "land";
+    private final String LARGE = "large";
+    public static String POSITION = "POSITION";
+    private int pos = -1;
 
-    private boolean large = false;
+    @Bind(R.id.viewpager)
+    ViewPager viewPager;
+
+    @Bind(R.id.tabs)
+    TabLayout tabs;
+
+    private SharedPreferences mPrefs;
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        SharedPreferences.Editor ed = mPrefs.edit();
+        ed.putInt(POSITION, pos);
+        ed.commit();
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        if (pos != -1)
+            viewPager.setCurrentItem(pos);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        fragmentManager = getFragmentManager();
-        fragmentManager.addOnBackStackChangedListener(this);
-
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
-            actionBar.setDisplayHomeAsUpEnabled(true);
-
         setContentView(R.layout.activity_challenge);
-        large = findViewById(R.id.challengeListFrame) != null;
+        ButterKnife.bind(this);
 
-        /*if (findViewById(R.id.fragment_container) != null)
+        mPrefs = getSharedPreferences("tab", MODE_PRIVATE);
+        pos = mPrefs.getInt(POSITION, -1);
+
+        config = getString(R.string.selected_config);
+        fragmentManager = getSupportFragmentManager();
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        final ActionBar ab = getSupportActionBar();
+        //ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+        ab.setDisplayHomeAsUpEnabled(true);
+
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        if (viewPager != null)
         {
-            if (savedInstanceState != null)
-            {
-                categoryListFragment = (CategoryListFragment) fragmentManager.getFragment(savedInstanceState, "categoryListFragment");
-                challengeListFragment = (RecipeChallengeListFragment) fragmentManager.getFragment(savedInstanceState, "challengeListFragment");
-                challengeFragment = (RecipeChallengeFragment) fragmentManager.getFragment(savedInstanceState, "challengeFragment");
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                if (categoryListFragment != null)
-                    fragmentTransaction.add(R.id.fragment_container, categoryListFragment);
-                if (challengeListFragment != null)
-                    fragmentTransaction.add(R.id.fragment_container, challengeListFragment);
-                if (challengeFragment != null)
-                    fragmentTransaction.add(R.id.fragment_container, challengeFragment);
-                fragmentTransaction.commit();
-            }
-            else
-            {
-                categoryListFragment = new CategoryListFragment();
-                categoryListFragment.setArguments(getIntent().getExtras());
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.add(R.id.fragment_container, categoryListFragment);
-                fragmentTransaction.commit();
-            }
-        }*/
-
-        if (savedInstanceState == null)
-        {
-            Log.e("ACTIVITY", "SAVED INSTANCE IS NULL");
-            CategoryListFragment categoryListFragment = new CategoryListFragment();
-            categoryListFragment.setArguments(getIntent().getExtras());
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.fragment_container, categoryListFragment, "categoryListFragment");
-            fragmentTransaction.commit();
-
+            setupViewPager(viewPager);
         }
-        /*else
-        {
-            categoryListFragment = (CategoryListFragment) fragmentManager.getFragment(savedInstanceState, "categoryListFragment");
-            challengeListFragment = (RecipeChallengeListFragment) fragmentManager.getFragment(savedInstanceState, "challengeListFragment");
-            challengeFragment = (RecipeChallengeFragment) fragmentManager.getFragment(savedInstanceState, "challengeFragment");
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            if (categoryListFragment != null)
-                fragmentTransaction.add(R.id.fragment_container, categoryListFragment);
-            if (challengeListFragment != null)
-                fragmentTransaction.add(R.id.fragment_container, challengeListFragment);
-            if (challengeFragment != null)
-                fragmentTransaction.add(R.id.fragment_container, challengeFragment);
-            fragmentTransaction.commit();
-        }*/
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+
     }
 
     @Override
-    public void onCategorySelected(int category)
+    public boolean onCreateOptionsMenu(Menu menu)
     {
-        // TODO make these check for actual categories rather than position once API supports categories
-        switch (category)
-        {
-            case 0:
-                //Create list with challenges
-                RecipeChallengeListFragment recipeListFragment = new RecipeChallengeListFragment();
-                Bundle args0 = new Bundle();
-                args0.putInt(RecipeChallengeListFragment.ARG_CATEGORY, category);
-                recipeListFragment.setArguments(args0);
-
-                //Fragment transaction to show list with challenges
-                FragmentTransaction transaction0 = fragmentManager.beginTransaction();
-                if (large)
-                {
-                    transaction0.replace(R.id.challengeListFrame, recipeListFragment, "challengeListFragment");
-                } else {
-                    transaction0.replace(R.id.fragment_container, recipeListFragment, "challengeListFragment");
-                    transaction0.addToBackStack(null);
-                }
-                transaction0.commit();
-                break;
-            case 1:
-                //Create list with challenges
-                RestaurantChallengeListFragment restaurantListFragment = new RestaurantChallengeListFragment();
-                Bundle args1 = new Bundle();
-                args1.putInt(RecipeChallengeListFragment.ARG_CATEGORY, category);
-                restaurantListFragment.setArguments(args1);
-
-                //Fragment transaction to show list with challenges
-                FragmentTransaction transaction1 = fragmentManager.beginTransaction();
-                if (large)
-                {
-                    Log.e("ACTIVITY", "ACTING LIKE A TABLET");
-                    transaction1.replace(R.id.challengeListFrame, restaurantListFragment, "challengeListFragment");
-                } else {
-                    Log.e("ACTIVITY", "ACTING LIKE A PHONE");
-                    transaction1.replace(R.id.fragment_container, restaurantListFragment, "challengeListFragment");
-                    transaction1.addToBackStack(null);
-                }
-                transaction1.commit();
-                break;
-            default:
-                break;
-        }
-
-    }
-
-    /*@Override
-    public void onRecipeSelected(int category, int challenge)
-    {
-        //Create list with challenges
-        challengeFragment = new RecipeChallengeFragment();
-        Bundle args = new Bundle();
-        args.putInt(RecipeChallengeFragment.ARG_CATEGORY, category);
-        args.putInt(RecipeChallengeFragment.ARG_CHALLENGE, challenge);
-        challengeFragment.setArguments(args);
-
-        //Fragment transaction to show list with challenges
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.fragment_container, challengeFragment, "challengeFragment");
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }*/
-
-    @Override
-    public void onRecipeSelected(Recipe recipe)
-    {
-        //Create list with challenges
-        RecipeChallengeFragment challengeFragment = new RecipeChallengeFragment();
-        Bundle args = new Bundle();
-        args.putSerializable(RecipeChallengeFragment.ARG_RECIPE, recipe);
-        /*args.put(RecipeChallengeFragment.ARG_INGREDIENTS, recipe.getIngredients().);
-        args.putString(RecipeChallengeFragment.ARG_PROPERTIES, recipe.getName());
-        args.putString(RecipeChallengeFragment.ARG_DESCRIPTION, recipe.getName());
-        args.putString(RecipeChallengeFragment.ARG_IMAGE, recipe.getImage());*/
-
-        challengeFragment.setArguments(args);
-
-        //Fragment transaction to show list with challenges
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        if (large)
-        {
-            transaction.replace(R.id.challengeDetailFrame, challengeFragment, "challengeFragment");
-        } else {
-            transaction.replace(R.id.fragment_container, challengeFragment, "challengeFragment");
-            transaction.addToBackStack(null);
-        }
-        transaction.commit();
-    }
-
-    @Override
-    public void onRestaurantSelected()
-    {
-        //Create list with challenges
-        RestaurantChallengeFragment challengeFragment = new RestaurantChallengeFragment();
-        Bundle args = new Bundle();
-
-        challengeFragment.setArguments(args);
-
-        //Fragment transaction to show list with challenges
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        if (large)
-        {
-            transaction.replace(R.id.challengeDetailFrame, challengeFragment, "challengeFragment");
-        } else {
-            transaction.replace(R.id.fragment_container, challengeFragment, "challengeFragment");
-            transaction.addToBackStack(null);
-        }
-        transaction.commit();
+        getMenuInflater().inflate(R.menu.menu_with_actions, menu);
+        return true;
     }
 
     @Override
     public boolean onSupportNavigateUp()
     {
-        if (fragmentManager.getBackStackEntryCount() > 0)
-        {
-            fragmentManager.popBackStack();
-        } else {
-            finish();
-        }
+        finish();
         return true;
     }
 
-    @Override
-    protected void onPause()
+    private void setupViewPager(ViewPager viewPager)
     {
-        super.onPause();
-        // TODO : Save here?
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState)
-    {
-        Log.e("ACTIVITY", "SAVE INSTANCE STATE CALLED");
-        super.onSaveInstanceState(outState);
-        /*if (categoryListFragment != null && categoryListFragment.isAdded())
-            fragmentManager.putFragment(outState, "categoryListFragment", categoryListFragment);
-        if (challengeListFragment != null && challengeListFragment.isAdded())
-            fragmentManager.putFragment(outState, "challengeListFragment", challengeListFragment);
-        if (challengeFragment != null && challengeFragment.isAdded())
-            fragmentManager.putFragment(outState, "challengeFragment", challengeFragment);*/
-    }
-
-    @Override
-    public void onBackStackChanged()
-    {
-        /*ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            if (fragmentManager.getBackStackEntryCount() > 0)
+        Adapter adapter = new Adapter(getSupportFragmentManager());
+        adapter.addFragment(new RecipeListFragment(), getString(R.string.category_cooking));
+        adapter.addFragment(new RestaurantListFragment(), getString(R.string.category_restaurant));
+        adapter.addFragment(new RecipeListFragment(), getString(R.string.category_sugarfree));
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener()
+        {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
             {
-                actionBar.setDisplayHomeAsUpEnabled(true);
-            } else {
-                actionBar.setDisplayHomeAsUpEnabled(false);
             }
-        }*/
+
+            @Override
+            public void onPageSelected(int position)
+            {
+                pos = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state)
+            {
+            }
+        });
     }
+
+    static class Adapter extends FragmentPagerAdapter
+    {
+        private final List<Fragment> mFragments = new ArrayList<>();
+        private final List<String> mFragmentTitles = new ArrayList<>();
+
+        public Adapter(android.support.v4.app.FragmentManager fm)
+        {
+            super(fm);
+        }
+
+        public void addFragment(Fragment fragment, String title)
+        {
+            mFragments.add(fragment);
+            mFragmentTitles.add(title);
+        }
+
+        @Override
+        public Fragment getItem(int position)
+        {
+            return mFragments.get(position);
+        }
+
+        @Override
+        public int getCount()
+        {
+            return mFragments.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position)
+        {
+            return mFragmentTitles.get(position);
+        }
+    }
+
 }

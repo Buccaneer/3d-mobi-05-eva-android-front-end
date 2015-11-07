@@ -2,10 +2,13 @@ package be.evavzw.eva21daychallenge.models;
 
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 /**
  * Properties that belong to a {@link Recipe}
  */
-public class RecipeProperty {
+public class RecipeProperty implements Serializable
+{
 
     private String value, type;
     private int propertyId;
