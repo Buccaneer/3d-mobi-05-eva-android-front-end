@@ -30,61 +30,47 @@ import be.evavzw.eva21daychallenge.models.Recipe;
 import be.evavzw.eva21daychallenge.security.RecipeManager;
 
 /**
- * Created by Pieter-Jan on 2/11/2015.
+ * This Fragment is used to display a list of recipes
  */
-public class RecipeListFragment extends ChallengeFragment
-{
+public class RecipeListFragment extends ChallengeFragment {
 
     RecipeManager recipeManager;
-
     List<Recipe> recipes;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.list, container, false);
-        //setupTitle(layout);
         RecyclerView rv = (RecyclerView) layout.findViewById(R.id.challengeList);
         rv.setLayoutManager(new LinearLayoutManager(rv.getContext()));
-        //setupRecyclerView(rv);
         fetchChallenges(rv);
         return layout;
     }
 
-    /*private void setupTitle(LinearLayout layout)
-    {
-        ImageView iv = (ImageView) layout.findViewById(R.id.titleAvatar);
-        Glide.with(iv.getContext())
-                .load(Images.getRandomCheeseDrawable())
-                .fitCenter()
-                .into(iv);
-        TextView tv = (TextView) layout.findViewById(R.id.titleText);
-        tv.setText(getResources().getText(R.string.category_cooking));
-    }*/
-
-    private void setupRecyclerView(RecyclerView recyclerView)
-    {
-        //recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+    //Add adapter to the RecyclerView
+    private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(), recipes, getString(R.string.category_cooking_descr)));
     }
 
-    public static class SimpleStringRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
-    {
+    /**
+     * A custom Adapter with two types of ViewHolders
+     */
+    public static class SimpleStringRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         private final TypedValue mTypedValue = new TypedValue();
         private int mBackground;
         private List<Recipe> mValues;
         private String description;
 
-        public static class Description extends RecyclerView.ViewHolder
-        {
+        /**
+         * A different ViewHolder, used to display the category description as the first item in the RecyclerView
+         */
+        public static class Description extends RecyclerView.ViewHolder {
             public final View mView;
             public final ImageView mImageView;
             public final TextView mTextView;
 
-            public Description(View view)
-            {
+            public Description(View view) {
                 super(view);
                 mView = view;
                 mImageView = (ImageView) view.findViewById(R.id.categoryAvatar);
@@ -92,22 +78,22 @@ public class RecipeListFragment extends ChallengeFragment
             }
 
             @Override
-            public String toString()
-            {
+            public String toString() {
                 return super.toString() + " '" + mTextView.getText();
             }
         }
 
-        public static class ViewHolder extends RecyclerView.ViewHolder
-        {
+        /**
+         * The Viewholder used for actual items (recipes) in the RecyclerView
+         */
+        public static class ViewHolder extends RecyclerView.ViewHolder {
             public Recipe mRecipe;
 
             public final View mView;
             public final ImageView mImageView;
             public final TextView mTextView;
 
-            public ViewHolder(View view)
-            {
+            public ViewHolder(View view) {
                 super(view);
                 mView = view;
                 mImageView = (ImageView) view.findViewById(R.id.avatar);
@@ -115,29 +101,29 @@ public class RecipeListFragment extends ChallengeFragment
             }
 
             @Override
-            public String toString()
-            {
+            public String toString() {
                 return super.toString() + " '" + mTextView.getText();
             }
         }
 
         @Override
-        public int getItemViewType(int position)
-        {
+        public int getItemViewType(int position) {
             return position == 0 ? 0 : 1;
         }
 
-        public Recipe getValueAt(int position)
-        {
+        public Recipe getValueAt(int position) {
             return mValues.get(position);
         }
 
-        public SimpleStringRecyclerViewAdapter(Context context, List<Recipe> recipes, String description)
-        {
+        public SimpleStringRecyclerViewAdapter(Context context, List<Recipe> recipes, String description) {
             context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
             mBackground = mTypedValue.resourceId;
             mValues = recipes;
+
+            //Add the first item (recipe) twice because the Description ViewHolder overrides the first
             mValues.add(0, mValues.get(0));
+
+            //For testing purposes only (testing scrolling up and down)
             mValues.add(6, mValues.get(0));
             mValues.add(6, mValues.get(0));
             mValues.add(6, mValues.get(0));
@@ -145,19 +131,16 @@ public class RecipeListFragment extends ChallengeFragment
             mValues.add(6, mValues.get(0));
             mValues.add(6, mValues.get(0));
             mValues.add(6, mValues.get(0));
+
             this.description = description;
         }
 
         @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
-        {
-            if (viewType == 0)
-            {
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            if (viewType == 0) {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_description, parent, false);
                 return new Description(view);
-            }
-            else
-            {
+            } else {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
                 view.setBackgroundResource(mBackground);
                 return new ViewHolder(view);
@@ -165,19 +148,15 @@ public class RecipeListFragment extends ChallengeFragment
         }
 
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holderr, final int position)
-        {
-            if (holderr instanceof ViewHolder)
-            {
+        public void onBindViewHolder(RecyclerView.ViewHolder holderr, final int position) {
+            if (holderr instanceof ViewHolder) {
                 final ViewHolder holder = (ViewHolder) holderr;
                 holder.mRecipe = mValues.get(position);
                 holder.mTextView.setText(mValues.get(position).getName());
 
-                holder.mView.setOnClickListener(new View.OnClickListener()
-                {
+                holder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v)
-                    {
+                    public void onClick(View v) {
                         Context context = v.getContext();
                         Intent intent = new Intent(context, RecipeDetailActivity.class);
                         intent.putExtra(RecipeDetailActivity.RECIPE, holder.mRecipe);
@@ -192,11 +171,7 @@ public class RecipeListFragment extends ChallengeFragment
                         .thumbnail(0.2f)
                         .into(holder.mImageView);
 
-                    /*Glide.with(holder.mImageView.getContext())
-                            .load(Images.getRandomCheeseDrawable())
-                            .fitCenter()
-                            .into(holder.mImageView);*/
-            } else if (holderr instanceof  Description){
+            } else if (holderr instanceof Description) {
                 final Description holder = (Description) holderr;
                 holder.mTextView.setText(description);
                 Glide.with(holder.mImageView.getContext())
@@ -209,47 +184,36 @@ public class RecipeListFragment extends ChallengeFragment
         }
 
         @Override
-        public int getItemCount()
-        {
+        public int getItemCount() {
             return mValues.size();
         }
     }
 
-    private void fetchChallenges(RecyclerView rv)
-    {
+    //Method that fetches the Challenges then calls setupRecyclerView
+    private void fetchChallenges(RecyclerView rv) {
         //FetchChallengesTask fetch = new FetchChallengesTask(rv);
         //fetch.execute();
 
         /** TIJDELIJK **/
         JSONArray obj = null;
-        try
-        {
+        try {
             obj = new JSONArray(Mock.recipes);
-        }
-        catch (JSONException e)
-        {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         List<Recipe> recipes = new ArrayList<>();
 
         //voor elk object in de recipes (dus elk recept) de constructor van recept aanroepen met recipes stukje
-        for (int i = 0; i < obj.length(); i++)
-        {
+        for (int i = 0; i < obj.length(); i++) {
             JSONObject jsonRow = null;
-            try
-            {
+            try {
                 jsonRow = obj.getJSONObject(i);
-            }
-            catch (JSONException e)
-            {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
-            try
-            {
+            try {
                 recipes.add(new Recipe(jsonRow));
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -259,46 +223,38 @@ public class RecipeListFragment extends ChallengeFragment
         setupRecyclerView(rv);
     }
 
-    class FetchChallengesTask extends AsyncTask<String, String, Boolean>
-    {
+    /**
+     * An Asynctask that uses the Rest Framework to fetch recipes
+     */
+    class FetchChallengesTask extends AsyncTask<String, String, Boolean> {
         List<Recipe> list;
         RecyclerView recyclerView;
 
-        public FetchChallengesTask(RecyclerView recyclerView)
-        {
+        public FetchChallengesTask(RecyclerView recyclerView) {
             super();
             this.recyclerView = recyclerView;
         }
 
         @Override
-        protected void onPreExecute()
-        {
+        protected void onPreExecute() {
 
         }
 
         @Override
-        protected Boolean doInBackground(String... objects)
-        {
-            try
-            {
+        protected Boolean doInBackground(String... objects) {
+            try {
                 list = recipeManager.getAllRecipes();
                 Log.e("RecipeListFragment", "Got recipes");
                 return true;
-            }
-            catch (Exception ex)
-            {
-                // connectie mislukt
+            } catch (Exception ex) {
                 return false;
             }
         }
 
         @Override
-        protected void onPostExecute(Boolean succeed)
-        {
-            //setRefresh(false);
+        protected void onPostExecute(Boolean succeed) {
             Log.e("RecipeListFragment", "Post Execute called");
-            if (succeed)
-            {
+            if (succeed) {
                 recipes = list;
                 setupRecyclerView(recyclerView);
             }

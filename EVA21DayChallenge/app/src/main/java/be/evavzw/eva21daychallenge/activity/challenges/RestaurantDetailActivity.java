@@ -18,10 +18,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by Pieter-Jan on 4/11/2015.
+ * Activity which displays all information about a Restaurant.
  */
-public class RestaurantDetailActivity extends AppCompatActivity
-{
+public class RestaurantDetailActivity extends AppCompatActivity {
     public static final String RESTAURANT = "restaurant";
 
     RestaurantTemp restaurant;
@@ -42,8 +41,7 @@ public class RestaurantDetailActivity extends AppCompatActivity
     TextView restaurantDescription;
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.restaurant_details);
         ButterKnife.bind(this);
@@ -54,7 +52,6 @@ public class RestaurantDetailActivity extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         final ActionBar ab = getSupportActionBar();
-        //ab.setHomeAsUpIndicator(R.drawable.ic_menu);
         ab.setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
@@ -63,24 +60,25 @@ public class RestaurantDetailActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_with_actions, menu);
         return true;
     }
 
-    private String toUpperCase(String s)
-    {
+    private String toUpperCase(String s) {
         return Character.toUpperCase(s.charAt(0)) + s.substring(1);
     }
 
-    private String toLowerCase(String s)
-    {
+    private String toLowerCase(String s) {
         return Character.toLowerCase(s.charAt(0)) + s.substring(1);
     }
 
-    private void updateChallenge(RestaurantTemp restaurant)
-    {
+    /**
+     * Formats the Restaurant's details then puts them into their proper TextViews
+     *
+     * @param restaurant
+     */
+    private void updateChallenge(RestaurantTemp restaurant) {
         restaurantTitle.setText(restaurant.getName());
 
         String address = "<b>" + getString(R.string.address) + "</b><br>";
@@ -99,70 +97,16 @@ public class RestaurantDetailActivity extends AppCompatActivity
         String description = "<b>" + getString(R.string.description) + "</b><br>";
         description += restaurant.getDescription();
         restaurantDescription.setText(Html.fromHtml(description));
-        /*String[] ingredients = new String[restaurant..getIngredients().size()];
-        int counter = 0;
-        for (Ingredient i : recipe.getIngredients())
-        {
-            ingredients[counter++] = (i.getQuantity() > 0 ? i.getQuantity() + " " + (i.getUnit().trim().equals("") ? "" : i.getUnit().trim() + " "): "") + toLowerCase(i.getName().trim());
-        }
-        Arrays.sort(ingredients, new Vergelijker());
-        String ingredients1 = "";
-        String ingredients2 = "";
-        for (int i = 0; i < ingredients.length; i++)
-        {
-            if (i % 2 == 0)
-                ingredients1 += "• " + ingredients[i] + (i < ingredients.length - 2 ? "\n" : "");
-            else
-                ingredients2 += "• " + ingredients[i] + (i < ingredients.length - 2 ? "\n" : "");
-        }
-        //ingredientsTitle.setText("Ingredients");
-        ingredientsLeft.setText(ingredients1);
-        ingredientsRight.setText(ingredients2);
-
-        String[] info = new String[recipe.getProperties().size()];
-        counter = 0;
-        for (RecipeProperty p : recipe.getProperties())
-        {
-            info[counter++] = toUpperCase(p.getType().trim()) + ": " + toUpperCase(p.getValue().trim());
-        }
-        Arrays.sort(info, new Vergelijker());
-        String info1 = "";
-        String info2 = "";
-        for (int i = 0; i < info.length; i++)
-        {
-            if (i % 2 == 0)
-                info1 += info[i] + (i < info.length - 2 ? "\n" : "");
-            else
-                info2 += info[i] + (i < info.length - 2 ? "\n" : "");
-        }
-        //extraTitle.setText("Extra information");
-        extraLeft.setText(info1);
-        extraRight.setText(info2);
-
-        String desc = recipe.getDescription().replaceAll("<[^>]*>", "");
-        desc = desc.replaceAll("\\n", "");
-        String[] descArray = desc.split("\\.");
-        String formatted = "";
-        for (int i = 0; i < descArray.length; i++)
-        {
-            formatted += i + 1 + ". " + toUpperCase(descArray[i].trim()) + ".\n";
-        }*/
     }
 
-    private class Vergelijker implements Comparator<String>
-    {
-        public int compare(String o1, String o2)
-        {
-            if (o1.length() > o2.length())
-            {
+    //A simple string comparator
+    private class Vergelijker implements Comparator<String> {
+        public int compare(String o1, String o2) {
+            if (o1.length() > o2.length()) {
                 return 1;
-            }
-            else if (o1.length() < o2.length())
-            {
+            } else if (o1.length() < o2.length()) {
                 return -1;
-            }
-            else
-            {
+            } else {
                 return 0;
             }
         }
