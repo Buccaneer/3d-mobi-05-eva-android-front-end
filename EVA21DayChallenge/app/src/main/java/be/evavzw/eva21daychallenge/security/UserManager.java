@@ -208,14 +208,15 @@ public class UserManager implements RequestSigner {
 
         // Get a User object, we don't need to add an authorization header because this will be called automatically by the AbstractRestMethod template
         User u = getUser();
-
-        // Make a new Rest Method which handles the registering of external users
-        new RegisterExternalRestMethod(context).setEmail(u.getEmail()).setCookie(cookie).execute();
-        u = getUser();
-
-        // For some reason the account doesn't get confirmed if it's the first time registering, so call it again if it's not confirmed
         if (!u.isRegistered()) {
+            // Make a new Rest Method which handles the registering of external users
             new RegisterExternalRestMethod(context).setEmail(u.getEmail()).setCookie(cookie).execute();
+            u = getUser();
+
+            // For some reason the account doesn't get confirmed if it's the first time registering, so call it again if it's not confirmed
+            if (!u.isRegistered()) {
+                new RegisterExternalRestMethod(context).setEmail(u.getEmail()).setCookie(cookie).execute();
+            }
         }
     }
 }

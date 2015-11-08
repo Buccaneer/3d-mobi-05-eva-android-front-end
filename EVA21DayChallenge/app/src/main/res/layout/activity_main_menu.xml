@@ -97,14 +97,23 @@
                 android:layout_weight="1"
                 android:textSize="40sp" />
         </LinearLayout>
-
+<!--
         <ProgressBar
             style="?android:attr/progressBarStyleHorizontal"
-            android:progressDrawable="@drawable/clip_source"
+           android:progressDrawable="@drawable/clip_source"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="20dp"
             android:background="@drawable/kaleboom"
+            android:id="@+id/progressDaysRemaining">
+        </ProgressBar>
+
+        -->
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
             android:id="@+id/progressDaysRemaining">
         </ProgressBar>
     </LinearLayout>

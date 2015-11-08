@@ -15,6 +15,7 @@ import android.media.Image;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.webkit.CookieManager;
@@ -34,6 +35,8 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import android.widget.Toast;
+
+import org.scribe.model.Token;
 
 import java.util.Map;
 
@@ -207,6 +210,7 @@ public class Login extends RESTfulActivity {
 
         // Add listeners for when the page is started
         webView.setWebViewClient(new WebViewClient() {
+            private boolean doneYet = false;
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
@@ -217,14 +221,28 @@ public class Login extends RESTfulActivity {
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
                 if (url.startsWith("http://evavzwrest.azurewebsites.net")) {
-                    if (url.contains("#access_token=")) {
+                    if (url.contains("#access_token=") && !doneYet) {
                         String cookies = CookieManager.getInstance().getCookie(url);
                         String token = getToken(url);
                         if (token != null) {
                             // Once the user entered his credentials and is redirected back to our site, close the alert and start the Register service
-                            alertDialog.dismiss();
+                          //  alertDialog.dismiss();
                             RegisterExternalLoginTask rel = new RegisterExternalLoginTask();
                             rel.execute(token, cookies);
+                        }
+                        view.loadUrl(usedLastTime);
+                        doneYet = true;
+                        Log.i("FALSE", usedLastTime);
+                    } else if (url.contains("#access_token=")) {
+                        Log.i("TRUE", url);
+                        String token = getToken(url);
+                        if (token != null) {
+                            // Once the user entered his credentials and is redirected back to our site, close the alert and start the Register service
+                            alertDialog.dismiss();
+                            userManager.login(new Token(token,""));
+                            Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+                            Login.this.finish();
+                            startActivity(intent);
                         }
                     }
                     if (url.contains("#error=")) {
@@ -324,8 +342,9 @@ public class Login extends RESTfulActivity {
             }
         }
     }
-
+    public static String usedLastTime ="";
     private class NavigateToExternalLoginProviderTask extends AsyncTask<String,Void,String> {
+
         @Override
         protected void onPreExecute() {
             setRefresh(true);
@@ -354,6 +373,7 @@ public class Login extends RESTfulActivity {
             if (s == null) {
                 finish();
             } else {
+                usedLastTime = s;
                 webView.loadUrl(s);
             }
         }
