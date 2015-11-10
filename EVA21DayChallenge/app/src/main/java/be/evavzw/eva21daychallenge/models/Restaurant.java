@@ -7,14 +7,14 @@ import java.io.Serializable;
 /**
  * Created by Pieter-Jan on 4/11/2015.
  */
-public class RestaurantTemp implements Serializable
+public class Restaurant implements Serializable
 {
 
     private String name, description, website, email, phone, street, postal, city;
     private int restaurantId;
     private double latitude, longitude;
 
-    public RestaurantTemp(JSONObject jsonObject) throws Exception{
+    public Restaurant(JSONObject jsonObject) throws Exception{
         parseJson(jsonObject);
     }
 
@@ -30,7 +30,7 @@ public class RestaurantTemp implements Serializable
 
         restaurantId = jsonObject.getInt("RestaurantId");
         latitude = jsonObject.getDouble("Latitude");
-        longitude = jsonObject.getDouble("Longitute");
+        longitude = jsonObject.getDouble("Longitude");
     }
 
     public String getName() {

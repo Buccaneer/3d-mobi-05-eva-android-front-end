@@ -13,7 +13,7 @@ import android.widget.TextView;
 import java.util.Comparator;
 
 import be.evavzw.eva21daychallenge.R;
-import be.evavzw.eva21daychallenge.models.RestaurantTemp;
+import be.evavzw.eva21daychallenge.models.Restaurant;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
 public class RestaurantDetailActivity extends AppCompatActivity {
     public static final String RESTAURANT = "restaurant";
 
-    RestaurantTemp restaurant;
+    Restaurant restaurant;
 
     @Bind(R.id.restaurantMap)
     ImageView restaurantMap;
@@ -55,7 +55,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
-        restaurant = (RestaurantTemp) intent.getSerializableExtra(RESTAURANT);
+        restaurant = (Restaurant) intent.getSerializableExtra(RESTAURANT);
         updateChallenge(restaurant);
     }
 
@@ -78,7 +78,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
      *
      * @param restaurant
      */
-    private void updateChallenge(RestaurantTemp restaurant) {
+    private void updateChallenge(Restaurant restaurant) {
         restaurantTitle.setText(restaurant.getName());
 
         String address = "<b>" + getString(R.string.address) + "</b><br>";

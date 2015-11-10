@@ -26,7 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.evavzw.eva21daychallenge.R;
-import be.evavzw.eva21daychallenge.models.RestaurantTemp;
+import be.evavzw.eva21daychallenge.models.Restaurant;
+import be.evavzw.eva21daychallenge.security.ChallengeManager;
 
 /**
  * Created by Pieter-Jan on 4/11/2015.
@@ -35,14 +36,15 @@ import be.evavzw.eva21daychallenge.models.RestaurantTemp;
 public class RestaurantListFragment extends ChallengeFragment {
 
     //RestaurantManager restaurantManager;
-
-    List<RestaurantTemp> restaurants;
+    ChallengeManager challengeManager;
+    List<Restaurant> restaurants;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.restaurant_challenge, container, false);
         //setupTitle(layout);
+        challengeManager = ChallengeManager.getInstance(getContext());
         RecyclerView rv = (RecyclerView) layout.findViewById(R.id.restaurantList);
         rv.setLayoutManager(new LinearLayoutManager(rv.getContext()));
         //setupRecyclerView(rv);
@@ -69,7 +71,7 @@ public class RestaurantListFragment extends ChallengeFragment {
     public static class SimpleStringRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private final TypedValue mTypedValue = new TypedValue();
         private int mBackground;
-        private List<RestaurantTemp> mValues;
+        private List<Restaurant> mValues;
         private String description;
 
         public static class Description extends RecyclerView.ViewHolder {
@@ -92,7 +94,7 @@ public class RestaurantListFragment extends ChallengeFragment {
         }
 
         public static class ViewHolder extends RecyclerView.ViewHolder {
-            public RestaurantTemp mRestaurant;
+            public Restaurant mRestaurant;
 
             public final View mView;
             public final ImageView mImageView;
@@ -116,20 +118,20 @@ public class RestaurantListFragment extends ChallengeFragment {
             return position == 0 ? 0 : 1;
         }
 
-        public RestaurantTemp getValueAt(int position) {
+        public Restaurant getValueAt(int position) {
             return mValues.get(position);
         }
 
-        public SimpleStringRecyclerViewAdapter(Context context, List<RestaurantTemp> restaurants, String description) {
+        public SimpleStringRecyclerViewAdapter(Context context, List<Restaurant> restaurants, String description) {
             context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
             mBackground = mTypedValue.resourceId;
             mValues = restaurants;
             mValues.add(0, mValues.get(0));
+            /*mValues.add(3, mValues.get(0));
             mValues.add(3, mValues.get(0));
             mValues.add(3, mValues.get(0));
             mValues.add(3, mValues.get(0));
-            mValues.add(3, mValues.get(0));
-            mValues.add(3, mValues.get(0));
+            mValues.add(3, mValues.get(0));*/
             this.description = description;
         }
 
@@ -196,13 +198,12 @@ public class RestaurantListFragment extends ChallengeFragment {
         //fetch.execute();
 
         /** TIJDELIJK **/
-        JSONArray obj = null;
+        /*JSONArray obj = null;
         try {
             obj = new JSONArray(Mock.restaurants);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        List<RestaurantTemp> restaurants = new ArrayList<>();
 
         //voor elk object in de recipes (dus elk recept) de constructor van recept aanroepen met recipes stukje
         for (int i = 0; i < obj.length(); i++) {
@@ -213,19 +214,19 @@ public class RestaurantListFragment extends ChallengeFragment {
                 e.printStackTrace();
             }
             try {
-                restaurants.add(new RestaurantTemp(jsonRow));
+                restaurants.add(new Restaurant(jsonRow));
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        this.restaurants = restaurants;
+        this.restaurants = restaurants;*/
         /** EINDE TIJDELIJK **/
 
-        setupRecyclerView(rv);
+        new FetchChallengesTask(rv).execute(3.73038, 51.053468);
     }
 
-    class FetchChallengesTask extends AsyncTask<String, String, Boolean> {
-        List<RestaurantTemp> list;
+    class FetchChallengesTask extends AsyncTask<Double, String, Boolean> {
+        List<Restaurant> list;
         RecyclerView recyclerView;
 
         public FetchChallengesTask(RecyclerView recyclerView) {
@@ -239,14 +240,13 @@ public class RestaurantListFragment extends ChallengeFragment {
         }
 
         @Override
-        protected Boolean doInBackground(String... objects) {
+        protected Boolean doInBackground(Double... objects) {
             try {
-                //list = restaurantManager.getAllRestaurants();
+                list = challengeManager.getRestaurantsByLocation(objects[0], objects[1]);
                 Log.e("RecipeListFragment", "Got recipes");
                 return true;
             } catch (Exception ex) {
-                // connectie mislukt
-                return false;
+                throw ex;
             }
         }
 
@@ -255,7 +255,7 @@ public class RestaurantListFragment extends ChallengeFragment {
             //setRefresh(false);
             Log.e("RecipeListFragment", "Post Execute called");
             if (succeed) {
-                //restaurants = list;
+                restaurants = list;
                 setupRecyclerView(recyclerView);
             }
         }

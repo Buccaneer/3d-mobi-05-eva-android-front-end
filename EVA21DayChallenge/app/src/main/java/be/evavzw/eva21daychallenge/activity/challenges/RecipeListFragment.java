@@ -27,14 +27,14 @@ import java.util.List;
 
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.models.Recipe;
-import be.evavzw.eva21daychallenge.security.RecipeManager;
+import be.evavzw.eva21daychallenge.security.ChallengeManager;
 
 /**
  * This Fragment is used to display a list of recipes
  */
 public class RecipeListFragment extends ChallengeFragment {
 
-    RecipeManager recipeManager;
+    ChallengeManager challengeManager;
     List<Recipe> recipes;
 
     @Nullable
@@ -243,7 +243,7 @@ public class RecipeListFragment extends ChallengeFragment {
         @Override
         protected Boolean doInBackground(String... objects) {
             try {
-                list = recipeManager.getAllRecipes();
+                list = challengeManager.getAllRecipes();
                 Log.e("RecipeListFragment", "Got recipes");
                 return true;
             } catch (Exception ex) {
