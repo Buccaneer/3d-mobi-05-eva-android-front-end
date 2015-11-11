@@ -126,8 +126,8 @@ public class RestaurantListFragment extends ChallengeFragment {
             context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
             mBackground = mTypedValue.resourceId;
             mValues = restaurants;
-            mValues.add(0, mValues.get(0));
-            /*mValues.add(3, mValues.get(0));
+            /*mValues.add(0, mValues.get(0));
+            mValues.add(3, mValues.get(0));
             mValues.add(3, mValues.get(0));
             mValues.add(3, mValues.get(0));
             mValues.add(3, mValues.get(0));
@@ -225,7 +225,7 @@ public class RestaurantListFragment extends ChallengeFragment {
         new FetchChallengesTask(rv).execute(3.73038, 51.053468);
     }
 
-    class FetchChallengesTask extends AsyncTask<Double, String, Boolean> {
+    private class FetchChallengesTask extends AsyncTask<Double, String, Boolean> {
         List<Restaurant> list;
         RecyclerView recyclerView;
 

@@ -8,6 +8,7 @@ import be.evavzw.eva21daychallenge.models.Recipe;
 import be.evavzw.eva21daychallenge.models.Restaurant;
 import be.evavzw.eva21daychallenge.rest.GetAllRecipesRestMethod;
 import be.evavzw.eva21daychallenge.rest.GetAllRestaurantsRestMethod;
+import be.evavzw.eva21daychallenge.rest.GetRestaurantDetailsRestMethod;
 import be.evavzw.eva21daychallenge.rest.framework.RestMethodResult;
 
 /**
@@ -53,5 +54,9 @@ public class ChallengeManager {
         GetAllRestaurantsRestMethod byLocationRestMethod =  new GetAllRestaurantsRestMethod(context);
         byLocationRestMethod.setCoordinatesAndDistance(longitude, latitude, radius);
         return byLocationRestMethod.execute().getResource();
+    }
+
+    public Restaurant getRestaurantDetails(int restaurantId) {
+        return new GetRestaurantDetailsRestMethod(context, restaurantId).execute().getResource();
     }
 }

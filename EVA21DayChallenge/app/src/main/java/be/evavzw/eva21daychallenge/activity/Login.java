@@ -51,8 +51,6 @@ import be.evavzw.eva21daychallenge.R;
  * Main activity which the user sees upon login
  */
 public class Login extends RESTfulActivity {
-
-    
     @Bind(R.id.signIn)
     Button signIn;
     @Bind(R.id.eva_logo)

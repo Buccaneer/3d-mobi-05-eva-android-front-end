@@ -1,6 +1,7 @@
 package be.evavzw.eva21daychallenge.activity.challenges;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import java.util.Comparator;
 
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.models.Restaurant;
+import be.evavzw.eva21daychallenge.security.ChallengeManager;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -23,6 +25,7 @@ import butterknife.ButterKnife;
 public class RestaurantDetailActivity extends AppCompatActivity {
     public static final String RESTAURANT = "restaurant";
 
+    private ChallengeManager challengeManager;
     Restaurant restaurant;
 
     @Bind(R.id.restaurantMap)
@@ -46,6 +49,8 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         setContentView(R.layout.restaurant_details);
         ButterKnife.bind(this);
 
+        challengeManager = ChallengeManager.getInstance(getApplicationContext());
+
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.category_restaurant));
         setSupportActionBar(toolbar);
@@ -56,7 +61,8 @@ public class RestaurantDetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         restaurant = (Restaurant) intent.getSerializableExtra(RESTAURANT);
-        updateChallenge(restaurant);
+        new FetchRestaurantDetailsTask().execute();
+        //updateChallenge(restaurant);
     }
 
     @Override
@@ -112,4 +118,16 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         }
     }
 
+    private class FetchRestaurantDetailsTask extends AsyncTask<Void, Void, Restaurant>{
+
+        @Override
+        protected Restaurant doInBackground(Void... params) {
+            return challengeManager.getRestaurantDetails(restaurant.getRestaurantId());
+        }
+
+        @Override
+        protected void onPostExecute(Restaurant restaurant) {
+            updateChallenge(restaurant);
+        }
+    }
 }

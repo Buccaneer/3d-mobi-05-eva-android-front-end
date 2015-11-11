@@ -226,7 +226,7 @@ public class RecipeListFragment extends ChallengeFragment {
     /**
      * An Asynctask that uses the Rest Framework to fetch recipes
      */
-    class FetchChallengesTask extends AsyncTask<String, String, Boolean> {
+    private class FetchChallengesTask extends AsyncTask<String, String, Boolean> {
         List<Recipe> list;
         RecyclerView recyclerView;
 

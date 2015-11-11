@@ -3,7 +3,6 @@ package be.evavzw.eva21daychallenge.rest;
 import android.content.Context;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ import be.evavzw.eva21daychallenge.rest.framework.RestMethodFactory;
  * Created by Gebruiker on 09/11/2015.
  */
 public class GetAllRestaurantsRestMethod extends AbstractRestMethod<List<Restaurant>> {
-    private static final URI RESTAURANTURL = URI.create("http://evavzwrest.azurewebsites.net/api/Restaurants/Find");
+    private static final URI RESTAURANTURI = URI.create("http://evavzwrest.azurewebsites.net/api/Restaurants/Find");
     private Context context;
     private double longitude, latitude, distance = 0.0;
 
@@ -47,12 +46,11 @@ public class GetAllRestaurantsRestMethod extends AbstractRestMethod<List<Restaur
         try {
             String body = "Longitude=" + longitude + "&Latitude=" + latitude;
             body += distance == 0 ? "" : "&Distance=" + distance;
-            Request r = new Request(RestMethodFactory.Method.POST, RESTAURANTURL, null, body.getBytes());
+            Request r = new Request(RestMethodFactory.Method.POST, RESTAURANTURI, null, body.getBytes());
             return r;
         } catch (Exception ex) {
             throw new IllegalArgumentException("Cannot build request see nested exception.", ex);
         }
-
     }
 
     @Override
