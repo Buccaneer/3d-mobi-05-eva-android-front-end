@@ -28,6 +28,7 @@ import java.util.List;
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.models.Restaurant;
 import be.evavzw.eva21daychallenge.security.ChallengeManager;
+import be.evavzw.eva21daychallenge.services.RestaurantService;
 
 /**
  * Created by Pieter-Jan on 4/11/2015.
@@ -38,6 +39,7 @@ public class RestaurantListFragment extends ChallengeFragment {
     //RestaurantManager restaurantManager;
     ChallengeManager challengeManager;
     List<Restaurant> restaurants;
+    private RestaurantService service;
 
     @Nullable
     @Override
@@ -48,6 +50,7 @@ public class RestaurantListFragment extends ChallengeFragment {
         RecyclerView rv = (RecyclerView) layout.findViewById(R.id.restaurantList);
         rv.setLayoutManager(new LinearLayoutManager(rv.getContext()));
         //setupRecyclerView(rv);
+        service = RestaurantService.getLocationManager(getContext());
         fetchChallenges(rv);
         return layout;
     }
@@ -222,7 +225,10 @@ public class RestaurantListFragment extends ChallengeFragment {
         this.restaurants = restaurants;*/
         /** EINDE TIJDELIJK **/
 
-        new FetchChallengesTask(rv).execute(3.73038, 51.053468);
+        Log.i("LOCATION", String.valueOf(service.longitude));
+        Log.i("LOCATION", String.valueOf(service.latitude));
+
+        new FetchChallengesTask(rv).execute(service.longitude, service.latitude);
     }
 
     private class FetchChallengesTask extends AsyncTask<Double, String, Boolean> {
