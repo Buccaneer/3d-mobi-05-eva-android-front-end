@@ -191,7 +191,7 @@ public class RecipeListFragment extends ChallengeFragment {
 
     //Method that fetches the Challenges then calls setupRecyclerView
     private void fetchChallenges(RecyclerView rv) {
-        //FetchChallengesTask fetch = new FetchChallengesTask(rv);
+        //FetchRestaurantsTask fetch = new FetchRestaurantsTask(rv);
         //fetch.execute();
 
         /** TIJDELIJK **/
