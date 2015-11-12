@@ -1,5 +1,6 @@
 package be.evavzw.eva21daychallenge.activity.challenges;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -7,8 +8,11 @@ import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -54,61 +58,52 @@ public class RestaurantListFragment extends ChallengeFragment implements
         LocationListener,
         ResultCallback<LocationSettingsResult> {
 
-    protected static final String TAG = "ChallengeActivity";
+    private static final String TAG = "RestaurantListFragment";
 
     /**
      * Constant used in the location settings dialog.
      */
-    protected static final int REQUEST_CHECK_SETTINGS = 0x1;
+    private static final int REQUEST_CHECK_SETTINGS = 0x1;
 
     /**
      * The desired interval for location updates. Inexact. Updates may be more or less frequent.
      */
-    public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 1000;
+    private static final long UPDATE_INTERVAL_IN_MILLISECONDS = 1000;
 
     /**
      * The fastest rate for active location updates. Exact. Updates will never be more frequent
      * than this value.
      */
-    public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS =
+    private static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS =
             UPDATE_INTERVAL_IN_MILLISECONDS;
 
-    // Keys for storing activity state in the Bundle.
-    protected final static String KEY_REQUESTING_LOCATION_UPDATES = "requesting-location-updates";
-    protected final static String KEY_LOCATION = "location";
-    protected final static String KEY_LAST_UPDATED_TIME_STRING = "last-updated-time-string";
 
     /**
      * Provides the entry point to Google Play services.
      */
-    protected GoogleApiClient mGoogleApiClient;
+    private GoogleApiClient mGoogleApiClient;
 
     /**
      * Stores parameters for requests to the FusedLocationProviderApi.
      */
-    protected LocationRequest mLocationRequest;
+    private LocationRequest mLocationRequest;
 
     /**
      * Stores the types of location services the client is interested in using. Used for checking
      * settings to determine if the device has optimal location settings.
      */
-    protected LocationSettingsRequest mLocationSettingsRequest;
+    private LocationSettingsRequest mLocationSettingsRequest;
 
     /**
      * Represents a geographical location.
      */
-    protected Location mCurrentLocation;
+    private Location mCurrentLocation;
 
     /**
      * Tracks the status of the location updates request. Value changes when the user presses the
      * Start Updates and Stop Updates buttons.
      */
-    protected Boolean mRequestingLocationUpdates;
-
-    /**
-     * Time when the location was updated represented as a String.
-     */
-    protected String mLastUpdateTime;
+    private Boolean mRequestingLocationUpdates;
 
     private ChallengeManager challengeManager;
     private List<Restaurant> restaurants;
@@ -125,14 +120,37 @@ public class RestaurantListFragment extends ChallengeFragment implements
         //setupRecyclerView(rv);
 
         mRequestingLocationUpdates = false;
-        mLastUpdateTime = "";
 
         buildGoogleApiClient();
         createLocationRequest();
         buildLocationSettingsRequest();
 
-        checkLocationSettings();
+        if (Build.VERSION.SDK_INT >= 23) {
+            askLocationPermission();
+        } else {
+            checkLocationSettings();
+        }
+
         return layout;
+    }
+
+    private void askLocationPermission() {
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 200);
+        } else {
+            checkLocationSettings();
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        Log.i(TAG, "PERMISSION CALLBACK");
+        if (requestCode == 200) {
+            if (grantResults.length != 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                checkLocationSettings();
+            }
+        }
     }
 
     /**
@@ -153,11 +171,11 @@ public class RestaurantListFragment extends ChallengeFragment implements
      * {@code ACCESS_COARSE_LOCATION} and {@code ACCESS_FINE_LOCATION}. These settings control
      * the accuracy of the current location. This sample uses ACCESS_FINE_LOCATION, as defined in
      * the AndroidManifest.xml.
-     * <p>
+     * <p/>
      * When the ACCESS_FINE_LOCATION setting is specified, combined with a fast update
      * interval (5 seconds), the Fused Location Provider API returns location updates that are
      * accurate to within a few feet.
-     * <p>
+     * <p/>
      * These settings are appropriate for mapping applications that show real-time location
      * updates.
      */
@@ -181,7 +199,7 @@ public class RestaurantListFragment extends ChallengeFragment implements
      * a {@link com.google.android.gms.location.LocationSettingsRequest} that is used for checking
      * if a device has the needed location settings.
      */
-    protected void buildLocationSettingsRequest() {
+    private void buildLocationSettingsRequest() {
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
         builder.addLocationRequest(mLocationRequest);
         mLocationSettingsRequest = builder.build();
@@ -192,7 +210,7 @@ public class RestaurantListFragment extends ChallengeFragment implements
      * {@link com.google.android.gms.location.SettingsApi#checkLocationSettings(GoogleApiClient,
      * LocationSettingsRequest)} method, with the results provided through a {@code PendingResult}.
      */
-    protected void checkLocationSettings() {
+    private void checkLocationSettings() {
         PendingResult<LocationSettingsResult> result =
                 LocationServices.SettingsApi.checkLocationSettings(
                         mGoogleApiClient,
@@ -257,7 +275,7 @@ public class RestaurantListFragment extends ChallengeFragment implements
     /**
      * Requests location updates from the FusedLocationApi.
      */
-    protected void startLocationUpdates() {
+    private void startLocationUpdates() {
         LocationServices.FusedLocationApi.requestLocationUpdates(
                 mGoogleApiClient,
                 mLocationRequest,
@@ -273,7 +291,7 @@ public class RestaurantListFragment extends ChallengeFragment implements
     /**
      * Removes location updates from the FusedLocationApi.
      */
-    protected void stopLocationUpdates() {
+    private void stopLocationUpdates() {
         // It is a good practice to remove location requests when the activity is in a paused or
         // stopped state. Doing so helps battery performance and is especially
         // recommended in applications that request frequent location updates.
@@ -339,7 +357,6 @@ public class RestaurantListFragment extends ChallengeFragment implements
         // is displayed as the activity is re-created.
         if (mCurrentLocation == null) {
             mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-            mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
         }
     }
 
@@ -349,8 +366,6 @@ public class RestaurantListFragment extends ChallengeFragment implements
     @Override
     public void onLocationChanged(Location location) {
         mCurrentLocation = location;
-        mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
-        Toast.makeText(getContext(), mLastUpdateTime + mCurrentLocation.getLongitude() + " - " + mCurrentLocation.getLatitude(), Toast.LENGTH_LONG).show();
         new FetchRestaurantsTask(rv).execute(mCurrentLocation.getLongitude(), mCurrentLocation.getLatitude());
         stopLocationUpdates();
         mGoogleApiClient.disconnect();
@@ -385,7 +400,7 @@ public class RestaurantListFragment extends ChallengeFragment implements
         recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(), restaurants, getString(R.string.category_restaurant_descr)));
     }
 
-    public static class SimpleStringRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static class SimpleStringRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private final TypedValue mTypedValue = new TypedValue();
         private int mBackground;
         private List<Restaurant> mValues;

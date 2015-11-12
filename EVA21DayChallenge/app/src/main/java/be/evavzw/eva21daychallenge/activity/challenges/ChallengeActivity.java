@@ -1,5 +1,6 @@
 package be.evavzw.eva21daychallenge.activity.challenges;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -10,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 
 import java.util.ArrayList;
@@ -49,6 +51,7 @@ public class ChallengeActivity extends AppCompatActivity
     TabLayout tabs;
 
     private SharedPreferences mPrefs;
+    private RestaurantListFragment restaurantListFragment;
 
     /**
      * Saves the current Tab position on pause
@@ -106,6 +109,11 @@ public class ChallengeActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        restaurantListFragment.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
         getMenuInflater().inflate(R.menu.menu_with_actions, menu);
@@ -126,9 +134,10 @@ public class ChallengeActivity extends AppCompatActivity
      */
     private void setupViewPager(ViewPager viewPager)
     {
+        this.restaurantListFragment = new RestaurantListFragment();
         Adapter adapter = new Adapter(getSupportFragmentManager());
         adapter.addFragment(new RecipeListFragment(), getString(R.string.category_cooking));
-        adapter.addFragment(new RestaurantListFragment(), getString(R.string.category_restaurant));
+        adapter.addFragment(restaurantListFragment, getString(R.string.category_restaurant));
         adapter.addFragment(new RecipeListFragment(), getString(R.string.category_sugarfree));
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener()
