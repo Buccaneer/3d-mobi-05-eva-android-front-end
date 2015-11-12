@@ -13,9 +13,11 @@ import android.widget.TextView;
 import java.util.Comparator;
 
 import be.evavzw.eva21daychallenge.R;
+import be.evavzw.eva21daychallenge.activity.MainMenu;
 import be.evavzw.eva21daychallenge.models.RestaurantTemp;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Activity which displays all information about a Restaurant.
@@ -110,6 +112,15 @@ public class RestaurantDetailActivity extends AppCompatActivity {
                 return 0;
             }
         }
+    }
+
+
+    @OnClick(R.id.addChallenge)
+    public void addChallenge(){
+        Intent intent = new Intent(RestaurantDetailActivity.this, MainMenu.class);
+        startActivity(intent);
+
+        this.finish();
     }
 
 }

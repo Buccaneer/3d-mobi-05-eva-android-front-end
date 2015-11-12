@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -19,11 +20,13 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 import be.evavzw.eva21daychallenge.R;
+import be.evavzw.eva21daychallenge.activity.MainMenu;
 import be.evavzw.eva21daychallenge.models.Ingredient;
 import be.evavzw.eva21daychallenge.models.Recipe;
 import be.evavzw.eva21daychallenge.models.RecipeProperty;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Activity which displays all information about a Recipe.
@@ -116,6 +119,14 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @OnClick(R.id.addChallenge)
+    public void addChallenge(){
+        Intent intent = new Intent(RecipeDetailActivity.this, MainMenu.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        this.finish();
     }
 
     //Loads the image in the CollapsingToolbar
