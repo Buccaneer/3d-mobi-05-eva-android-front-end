@@ -559,7 +559,7 @@ public class RestaurantListFragment extends ChallengeFragment implements
             Log.e("Longitude", String.valueOf(objects[0]));
             Log.e("Latitude", String.valueOf(objects[1]));
             try {
-                list = challengeManager.getRestaurantsByLocationAndRadius(objects[0], objects[1]);
+                list = challengeManager.getRestaurantsByLocation(objects[0], objects[1]);
                 Log.e("RecipeListFragment", "Got recipes");
                 return true;
             } catch (Exception ex) {
