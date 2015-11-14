@@ -11,7 +11,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,7 +22,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -40,23 +38,22 @@ import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.bumptech.glide.Glide;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.List;
 
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.models.Restaurant;
-import be.evavzw.eva21daychallenge.security.ChallengeManager;
+import be.evavzw.eva21daychallenge.rest.ChallengeManager;
 
 /**
  * Created by Pieter-Jan on 4/11/2015.
- * TODO: Add actual map and comments
+ * TODO: Add actual map
  */
 public class RestaurantListFragment extends ChallengeFragment implements
         ConnectionCallbacks,
         OnConnectionFailedListener,
         LocationListener,
-        ResultCallback<LocationSettingsResult> {
+        ResultCallback<LocationSettingsResult>
+{
 
     private static final String TAG = "RestaurantListFragment";
 
@@ -76,7 +73,6 @@ public class RestaurantListFragment extends ChallengeFragment implements
      */
     private static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS =
             UPDATE_INTERVAL_IN_MILLISECONDS;
-
 
     /**
      * Provides the entry point to Google Play services.
@@ -111,7 +107,8 @@ public class RestaurantListFragment extends ChallengeFragment implements
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.restaurant_challenge, container, false);
         //setupTitle(layout);
         challengeManager = ChallengeManager.getInstance(getContext());
@@ -125,29 +122,37 @@ public class RestaurantListFragment extends ChallengeFragment implements
         createLocationRequest();
         buildLocationSettingsRequest();
 
-        if (Build.VERSION.SDK_INT >= 23) {
+        if (Build.VERSION.SDK_INT >= 23)
+        {
             askLocationPermission();
-        } else {
+        }
+        else
+        {
             checkLocationSettings();
         }
-
         return layout;
     }
 
-    private void askLocationPermission() {
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+    private void askLocationPermission()
+    {
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        {
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 200);
-        } else {
+        }
+        else
+        {
             checkLocationSettings();
         }
-
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
+    {
         Log.i(TAG, "PERMISSION CALLBACK");
-        if (requestCode == 200) {
-            if (grantResults.length != 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (requestCode == 200)
+        {
+            if (grantResults.length != 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
                 checkLocationSettings();
             }
         }
@@ -157,7 +162,8 @@ public class RestaurantListFragment extends ChallengeFragment implements
      * Builds a GoogleApiClient. Uses the {@code #addApi} method to request the
      * LocationServices API.
      */
-    protected synchronized void buildGoogleApiClient() {
+    protected synchronized void buildGoogleApiClient()
+    {
         Log.i(TAG, "Building GoogleApiClient");
         mGoogleApiClient = new GoogleApiClient.Builder(getContext())
                 .addConnectionCallbacks(this)
@@ -179,7 +185,8 @@ public class RestaurantListFragment extends ChallengeFragment implements
      * These settings are appropriate for mapping applications that show real-time location
      * updates.
      */
-    protected void createLocationRequest() {
+    protected void createLocationRequest()
+    {
         mLocationRequest = new LocationRequest();
 
         // Sets the desired interval for active location updates. This interval is
@@ -199,7 +206,8 @@ public class RestaurantListFragment extends ChallengeFragment implements
      * a {@link com.google.android.gms.location.LocationSettingsRequest} that is used for checking
      * if a device has the needed location settings.
      */
-    private void buildLocationSettingsRequest() {
+    private void buildLocationSettingsRequest()
+    {
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
         builder.addLocationRequest(mLocationRequest);
         mLocationSettingsRequest = builder.build();
@@ -210,7 +218,8 @@ public class RestaurantListFragment extends ChallengeFragment implements
      * {@link com.google.android.gms.location.SettingsApi#checkLocationSettings(GoogleApiClient,
      * LocationSettingsRequest)} method, with the results provided through a {@code PendingResult}.
      */
-    private void checkLocationSettings() {
+    private void checkLocationSettings()
+    {
         PendingResult<LocationSettingsResult> result =
                 LocationServices.SettingsApi.checkLocationSettings(
                         mGoogleApiClient,
@@ -228,9 +237,11 @@ public class RestaurantListFragment extends ChallengeFragment implements
      * settings dialog to the user.
      */
     @Override
-    public void onResult(LocationSettingsResult locationSettingsResult) {
+    public void onResult(LocationSettingsResult locationSettingsResult)
+    {
         final Status status = locationSettingsResult.getStatus();
-        switch (status.getStatusCode()) {
+        switch (status.getStatusCode())
+        {
             case LocationSettingsStatusCodes.SUCCESS:
                 Log.i(TAG, "All location settings are satisfied.");
                 startLocationUpdates();
@@ -239,11 +250,14 @@ public class RestaurantListFragment extends ChallengeFragment implements
                 Log.i(TAG, "Location settings are not satisfied. Show the user a dialog to " +
                         "upgrade location settings ");
 
-                try {
+                try
+                {
                     // Show the dialog by calling startResolutionForResult(), and check the result
                     // in onActivityResult().
                     status.startResolutionForResult(getActivity(), REQUEST_CHECK_SETTINGS);
-                } catch (IntentSender.SendIntentException e) {
+                }
+                catch (IntentSender.SendIntentException e)
+                {
                     Log.i(TAG, "PendingIntent unable to execute request.");
                 }
                 break;
@@ -255,11 +269,14 @@ public class RestaurantListFragment extends ChallengeFragment implements
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        switch (requestCode)
+        {
             // Check for the integer request code originally supplied to startResolutionForResult().
             case REQUEST_CHECK_SETTINGS:
-                switch (resultCode) {
+                switch (resultCode)
+                {
                     case Activity.RESULT_OK:
                         Log.i(TAG, "User agreed to make required location settings changes.");
                         startLocationUpdates();
@@ -275,14 +292,17 @@ public class RestaurantListFragment extends ChallengeFragment implements
     /**
      * Requests location updates from the FusedLocationApi.
      */
-    private void startLocationUpdates() {
+    private void startLocationUpdates()
+    {
         LocationServices.FusedLocationApi.requestLocationUpdates(
                 mGoogleApiClient,
                 mLocationRequest,
                 this
-        ).setResultCallback(new ResultCallback<Status>() {
+        ).setResultCallback(new ResultCallback<Status>()
+        {
             @Override
-            public void onResult(Status status) {
+            public void onResult(Status status)
+            {
                 mRequestingLocationUpdates = true;
             }
         });
@@ -291,49 +311,58 @@ public class RestaurantListFragment extends ChallengeFragment implements
     /**
      * Removes location updates from the FusedLocationApi.
      */
-    private void stopLocationUpdates() {
+    private void stopLocationUpdates()
+    {
         // It is a good practice to remove location requests when the activity is in a paused or
         // stopped state. Doing so helps battery performance and is especially
         // recommended in applications that request frequent location updates.
         LocationServices.FusedLocationApi.removeLocationUpdates(
                 mGoogleApiClient,
                 this
-        ).setResultCallback(new ResultCallback<Status>() {
+        ).setResultCallback(new ResultCallback<Status>()
+        {
             @Override
-            public void onResult(Status status) {
+            public void onResult(Status status)
+            {
                 mRequestingLocationUpdates = false;
             }
         });
     }
 
     @Override
-    public void onStart() {
+    public void onStart()
+    {
         mGoogleApiClient.connect();
         super.onStart();
     }
 
     @Override
-    public void onResume() {
+    public void onResume()
+    {
         super.onResume();
         // Within {@code onPause()}, we pause location updates, but leave the
         // connection to GoogleApiClient intact.  Here, we resume receiving
         // location updates if the user has requested them.
-        if (mGoogleApiClient.isConnected() && mRequestingLocationUpdates) {
+        if (mGoogleApiClient.isConnected() && mRequestingLocationUpdates)
+        {
             startLocationUpdates();
         }
     }
 
     @Override
-    public void onPause() {
+    public void onPause()
+    {
         // Stop location updates to save battery, but don't disconnect the GoogleApiClient object.
-        if (mGoogleApiClient.isConnected()) {
+        if (mGoogleApiClient.isConnected())
+        {
             stopLocationUpdates();
         }
         super.onPause();
     }
 
     @Override
-    public void onStop() {
+    public void onStop()
+    {
         mGoogleApiClient.disconnect();
         super.onStop();
     }
@@ -342,7 +371,8 @@ public class RestaurantListFragment extends ChallengeFragment implements
      * Runs when a GoogleApiClient object successfully connects.
      */
     @Override
-    public void onConnected(Bundle connectionHint) {
+    public void onConnected(Bundle connectionHint)
+    {
         Log.i(TAG, "Connected to GoogleApiClient");
 
         // If the initial location was never previously requested, we use
@@ -355,7 +385,8 @@ public class RestaurantListFragment extends ChallengeFragment implements
         // user launches the activity,
         // moves to a new location, and then changes the device orientation, the original location
         // is displayed as the activity is re-created.
-        if (mCurrentLocation == null) {
+        if (mCurrentLocation == null)
+        {
             mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         }
     }
@@ -364,7 +395,8 @@ public class RestaurantListFragment extends ChallengeFragment implements
      * Callback that fires when the location changes.
      */
     @Override
-    public void onLocationChanged(Location location) {
+    public void onLocationChanged(Location location)
+    {
         mCurrentLocation = location;
         new FetchRestaurantsTask(rv).execute(mCurrentLocation.getLongitude(), mCurrentLocation.getLatitude());
         stopLocationUpdates();
@@ -372,12 +404,14 @@ public class RestaurantListFragment extends ChallengeFragment implements
     }
 
     @Override
-    public void onConnectionSuspended(int cause) {
+    public void onConnectionSuspended(int cause)
+    {
         Log.i(TAG, "Connection suspended");
     }
 
     @Override
-    public void onConnectionFailed(ConnectionResult result) {
+    public void onConnectionFailed(ConnectionResult result)
+    {
         // Refer to the javadoc for ConnectionResult to see what error codes might be returned in
         // onConnectionFailed.
         Log.i(TAG, "Connection failed: ConnectionResult.getErrorCode() = " + result.getErrorCode());
@@ -394,25 +428,26 @@ public class RestaurantListFragment extends ChallengeFragment implements
         tv.setText("Title");
     }*/
 
-    private void setupRecyclerView(RecyclerView recyclerView) {
-        //recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-
+    private void setupRecyclerView(RecyclerView recyclerView)
+    {
         recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(), restaurants, getString(R.string.category_restaurant_descr)));
     }
 
-    private static class SimpleStringRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static class SimpleStringRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
+    {
         private final TypedValue mTypedValue = new TypedValue();
         private int mBackground;
         private List<Restaurant> mValues;
         private String description;
 
-        public static class Description extends RecyclerView.ViewHolder {
-
+        public static class Description extends RecyclerView.ViewHolder
+        {
             public final View mView;
             public final ImageView mImageView;
             public final TextView mTextView;
 
-            public Description(View view) {
+            public Description(View view)
+            {
                 super(view);
                 mView = view;
                 mImageView = (ImageView) view.findViewById(R.id.categoryAvatar);
@@ -420,19 +455,22 @@ public class RestaurantListFragment extends ChallengeFragment implements
             }
 
             @Override
-            public String toString() {
+            public String toString()
+            {
                 return super.toString() + " '" + mTextView.getText();
             }
         }
 
-        public static class ViewHolder extends RecyclerView.ViewHolder {
+        public static class ViewHolder extends RecyclerView.ViewHolder
+        {
             public Restaurant mRestaurant;
 
             public final View mView;
             public final ImageView mImageView;
             public final TextView mTextView;
 
-            public ViewHolder(View view) {
+            public ViewHolder(View view)
+            {
                 super(view);
                 mView = view;
                 mImageView = (ImageView) view.findViewById(R.id.avatar);
@@ -440,21 +478,25 @@ public class RestaurantListFragment extends ChallengeFragment implements
             }
 
             @Override
-            public String toString() {
+            public String toString()
+            {
                 return super.toString() + " '" + mTextView.getText();
             }
         }
 
         @Override
-        public int getItemViewType(int position) {
+        public int getItemViewType(int position)
+        {
             return position == 0 ? 0 : 1;
         }
 
-        public Restaurant getValueAt(int position) {
+        public Restaurant getValueAt(int position)
+        {
             return mValues.get(position);
         }
 
-        public SimpleStringRecyclerViewAdapter(Context context, List<Restaurant> restaurants, String description) {
+        public SimpleStringRecyclerViewAdapter(Context context, List<Restaurant> restaurants, String description)
+        {
             context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
             mBackground = mTypedValue.resourceId;
             mValues = restaurants;
@@ -468,11 +510,15 @@ public class RestaurantListFragment extends ChallengeFragment implements
         }
 
         @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            if (viewType == 0) {
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+        {
+            if (viewType == 0)
+            {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_description, parent, false);
                 return new Description(view);
-            } else {
+            }
+            else
+            {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
                 view.setBackgroundResource(mBackground);
                 return new ViewHolder(view);
@@ -480,15 +526,19 @@ public class RestaurantListFragment extends ChallengeFragment implements
         }
 
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holderr, final int position) {
-            if (holderr instanceof ViewHolder) {
+        public void onBindViewHolder(RecyclerView.ViewHolder holderr, final int position)
+        {
+            if (holderr instanceof ViewHolder)
+            {
                 final ViewHolder holder = (ViewHolder) holderr;
                 holder.mRestaurant = mValues.get(position);
                 holder.mTextView.setText(mValues.get(position).getName());
 
-                holder.mView.setOnClickListener(new View.OnClickListener() {
+                holder.mView.setOnClickListener(new View.OnClickListener()
+                {
                     @Override
-                    public void onClick(View v) {
+                    public void onClick(View v)
+                    {
                         Context context = v.getContext();
                         Intent intent = new Intent(context, RestaurantDetailActivity.class);
                         intent.putExtra(RestaurantDetailActivity.RESTAURANT, holder.mRestaurant);
@@ -507,7 +557,9 @@ public class RestaurantListFragment extends ChallengeFragment implements
                             .load(Images.getRandomCheeseDrawable())
                             .fitCenter()
                             .into(holder.mImageView);*/
-            } else if (holderr instanceof Description) {
+            }
+            else if (holderr instanceof Description)
+            {
                 final Description holder = (Description) holderr;
                 holder.mTextView.setText(description);
                 Glide.with(holder.mImageView.getContext())
@@ -520,12 +572,14 @@ public class RestaurantListFragment extends ChallengeFragment implements
         }
 
         @Override
-        public int getItemCount() {
+        public int getItemCount()
+        {
             return mValues.size();
         }
     }
 
-    private void fetchChallenges() {
+    private void fetchChallenges()
+    {
         //FetchRestaurantsTask fetch = new FetchRestaurantsTask(rv);
         //fetch.execute();
 
@@ -555,41 +609,52 @@ public class RestaurantListFragment extends ChallengeFragment implements
         /** EINDE TIJDELIJK **/
     }
 
-    private class FetchRestaurantsTask extends AsyncTask<Double, String, Boolean> {
+    private class FetchRestaurantsTask extends AsyncTask<Double, String, Boolean>
+    {
         List<Restaurant> list;
         RecyclerView recyclerView;
 
-        public FetchRestaurantsTask(RecyclerView recyclerView) {
+        public FetchRestaurantsTask(RecyclerView recyclerView)
+        {
             super();
             this.recyclerView = recyclerView;
         }
 
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute()
+        {
 
         }
 
         @Override
-        protected Boolean doInBackground(Double... objects) {
+        protected Boolean doInBackground(Double... objects)
+        {
             Log.e("Longitude", String.valueOf(objects[0]));
             Log.e("Latitude", String.valueOf(objects[1]));
-            try {
+            try
+            {
                 list = challengeManager.getRestaurantsByLocation(objects[0], objects[1]);
-                Log.e("RecipeListFragment", "Got recipes");
+                Log.e("RestaurantListFragment", "Got restaurants");
                 return true;
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 throw ex;
             }
         }
 
         @Override
-        protected void onPostExecute(Boolean succeed) {
+        protected void onPostExecute(Boolean succeed)
+        {
             //setRefresh(false);
-            if (succeed) {
+            if (succeed)
+            {
                 Log.e("RecipeListFragment", "Post Execute called");
                 restaurants = list;
                 setupRecyclerView(recyclerView);
-            } else {
+            }
+            else
+            {
                 Log.e("qmlskdjf", "Post Execute Failed");
             }
         }

@@ -1,29 +1,53 @@
 package be.evavzw.eva21daychallenge.models;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
+import com.j256.ormlite.table.DatabaseTable;
+
+import java.util.Collection;
+
+import be.evavzw.eva21daychallenge.models.challenges.Challenge;
+
 /**
  * Created by Pieter-Jan on 4/11/2015.
  */
-public enum Category
+@DatabaseTable(tableName = "categories")
+public class Category
 {
-    KOKEN("TITILE", "Bij deze challenge is het de bedoeling dat je iets plantaardig kookt. Dit is een saaie placeholder tekst.");
+    public static final String COOKING = "Cooking";
+    public static final String DINING_OUT = "Dining_Out";
+    public static final String SUGARFREE = "Sugarfree";
 
-    private final String title;
-    private final String description;
+    public static final String ID_FIELD_NAME = "name";
+    public static final String FIELD_CHALLENGES = "challenges";
 
-    Category(String title, String description)
+    @DatabaseField(id = true, columnName = ID_FIELD_NAME)
+    private String name;
+
+    @ForeignCollectionField(columnName = FIELD_CHALLENGES)
+    private Collection<Challenge> challenges;
+
+    Category()
     {
-        this.title = title;
-        this.description = description;
     }
 
-    public String getTitle()
+    public Category(String name)
     {
-        return title;
+        this.name = name;
     }
 
-    public String getDescription()
+    public String getName()
     {
-        return description;
+        return name;
     }
 
+    public Collection<Challenge> getChallenges()
+    {
+        return challenges;
+    }
+
+    public void setChallenges(Collection<Challenge> challenges)
+    {
+        this.challenges = challenges;
+    }
 }

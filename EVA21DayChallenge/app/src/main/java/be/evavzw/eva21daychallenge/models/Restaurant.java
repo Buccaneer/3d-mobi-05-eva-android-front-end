@@ -1,5 +1,8 @@
 package be.evavzw.eva21daychallenge.models;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import org.json.JSONObject;
 
 import java.io.Serializable;
@@ -7,11 +10,21 @@ import java.io.Serializable;
 /**
  * Created by Pieter-Jan on 4/11/2015.
  */
+@DatabaseTable
 public class Restaurant implements Serializable {
 
-    private String name, description, website, email, phone, street, postal, city;
+    @DatabaseField(id = true)
     private int restaurantId;
+
+    @DatabaseField
+    private String name, description, website, email, phone, street, postal, city;
+
+    @DatabaseField
     private double latitude, longitude;
+
+    Restaurant() //for ormlite
+    {
+    }
 
     public Restaurant(JSONObject jsonObject) throws Exception {
         parseJson(jsonObject);

@@ -1,22 +1,39 @@
 package be.evavzw.eva21daychallenge.models;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Class that represents a Recipe
  */
+@DatabaseTable(tableName = "recipes")
 public class Recipe implements Serializable {
-    private List<Ingredient> ingredients;
-    private String name;
-    private String description;
-    private String image;
+
+    public static final String ID_FIELD_NAME = "recipeId";
+
+    @DatabaseField(id = true, columnName = ID_FIELD_NAME)
     private int recipeId;
-    private List<RecipeProperty> properties;
+
+    @DatabaseField
+    private String name,description, image;
+
+    @ForeignCollectionField
+    private Collection<Ingredient> ingredients;
+
+    @ForeignCollectionField
+    private Collection<RecipeProperty> properties;
+
+    Recipe() //for ormlite
+    {
+    }
 
     /**
      * Let the class build itself with a given {@link JSONObject}
@@ -44,14 +61,14 @@ public class Recipe implements Serializable {
 
         for(int i = 0; i < ingredientsArray.length(); i++){
             JSONObject jsonRow = ingredientsArray.getJSONObject(i);
-            ingredients.add(new Ingredient(jsonRow));
+            ingredients.add(new Ingredient(this, jsonRow));
         }
 
         JSONArray propertiesArray = jsonObject.getJSONArray("Properties");
 
         for(int i = 0; i < propertiesArray.length(); i++){
             JSONObject jsonRow = propertiesArray.getJSONObject(i);
-            properties.add(new RecipeProperty(jsonRow));
+            properties.add(new RecipeProperty(this, jsonRow));
         }
     }
 
@@ -59,11 +76,11 @@ public class Recipe implements Serializable {
         return recipeId;
     }
 
-    public List<Ingredient> getIngredients() {
+    public Collection<Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public List<RecipeProperty> getProperties() {
+    public Collection<RecipeProperty> getProperties() {
         return properties;
     }
 
