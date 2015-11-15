@@ -4,6 +4,7 @@ import android.content.Context;
 
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.models.profile_setup.AbstractWizardModel;
+import be.evavzw.eva21daychallenge.models.profile_setup.AllergiesPage;
 import be.evavzw.eva21daychallenge.models.profile_setup.MultipleFixedChoicePage;
 import be.evavzw.eva21daychallenge.models.profile_setup.PageList;
 import be.evavzw.eva21daychallenge.models.profile_setup.SingleFixedChoicePage;
@@ -39,8 +40,7 @@ public class ProfileWizardModel extends AbstractWizardModel {
         return new PageList(
                 new UserInfoPage(this, personalInfo, mContext)
                         .setRequired(true),
-                new MultipleFixedChoicePage(this, allergicTo)
-                        .setChoices(glutenFree, sugarFree, peanuts, nuts),
+                new AllergiesPage(this, allergicTo, mContext),
                 new SingleFixedChoicePage(this, budgetAmount)
                         .setChoices(low, medium, large, notShared)
                         .setRequired(true),
