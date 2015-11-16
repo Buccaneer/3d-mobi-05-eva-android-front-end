@@ -16,6 +16,7 @@ import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
+import be.evavzw.eva21daychallenge.activity.About;
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.activity.Login;
 import be.evavzw.eva21daychallenge.security.UserManager;
@@ -87,9 +88,12 @@ public abstract class RESTfulActivity extends AppCompatActivity implements Navig
             Intent intent = new Intent(getApplicationContext(), Login.class);
             startActivity(intent);
             this.finish();
-        }/*else if (id == R.id.nav_gallery) {
+        }else if (id == R.id.nav_about) {
+            Intent intent = new Intent(getApplicationContext(), About.class);
+            startActivity(intent);
 
-        } else if (id == R.id.nav_slideshow) {
+
+        } /*else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
 
