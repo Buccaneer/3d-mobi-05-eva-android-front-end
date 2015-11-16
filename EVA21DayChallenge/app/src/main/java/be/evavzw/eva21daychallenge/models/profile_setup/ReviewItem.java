@@ -1,5 +1,9 @@
 package be.evavzw.eva21daychallenge.models.profile_setup;
 
+import java.util.List;
+
+import be.evavzw.eva21daychallenge.models.Ingredient;
+
 /**
  * Represents a single line item on the final review page.
  *

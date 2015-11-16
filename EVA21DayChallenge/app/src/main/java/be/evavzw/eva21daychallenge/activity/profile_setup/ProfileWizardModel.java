@@ -32,10 +32,6 @@ public class ProfileWizardModel extends AbstractWizardModel {
         String large = mContext.getResources().getString(R.string.large);
         String notShared = mContext.getResources().getString(R.string.notShared);
         String allergicTo = mContext.getResources().getString(R.string.allergicTo);
-        String glutenFree = mContext.getResources().getString(R.string.glutenFree);
-        String sugarFree = mContext.getResources().getString(R.string.sugarFree);
-        String peanuts = mContext.getResources().getString(R.string.peanuts);
-        String nuts = mContext.getResources().getString(R.string.nuts);
 
         return new PageList(
                 new UserInfoPage(this, personalInfo, mContext)

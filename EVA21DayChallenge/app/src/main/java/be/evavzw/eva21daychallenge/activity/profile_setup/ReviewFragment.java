@@ -17,6 +17,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import be.evavzw.eva21daychallenge.R;
+import be.evavzw.eva21daychallenge.models.Ingredient;
 import be.evavzw.eva21daychallenge.models.profile_setup.AbstractWizardModel;
 import be.evavzw.eva21daychallenge.models.profile_setup.ModelCallbacks;
 import be.evavzw.eva21daychallenge.models.profile_setup.Page;
@@ -148,9 +149,9 @@ public class ReviewFragment extends ListFragment implements ModelCallbacks {
 
             ReviewItem reviewItem = mCurrentReviewItems.get(position);
             String value = reviewItem.getDisplayValue();
-            if (TextUtils.isEmpty(value)) {
-                value = "/";
-            }
+                if (TextUtils.isEmpty(value)) {
+                    value = "/";
+                }
             ((TextView) rootView.findViewById(android.R.id.text1)).setText(reviewItem.getTitle());
             ((TextView) rootView.findViewById(android.R.id.text2)).setText(value);
             return rootView;

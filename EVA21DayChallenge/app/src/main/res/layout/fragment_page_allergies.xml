@@ -8,6 +8,7 @@
         style="@style/WizardPageTitle" />
 
     <be.evavzw.eva21daychallenge.customComponent.SearchableCheckListView
+        android:id="@+id/checkListView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
 

@@ -2,10 +2,12 @@ package be.evavzw.eva21daychallenge.models;
 
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 /**
  * Ingredients for a {@link Recipe}
  */
-public class Ingredient {
+public class Ingredient implements Serializable {
 
     private String name, unit;
     private int ingredientId, quantity;

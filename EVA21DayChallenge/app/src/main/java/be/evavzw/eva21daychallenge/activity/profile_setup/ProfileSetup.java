@@ -21,6 +21,7 @@ import java.util.List;
 
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.activity.MainMenu;
+import be.evavzw.eva21daychallenge.models.Ingredient;
 import be.evavzw.eva21daychallenge.models.profile_setup.AbstractWizardModel;
 import be.evavzw.eva21daychallenge.models.profile_setup.ModelCallbacks;
 import be.evavzw.eva21daychallenge.models.profile_setup.Page;
@@ -160,10 +161,17 @@ public class ProfileSetup extends android.support.v4.app.FragmentActivity implem
         bundle.putBundle(numberHousehold, bundle4);
 
         mWizardModel.load(bundle);
+
+        //mPager.setCurrentItem(mCurrentPageSequence.size());
     }
 
     private void reviewPositiveClick() {
         //TODO: retrieve all items filled in by the user and send it to the server + set it in sharedpreferences maybe?
+        String allergicTo = getApplicationContext().getResources().getString(R.string.allergicTo);
+        List<Ingredient> ingredients = (List<Ingredient>) mWizardModel.findByKey(allergicTo).getData().getSerializable(Page.INGREDIENT_DATA_KEY);
+        for (Ingredient ingredient :ingredients) {
+            Log.i("Ingredient", ingredient.getIngredientId() + "--" + ingredient.getName());
+        }
         Intent intent = new Intent(this, MainMenu.class);
         finish();
         startActivity(intent);

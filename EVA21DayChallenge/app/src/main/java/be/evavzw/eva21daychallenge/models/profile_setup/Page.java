@@ -14,6 +14,7 @@ public abstract class Page implements PageTreeNode {
      * The key into {@link #getData()} used for wizards with simple (single) values.
      */
     public static final String SIMPLE_DATA_KEY = "_";
+    public static final String INGREDIENT_DATA_KEY = "INGREDIENTS";
 
     protected ModelCallbacks mCallbacks;
 
@@ -69,10 +70,7 @@ public abstract class Page implements PageTreeNode {
         return (mParentKey != null) ? mParentKey + ":" + mTitle : mTitle;
     }
 
-    public void getReviewItems(ArrayList<ReviewItem> dest) {
-    }
-
-    ;
+    public void getReviewItems(ArrayList<ReviewItem> dest) {}
 
     public boolean isCompleted() {
         return true;
