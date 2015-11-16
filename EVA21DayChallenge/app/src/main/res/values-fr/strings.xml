@@ -73,4 +73,5 @@
     <string name="category_cooking_descr">Dans ce défi, il est prévu que vous faites cuire quelque chose végétalien.</string>
     <string name="category_restaurant_descr">Dans ce défi, il est prévu que vous allez dans un restaurant et manger végétalien.</string>
     <string name="category_sugarfree_descr">Dans ce défi, il est prévu que vous mangez du sucre gratuitement pendant une journée entière.</string>
+    <string name="aboutText" />
 </resources>

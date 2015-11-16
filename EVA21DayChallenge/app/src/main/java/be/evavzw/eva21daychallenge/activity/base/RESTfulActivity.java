@@ -1,6 +1,7 @@
 package be.evavzw.eva21daychallenge.activity.base;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -87,7 +88,8 @@ public abstract class RESTfulActivity extends AppCompatActivity implements Navig
             Intent intent = new Intent(getApplicationContext(), Login.class);
             startActivity(intent);
             this.finish();
-        }/*else if (id == R.id.nav_gallery) {
+        }/*else if (id == R.id.nav_about) {
+
 
         } else if (id == R.id.nav_slideshow) {
 
