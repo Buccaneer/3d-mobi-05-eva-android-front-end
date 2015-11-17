@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,9 +27,9 @@ public class UserInfoFragment extends Fragment {
     private PageFragmentCallbacks mCallbacks;
     private String mKey;
     private UserInfoPage mPage;
-    private TextView mGivenNameView;
-    private TextView mSurnameView;
-    private TextView mAgeView;
+    private EditText mGivenNameView;
+    private EditText mSurnameView;
+    private EditText mAgeView;
 
     public UserInfoFragment() {
     }
@@ -57,13 +58,13 @@ public class UserInfoFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_page_user_info, container, false);
         ((TextView) rootView.findViewById(R.id.pageTitle)).setText(mPage.getTitle());
 
-        mGivenNameView = ((TextView) rootView.findViewById(R.id.givenname));
+        mGivenNameView = ((EditText) rootView.findViewById(R.id.givenname));
         mGivenNameView.setText(mPage.getData().getString(UserInfoPage.GIVEN_NAME_DATA_KEY));
 
-        mSurnameView = ((TextView) rootView.findViewById(R.id.surname));
+        mSurnameView = ((EditText) rootView.findViewById(R.id.surname));
         mSurnameView.setText(mPage.getData().getString(UserInfoPage.SURNAME_DATA_KEY));
 
-        mAgeView = ((TextView) rootView.findViewById(R.id.agePicker));
+        mAgeView = ((EditText) rootView.findViewById(R.id.agePicker));
         mAgeView.setText(mPage.getData().getString(UserInfoPage.AGE_DATA_KEY));
 
         mAgeView.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +98,7 @@ public class UserInfoFragment extends Fragment {
     DatePickerDialog.OnDateSetListener ondate = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            mAgeView.setText(dayOfMonth + "-" + monthOfYear + "-" + year);
+            mAgeView.setText(dayOfMonth + "-" + (monthOfYear+1) + "-" + year);
         }
     };
 
@@ -171,7 +172,7 @@ public class UserInfoFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                mPage.getData().putString(UserInfoPage.AGE_DATA_KEY, (editable != null) ? editable.toString() : null);
+                mPage.getData().putSerializable(UserInfoPage.AGE_DATA_KEY, (editable != null) ? editable.toString() : null);
                 mPage.notifyDataChanged();
             }
         });

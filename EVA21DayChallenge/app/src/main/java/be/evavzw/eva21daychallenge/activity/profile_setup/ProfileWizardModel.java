@@ -45,6 +45,7 @@ public class ProfileWizardModel extends AbstractWizardModel {
                         .setRequired(true),
                 new SingleFixedChoicePage(this, numberHousehold)
                         .setChoices(String.valueOf(1), String.valueOf(2), String.valueOf(3), String.valueOf(4), "5+")
+                        .setRequired(true)
         );
     }
 }

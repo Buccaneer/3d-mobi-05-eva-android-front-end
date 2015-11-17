@@ -15,6 +15,7 @@ import be.evavzw.eva21daychallenge.rest.ExternalLoginsRestMethod;
 import be.evavzw.eva21daychallenge.rest.InternalLoginRestMethod;
 import be.evavzw.eva21daychallenge.rest.RegisterExternalRestMethod;
 import be.evavzw.eva21daychallenge.rest.RegisterRestMethod;
+import be.evavzw.eva21daychallenge.rest.UpdateUserInfoRestMethod;
 import be.evavzw.eva21daychallenge.rest.UserInfoRestMethod;
 import be.evavzw.eva21daychallenge.rest.framework.Request;
 import be.evavzw.eva21daychallenge.rest.framework.RestMethodResult;
@@ -224,5 +225,11 @@ public class UserManager implements RequestSigner {
         if (!u.isRegistered()) {
             new RegisterExternalRestMethod(context).setEmail(u.getEmail()).setCookie(cookie).execute();
         }
+    }
+
+    public void updateUserInfo(User user) {
+        UpdateUserInfoRestMethod updateUserInfoRestMethod = new UpdateUserInfoRestMethod(context);
+        updateUserInfoRestMethod.setUser(user);
+        updateUserInfoRestMethod.execute();
     }
 }

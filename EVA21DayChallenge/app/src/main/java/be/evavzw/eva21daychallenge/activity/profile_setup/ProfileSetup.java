@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -17,16 +18,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.security.Permission;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.activity.MainMenu;
 import be.evavzw.eva21daychallenge.models.Ingredient;
+import be.evavzw.eva21daychallenge.models.User;
 import be.evavzw.eva21daychallenge.models.profile_setup.AbstractWizardModel;
 import be.evavzw.eva21daychallenge.models.profile_setup.ModelCallbacks;
 import be.evavzw.eva21daychallenge.models.profile_setup.Page;
 import be.evavzw.eva21daychallenge.models.profile_setup.SingleFixedChoicePage;
 import be.evavzw.eva21daychallenge.models.profile_setup.UserInfoPage;
+import be.evavzw.eva21daychallenge.security.UserManager;
 
 public class ProfileSetup extends android.support.v4.app.FragmentActivity implements PageFragmentCallbacks, ReviewFragment.Callbacks, ModelCallbacks {
 
@@ -46,11 +53,15 @@ public class ProfileSetup extends android.support.v4.app.FragmentActivity implem
     private StepPagerStrip mStepPagerStrip;
 
     private String calledFrom = "";
+    private UserManager userManager;
+    private User user = null;
 
     public void onCreate(Bundle savedInstanceState) {
         mWizardModel = new ProfileWizardModel(getApplicationContext());
 
         super.onCreate(savedInstanceState);
+
+        userManager = UserManager.getInstance(getApplicationContext());
 
         calledFrom = getIntent().getExtras().getString("CALLED_FROM");
 
@@ -107,7 +118,7 @@ public class ProfileSetup extends android.support.v4.app.FragmentActivity implem
                                     .setPositiveButton(R.string.submit_confirm_button, new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-                                            reviewPositiveClick();
+                                            new GetUserTask().execute();
                                         }
                                     })
                                     .setNegativeButton(android.R.string.cancel, null)
@@ -135,46 +146,98 @@ public class ProfileSetup extends android.support.v4.app.FragmentActivity implem
         onPageTreeChanged();
         updateBottomBar();
 
-        Bundle bundle = new Bundle();
-        Bundle bundle1 = new Bundle();
-        String personalInfo = getApplicationContext().getResources().getString(R.string.personalInfo);
-        bundle1.putString(UserInfoPage.AGE_DATA_KEY, "27-05-1992");
-        bundle1.putString(UserInfoPage.SURNAME_DATA_KEY, "Louwagie");
-        bundle1.putString(UserInfoPage.GIVEN_NAME_DATA_KEY, "Fien");
-        bundle.putBundle(personalInfo, bundle1);
-
-        Bundle bundle2 = new Bundle();
-        String budgetAmount = getApplicationContext().getResources().getString(R.string.budgetAmount);
-        String notShared = getApplicationContext().getResources().getString(R.string.notShared);
-        bundle2.putString(SingleFixedChoicePage.SIMPLE_DATA_KEY, notShared);
-        bundle.putBundle(budgetAmount, bundle2);
-
-        Bundle bundle3 = new Bundle();
-        String typeOfVegetarian = getApplicationContext().getResources().getString(R.string.typeOfVegetarian);
-        String vegan = getApplicationContext().getResources().getString(R.string.vegan);
-        bundle3.putString(SingleFixedChoicePage.SIMPLE_DATA_KEY, vegan);
-        bundle.putBundle(typeOfVegetarian, bundle3);
-
-        Bundle bundle4 = new Bundle();
-        String numberHousehold = getApplicationContext().getResources().getString(R.string.numberHousehold);
-        bundle4.putString(SingleFixedChoicePage.SIMPLE_DATA_KEY, String.valueOf(2));
-        bundle.putBundle(numberHousehold, bundle4);
-
-        mWizardModel.load(bundle);
+        //Some mocked data
+//        Bundle bundle = new Bundle();
+//        Bundle bundle1 = new Bundle();
+//        String personalInfo = getApplicationContext().getResources().getString(R.string.personalInfo);
+//        bundle1.putString(UserInfoPage.AGE_DATA_KEY, "27-05-1992");
+//        bundle1.putString(UserInfoPage.SURNAME_DATA_KEY, "Louwagie");
+//        bundle1.putString(UserInfoPage.GIVEN_NAME_DATA_KEY, "Fien");
+//        bundle.putBundle(personalInfo, bundle1);
+//
+//        Bundle bundle2 = new Bundle();
+//        String budgetAmount = getApplicationContext().getResources().getString(R.string.budgetAmount);
+//        String notShared = getApplicationContext().getResources().getString(R.string.notShared);
+//        bundle2.putString(SingleFixedChoicePage.SIMPLE_DATA_KEY, notShared);
+//        bundle.putBundle(budgetAmount, bundle2);
+//
+//        Bundle bundle3 = new Bundle();
+//        String typeOfVegetarian = getApplicationContext().getResources().getString(R.string.typeOfVegetarian);
+//        String vegan = getApplicationContext().getResources().getString(R.string.vegan);
+//        bundle3.putString(SingleFixedChoicePage.SIMPLE_DATA_KEY, vegan);
+//        bundle.putBundle(typeOfVegetarian, bundle3);
+//
+//        Bundle bundle4 = new Bundle();
+//        String numberHousehold = getApplicationContext().getResources().getString(R.string.numberHousehold);
+//        bundle4.putString(SingleFixedChoicePage.SIMPLE_DATA_KEY, String.valueOf(2));
+//        bundle.putBundle(numberHousehold, bundle4);
+//
+//        mWizardModel.load(bundle);
 
         //mPager.setCurrentItem(mCurrentPageSequence.size());
     }
 
     private void reviewPositiveClick() {
         //TODO: retrieve all items filled in by the user and send it to the server + set it in sharedpreferences maybe?
-        String allergicTo = getApplicationContext().getResources().getString(R.string.allergicTo);
-        List<Ingredient> ingredients = (List<Ingredient>) mWizardModel.findByKey(allergicTo).getData().getSerializable(Page.INGREDIENT_DATA_KEY);
-        for (Ingredient ingredient :ingredients) {
-            Log.i("Ingredient", ingredient.getIngredientId() + "--" + ingredient.getName());
+        String personalInfoPageKey = getApplicationContext().getResources().getString(R.string.personalInfo);
+        String allergicToPageKey = getApplicationContext().getResources().getString(R.string.allergicTo);
+        String budgetAmountPageKey = getApplicationContext().getResources().getString(R.string.budgetAmount);
+        String typeOfVegetarianPageKey = getApplicationContext().getResources().getString(R.string.typeOfVegetarian);
+        String numberHouseholdPageKey = getApplicationContext().getResources().getString(R.string.numberHousehold);
+
+        String firstName = mWizardModel.findByKey(personalInfoPageKey).getData().getString(UserInfoPage.GIVEN_NAME_DATA_KEY);
+        String lastName = mWizardModel.findByKey(personalInfoPageKey).getData().getString(UserInfoPage.SURNAME_DATA_KEY);
+        String birthDayString = mWizardModel.findByKey(personalInfoPageKey).getData().getString(UserInfoPage.AGE_DATA_KEY);
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        Date birthDay = new Date();
+        try {
+            birthDay = format.parse(birthDayString);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-        Intent intent = new Intent(this, MainMenu.class);
-        finish();
-        startActivity(intent);
+        String budget = mWizardModel.findByKey(budgetAmountPageKey).getData().getString(Page.SIMPLE_DATA_KEY);
+        String typeOfVegan = mWizardModel.findByKey(typeOfVegetarianPageKey).getData().getString(Page.SIMPLE_DATA_KEY);
+        List<Ingredient> ingredients = (List<Ingredient>) mWizardModel.findByKey(allergicToPageKey).getData().getSerializable(Page.INGREDIENT_DATA_KEY);
+        int[] allergies;
+        if (ingredients != null) {
+            allergies = new int[ingredients.size()];
+            for (int i = 0; i < ingredients.size(); i++) {
+                allergies[i] = ingredients.get(i).getIngredientId();
+            }
+        } else {
+            allergies = new int[0];
+        }
+        String peopleInFamily = mWizardModel.findByKey(numberHouseholdPageKey).getData().getString(Page.SIMPLE_DATA_KEY);
+        int people;
+        try {
+            people = Integer.parseInt(peopleInFamily);
+        } catch (Exception e) {
+            people = 5;
+        }
+
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setBirthDay(birthDay);
+        user.setBudget(budget);
+        user.setTypeOfVegan(typeOfVegan);
+        user.setAllergies(allergies);
+        user.setPeopleInFamily(people);
+
+        Log.i("FirstName", firstName);
+        Log.i("LastName", lastName);
+        Log.i("BirthDay", birthDay.toString());
+        Log.i("Budget", budget);
+        Log.i("TypeOfVegan", typeOfVegan);
+        for (Integer i : allergies) {
+            Log.i("Allergy", String.valueOf(i));
+        }
+        Log.i("PeopleInFamily", peopleInFamily);
+
+        new UpdateUserInfoTask().execute(user);
+
+        //Intent intent = new Intent(this, MainMenu.class);
+        //finish();
+        //startActivity(intent);
     }
 
     @Override
@@ -322,6 +385,52 @@ public class ProfileSetup extends android.support.v4.app.FragmentActivity implem
 
         public int getCutOffPage() {
             return mCutOffPage;
+        }
+    }
+
+    private class GetUserTask extends AsyncTask<Void, Void, Boolean> {
+
+        private User tempUser = null;
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            try {
+                tempUser = userManager.getUser();
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean succeed) {
+            if (succeed) {
+                user = tempUser;
+                reviewPositiveClick();
+            }
+        }
+    }
+
+    private class UpdateUserInfoTask extends AsyncTask<User, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(User... params) {
+            try{
+                userManager.updateUserInfo(params[0]);
+                return true;
+            }catch(Exception e){
+                throw e;
+                //return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean success) {
+            if(success){
+                Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+                ProfileSetup.this.finish();
+                startActivity(intent);
+            }
         }
     }
 }
