@@ -67,6 +67,9 @@ public class AllergiesFragment extends Fragment implements SearchableCheckListVi
 
         checkListView = (SearchableCheckListView) rootView.findViewById(R.id.checkListView);
 
+        if(mPage.getData()!= null && mPage.getData().containsKey(AllergiesPage.INGREDIENT_DATA_KEY))
+            checkListView.setCheckedIngredients((List<Ingredient>) mPage.getData().getSerializable(AllergiesPage.INGREDIENT_DATA_KEY));
+
         checkListView.setOnIngredientCheckedListener(this);
 
         return rootView;
@@ -112,6 +115,11 @@ public class AllergiesFragment extends Fragment implements SearchableCheckListVi
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onViewStateRestored(Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
     }
 
     @Override

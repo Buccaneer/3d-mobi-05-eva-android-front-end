@@ -3,15 +3,13 @@ package be.evavzw.eva21daychallenge.rest;
 import android.content.Context;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URI;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.SimpleTimeZone;
+import java.util.ArrayList;
 
+import be.evavzw.eva21daychallenge.models.Ingredient;
 import be.evavzw.eva21daychallenge.models.User;
 import be.evavzw.eva21daychallenge.rest.framework.AbstractRestMethod;
 import be.evavzw.eva21daychallenge.rest.framework.Request;
@@ -71,8 +69,9 @@ public class UserInfoRestMethod extends AbstractRestMethod<User> {
                 user.setBudget(json.getString("Budget"));
             if (json.has("TypeOfVegan"))
                 user.setTypeOfVegan(json.getString("TypeOfVegan"));
-            if (json.has("Allergies"))
-                user.setAllergies(fillAllergiesArray(json));
+            if (json.has("Allergies")){
+                user.setAllergies(filAllergiesList(json));
+            }
             if (json.has("PeopleInFamily"))
                 user.setPeopleInFamily(json.getInt("PeopleInFamily"));
             if (json.has("DoneSetup"))
@@ -87,15 +86,18 @@ public class UserInfoRestMethod extends AbstractRestMethod<User> {
         }
     }
 
-    private int[] fillAllergiesArray(JSONObject json) throws JSONException {
-        try {
+    private ArrayList<Ingredient> filAllergiesList(JSONObject json) throws Exception {
+        try{
             JSONArray array = json.getJSONArray("Allergies");
-            int[] numbers = new int[array.length()];
-            for (int i = 0; i < array.length(); i++) {
-                numbers[i] = array.getJSONObject(i).getInt("IngredientId");
+            ArrayList<Ingredient> ingredients = new ArrayList<>();
+            for(int i = 0; i < array.length(); i++){
+                Ingredient ingredient = new Ingredient();
+                ingredient.setName(array.getJSONObject(i).getString("Name"));
+                ingredient.setIngredientId(array.getJSONObject(i).getInt("IngredientId"));
+                ingredients.add(ingredient);
             }
-            return numbers;
-        } catch (JSONException e) {
+            return ingredients;
+        }catch(Exception e){
             throw e;
         }
     }

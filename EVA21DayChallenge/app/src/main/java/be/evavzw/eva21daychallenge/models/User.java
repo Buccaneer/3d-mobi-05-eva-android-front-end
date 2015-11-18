@@ -1,5 +1,6 @@
 package be.evavzw.eva21daychallenge.models;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class User {
@@ -12,7 +13,7 @@ public class User {
     private String lastName;
     private String budget;
     private String typeOfVegan;
-    private int[] allergies;
+    private ArrayList<Ingredient> allergies;
     private int peopleInFamily;
     private boolean doneSetup;
 
@@ -56,10 +57,6 @@ public class User {
         return peopleInFamily;
     }
 
-    public int[] getAllergies() {
-        return allergies;
-    }
-
     public String getBudget() {
         return budget;
     }
@@ -76,16 +73,20 @@ public class User {
         return typeOfVegan;
     }
 
+    public ArrayList<Ingredient> getAllergies() {
+        return allergies;
+    }
+
+    public void setAllergies(ArrayList<Ingredient> allergies) {
+        this.allergies = allergies;
+    }
+
     public void setBudget(String budget) {
         this.budget = budget;
     }
 
     public boolean hasDoneSetup() {
         return doneSetup;
-    }
-
-    public void setAllergies(int[] allergies) {
-        this.allergies = allergies;
     }
 
     public void setBirthDay(Date birthDay) {

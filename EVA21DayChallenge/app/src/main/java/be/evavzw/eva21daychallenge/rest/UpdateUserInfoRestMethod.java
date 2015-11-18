@@ -7,12 +7,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URI;
-import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
+import be.evavzw.eva21daychallenge.models.Ingredient;
 import be.evavzw.eva21daychallenge.models.User;
 import be.evavzw.eva21daychallenge.rest.framework.AbstractRestMethod;
 import be.evavzw.eva21daychallenge.rest.framework.Request;
@@ -71,9 +71,9 @@ public class UpdateUserInfoRestMethod extends AbstractRestMethod{
         body.put("Budget", user.getBudget());
         body.put("TypeOfVegan", user.getTypeOfVegan());
         JSONArray allergies = new JSONArray();
-        int[] all = user.getAllergies();
-        for(Integer i: all){
-            allergies.put(i);
+        ArrayList<Ingredient> all = user.getAllergies();
+        for(Ingredient i: all){
+            allergies.put(i.getIngredientId());
         }
         body.put("Allergies", allergies);
         body.put("PeopleInFamily", user.getPeopleInFamily());

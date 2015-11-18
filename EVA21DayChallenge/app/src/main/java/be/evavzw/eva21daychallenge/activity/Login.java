@@ -23,6 +23,7 @@ import java.util.Map;
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.activity.base.RESTfulActivity;
 import be.evavzw.eva21daychallenge.activity.profile_setup.ProfileSetup;
+import be.evavzw.eva21daychallenge.models.User;
 import be.evavzw.eva21daychallenge.security.UserManager;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -146,7 +147,6 @@ public class Login extends RESTfulActivity {
                         String token = getToken(url);
                         if (token != null) {
                             // Once the user entered his credentials and is redirected back to our site, close the alert and start the Register service
-                            alertDialog.dismiss();
                             RegisterExternalLoginTask rel = new RegisterExternalLoginTask();
                             rel.execute(token, cookies);
                         }
@@ -274,7 +274,32 @@ public class Login extends RESTfulActivity {
         @Override
         protected void onPostExecute(Boolean succeeded) {
             if (succeeded) {
+                new CheckUserSetup().execute();
+//                Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+//                Login.this.finish();
+//                startActivity(intent);
+            }
+        }
+    }
+
+    private class CheckUserSetup extends AsyncTask<Void, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            try {
+                return userManager.getUser().hasDoneSetup();
+            } catch (Exception e) {
+                throw e;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean doneSetup) {
+            if(doneSetup){
                 Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+                Login.this.finish();
+                startActivity(intent);
+            }else{
+                Intent intent = new Intent(getApplicationContext(), ProfileSetup.class);
                 Login.this.finish();
                 startActivity(intent);
             }

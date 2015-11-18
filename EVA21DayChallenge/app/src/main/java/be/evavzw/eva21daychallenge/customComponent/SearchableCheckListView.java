@@ -16,7 +16,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,6 +25,8 @@ import java.util.List;
 
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.models.Ingredient;
+import be.evavzw.eva21daychallenge.models.profile_setup.AllergiesPage;
+import be.evavzw.eva21daychallenge.rest.InternalLoginRestMethod;
 import be.evavzw.eva21daychallenge.security.IngredientManager;
 
 /**
@@ -104,11 +105,23 @@ public class SearchableCheckListView extends LinearLayout implements TextWatcher
     protected Parcelable onSaveInstanceState() {
         Bundle bundle = new Bundle();
         bundle.putParcelable("instanceState", super.onSaveInstanceState());
-        bundle.putSerializable("checkedIngredients", checkedIngredients);
+        bundle.putSerializable(AllergiesPage.INGREDIENT_DATA_KEY, checkedIngredients);
         bundle.putString("editTextValue", ingredientText.getText().toString());
         bundle.putInt("textLength", ingredientTextLength);
         bundle.putSerializable("currentItems", ingredientAdapter.getIngredientList());
         return bundle;
+    }
+
+    public void setCheckedIngredients(List<Ingredient> ingredients) {
+        HashMap<Integer, Ingredient> ingredientmap = new HashMap<>();
+        for (Ingredient ingredient : ingredients) {
+            ingredientmap.put(ingredient.getIngredientId(), ingredient);
+        }
+
+        checkedIngredients = ingredientmap;
+
+        ingredientAdapter.clear();
+        ingredientAdapter.addAll(checkedIngredients.values());
     }
 
     @Override
@@ -116,7 +129,7 @@ public class SearchableCheckListView extends LinearLayout implements TextWatcher
         Parcelable savedState = null;
         if (state instanceof Bundle) {
             Bundle bundle = (Bundle) state;
-            checkedIngredients = (HashMap<Integer, Ingredient>) bundle.getSerializable("checkedIngredients");
+            checkedIngredients = (HashMap<Integer, Ingredient>) bundle.getSerializable(AllergiesPage.INGREDIENT_DATA_KEY);
             ingredientText.setText(bundle.getString("editTextValue"));
             ingredientTextLength = bundle.getInt("textLength");
             ingredientText.setSelection(ingredientTextLength);
@@ -166,9 +179,12 @@ public class SearchableCheckListView extends LinearLayout implements TextWatcher
                             checkedIngredients.put(ingredient.getIngredientId(), ingredient);
                             onIngredientCheckedListener.onChecked(new ArrayList<>(checkedIngredients.values()));
                         } else {
-                            if (ingredientTextLength == 0)
-                                ingredientList.remove(ingredient);
                             checkedIngredients.remove(ingredient.getIngredientId());
+                            if(ingredientText.length() == 0){
+                                ingredientAdapter.clear();
+                                ingredientAdapter.addAll(checkedIngredients.values());
+                                ingredientAdapter.notifyDataSetChanged();
+                            }
                             onIngredientCheckedListener.onChecked(new ArrayList<>(checkedIngredients.values()));
                         }
                     }
@@ -176,7 +192,6 @@ public class SearchableCheckListView extends LinearLayout implements TextWatcher
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
-
             Ingredient ingredient = ingredientList.get(position);
 
             holder.name.setText(ingredient.getName());
@@ -188,16 +203,17 @@ public class SearchableCheckListView extends LinearLayout implements TextWatcher
 
         @Override
         public void addAll(Collection<? extends Ingredient> collection) {
-            super.addAll(collection);
             this.ingredientList.clear();
             this.ingredientList.addAll(collection);
+            ingredientAdapter.notifyDataSetChanged();
+            super.addAll(ingredientList);
         }
 
         @Override
         public void addAll(Ingredient... items) {
-            super.addAll(items);
             this.ingredientList.clear();
             this.ingredientList.addAll(Arrays.asList(items));
+            super.addAll(ingredientList);
         }
 
         public ArrayList<Ingredient> getIngredientList() {
