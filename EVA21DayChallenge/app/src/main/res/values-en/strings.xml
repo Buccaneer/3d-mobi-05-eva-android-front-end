@@ -75,7 +75,9 @@
     <string name="category_cooking_descr">In this challenge, it\'s intended that you cook something vegan.</string>
     <string name="category_restaurant_descr">In this challenge, it\'s intended that you go to a restaurant and eat vegan.</string>
     <string name="category_sugarfree_descr">In this challenge, it\'s intended that you eat sugar free for a whole day.</string>
-    <string name="about1">De EVA 21 dagen challenge werd ontwikkeld in naam van EVA vzw.</string>
-    <string name="about2">Deze app wil mensen aanzetten om 21 dagen plantaardig te eten om hen te overtuigen om minder dierlijke producten te gebruiken en meer alternatieven te nemen.</string>
-    <string name="about3">Als je meer informatie wil weten over de werking van EVA, dan kun je altijd terecht op hun website.</string>
+    <string name="title_activity_about">About</string>
+    <string name="naarWebsite">Go to website</string>
+    <string name="about1">The EVA 21 days challenge was developed for EVA vzw.</string>
+    <string name="about2">This app wants to inspire people to eat more vegan for 21 days and convince them to use less animal-related products and more alternatives.</string>
+    <string name="about3">If you want to read more about the goal of EVA, you can always go to their website.</string>
 </resources>
