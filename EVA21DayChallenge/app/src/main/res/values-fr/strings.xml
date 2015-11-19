@@ -71,10 +71,12 @@
     <string name="properties">Données</string>
     <string name="selected_config">portrait</string>
     <string name="website">Site web</string>
+    <string name="title_activity_about">À propos</string>
     <string name="category_cooking_descr">Dans ce défi, il est prévu que vous faites cuire quelque chose végétalien.</string>
     <string name="category_restaurant_descr">Dans ce défi, il est prévu que vous allez dans un restaurant et manger végétalien.</string>
     <string name="category_sugarfree_descr">Dans ce défi, il est prévu que vous mangez du sucre gratuitement pendant une journée entière.</string>
-    <string name="about1">De EVA 21 dagen challenge werd ontwikkeld in naam van EVA vzw.</string>
-    <string name="about2">Deze app wil mensen aanzetten om 21 dagen plantaardig te eten om hen te overtuigen om minder dierlijke producten te gebruiken en meer alternatieven te nemen.</string>
-    <string name="about3">Als je meer informatie wil weten over de werking van EVA, dan kun je altijd terecht op hun website.</string>
+    <string name="about1">Le challenge EVA 21 jours a été développé au nom de l’A.S.B.L. EVA.</string>
+    <string name="about2">Cette application veut encourager des personnes à manger plus végétal durant 21 jours  pour les convaincre d’utiliser moins de produits animaliers et de choisir plus d’alternatives.</string>
+    <string name="about3"> Si vous souhaitez obtenir plus d’informations sur le travail d’EVA, alors vous pouvez toujours consulter leur site internet.</string>
+    <string name="naarWebsite">Allez au site-web</string>
 </resources>
