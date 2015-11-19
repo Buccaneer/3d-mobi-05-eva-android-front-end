@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.activity.Login;
+import be.evavzw.eva21daychallenge.activity.profile_setup.ProfileSetup;
 import be.evavzw.eva21daychallenge.security.UserManager;
 
 /**
@@ -63,7 +64,7 @@ public abstract class RESTfulActivity extends AppCompatActivity implements Navig
             @Override
             public void onGlobalLayout() {
                 View contentView = decorView.findViewById(android.R.id.content);
-                progressBar.setY(contentView.getY() +55);
+                progressBar.setY(contentView.getY() + 55);
 
                 ViewTreeObserver observer = progressBar.getViewTreeObserver();
                 observer.removeGlobalOnLayoutListener(this);
@@ -87,17 +88,12 @@ public abstract class RESTfulActivity extends AppCompatActivity implements Navig
             Intent intent = new Intent(getApplicationContext(), Login.class);
             startActivity(intent);
             this.finish();
-        }/*else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }*/
+        }else if(id == R.id.nav_settings){
+            Intent intent = new Intent(getApplicationContext(), ProfileSetup.class);
+            intent.putExtra("CALLED_FROM", "navigation");
+            finish();
+            startActivity(intent);
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer != null)
@@ -119,6 +115,7 @@ public abstract class RESTfulActivity extends AppCompatActivity implements Navig
 
     /**
      * Makes the ProgressBar visible or invisible, this is called by sub classes
+     *
      * @param toggle <code>if(true) show progressbar, else hide progressbar</code>
      */
     public void toggleProgressBar(boolean toggle) {

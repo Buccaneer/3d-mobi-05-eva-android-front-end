@@ -74,7 +74,7 @@ public class RestClient {
             status = conn.getResponseCode();
 
             //Get the input stream for the body or error stream if there's an error
-            BufferedInputStream in = new BufferedInputStream(status/100 == 2 ? conn.getInputStream() : conn.getErrorStream());
+            BufferedInputStream in = new BufferedInputStream(status / 100 == 2 ? conn.getInputStream() : conn.getErrorStream());
             byte[] body = readStream(in);
             response = new Response(conn.getResponseCode(), conn.getHeaderFields(), body);
             response.status = status;

@@ -40,12 +40,14 @@ import org.scribe.model.Token;
 
 import java.util.Map;
 
+import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.activity.base.RESTfulActivity;
+import be.evavzw.eva21daychallenge.activity.profile_setup.ProfileSetup;
+import be.evavzw.eva21daychallenge.models.User;
 import be.evavzw.eva21daychallenge.security.UserManager;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import be.evavzw.eva21daychallenge.R;
 
 /**
  * Main activity which the user sees upon login
@@ -73,7 +75,7 @@ public class Login extends RESTfulActivity {
 
     /**
      * Check if there's a token present and validate it, if it's valid this will redirect the user to the {@link MainMenu}
-      */
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -163,7 +165,6 @@ public class Login extends RESTfulActivity {
     public void createAccountOnClick(View v) {
         Intent intent = new Intent(v.getContext(), Register.class);
         startActivity(intent);
-
     }
 
     @OnClick(R.id.loginFacebookButton)
@@ -183,6 +184,7 @@ public class Login extends RESTfulActivity {
 
     /**
      * Handles login for external services, eg Facebook, Twitter, Google
+     *
      * @param service the service to be used for login
      */
     private void handleExternalLogin(String service) {
@@ -257,6 +259,7 @@ public class Login extends RESTfulActivity {
 
     /**
      * Retrieves the token out of the WebView URL
+     *
      * @param url webview URL
      * @return Access token
      */
@@ -432,7 +435,32 @@ public class Login extends RESTfulActivity {
         @Override
         protected void onPostExecute(Boolean succeeded) {
             if (succeeded) {
+                new CheckUserSetup().execute();
+//                Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+//                Login.this.finish();
+//                startActivity(intent);
+            }
+        }
+    }
+
+    private class CheckUserSetup extends AsyncTask<Void, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            try {
+                return userManager.getUser().hasDoneSetup();
+            } catch (Exception e) {
+                throw e;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean doneSetup) {
+            if(doneSetup){
                 Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+                Login.this.finish();
+                startActivity(intent);
+            }else{
+                Intent intent = new Intent(getApplicationContext(), ProfileSetup.class);
                 Login.this.finish();
                 startActivity(intent);
             }
@@ -441,6 +469,7 @@ public class Login extends RESTfulActivity {
 
     /**
      * Sets the ProgressBar visible or invisible, is called in the AsyncTasks at <code>onPreExecute()</code> or <code>onPostExecute()</code>
+     *
      * @param refresh
      */
     private void setRefresh(final boolean refresh) {

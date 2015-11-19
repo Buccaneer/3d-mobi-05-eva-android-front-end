@@ -23,13 +23,14 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.activity.base.RESTfulActivity;
+import be.evavzw.eva21daychallenge.activity.profile_setup.ProfileSetup;
 import be.evavzw.eva21daychallenge.exceptions.RegisterFailedException;
 import be.evavzw.eva21daychallenge.security.UserManager;
 import butterknife.OnClick;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class Register extends RESTfulActivity {
 
@@ -71,7 +72,7 @@ public class Register extends RESTfulActivity {
         evaLogo.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
         // Get instance of user manager
-        userManager  = UserManager.getInstance(this);
+        userManager = UserManager.getInstance(this);
 
 
         loadBackground();
@@ -202,8 +203,9 @@ public class Register extends RESTfulActivity {
         protected void onPostExecute(Boolean succeed) {
             setRefresh(false);
             if (succeed) {
-                Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+                Intent intent = new Intent(getApplicationContext(), ProfileSetup.class);
                 Register.this.finish();
+                intent.putExtra("CALLED_FROM", "register");
                 startActivity(intent);
             }
         }
@@ -238,6 +240,7 @@ public class Register extends RESTfulActivity {
 
     /**
      * Sets the ProgressBar visible or invisible, is called in the AsyncTasks at <code>onPreExecute()</code> or <code>onPostExecute()</code>
+     *
      * @param toggle
      */
     private void setRefresh(final boolean toggle) {

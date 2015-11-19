@@ -3,8 +3,7 @@ package be.evavzw.eva21daychallenge.models;
 /**
  * Created by Pieter-Jan on 28/10/2015.
  */
-public class Mock
-{
+public class Mock {
 
     // RESTAURANTS
     /*Restaurant restaurant1 = new Restaurant()

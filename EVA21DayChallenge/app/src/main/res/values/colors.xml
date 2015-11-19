@@ -14,5 +14,10 @@
     <color name="eva_blauw">#006890</color>
     <color name="eva_turquoise">#006c67</color>
     <color name="eva_geel">#f1de01</color>
-
+    <color name="review_green">#afbd1f</color>
+    <color name="step_pager_previous_tab_color">#10000000</color>
+    <color name="step_pager_selected_tab_color">#ffffff</color>
+    <color name="step_pager_selected_last_tab_color">@color/eva_donkergroen</color>
+    <color name="step_pager_next_tab_color">#10000000</color>
+    <color name="apptheme_color">#afbd1f</color>
 </resources>

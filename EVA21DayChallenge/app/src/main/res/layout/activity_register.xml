@@ -29,37 +29,37 @@
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:background="@drawable/round_corners">
-    <EditText
-        android:id="@+id/email"
-        android:hint="@string/email"
-        android:inputType="textEmailAddress"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/email"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
         <View
             android:layout_width="match_parent"
             android:layout_gravity="center"
             android:layout_height="1dp"
             android:background="#afc137" />
 
-    <EditText
-        android:id="@+id/password"
-        android:hint="@string/password"
-        android:inputType="textPassword"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/password"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
         <View
             android:layout_width="match_parent"
             android:layout_gravity="center"
             android:layout_height="1dp"
             android:background="#afc137" />
 
-    <EditText
-        android:id="@+id/confirmPassword"
-        android:hint="@string/confirmPassword"
-        android:inputType="textPassword"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
-        </LinearLayout>
+        <EditText
+            android:id="@+id/confirmPassword"
+            android:hint="@string/confirmPassword"
+            android:inputType="textPassword"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
     <!--<RadioGroup
         android:id="@+id/geslacht"
@@ -81,23 +81,23 @@
 
         >
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/blaadjes_achtergrond"
-        android:visibility="invisible"
-        android:elevation="1dp"
-        android:layout_centerInParent="true"
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/blaadjes_achtergrond"
+            android:visibility="invisible"
+            android:elevation="1dp"
+            android:layout_centerInParent="true"
 
-        />
+            />
 
-    <Button
-        android:id="@+id/register"
-        android:text="@string/register"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:textAllCaps="false"
-        android:stateListAnimator="@null"/>
+        <Button
+            android:id="@+id/register"
+            android:text="@string/register"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textAllCaps="false"
+            android:stateListAnimator="@null"/>
     </RelativeLayout>
 </LinearLayout>
