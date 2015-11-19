@@ -95,7 +95,7 @@ public abstract class RESTfulActivity extends AppCompatActivity implements Navig
             finish();
             startActivity(intent);
         }
-        }else if (id == R.id.nav_about) {
+        else if (id == R.id.nav_about) {
             Intent intent = new Intent(getApplicationContext(), About.class);
             startActivity(intent);
 

@@ -6,8 +6,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">#afbd1f</item>
+    <style name="AppTheme" parent="_AppTheme">
     </style>
 
     <style name="AppTheme.Challenges" parent="@style/AppTheme">
@@ -22,6 +21,7 @@
     </style>
 
     <style name="_AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">#afbd1f</item>
 
         <item name="android:listChoiceIndicatorMultiple">@drawable/apptheme_btn_check_holo_light</item>
 
