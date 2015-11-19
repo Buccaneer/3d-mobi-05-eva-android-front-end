@@ -79,5 +79,11 @@
     <string name="category_cooking">Koken</string>
     <string name="category_sugarfree">Suikervrij</string>
     <string name="category_sugarfree_descr">Bij deze challenge is het de bedoeling dat je een hele dag lang suikervrij leeft.</string>
-
+    <string name="checkin">Checkin</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_about">Over</string>
+    <string name="about1">De EVA 21 dagen challenge werd ontwikkeld in naam van EVA vzw.</string>
+    <string name="about2">Deze app wil mensen aanzetten om 21 dagen plantaardig te eten om hen te overtuigen om minder dierlijke producten te gebruiken en meer alternatieven te nemen.</string>
+    <string name="about3">Als je meer informatie wil weten over de werking van EVA, dan kun je altijd terecht op hun website.</string>
+    <string name="naarWebsite">Ga naar website</string>
 </resources>
