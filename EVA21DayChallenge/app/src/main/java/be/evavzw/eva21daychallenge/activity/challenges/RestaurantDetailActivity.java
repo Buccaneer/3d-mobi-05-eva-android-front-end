@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -88,17 +89,32 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         restaurantTitle.setText(restaurant.getName());
 
         String address = "<b>" + getString(R.string.address) + "</b><br>";
+        address += "<a href=\"geo:0,0?q=" +
+                restaurant.getStreet().trim() + " " +
+                restaurant.getPostal().trim() + " " +
+                restaurant.getCity().trim() + "\" >";
+
         address += restaurant.getStreet().trim() + "<br>";
         address += restaurant.getPostal().trim() + " " + restaurant.getCity().trim();
+        address += "</a>";
 
         restaurantAddress.setText(Html.fromHtml(address));
+        restaurantAddress.setMovementMethod(LinkMovementMethod.getInstance());
 
         String properties = "<b>" + getString(R.string.properties) + "</b><br>";
-        properties += getString(R.string.phone) + " " + restaurant.getPhone() + "<br>";
-        properties += getString(R.string.email) + ": " + restaurant.getEmail() + "<br>";
-        properties += getString(R.string.website) + ": " + restaurant.getWebsite();
+        properties += getString(R.string.phone) + ": ";
+        properties += "<a href=\"tel:" + restaurant.getPhone() + "\">";
+        properties += restaurant.getPhone() + "</a><br>";
 
+        properties += getString(R.string.email) + ": ";
+        properties += "<a href=\"mailto:" + restaurant.getEmail() + "\">";
+        properties += restaurant.getEmail() + "</a><br>";
+
+        properties += getString(R.string.website) + ": ";
+        properties += "<a href=\"" + restaurant.getWebsite() + "\">";
+        properties += restaurant.getWebsite() + "</a>";
         restaurantProperties.setText(Html.fromHtml(properties));
+        restaurantProperties.setMovementMethod(LinkMovementMethod.getInstance());
 
         String description = "<b>" + getString(R.string.description) + "</b><br>";
         description += restaurant.getDescription();
@@ -118,7 +134,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         }
     }
 
-    private class FetchRestaurantDetailsTask extends AsyncTask<Void, Void, Restaurant>{
+    private class FetchRestaurantDetailsTask extends AsyncTask<Void, Void, Restaurant> {
 
         @Override
         protected Restaurant doInBackground(Void... params) {

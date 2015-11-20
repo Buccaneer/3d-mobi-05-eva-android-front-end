@@ -40,6 +40,8 @@ public class Restaurant implements Serializable {
             latitude = jsonObject.getDouble("Latitude");
         if (jsonObject.has("Longitude"))
             longitude = jsonObject.getDouble("Longitude");
+        if (jsonObject.has("Longitute"))
+            longitude = jsonObject.getDouble("Longitute");
     }
 
     public String getName() {
