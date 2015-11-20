@@ -3,6 +3,7 @@ package be.evavzw.eva21daychallenge.activity.challenges;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,7 +13,16 @@ import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import java.util.Comparator;
+import java.util.Map;
 
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.models.Restaurant;
@@ -29,9 +39,6 @@ public class RestaurantDetailActivity extends AppCompatActivity {
     private ChallengeManager challengeManager;
     Restaurant restaurant;
 
-    @Bind(R.id.restaurantMap)
-    ImageView restaurantMap;
-
     @Bind(R.id.restaurantTitle)
     TextView restaurantTitle;
 
@@ -43,6 +50,8 @@ public class RestaurantDetailActivity extends AppCompatActivity {
 
     @Bind(R.id.restaurantDescription)
     TextView restaurantDescription;
+
+    private GoogleMap googleMap;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,9 +69,10 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         final ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
-        Intent intent = getIntent();
-        restaurant = (Restaurant) intent.getSerializableExtra(RESTAURANT);
+        restaurant = (Restaurant) getIntent().getSerializableExtra(RESTAURANT);
         //new FetchRestaurantDetailsTask().execute();
+        googleMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.restaurantMapFragment)).getMap();
+
         updateChallenge(restaurant);
     }
 
@@ -119,6 +129,11 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         String description = "<b>" + getString(R.string.description) + "</b><br>";
         description += restaurant.getDescription();
         restaurantDescription.setText(Html.fromHtml(description));
+
+        LatLng latLng = new LatLng(restaurant.getLatitude(), restaurant.getLongitude());
+        googleMap.addMarker(new MarkerOptions().position(latLng).title(restaurant.getName()));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+
     }
 
     //A simple string comparator
