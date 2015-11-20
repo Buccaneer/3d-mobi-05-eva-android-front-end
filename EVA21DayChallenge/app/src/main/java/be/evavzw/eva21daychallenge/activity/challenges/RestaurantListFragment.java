@@ -40,7 +40,12 @@ import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.bumptech.glide.Glide;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -106,7 +111,7 @@ public class RestaurantListFragment extends ChallengeFragment implements
     private Boolean mRequestingLocationUpdates;
 
     private ChallengeManager challengeManager;
-    private List<Restaurant> restaurants;
+    private List<Restaurant> restaurants = new ArrayList<>();
     private RecyclerView rv;
 
     @Nullable
@@ -119,18 +124,22 @@ public class RestaurantListFragment extends ChallengeFragment implements
         rv.setLayoutManager(new LinearLayoutManager(rv.getContext()));
         //setupRecyclerView(rv);
 
-        mRequestingLocationUpdates = false;
+        //TODO: enable in release, this asks for location
+//        mRequestingLocationUpdates = false;
+//
+//        buildGoogleApiClient();
+//        createLocationRequest();
+//        buildLocationSettingsRequest();
+//
+//        if (Build.VERSION.SDK_INT >= 23) {
+//            askLocationPermission();
+//        } else {
+//            checkLocationSettings();
+//        }
 
-        buildGoogleApiClient();
-        createLocationRequest();
-        buildLocationSettingsRequest();
-
-        if (Build.VERSION.SDK_INT >= 23) {
-            askLocationPermission();
-        } else {
-            checkLocationSettings();
-        }
-
+        //new FetchRestaurantsTask(rv).execute();
+fetchChallenges();
+        new FetchRestaurantsTask(rv).execute();
         return layout;
     }
 
@@ -308,33 +317,37 @@ public class RestaurantListFragment extends ChallengeFragment implements
 
     @Override
     public void onStart() {
-        mGoogleApiClient.connect();
+        //TODO: enable in release
+        //mGoogleApiClient.connect();
         super.onStart();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        //TODO: enable in release
         // Within {@code onPause()}, we pause location updates, but leave the
         // connection to GoogleApiClient intact.  Here, we resume receiving
         // location updates if the user has requested them.
-        if (mGoogleApiClient.isConnected() && mRequestingLocationUpdates) {
-            startLocationUpdates();
-        }
+//        if (mGoogleApiClient.isConnected() && mRequestingLocationUpdates) {
+//            startLocationUpdates();
+//        }
     }
 
     @Override
     public void onPause() {
+        //TODO: enable in release
         // Stop location updates to save battery, but don't disconnect the GoogleApiClient object.
-        if (mGoogleApiClient.isConnected()) {
-            stopLocationUpdates();
-        }
+//        if (mGoogleApiClient.isConnected()) {
+//            stopLocationUpdates();
+//        }
         super.onPause();
     }
 
     @Override
     public void onStop() {
-        mGoogleApiClient.disconnect();
+        //TODO: enable in release
+        //mGoogleApiClient.disconnect();
         super.onStop();
     }
 
@@ -530,7 +543,7 @@ public class RestaurantListFragment extends ChallengeFragment implements
         //fetch.execute();
 
         /** TIJDELIJK **/
-        /*JSONArray obj = null;
+        JSONArray obj = null;
         try {
             obj = new JSONArray(Mock.restaurants);
         } catch (JSONException e) {
@@ -551,7 +564,7 @@ public class RestaurantListFragment extends ChallengeFragment implements
                 e.printStackTrace();
             }
         }
-        this.restaurants = restaurants;*/
+        this.restaurants = restaurants;
         /** EINDE TIJDELIJK **/
     }
 
@@ -571,10 +584,13 @@ public class RestaurantListFragment extends ChallengeFragment implements
 
         @Override
         protected Boolean doInBackground(Double... objects) {
-            Log.e("Longitude", String.valueOf(objects[0]));
-            Log.e("Latitude", String.valueOf(objects[1]));
+            //Log.e("Longitude", String.valueOf(objects[0]));
+            //Log.e("Latitude", String.valueOf(objects[1]));
             try {
-                list = challengeManager.getRestaurantsByLocation(objects[0], objects[1]);
+                //TODO: enable in release
+                //list = challengeManager.getRestaurantsByLocation(objects[0], objects[1]);
+                //list = challengeManager.getRestaurantsByLocationAndRadius(3.7007681,51.0310409, 10);
+                list = restaurants;
                 Log.e("RecipeListFragment", "Got recipes");
                 return true;
             } catch (Exception ex) {

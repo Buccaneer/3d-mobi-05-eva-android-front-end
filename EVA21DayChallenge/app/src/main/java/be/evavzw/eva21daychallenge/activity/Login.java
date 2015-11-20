@@ -281,7 +281,7 @@ public class Login extends RESTfulActivity {
 
     private void signIn(String email, String password) {
         AuthorizeTask authorizeTask = new AuthorizeTask();
-        authorizeTask.execute(new String[]{email, password});
+        authorizeTask.execute(email, password);
     }
 
     private void setEmailError(final String error) {

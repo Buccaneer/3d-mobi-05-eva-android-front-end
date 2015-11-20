@@ -61,8 +61,8 @@ public class RestaurantDetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         restaurant = (Restaurant) intent.getSerializableExtra(RESTAURANT);
-        new FetchRestaurantDetailsTask().execute();
-        //updateChallenge(restaurant);
+        //new FetchRestaurantDetailsTask().execute();
+        updateChallenge(restaurant);
     }
 
     @Override
