@@ -3,24 +3,29 @@ package be.evavzw.eva21daychallenge.models.challenges;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import be.evavzw.eva21daychallenge.models.Category;
+import be.evavzw.eva21daychallenge.models.categories.Category;
+import be.evavzw.eva21daychallenge.models.categories.RestaurantCategory;
+import be.evavzw.eva21daychallenge.models.categories.TextCategory;
 
 /**
  * Created by Pieter-Jan on 14/11/2015.
  */
-@DatabaseTable(tableName = "textchallenges")
+@DatabaseTable(tableName = "text_challenges")
 public class TextChallenge extends Challenge
 {
     @DatabaseField
     private String text;
 
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = Category.ID_FIELD_NAME)
+    private TextCategory category;
+
     TextChallenge() //for ormlite
     {
     }
 
-    TextChallenge(Category category, String text)
+    TextChallenge(TextCategory category, String text)
     {
-        super(category);
+        this.category = category;
         this.text = text;
     }
 
@@ -28,4 +33,10 @@ public class TextChallenge extends Challenge
     {
         return text;
     }
+
+    public TextCategory getCategory()
+    {
+        return category;
+    }
+
 }

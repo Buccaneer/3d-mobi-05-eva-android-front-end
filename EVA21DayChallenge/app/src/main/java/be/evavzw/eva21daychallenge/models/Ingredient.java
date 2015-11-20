@@ -17,7 +17,7 @@ public class Ingredient implements Serializable
     private int ingredientId;
 
     @DatabaseField
-    private String name, unit, quantity;
+    private String name, prefix, postfix;
 
     @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = Recipe.ID_FIELD)
     private Recipe recipe;
@@ -26,13 +26,13 @@ public class Ingredient implements Serializable
     {
     }
 
-    public Ingredient(Recipe recipe, int ingredientId, String name, String unit, String quantity)
+    public Ingredient(Recipe recipe, int ingredientId, String name, String prefix, String postfix)
     {
         this.recipe = recipe;
         this.ingredientId = ingredientId;
         this.name = name;
-        this.unit = unit;
-        this.quantity = quantity;
+        this.prefix = prefix;
+        this.postfix = postfix;
     }
 
     /**
@@ -55,10 +55,10 @@ public class Ingredient implements Serializable
      */
     private void parseJson(JSONObject jsonObject) throws Exception
     {
-        name = jsonObject.getJSONObject("Ingredient").getString("Name");
-        unit = jsonObject.getJSONObject("Ingredient").getString("Unit");
-        quantity = jsonObject.getString("Quantity");
         ingredientId = jsonObject.getJSONObject("Ingredient").getInt("IngredientId");
+        name = jsonObject.getJSONObject("Ingredient").getString("Name");
+        prefix = jsonObject.getString("Prefix");
+        postfix = jsonObject.getString("Postfix");
     }
 
     public String getName()
@@ -71,13 +71,13 @@ public class Ingredient implements Serializable
         return ingredientId;
     }
 
-    public String getUnit()
+    public String getPrefix()
     {
-        return unit;
+        return prefix;
     }
 
-    public String getQuantity()
+    public String getPostfix()
     {
-        return quantity;
+        return postfix;
     }
 }

@@ -1,16 +1,16 @@
 package be.evavzw.eva21daychallenge.models.challenges;
 
 import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
 
+import java.io.Serializable;
 import java.util.Date;
 
-import be.evavzw.eva21daychallenge.models.Category;
+import be.evavzw.eva21daychallenge.models.categories.Category;
 
 /**
  * Created by Pieter-Jan on 14/11/2015.
  */
-public class Challenge
+public class Challenge implements Serializable
 {
     public static final String ID_FIELD = "challenge_id";
 
@@ -20,21 +20,8 @@ public class Challenge
     @DatabaseField
     private Date date;
 
-    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = Category.ID_FIELD_NAME)
-    private Category category;
-
     Challenge() //for ormlite
     {
-    }
-
-    public Challenge(Category category)
-    {
-        this.category = category;
-    }
-
-    public Category getCategory()
-    {
-        return category;
     }
 
     public Date getDate()

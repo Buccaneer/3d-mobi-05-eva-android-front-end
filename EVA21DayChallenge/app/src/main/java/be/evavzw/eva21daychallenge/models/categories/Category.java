@@ -1,4 +1,4 @@
-package be.evavzw.eva21daychallenge.models;
+package be.evavzw.eva21daychallenge.models.categories;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
@@ -11,7 +11,6 @@ import be.evavzw.eva21daychallenge.models.challenges.Challenge;
 /**
  * Created by Pieter-Jan on 4/11/2015.
  */
-@DatabaseTable(tableName = "categories")
 public class Category
 {
     public static final String COOKING = "Cooking";
@@ -23,9 +22,6 @@ public class Category
 
     @DatabaseField(id = true, columnName = ID_FIELD_NAME)
     private String name;
-
-    @ForeignCollectionField(columnName = FIELD_CHALLENGES)
-    private Collection<Challenge> challenges;
 
     Category()
     {
@@ -41,13 +37,4 @@ public class Category
         return name;
     }
 
-    public Collection<Challenge> getChallenges()
-    {
-        return challenges;
-    }
-
-    public void setChallenges(Collection<Challenge> challenges)
-    {
-        this.challenges = challenges;
-    }
 }

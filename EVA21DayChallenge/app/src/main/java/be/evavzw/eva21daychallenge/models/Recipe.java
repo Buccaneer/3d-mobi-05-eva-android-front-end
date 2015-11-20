@@ -19,14 +19,13 @@ import be.evavzw.eva21daychallenge.models.challenges.*;
 @DatabaseTable(tableName = "recipes")
 public class Recipe implements Serializable
 {
-
     public static final String ID_FIELD = "recipeId";
 
     @DatabaseField(id = true, columnName = ID_FIELD)
     private int recipeId;
 
     @DatabaseField
-    private String name,description, image;
+    private String name, description, image;
 
     @DatabaseField (foreign = true, foreignAutoRefresh = true, columnName = Challenge.ID_FIELD)
     private RecipeChallenge challenge;

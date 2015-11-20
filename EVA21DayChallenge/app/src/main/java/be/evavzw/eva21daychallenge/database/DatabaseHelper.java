@@ -11,13 +11,9 @@ import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
 
-import be.evavzw.eva21daychallenge.models.Category;
-import be.evavzw.eva21daychallenge.models.Ingredient;
-import be.evavzw.eva21daychallenge.models.Recipe;
-import be.evavzw.eva21daychallenge.models.RecipeProperty;
-import be.evavzw.eva21daychallenge.models.Restaurant;
-import be.evavzw.eva21daychallenge.models.challenges.Challenge;
-import be.evavzw.eva21daychallenge.models.challenges.RecipeChallenge;
+import be.evavzw.eva21daychallenge.models.*;
+import be.evavzw.eva21daychallenge.models.categories.*;
+import be.evavzw.eva21daychallenge.models.challenges.*;
 
 /**
  * Created by Pieter-Jan on 14/11/2015.
@@ -29,8 +25,12 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper
 
     private Dao<Recipe, Integer> recipeDao;
     private Dao<Restaurant, Integer> restaurantDao;
-    private Dao<Category, String> categoryDao;
+    private Dao<RecipeCategory, String> recipeCategoryDao;
+    private Dao<RestaurantCategory, String> restaurantCategoryDao;
+    private Dao<TextCategory, String> textCategoryDao;
     private Dao<RecipeChallenge, Integer> recipeChallengeDao;
+    private Dao<RestaurantChallenge, Integer> restaurantChallengeDao;
+    private Dao<TextChallenge, Integer> textChallengeDao;
     private Dao<Ingredient, Integer> ingredientDao;
     private Dao<RecipeProperty, Integer> recipePropertyDao;
 
@@ -48,8 +48,13 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper
             TableUtils.createTable(connectionSource, Recipe.class);
             TableUtils.createTable(connectionSource, RecipeProperty.class);
             TableUtils.createTable(connectionSource, Restaurant.class);
-            TableUtils.createTable(connectionSource, Challenge.class);
-            TableUtils.createTable(connectionSource, Category.class);
+            TableUtils.createTable(connectionSource, RecipeChallenge.class);
+            TableUtils.createTable(connectionSource, RestaurantChallenge.class);
+            TableUtils.createTable(connectionSource, TextChallenge.class);
+            TableUtils.createTable(connectionSource, RecipeCategory.class);
+            TableUtils.createTable(connectionSource, RestaurantCategory.class);
+            TableUtils.createTable(connectionSource, TextCategory.class);
+
         } catch (SQLException e) {
             Log.e(DatabaseHelper.class.getName(), "Can't create database", e);
             throw new RuntimeException(e);
@@ -62,11 +67,15 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper
         try {
             Log.i(DatabaseHelper.class.getName(), "onUpgrade");
             TableUtils.dropTable(connectionSource, Ingredient.class, true);
-            TableUtils.dropTable(connectionSource, Ingredient.class, true);
             TableUtils.dropTable(connectionSource, Recipe.class, true);
             TableUtils.dropTable(connectionSource, RecipeProperty.class, true);
-            TableUtils.dropTable(connectionSource, Challenge.class, true);
-            TableUtils.dropTable(connectionSource, Category.class, true);
+            TableUtils.dropTable(connectionSource, Restaurant.class, true);
+            TableUtils.dropTable(connectionSource, RecipeChallenge.class, true);
+            TableUtils.dropTable(connectionSource, RestaurantChallenge.class, true);
+            TableUtils.dropTable(connectionSource, TextChallenge.class, true);
+            TableUtils.dropTable(connectionSource, RecipeCategory.class, true);
+            TableUtils.dropTable(connectionSource, RestaurantCategory.class, true);
+            TableUtils.dropTable(connectionSource, TextCategory.class, true);
             // after we drop the old databases, we create the new ones
             onCreate(database, connectionSource);
         } catch (SQLException e) {
@@ -75,11 +84,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper
         }
     }
 
-    public Dao<Category, String> getCategories() throws SQLException {
-        if (categoryDao == null) {
-            categoryDao = getDao(Category.class);
+    public Dao<RecipeCategory, String> getRecipeCategories() throws SQLException {
+        if (recipeCategoryDao == null) {
+            recipeCategoryDao = getDao(RecipeCategory.class);
         }
-        return categoryDao;
+        return recipeCategoryDao;
     }
 
     public Dao<RecipeChallenge, Integer> getRecipeChallenges() throws SQLException {
@@ -87,6 +96,34 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper
             recipeChallengeDao = getDao(RecipeChallenge.class);
         }
         return recipeChallengeDao;
+    }
+
+    public Dao<RestaurantCategory, String> getRestaurantCategories() throws SQLException {
+        if (restaurantCategoryDao == null) {
+            restaurantCategoryDao = getDao(RestaurantCategory.class);
+        }
+        return restaurantCategoryDao;
+    }
+
+    public Dao<RestaurantChallenge, Integer> getRestaurantChallenges() throws SQLException {
+        if (restaurantChallengeDao == null) {
+            restaurantChallengeDao = getDao(RestaurantChallenge.class);
+        }
+        return restaurantChallengeDao;
+    }
+
+    public Dao<TextCategory, String> getTextCategories() throws SQLException {
+        if (textCategoryDao == null) {
+            textCategoryDao = getDao(TextCategory.class);
+        }
+        return textCategoryDao;
+    }
+
+    public Dao<TextChallenge, Integer> getTextChallenges() throws SQLException {
+        if (textChallengeDao == null) {
+            textChallengeDao = getDao(TextChallenge.class);
+        }
+        return textChallengeDao;
     }
 
     public Dao<Recipe, Integer> getRecipes() throws SQLException {
