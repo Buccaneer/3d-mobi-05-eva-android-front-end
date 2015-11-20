@@ -14,7 +14,7 @@ import be.evavzw.eva21daychallenge.models.challenges.*;
 @DatabaseTable(tableName = "recipe_categories")
 public class RecipeCategory extends Category implements Serializable
 {
-    @ForeignCollectionField(columnName = FIELD_CHALLENGES)
+    @ForeignCollectionField(columnName = FIELD_CHALLENGES, eager = true)
     private Collection<RecipeChallenge> challenges;
 
     RecipeCategory() //for ormlite

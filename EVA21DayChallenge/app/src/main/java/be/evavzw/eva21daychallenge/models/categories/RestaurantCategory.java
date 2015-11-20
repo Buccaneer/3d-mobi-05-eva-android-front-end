@@ -13,7 +13,7 @@ import be.evavzw.eva21daychallenge.models.challenges.*;
 @DatabaseTable(tableName = "restaurant_categories")
 public class RestaurantCategory extends Category
 {
-    @ForeignCollectionField(columnName = FIELD_CHALLENGES)
+    @ForeignCollectionField(columnName = FIELD_CHALLENGES, eager = true)
     private Collection<RestaurantChallenge> challenges;
 
     RestaurantCategory() //for ormlite

@@ -13,7 +13,7 @@ import be.evavzw.eva21daychallenge.models.challenges.*;
 @DatabaseTable(tableName = "text_categories")
 public class TextCategory extends Category
 {
-    @ForeignCollectionField(columnName = FIELD_CHALLENGES)
+    @ForeignCollectionField(columnName = FIELD_CHALLENGES, eager = true)
     private Collection<TextChallenge> challenges;
 
     TextCategory() //for ormlite

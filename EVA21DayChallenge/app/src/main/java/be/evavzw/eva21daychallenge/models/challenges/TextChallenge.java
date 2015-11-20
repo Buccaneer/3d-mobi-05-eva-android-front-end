@@ -3,9 +3,7 @@ package be.evavzw.eva21daychallenge.models.challenges;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import be.evavzw.eva21daychallenge.models.categories.Category;
-import be.evavzw.eva21daychallenge.models.categories.RestaurantCategory;
-import be.evavzw.eva21daychallenge.models.categories.TextCategory;
+import be.evavzw.eva21daychallenge.models.categories.*;
 
 /**
  * Created by Pieter-Jan on 14/11/2015.

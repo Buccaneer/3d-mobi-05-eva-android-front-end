@@ -30,10 +30,10 @@ public class Recipe implements Serializable
     @DatabaseField (foreign = true, foreignAutoRefresh = true, columnName = Challenge.ID_FIELD)
     private RecipeChallenge challenge;
 
-    @ForeignCollectionField
+    @ForeignCollectionField(eager = true)
     private Collection<Ingredient> ingredients;
 
-    @ForeignCollectionField
+    @ForeignCollectionField(eager = true)
     private Collection<RecipeProperty> properties;
 
     Recipe() //for ormlite
