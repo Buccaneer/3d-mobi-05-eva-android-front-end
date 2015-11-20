@@ -19,7 +19,7 @@ public class RecipeProperty implements Serializable
     @DatabaseField
     private String value, type;
 
-    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = Recipe.ID_FIELD_NAME)
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = Recipe.ID_FIELD)
     private Recipe recipe;
 
     RecipeProperty() //for ormlite

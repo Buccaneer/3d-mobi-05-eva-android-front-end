@@ -10,10 +10,11 @@ import be.evavzw.eva21daychallenge.models.Category;
 /**
  * Created by Pieter-Jan on 14/11/2015.
  */
-@DatabaseTable(tableName = "challenges")
 public class Challenge
 {
-    @DatabaseField(generatedId = true)
+    public static final String ID_FIELD = "challenge_id";
+
+    @DatabaseField(generatedId = true, columnName = ID_FIELD)
     private int id;
 
     @DatabaseField

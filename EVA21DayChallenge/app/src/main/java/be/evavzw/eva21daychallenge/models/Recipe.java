@@ -11,19 +11,25 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import be.evavzw.eva21daychallenge.models.challenges.*;
+
 /**
  * Class that represents a Recipe
  */
 @DatabaseTable(tableName = "recipes")
-public class Recipe implements Serializable {
+public class Recipe implements Serializable
+{
 
-    public static final String ID_FIELD_NAME = "recipeId";
+    public static final String ID_FIELD = "recipeId";
 
-    @DatabaseField(id = true, columnName = ID_FIELD_NAME)
+    @DatabaseField(id = true, columnName = ID_FIELD)
     private int recipeId;
 
     @DatabaseField
     private String name,description, image;
+
+    @DatabaseField (foreign = true, foreignAutoRefresh = true, columnName = Challenge.ID_FIELD)
+    private RecipeChallenge challenge;
 
     @ForeignCollectionField
     private Collection<Ingredient> ingredients;
@@ -94,5 +100,15 @@ public class Recipe implements Serializable {
 
     public String getName() {
         return name;
+    }
+
+    public RecipeChallenge getChallenge()
+    {
+        return challenge;
+    }
+
+    public void setChallenge(RecipeChallenge challenge)
+    {
+        this.challenge = challenge;
     }
 }

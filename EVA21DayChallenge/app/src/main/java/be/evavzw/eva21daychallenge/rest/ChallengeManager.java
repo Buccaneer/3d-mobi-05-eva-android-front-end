@@ -11,9 +11,7 @@ import java.util.List;
 
 import be.evavzw.eva21daychallenge.database.DatabaseHelper;
 import be.evavzw.eva21daychallenge.models.*;
-import be.evavzw.eva21daychallenge.models.challenges.Challenge;
-import be.evavzw.eva21daychallenge.models.challenges.RecipeChallenge;
-import be.evavzw.eva21daychallenge.models.challenges.TextChallenge;
+import be.evavzw.eva21daychallenge.models.challenges.*;
 
 /**
  * Handles communication to retrieve {@link Recipe}s from the server
@@ -49,32 +47,66 @@ public class ChallengeManager
     {
         try
         {
-            Dao<Category, String> dao = helper.getCategories();
-            Category category = dao.queryForId(categoryName);
+            Dao<Category, String> categoryDao = helper.getCategories();
+            Dao<RecipeChallenge, Integer> recipeChallengeDao = helper.getRecipeChallenges();
+            Dao<Recipe, Integer> recipeDao = helper.getRecipes();
+            Dao<Ingredient, Integer> ingredientDao = helper.getIngredients();
+            Dao<RecipeProperty, Integer> recipePropertyDao = helper.getRecipeProperties();
+            Category category = categoryDao.queryForId(categoryName);
             // Category exists and has challenges -> return recipes from existing challenges
-            if (category != null && category.getChallenges() != null && category.getChallenges().size() > 0)
+            if (category == null)
             {
-                Log.e("ChallengeManager", "Category found, getting recipes from DB");
+                Log.e("ChallengeManager", "Category not found, getting recipes from server");
+                category = new Category(categoryName);
+                categoryDao.create(category);
+                List<Challenge> challenges = new ArrayList<>();
+                List<Recipe> recipes = new GetAllRecipesRestMethod(context).execute().getResource();
+                for (Recipe recipe : recipes)
+                {
+                    RecipeChallenge challenge = new RecipeChallenge(category, recipe);
+                    recipeChallengeDao.create(challenge);
+
+                    challenges.add(challenge);
+                    recipe.setChallenge(challenge);
+                    recipeDao.createIfNotExists(recipe);
+                    for (Ingredient i : recipe.getIngredients())
+                        ingredientDao.createIfNotExists(i);
+                    for (RecipeProperty p : recipe.getProperties())
+                        recipePropertyDao.createIfNotExists(p);
+                }
+                category.setChallenges(challenges);
+                return recipes;
+            }
+            else if (category.getChallenges() == null || category.getChallenges().size() == 0)
+            {
+                Log.e("ChallengeManager", "Category found but no challenges, getting recipes from server");
+                List<Challenge> challenges = new ArrayList<>();
+                List<Recipe> recipes = new GetAllRecipesRestMethod(context).execute().getResource();
+                for (Recipe recipe : recipes)
+                {
+                    RecipeChallenge challenge = new RecipeChallenge(category, recipe);
+                    recipeChallengeDao.create(challenge);
+
+                    challenges.add(challenge);
+                    recipe.setChallenge(challenge);
+                    recipeDao.createIfNotExists(recipe);
+                    for (Ingredient i : recipe.getIngredients())
+                        ingredientDao.createIfNotExists(i);
+                    for (RecipeProperty p : recipe.getProperties())
+                        recipePropertyDao.createIfNotExists(p);
+                }
+                category.setChallenges(challenges);
+                return recipes;
+            }
+            else
+            {
+                Log.e("ChallengeManager", "Category found with challenges, getting recipes from DB");
                 List<Recipe> recipes = new ArrayList<>();
                 for (Challenge c : category.getChallenges())
                 {
                     RecipeChallenge r = (RecipeChallenge) c;
                     recipes.add(r.getRecipe());
                 }
-                return recipes;
-            }
-            else
-            {
-                Log.e("ChallengeManager", "Category not found, getting recipes from server");
-                category = new Category(categoryName);
-                List<Challenge> challenges = new ArrayList<>();
-                List<Recipe> recipes = new GetAllRecipesRestMethod(context).execute().getResource();
-                for (Recipe recipe : recipes)
-                {
-                    challenges.add(new RecipeChallenge(category, recipe));
-                }
-                category.setChallenges(challenges);
-                dao.create(category);
                 return recipes;
             }
         }

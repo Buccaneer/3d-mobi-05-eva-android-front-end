@@ -17,19 +17,16 @@ public class Ingredient implements Serializable
     private int ingredientId;
 
     @DatabaseField
-    private String name, unit;
+    private String name, unit, quantity;
 
-    @DatabaseField
-    private int quantity;
-
-    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = Recipe.ID_FIELD_NAME)
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = Recipe.ID_FIELD)
     private Recipe recipe;
 
     Ingredient() //for ormlite
     {
     }
 
-    public Ingredient(Recipe recipe, int ingredientId, String name, String unit, int quantity)
+    public Ingredient(Recipe recipe, int ingredientId, String name, String unit, String quantity)
     {
         this.recipe = recipe;
         this.ingredientId = ingredientId;
@@ -60,7 +57,7 @@ public class Ingredient implements Serializable
     {
         name = jsonObject.getJSONObject("Ingredient").getString("Name");
         unit = jsonObject.getJSONObject("Ingredient").getString("Unit");
-        quantity = jsonObject.getInt("Quantity");
+        quantity = jsonObject.getString("Quantity");
         ingredientId = jsonObject.getJSONObject("Ingredient").getInt("IngredientId");
     }
 
@@ -79,7 +76,7 @@ public class Ingredient implements Serializable
         return unit;
     }
 
-    public int getQuantity()
+    public String getQuantity()
     {
         return quantity;
     }

@@ -17,6 +17,7 @@ import be.evavzw.eva21daychallenge.models.Recipe;
 import be.evavzw.eva21daychallenge.models.RecipeProperty;
 import be.evavzw.eva21daychallenge.models.Restaurant;
 import be.evavzw.eva21daychallenge.models.challenges.Challenge;
+import be.evavzw.eva21daychallenge.models.challenges.RecipeChallenge;
 
 /**
  * Created by Pieter-Jan on 14/11/2015.
@@ -29,7 +30,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper
     private Dao<Recipe, Integer> recipeDao;
     private Dao<Restaurant, Integer> restaurantDao;
     private Dao<Category, String> categoryDao;
-    private Dao<Challenge, Integer> challengeDao;
+    private Dao<RecipeChallenge, Integer> recipeChallengeDao;
+    private Dao<Ingredient, Integer> ingredientDao;
+    private Dao<RecipeProperty, Integer> recipePropertyDao;
 
     public DatabaseHelper(Context context)
     {
@@ -79,11 +82,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper
         return categoryDao;
     }
 
-    public Dao<Challenge, Integer> getChallenges() throws SQLException {
-        if (challengeDao == null) {
-            challengeDao = getDao(Challenge.class);
+    public Dao<RecipeChallenge, Integer> getRecipeChallenges() throws SQLException {
+        if (recipeChallengeDao == null) {
+            recipeChallengeDao = getDao(RecipeChallenge.class);
         }
-        return challengeDao;
+        return recipeChallengeDao;
     }
 
     public Dao<Recipe, Integer> getRecipes() throws SQLException {
@@ -91,6 +94,20 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper
             recipeDao = getDao(Recipe.class);
         }
         return recipeDao;
+    }
+
+    public Dao<Ingredient, Integer> getIngredients() throws SQLException {
+        if (ingredientDao == null) {
+            ingredientDao = getDao(Ingredient.class);
+        }
+        return ingredientDao;
+    }
+
+    public Dao<RecipeProperty, Integer> getRecipeProperties() throws SQLException {
+        if (recipePropertyDao == null) {
+            recipePropertyDao = getDao(RecipeProperty.class);
+        }
+        return recipePropertyDao;
     }
 
     public Dao<Restaurant, Integer> getRestaurants() throws SQLException {

@@ -50,7 +50,7 @@ public class RecipeListFragment extends ChallengeFragment {
     }
 
     //Add adapter to the RecyclerView
-    private void setupRecyclerView(RecyclerView recyclerView) {
+    private void setupRecyclerView(RecyclerView recyclerView, List<Recipe> recipes) {
         recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(), recipes, getString(R.string.category_cooking_descr)));
     }
 
@@ -229,6 +229,7 @@ public class RecipeListFragment extends ChallengeFragment {
      */
     private class FetchChallengesTask extends AsyncTask<String, String, Boolean> {
         RecyclerView recyclerView;
+        List<Recipe> recipes;
 
         public FetchChallengesTask(RecyclerView recyclerView) {
             super();
@@ -257,7 +258,7 @@ public class RecipeListFragment extends ChallengeFragment {
             Log.e("RecipeListFragment", "Post Execute called");
             if (succeed) {
                 Log.e("RecipeListFragment", "Post Execute called and succeeded");
-                setupRecyclerView(recyclerView);
+                setupRecyclerView(recyclerView, recipes);
             }
         }
     }
