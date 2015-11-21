@@ -5,16 +5,14 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-    <ImageView
-        android:id="@+id/restaurantMap"
-        android:layout_weight="1"
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:id="@+id/restaurantChallengeMap"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:background="?attr/colorPrimary"
-        android:paddingBottom="1dp"
-        android:src="@drawable/map_screenshot"
-        android:scaleType="centerCrop"
-        android:contentDescription="Kaart"/>
+        android:layout_weight="1"
+        map:liteMode="true"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/restaurantList"

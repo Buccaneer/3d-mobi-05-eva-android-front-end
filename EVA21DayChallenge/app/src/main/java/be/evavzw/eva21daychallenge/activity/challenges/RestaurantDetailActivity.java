@@ -3,7 +3,6 @@ package be.evavzw.eva21daychallenge.activity.challenges;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -70,10 +69,19 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
 
         restaurant = (Restaurant) getIntent().getSerializableExtra(RESTAURANT);
-        //new FetchRestaurantDetailsTask().execute();
         googleMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.restaurantMapFragment)).getMap();
 
-        updateChallenge(restaurant);
+        googleMap.getUiSettings().setMapToolbarEnabled(false);
+        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                return;
+            }
+        });
+
+        new FetchRestaurantDetailsTask().execute();
+
+        //updateChallenge(restaurant);
     }
 
     @Override
