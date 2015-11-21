@@ -1,4 +1,4 @@
-package be.evavzw.eva21daychallenge.security;
+package be.evavzw.eva21daychallenge.services;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -32,9 +32,9 @@ public class UserManager implements RequestSigner {
     private Token token;
 
     /**
-     * Private constructor for the singleton class {@link be.evavzw.eva21daychallenge.security.UserManager}.
+     * Private constructor for the singleton class {@link be.evavzw.eva21daychallenge.services.UserManager}.
      *
-     * @param context the applicationcontext which the {@link be.evavzw.eva21daychallenge.security.UserManager#getInstance(Context)} receives
+     * @param context the applicationcontext which the {@link be.evavzw.eva21daychallenge.services.UserManager#getInstance(Context)} receives
      */
     private UserManager(Context context) {
         // Fetches the shared preferences and assigns it to a variable

@@ -52,13 +52,11 @@ public class GetIngredientsByNameRestMethod extends AbstractRestMethod<List<Ingr
         JSONArray ingredientsArray = new JSONArray(responseBody);
         for(int i = 0; i < ingredientsArray.length(); i++){
             JSONObject ingredient = ingredientsArray.getJSONObject(i);
-            Ingredient ingr = new Ingredient();
-            ingr.setIngredientId(ingredient.getInt("IngredientId"));
-            ingr.setName(ingredient.getString("Name"));
-            ingr.setUnit(ingredient.getString("Unit"));
+            int ingredientId = ingredient.getInt("IngredientId");
+            String name = ingredient.getString("Name");
+            Ingredient ingr = new Ingredient(null, ingredientId, name, "", "");
             ingredients.add(ingr);
         }
-
         return ingredients;
     }
 }

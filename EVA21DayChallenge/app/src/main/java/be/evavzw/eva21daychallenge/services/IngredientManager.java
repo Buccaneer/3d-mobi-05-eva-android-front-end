@@ -1,4 +1,4 @@
-package be.evavzw.eva21daychallenge.security;
+package be.evavzw.eva21daychallenge.services;
 
 import android.content.Context;
 

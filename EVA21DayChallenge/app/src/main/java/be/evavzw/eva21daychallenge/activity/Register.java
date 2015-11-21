@@ -27,7 +27,7 @@ import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.activity.base.RESTfulActivity;
 import be.evavzw.eva21daychallenge.activity.profile_setup.ProfileSetup;
 import be.evavzw.eva21daychallenge.exceptions.RegisterFailedException;
-import be.evavzw.eva21daychallenge.security.UserManager;
+import be.evavzw.eva21daychallenge.services.UserManager;
 import butterknife.OnClick;
 import butterknife.Bind;
 import butterknife.ButterKnife;

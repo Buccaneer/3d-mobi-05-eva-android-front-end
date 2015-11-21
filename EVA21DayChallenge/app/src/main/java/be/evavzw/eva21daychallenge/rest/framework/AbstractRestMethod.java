@@ -9,8 +9,8 @@ import java.util.Map;
 
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.exceptions.RegisterFailedException;
-import be.evavzw.eva21daychallenge.security.RequestSigner;
-import be.evavzw.eva21daychallenge.security.UserManager;
+import be.evavzw.eva21daychallenge.services.RequestSigner;
+import be.evavzw.eva21daychallenge.services.UserManager;
 
 /**
  * Abstract class which has a template method for executing a request.

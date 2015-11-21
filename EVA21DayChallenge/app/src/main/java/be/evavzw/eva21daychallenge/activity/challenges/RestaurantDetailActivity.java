@@ -15,12 +15,13 @@ import java.util.Comparator;
 
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.models.Restaurant;
-import be.evavzw.eva21daychallenge.security.ChallengeManager;
+import be.evavzw.eva21daychallenge.services.ChallengeManager;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
  * Activity which displays all information about a Restaurant.
+ * TODO: Add actual map
  */
 public class RestaurantDetailActivity extends AppCompatActivity {
     public static final String RESTAURANT = "restaurant";

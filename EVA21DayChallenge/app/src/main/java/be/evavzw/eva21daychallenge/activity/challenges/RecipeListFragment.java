@@ -18,16 +18,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import be.evavzw.eva21daychallenge.R;
+import be.evavzw.eva21daychallenge.models.categories.Category;
 import be.evavzw.eva21daychallenge.models.Recipe;
-import be.evavzw.eva21daychallenge.security.ChallengeManager;
+import be.evavzw.eva21daychallenge.services.ChallengeManager;
 
 /**
  * This Fragment is used to display a list of recipes
@@ -41,6 +37,7 @@ public class RecipeListFragment extends ChallengeFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.list, container, false);
+        challengeManager = ChallengeManager.getInstance(getContext());
         RecyclerView rv = (RecyclerView) layout.findViewById(R.id.challengeList);
         rv.setLayoutManager(new LinearLayoutManager(rv.getContext()));
         fetchChallenges(rv);
@@ -48,7 +45,7 @@ public class RecipeListFragment extends ChallengeFragment {
     }
 
     //Add adapter to the RecyclerView
-    private void setupRecyclerView(RecyclerView recyclerView) {
+    private void setupRecyclerView(RecyclerView recyclerView, List<Recipe> recipes) {
         recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(), recipes, getString(R.string.category_cooking_descr)));
     }
 
@@ -124,13 +121,13 @@ public class RecipeListFragment extends ChallengeFragment {
             mValues.add(0, mValues.get(0));
 
             //For testing purposes only (testing scrolling up and down)
+            /*mValues.add(6, mValues.get(0));
             mValues.add(6, mValues.get(0));
             mValues.add(6, mValues.get(0));
             mValues.add(6, mValues.get(0));
             mValues.add(6, mValues.get(0));
             mValues.add(6, mValues.get(0));
-            mValues.add(6, mValues.get(0));
-            mValues.add(6, mValues.get(0));
+            mValues.add(6, mValues.get(0));*/
 
             this.description = description;
         }
@@ -191,11 +188,11 @@ public class RecipeListFragment extends ChallengeFragment {
 
     //Method that fetches the Challenges then calls setupRecyclerView
     private void fetchChallenges(RecyclerView rv) {
-        //FetchRestaurantsTask fetch = new FetchRestaurantsTask(rv);
-        //fetch.execute();
+        FetchChallengesTask fetch = new FetchChallengesTask(rv);
+        fetch.execute();
 
         /** TIJDELIJK **/
-        JSONArray obj = null;
+        /*JSONArray obj = null;
         try {
             obj = new JSONArray(Mock.recipes);
         } catch (JSONException e) {
@@ -218,17 +215,16 @@ public class RecipeListFragment extends ChallengeFragment {
             }
         }
         this.recipes = recipes;
+        setupRecyclerView(rv);*/
         /** EINDE TIJDELIJK **/
-
-        setupRecyclerView(rv);
     }
 
     /**
      * An Asynctask that uses the Rest Framework to fetch recipes
      */
     private class FetchChallengesTask extends AsyncTask<String, String, Boolean> {
-        List<Recipe> list;
         RecyclerView recyclerView;
+        List<Recipe> recipes;
 
         public FetchChallengesTask(RecyclerView recyclerView) {
             super();
@@ -243,10 +239,11 @@ public class RecipeListFragment extends ChallengeFragment {
         @Override
         protected Boolean doInBackground(String... objects) {
             try {
-                list = challengeManager.getAllRecipes();
+                recipes = challengeManager.getRecipesForCategory(Category.COOKING);
                 Log.e("RecipeListFragment", "Got recipes");
                 return true;
             } catch (Exception ex) {
+                ex.printStackTrace();
                 return false;
             }
         }
@@ -255,8 +252,8 @@ public class RecipeListFragment extends ChallengeFragment {
         protected void onPostExecute(Boolean succeed) {
             Log.e("RecipeListFragment", "Post Execute called");
             if (succeed) {
-                recipes = list;
-                setupRecyclerView(recyclerView);
+                Log.e("RecipeListFragment", "Post Execute called and succeeded");
+                setupRecyclerView(recyclerView, recipes);
             }
         }
     }

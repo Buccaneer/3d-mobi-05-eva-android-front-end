@@ -26,8 +26,7 @@ import java.util.List;
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.models.Ingredient;
 import be.evavzw.eva21daychallenge.models.profile_setup.AllergiesPage;
-import be.evavzw.eva21daychallenge.rest.InternalLoginRestMethod;
-import be.evavzw.eva21daychallenge.security.IngredientManager;
+import be.evavzw.eva21daychallenge.services.IngredientManager;
 
 /**
  * Created by Jan on 15/11/2015.

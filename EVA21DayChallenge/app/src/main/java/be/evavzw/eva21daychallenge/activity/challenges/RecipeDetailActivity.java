@@ -148,7 +148,10 @@ public class RecipeDetailActivity extends AppCompatActivity {
         String[] ingredients = new String[recipe.getIngredients().size()];
         int counter = 0;
         for (Ingredient i : recipe.getIngredients()) {
-            ingredients[counter++] = (i.getQuantity() > 0 ? i.getQuantity() + " " + (i.getUnit().trim().equals("") ? "" : i.getUnit().trim() + " ") : "") + toLowerCase(i.getName().trim());
+            //ingredients[counter++] = (i.getQuantity() > 0 ? i.getQuantity() + " " + (i.getUnit().trim().equals("") ? "" : i.getUnit().trim() + " ") : "") + toLowerCase(i.getName().trim());
+            //String quantity = i.getQuantity();
+            //ingredients[counter++] = (quantity != null && quantity.trim().length() > 0 ? i.getQuantity() + " " + (i.getUnit().trim().equals("") ? "" : i.getUnit().trim() + " ") : "") + toLowerCase(i.getName().trim());
+            ingredients[counter++] = i.getPrefix().trim() + " " + toLowerCase(i.getName().trim()) + " " + i.getPostfix().trim();
         }
         Arrays.sort(ingredients, new Vergelijker());
         String ingredients1 = "";

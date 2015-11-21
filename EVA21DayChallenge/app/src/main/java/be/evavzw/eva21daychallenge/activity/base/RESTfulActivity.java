@@ -20,7 +20,7 @@ import be.evavzw.eva21daychallenge.activity.About;
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.activity.Login;
 import be.evavzw.eva21daychallenge.activity.profile_setup.ProfileSetup;
-import be.evavzw.eva21daychallenge.security.UserManager;
+import be.evavzw.eva21daychallenge.services.UserManager;
 
 /**
  * Superclass for all of our activities that need the {@link DrawerLayout} or/and {@link ProgressBar}

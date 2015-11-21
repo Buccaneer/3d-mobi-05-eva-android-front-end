@@ -7,7 +7,6 @@ import org.json.JSONObject;
 
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import be.evavzw.eva21daychallenge.models.Recipe;
@@ -63,7 +62,6 @@ public class GetAllRecipesRestMethod extends AbstractRestMethod<List<Recipe>> {
             JSONObject jsonRow = obj.getJSONObject(i);
             recipes.add(new Recipe(jsonRow));
         }
-
         return recipes;
     }
 }

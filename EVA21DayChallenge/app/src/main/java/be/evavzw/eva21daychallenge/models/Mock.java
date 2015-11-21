@@ -53,9 +53,9 @@ public class Mock {
     };*/
 
     // INGREDIENTS
-    Ingredient kikkererwt = new Ingredient(1, "Kikkererwt", "Blik", 1);
+    /*Ingredient kikkererwt = new Ingredient(1, "Kikkererwt", "Blik", 1);
     Ingredient citroensap = new Ingredient(2, "Citroensap", "Eetlepel", 1);
-    /*Ingredient knoflook = new Ingredient() {IngredientId = 3, Name = "Knoflook", Unit = "Teen"};
+    Ingredient knoflook = new Ingredient() {IngredientId = 3, Name = "Knoflook", Unit = "Teen"};
     Ingredient komijnpoeder = new Ingredient() {IngredientId = 4, Name = "Komijnpoeder", Unit = "Theelepel"};
     Ingredient tahin = new Ingredient() {IngredientId = 5, Name = "Tahin", Unit = "Eetlepel"};
     Ingredient olijfolie = new Ingredient() {IngredientId = 6, Name = "Olijfolie", Unit = "Eetlepel"};

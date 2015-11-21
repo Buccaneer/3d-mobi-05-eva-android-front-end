@@ -91,9 +91,7 @@ public class UserInfoRestMethod extends AbstractRestMethod<User> {
             JSONArray array = json.getJSONArray("Allergies");
             ArrayList<Ingredient> ingredients = new ArrayList<>();
             for(int i = 0; i < array.length(); i++){
-                Ingredient ingredient = new Ingredient();
-                ingredient.setName(array.getJSONObject(i).getString("Name"));
-                ingredient.setIngredientId(array.getJSONObject(i).getInt("IngredientId"));
+                Ingredient ingredient = new Ingredient(null, array.getJSONObject(i).getInt("IngredientId"), array.getJSONObject(i).getString("Name"), "", "");
                 ingredients.add(ingredient);
             }
             return ingredients;

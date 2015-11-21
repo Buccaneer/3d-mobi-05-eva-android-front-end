@@ -1,5 +1,8 @@
 package be.evavzw.eva21daychallenge.models;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import org.json.JSONObject;
 
 import java.io.Serializable;
@@ -7,11 +10,21 @@ import java.io.Serializable;
 /**
  * Properties that belong to a {@link Recipe}
  */
+@DatabaseTable(tableName = "recipeproperties")
 public class RecipeProperty implements Serializable
 {
-
-    private String value, type;
+    @DatabaseField(id = true)
     private int propertyId;
+
+    @DatabaseField
+    private String value, type;
+
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = Recipe.ID_FIELD)
+    private Recipe recipe;
+
+    RecipeProperty() //for ormlite
+    {
+    }
 
     /**
      * Let the class build itself with a given {@link JSONObject}
@@ -19,7 +32,8 @@ public class RecipeProperty implements Serializable
      * @param jsonObject content for this class
      * @throws Exception
      */
-    public RecipeProperty(JSONObject jsonObject) throws Exception {
+    public RecipeProperty(Recipe recipe, JSONObject jsonObject) throws Exception{
+        this.recipe = recipe;
         parseJson(jsonObject);
     }
 

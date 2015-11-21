@@ -33,7 +33,7 @@ import be.evavzw.eva21daychallenge.models.profile_setup.ModelCallbacks;
 import be.evavzw.eva21daychallenge.models.profile_setup.Page;
 import be.evavzw.eva21daychallenge.models.profile_setup.SingleFixedChoicePage;
 import be.evavzw.eva21daychallenge.models.profile_setup.UserInfoPage;
-import be.evavzw.eva21daychallenge.security.UserManager;
+import be.evavzw.eva21daychallenge.services.UserManager;
 
 public class ProfileSetup extends android.support.v4.app.FragmentActivity implements PageFragmentCallbacks, ReviewFragment.Callbacks, ModelCallbacks {
 

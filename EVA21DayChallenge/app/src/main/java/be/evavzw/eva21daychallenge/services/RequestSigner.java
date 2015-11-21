@@ -1,4 +1,4 @@
-package be.evavzw.eva21daychallenge.security;
+package be.evavzw.eva21daychallenge.services;
 
 
 import be.evavzw.eva21daychallenge.rest.framework.Request;

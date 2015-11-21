@@ -1,22 +1,44 @@
 package be.evavzw.eva21daychallenge.models;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+
+import be.evavzw.eva21daychallenge.models.challenges.*;
 
 /**
  * Class that represents a Recipe
  */
-public class Recipe implements Serializable {
-    private List<Ingredient> ingredients;
-    private String name;
-    private String description;
-    private String image;
+@DatabaseTable(tableName = "recipes")
+public class Recipe implements Serializable
+{
+    public static final String ID_FIELD = "recipeId";
+
+    @DatabaseField(id = true, columnName = ID_FIELD)
     private int recipeId;
-    private List<RecipeProperty> properties;
+
+    @DatabaseField
+    private String name, description, image;
+
+    @DatabaseField (foreign = true, foreignAutoRefresh = true, columnName = Challenge.ID_FIELD)
+    private RecipeChallenge challenge;
+
+    @ForeignCollectionField(eager = true)
+    private Collection<Ingredient> ingredients;
+
+    @ForeignCollectionField(eager = true)
+    private Collection<RecipeProperty> properties;
+
+    Recipe() //for ormlite
+    {
+    }
 
     /**
      * Let the class build itself with a given {@link JSONObject}
@@ -46,14 +68,14 @@ public class Recipe implements Serializable {
 
         for (int i = 0; i < ingredientsArray.length(); i++) {
             JSONObject jsonRow = ingredientsArray.getJSONObject(i);
-            ingredients.add(new Ingredient(jsonRow));
+            ingredients.add(new Ingredient(this, jsonRow));
         }
 
         JSONArray propertiesArray = jsonObject.getJSONArray("Properties");
 
         for (int i = 0; i < propertiesArray.length(); i++) {
             JSONObject jsonRow = propertiesArray.getJSONObject(i);
-            properties.add(new RecipeProperty(jsonRow));
+            properties.add(new RecipeProperty(this, jsonRow));
         }
     }
 
@@ -61,11 +83,11 @@ public class Recipe implements Serializable {
         return recipeId;
     }
 
-    public List<Ingredient> getIngredients() {
+    public Collection<Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public List<RecipeProperty> getProperties() {
+    public Collection<RecipeProperty> getProperties() {
         return properties;
     }
 
@@ -79,5 +101,15 @@ public class Recipe implements Serializable {
 
     public String getName() {
         return name;
+    }
+
+    public RecipeChallenge getChallenge()
+    {
+        return challenge;
+    }
+
+    public void setChallenge(RecipeChallenge challenge)
+    {
+        this.challenge = challenge;
     }
 }

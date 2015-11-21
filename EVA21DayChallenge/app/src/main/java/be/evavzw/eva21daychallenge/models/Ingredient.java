@@ -1,5 +1,8 @@
 package be.evavzw.eva21daychallenge.models;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import org.json.JSONObject;
 
 import java.io.Serializable;
@@ -7,18 +10,29 @@ import java.io.Serializable;
 /**
  * Ingredients for a {@link Recipe}
  */
-public class Ingredient implements Serializable {
+@DatabaseTable(tableName = "ingredients")
+public class Ingredient implements Serializable
+{
+    @DatabaseField(id = true)
+    private int ingredientId;
 
-    private String name, unit;
-    private int ingredientId, quantity;
+    @DatabaseField
+    private String name, prefix, postfix;
 
-    public Ingredient(){}
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = Recipe.ID_FIELD)
+    private Recipe recipe;
 
-    public Ingredient(int ingredientId, String name, String unit, int quantity) {
+    Ingredient() //for ormlite
+    {
+    }
+
+    public Ingredient(Recipe recipe, int ingredientId, String name, String prefix, String postfix)
+    {
+        this.recipe = recipe;
         this.ingredientId = ingredientId;
         this.name = name;
-        this.unit = unit;
-        this.quantity = quantity;
+        this.prefix = prefix;
+        this.postfix = postfix;
     }
 
     /**
@@ -27,7 +41,9 @@ public class Ingredient implements Serializable {
      * @param jsonObject content for this class
      * @throws Exception
      */
-    public Ingredient(JSONObject jsonObject) throws Exception {
+    public Ingredient(Recipe recipe, JSONObject jsonObject) throws Exception
+    {
+        this.recipe = recipe;
         parseJson(jsonObject);
     }
 
@@ -37,27 +53,32 @@ public class Ingredient implements Serializable {
      * @param jsonObject JSON passed by {@link Recipe}
      * @throws Exception
      */
-    private void parseJson(JSONObject jsonObject) throws Exception {
-        name = jsonObject.getJSONObject("Ingredient").getString("Name");
-        unit = jsonObject.getJSONObject("Ingredient").getString("Unit");
-        quantity = jsonObject.getInt("Quantity");
+    private void parseJson(JSONObject jsonObject) throws Exception
+    {
         ingredientId = jsonObject.getJSONObject("Ingredient").getInt("IngredientId");
+        name = jsonObject.getJSONObject("Ingredient").getString("Name");
+        prefix = jsonObject.getString("Prefix");
+        postfix = jsonObject.getString("Postfix");
     }
 
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
-    public int getIngredientId() {
+    public int getIngredientId()
+    {
         return ingredientId;
     }
 
-    public String getUnit() {
-        return unit;
+    public String getPrefix()
+    {
+        return prefix;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public String getPostfix()
+    {
+        return postfix;
     }
 
     public void setIngredientId(int ingredientId) {
@@ -68,7 +89,4 @@ public class Ingredient implements Serializable {
         this.name = name;
     }
 
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
 }
