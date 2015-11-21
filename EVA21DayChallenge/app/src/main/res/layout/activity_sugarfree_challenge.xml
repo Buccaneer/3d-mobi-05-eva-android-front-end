@@ -16,7 +16,7 @@
         android:layout_marginRight="10dp"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:paddingTop="40dp">
+        android:paddingTop="20dp">
 
         <TextView
             android:id="@+id/sugarfree1"
