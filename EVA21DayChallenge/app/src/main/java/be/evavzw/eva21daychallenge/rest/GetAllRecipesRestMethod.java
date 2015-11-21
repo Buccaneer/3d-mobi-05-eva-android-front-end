@@ -7,14 +7,12 @@ import org.json.JSONObject;
 
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import be.evavzw.eva21daychallenge.models.Recipe;
 import be.evavzw.eva21daychallenge.rest.framework.AbstractRestMethod;
 import be.evavzw.eva21daychallenge.rest.framework.Request;
 import be.evavzw.eva21daychallenge.rest.framework.RestMethodFactory;
-import be.evavzw.eva21daychallenge.R;
 
 /**
  * Rest method that returns all recipes from the server
