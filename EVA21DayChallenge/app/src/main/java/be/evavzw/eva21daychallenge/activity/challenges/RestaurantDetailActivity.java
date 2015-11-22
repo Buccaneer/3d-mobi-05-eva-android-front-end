@@ -15,7 +15,8 @@ import java.util.Comparator;
 
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.activity.MainMenu;
-import be.evavzw.eva21daychallenge.models.RestaurantTemp;
+import be.evavzw.eva21daychallenge.models.Restaurant;
+import be.evavzw.eva21daychallenge.security.ChallengeManager;
 import be.evavzw.eva21daychallenge.security.RestaurantManager;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -27,9 +28,10 @@ import butterknife.OnClick;
 public class RestaurantDetailActivity extends AppCompatActivity {
     public static final String RESTAURANT = "restaurant";
 
-    RestaurantTemp restaurant;
-
+    private ChallengeManager challengeManager;
     private RestaurantManager restaurantManager;
+
+    Restaurant restaurant;
 
     @Bind(R.id.restaurantMap)
     ImageView restaurantMap;
@@ -52,7 +54,9 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         setContentView(R.layout.restaurant_details);
         ButterKnife.bind(this);
 
-        restaurantManager =RestaurantManager.getInstance(getApplicationContext());
+
+        restaurantManager = RestaurantManager.getInstance(getApplicationContext());
+        challengeManager = ChallengeManager.getInstance(getApplicationContext());
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.category_restaurant));
@@ -63,8 +67,9 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
-        restaurant = (RestaurantTemp) intent.getSerializableExtra(RESTAURANT);
-        updateChallenge(restaurant);
+        restaurant = (Restaurant) intent.getSerializableExtra(RESTAURANT);
+        new FetchRestaurantDetailsTask().execute();
+        //updateChallenge(restaurant);
     }
 
     @Override
@@ -86,7 +91,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
      *
      * @param restaurant
      */
-    private void updateChallenge(RestaurantTemp restaurant) {
+    private void updateChallenge(Restaurant restaurant) {
         restaurantTitle.setText(restaurant.getName());
 
         String address = "<b>" + getString(R.string.address) + "</b><br>";
@@ -120,7 +125,6 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         }
     }
 
-
     @OnClick(R.id.addChallenge)
     public void addChallenge(){
         new AddChallengeTask().execute();
@@ -151,4 +155,16 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         }
     }
 
+    private class FetchRestaurantDetailsTask extends AsyncTask<Void, Void, Restaurant>{
+
+        @Override
+        protected Restaurant doInBackground(Void... params) {
+            return challengeManager.getRestaurantDetails(restaurant.getRestaurantId());
+        }
+
+        @Override
+        protected void onPostExecute(Restaurant restaurant) {
+            updateChallenge(restaurant);
+        }
+    }
 }

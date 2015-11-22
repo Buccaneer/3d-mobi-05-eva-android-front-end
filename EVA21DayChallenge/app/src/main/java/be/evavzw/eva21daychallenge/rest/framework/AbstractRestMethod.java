@@ -109,7 +109,8 @@ public abstract class AbstractRestMethod<T> implements RestMethod<T> {
 
     /**
      * Handles generic errors if not handled by the sub classes
-     * @param status server response status
+     *
+     * @param status       server response status
      * @param responseBody response message
      * @throws Exception
      */
@@ -125,6 +126,7 @@ public abstract class AbstractRestMethod<T> implements RestMethod<T> {
 
     /**
      * Lets the subclass build a {@link Request}, eg REST url, headers, set body etc.
+     *
      * @return returns a {@link Request} which will be executed in {@link AbstractRestMethod#execute()}
      */
     protected abstract Request buildRequest();
@@ -132,6 +134,7 @@ public abstract class AbstractRestMethod<T> implements RestMethod<T> {
     /**
      * Hook which subclasses can overwrite to disable authorization for a request.
      * Settings this to false will not add an authorization header
+     *
      * @return boolean to indicate whether to add authorization header
      */
     protected boolean requiresAuthorization() {
@@ -140,6 +143,7 @@ public abstract class AbstractRestMethod<T> implements RestMethod<T> {
 
     /**
      * Parses the response body returned by the server
+     *
      * @param responseBody JSON string returned by the server
      * @return Returns a generic type which usually contains objects
      * @throws Exception
@@ -148,6 +152,7 @@ public abstract class AbstractRestMethod<T> implements RestMethod<T> {
 
     /**
      * Makes a new RestClient, this handles all our server connections, then lets the client execute a given request
+     *
      * @param request request to be executed
      * @return returns {@link Response} containing status, body and headers
      */
@@ -158,6 +163,7 @@ public abstract class AbstractRestMethod<T> implements RestMethod<T> {
 
     /**
      * Gets the character encoding, can be changed if necessary
+     *
      * @param headers http response headers
      * @return encoding type (UTF-8) in our case
      */

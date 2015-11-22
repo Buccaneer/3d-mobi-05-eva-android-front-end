@@ -106,6 +106,7 @@
 
     </LinearLayout>
 
+
     <android.support.design.widget.FloatingActionButton
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
@@ -117,4 +118,5 @@
         android:clickable="true"/>
 
 </android.support.design.widget.CoordinatorLayout>
+
 

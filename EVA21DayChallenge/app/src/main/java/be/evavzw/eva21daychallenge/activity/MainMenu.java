@@ -6,23 +6,21 @@ import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-
+import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.activity.base.RESTfulActivity;
+import be.evavzw.eva21daychallenge.activity.challenges.ChallengeActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import be.evavzw.eva21daychallenge.R;
-import be.evavzw.eva21daychallenge.activity.challenges.ChallengeActivity;
 
 public class MainMenu extends RESTfulActivity {
 
     private int mProgressStatus = 0;
-    private final double CUTOFF = 100.0/21.0;
+    private final double CUTOFF = 100.0 / 21.0;
     private Handler mHandler = new Handler();
 /*    @Bind(R.id.progressDaysRemaining)
     ProgressBar progressBar;*/
@@ -35,8 +33,7 @@ ImageView view;
 
 
     @OnClick(R.id.button_challenge)
-    public void pickChallenge()
-    {
+    public void pickChallenge() {
         Intent intent = new Intent(MainMenu.this, ChallengeActivity.class);
         startActivity(intent);
     }
@@ -50,7 +47,7 @@ ImageView view;
         ButterKnife.bind(this);
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-  //      Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //      Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
 
        /* FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -96,7 +93,7 @@ ImageView view;
 
 /*    public void setProgress() {
 
-        if(progressBar != null){
+        if (progressBar != null) {
             new Thread(new Runnable() {
                 public void run() {
                     while (mProgressStatus <= 60) {
@@ -120,7 +117,7 @@ ImageView view;
         }
     }*/
 
-        //txvChallengeCountdown.setTypeface(Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/ArtistampMedium.ttf"));
+    //txvChallengeCountdown.setTypeface(Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/ArtistampMedium.ttf"));
 /*
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);

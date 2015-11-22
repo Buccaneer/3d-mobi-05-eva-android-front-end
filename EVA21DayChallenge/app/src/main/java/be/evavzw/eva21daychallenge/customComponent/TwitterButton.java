@@ -15,7 +15,7 @@ import com.twitter.sdk.android.core.R.string;
 public class TwitterButton extends AppCompatButton {
 
     public TwitterButton(Context context) {
-        this(context, (AttributeSet)null);
+        this(context, (AttributeSet) null);
     }
 
     public TwitterButton(Context context, AttributeSet attrs) {
@@ -29,7 +29,7 @@ public class TwitterButton extends AppCompatButton {
 
     private void setupButton() {
         Resources res = this.getResources();
-        super.setCompoundDrawablesWithIntrinsicBounds(res.getDrawable(drawable.tw__ic_logo_default), (Drawable)null, (Drawable)null, (Drawable)null);
+        super.setCompoundDrawablesWithIntrinsicBounds(res.getDrawable(drawable.tw__ic_logo_default), (Drawable) null, (Drawable) null, (Drawable) null);
         super.setCompoundDrawablePadding(res.getDimensionPixelSize(dimen.tw__login_btn_drawable_padding));
         super.setText(string.tw__login_btn_txt);
         super.setTextColor(res.getColor(color.tw__solid_white));

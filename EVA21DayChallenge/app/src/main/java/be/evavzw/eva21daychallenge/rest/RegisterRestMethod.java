@@ -129,6 +129,7 @@ public class RegisterRestMethod extends AbstractRestMethod<Void> {
 
     /**
      * Overwrite the hook {@link AbstractRestMethod#requiresAuthorization()} as logging in obviously doesn't require authorization
+     *
      * @return indicator whether to authenticate the request
      */
     @Override

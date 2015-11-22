@@ -15,19 +15,21 @@ public class RecipeProperty implements Serializable
 
     /**
      * Let the class build itself with a given {@link JSONObject}
+     *
      * @param jsonObject content for this class
      * @throws Exception
      */
-    public RecipeProperty(JSONObject jsonObject) throws Exception{
+    public RecipeProperty(JSONObject jsonObject) throws Exception {
         parseJson(jsonObject);
     }
 
     /**
      * Parses the JSON passed by {@link Recipe}
+     *
      * @param jsonObject JSON object with content for this class
      * @throws Exception
      */
-    private void parseJson(JSONObject jsonObject) throws Exception{
+    private void parseJson(JSONObject jsonObject) throws Exception {
         value = jsonObject.getString("Value");
         type = jsonObject.getString("Type");
         propertyId = jsonObject.getInt("PropertyId");

@@ -3,8 +3,7 @@ package be.evavzw.eva21daychallenge.activity.challenges;
 /**
  * To be used when Azure is down / not functioning properly.
  */
-public class Mock
-{
+public class Mock {
 
     static final String restaurants =
                     "   [ {  "  +

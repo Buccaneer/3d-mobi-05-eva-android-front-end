@@ -73,6 +73,7 @@ public class ExternalLoginsRestMethod extends AbstractRestMethod<Map<String, Str
 
     /**
      * Overwrite hook {@link AbstractRestMethod#requiresAuthorization()}, this request doesn't require authorization
+     *
      * @return
      */
     @Override

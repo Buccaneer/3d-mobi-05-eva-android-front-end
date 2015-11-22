@@ -1,6 +1,5 @@
 package be.evavzw.eva21daychallenge.exceptions;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,7 +7,7 @@ import java.util.Map;
 /**
  * Created by Jasper De Vrient on 11/10/2015.
  */
-public class RegisterFailedException extends IllegalArgumentException{
+public class RegisterFailedException extends IllegalArgumentException {
 
     private Map<String, List<String>> messages = new HashMap<>();
 

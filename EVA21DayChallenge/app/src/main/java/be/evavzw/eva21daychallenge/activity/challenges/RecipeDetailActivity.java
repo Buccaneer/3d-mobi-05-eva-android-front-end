@@ -84,7 +84,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         recipeManager = RecipeManager.getInstance(getApplicationContext());
-
         Intent intent = getIntent();
         recipe = (Recipe) intent.getSerializableExtra(RECIPE);
         updateChallenge(recipe);
@@ -230,7 +229,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 throw e;
             }
         }
-
         @Override
         protected void onPostExecute(Boolean success) {
             if(success){
@@ -242,5 +240,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
             }
         }
     }
+
+
 }
 
