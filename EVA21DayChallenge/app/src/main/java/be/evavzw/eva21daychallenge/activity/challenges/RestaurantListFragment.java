@@ -2,10 +2,13 @@ package be.evavzw.eva21daychallenge.activity.challenges;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -36,6 +39,14 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,7 +61,6 @@ import be.evavzw.eva21daychallenge.services.ChallengeManager;
 
 /**
  * Created by Pieter-Jan on 4/11/2015.
- * TODO: Add actual map
  */
 public class RestaurantListFragment extends ChallengeFragment implements
         ConnectionCallbacks,
@@ -108,11 +118,12 @@ public class RestaurantListFragment extends ChallengeFragment implements
     private ChallengeManager challengeManager;
     private List<Restaurant> restaurants = new ArrayList<>();
     private RecyclerView rv;
+    private GoogleMap googleMap;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.restaurant_challenge, container, false);
         //setupTitle(layout);
         challengeManager = ChallengeManager.getInstance(getContext());
@@ -120,22 +131,36 @@ public class RestaurantListFragment extends ChallengeFragment implements
         rv.setLayoutManager(new LinearLayoutManager(rv.getContext()));
         //setupRecyclerView(rv);
 
+        //new FetchRestaurantsTask(rv).execute();
+        //fetchChallenges();
+
+        setRetainInstance(true);
+
         //TODO: enable in release, this asks for location
-//        mRequestingLocationUpdates = false;
-//
-//        buildGoogleApiClient();
-//        createLocationRequest();
-//        buildLocationSettingsRequest();
-//
-//        if (Build.VERSION.SDK_INT >= 23) {
-//            askLocationPermission();
-//        } else {
-//            checkLocationSettings();
-//        }
+        mRequestingLocationUpdates = false;
+
+        buildGoogleApiClient();
+        createLocationRequest();
+        buildLocationSettingsRequest();
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            askLocationPermission();
+        } else {
+            checkLocationSettings();
+        }
+
+        android.support.v4.app.FragmentManager fm = getChildFragmentManager();
+        SupportMapFragment fragment = (SupportMapFragment) fm.findFragmentById(R.id.restaurantChallengeMap);
+        googleMap = fragment.getMap();
+        googleMap.getUiSettings().setMapToolbarEnabled(false);
+        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                return;
+            }
+        });
 
         //new FetchRestaurantsTask(rv).execute();
-		fetchChallenges();
-        new FetchRestaurantsTask(rv).execute();
         return layout;
     }
 
@@ -168,8 +193,7 @@ public class RestaurantListFragment extends ChallengeFragment implements
      * Builds a GoogleApiClient. Uses the {@code #addApi} method to request the
      * LocationServices API.
      */
-    protected synchronized void buildGoogleApiClient()
-    {
+    protected synchronized void buildGoogleApiClient() {
         Log.i(TAG, "Building GoogleApiClient");
         mGoogleApiClient = new GoogleApiClient.Builder(getContext())
                 .addConnectionCallbacks(this)
@@ -298,8 +322,12 @@ public class RestaurantListFragment extends ChallengeFragment implements
     /**
      * Requests location updates from the FusedLocationApi.
      */
-    private void startLocationUpdates()
-    {
+
+    private void startLocationUpdates() {
+        if (mGoogleApiClient == null) {
+            buildGoogleApiClient();
+        }
+
         LocationServices.FusedLocationApi.requestLocationUpdates(
                 mGoogleApiClient,
                 mLocationRequest,
@@ -338,7 +366,7 @@ public class RestaurantListFragment extends ChallengeFragment implements
     @Override
     public void onStart() {
         //TODO: enable in release
-        //mGoogleApiClient.connect();
+        mGoogleApiClient.connect();
         super.onStart();
     }
 
@@ -350,25 +378,25 @@ public class RestaurantListFragment extends ChallengeFragment implements
         // Within {@code onPause()}, we pause location updates, but leave the
         // connection to GoogleApiClient intact.  Here, we resume receiving
         // location updates if the user has requested them.
-//        if (mGoogleApiClient.isConnected() && mRequestingLocationUpdates) {
-//            startLocationUpdates();
-//        }
+        if (mGoogleApiClient.isConnected() && mRequestingLocationUpdates) {
+            startLocationUpdates();
+        }
     }
 
     @Override
     public void onPause() {
         //TODO: enable in release
         // Stop location updates to save battery, but don't disconnect the GoogleApiClient object.
-//        if (mGoogleApiClient.isConnected()) {
-//            stopLocationUpdates();
-//        }
+        if (mGoogleApiClient.isConnected()) {
+            stopLocationUpdates();
+        }
         super.onPause();
     }
 
     @Override
     public void onStop() {
         //TODO: enable in release
-        //mGoogleApiClient.disconnect();
+        mGoogleApiClient.disconnect();
         super.onStop();
     }
 
@@ -433,8 +461,30 @@ public class RestaurantListFragment extends ChallengeFragment implements
         tv.setText("Title");
     }*/
 
-    private void setupRecyclerView(RecyclerView recyclerView)
-    {
+    private void setupRecyclerView(RecyclerView recyclerView) {
+        //recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+
+        LatLngBounds.Builder builder = LatLngBounds.builder();
+        if (restaurants.size() > 1) {
+            for (Restaurant rest : restaurants) {
+                LatLng latlng = new LatLng(rest.getLatitude(), rest.getLongitude());
+                builder.include(latlng);
+                googleMap.addMarker(new MarkerOptions()
+                        .position(latlng)
+                        .title(rest.getName())
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.red_circle)));
+            }
+
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 1));
+        } else if (restaurants.size() == 1) {
+            LatLng latLng = new LatLng(restaurants.get(0).getLatitude(), restaurants.get(0).getLongitude());
+            googleMap.addMarker(new MarkerOptions()
+                    .position(latLng)
+                    .title(restaurants.get(0).getName())
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.red_circle)));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+        }
+
         recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(), restaurants, getString(R.string.category_restaurant_descr)));
     }
 
@@ -505,8 +555,9 @@ public class RestaurantListFragment extends ChallengeFragment implements
             context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
             mBackground = mTypedValue.resourceId;
             mValues = restaurants;
-            /*mValues.add(0, mValues.get(0));
-            mValues.add(3, mValues.get(0));
+            if (mValues.size() == 1)
+                mValues.add(0, mValues.get(0));
+            /*mValues.add(3, mValues.get(0));
             mValues.add(3, mValues.get(0));
             mValues.add(3, mValues.get(0));
             mValues.add(3, mValues.get(0));
@@ -610,7 +661,6 @@ public class RestaurantListFragment extends ChallengeFragment implements
                 e.printStackTrace();
             }
         }
-        this.restaurants = restaurants;
         /** EINDE TIJDELIJK **/
     }
 
@@ -637,10 +687,10 @@ public class RestaurantListFragment extends ChallengeFragment implements
             //Log.e("Latitude", String.valueOf(objects[1]));
             try {
                 //TODO: enable in release
-                //list = challengeManager.getRestaurantsByLocation(objects[0], objects[1]);
+                list = challengeManager.getRestaurantsByLocation(objects[0], objects[1]);
                 //list = challengeManager.getRestaurantsByLocationAndRadius(3.7007681,51.0310409, 10);
-                list = restaurants;
-                Log.e("RecipeListFragment", "Got recipes");
+                //list = restaurants;
+                Log.e("RestaurantListFragment", "Got Restaurants " + list.size());
                 return true;
             }
             catch (Exception ex)

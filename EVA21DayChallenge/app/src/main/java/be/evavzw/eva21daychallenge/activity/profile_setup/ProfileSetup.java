@@ -76,7 +76,7 @@ public class ProfileSetup extends android.support.v4.app.FragmentActivity implem
         typeOfVegetarianPageKey = getApplicationContext().getResources().getString(R.string.typeOfVegetarian);
         numberHouseholdPageKey = getApplicationContext().getResources().getString(R.string.numberHousehold);
 
-        if(getIntent().getExtras() != null && getIntent().getExtras().containsKey("CALLED_FROM"))
+        if (getIntent().getExtras() != null && getIntent().getExtras().containsKey("CALLED_FROM"))
             calledFrom = getIntent().getExtras().getString("CALLED_FROM");
 
         if (savedInstanceState != null) {
@@ -160,7 +160,7 @@ public class ProfileSetup extends android.support.v4.app.FragmentActivity implem
         onPageTreeChanged();
         updateBottomBar();
 
-        if(calledFrom.equals("navigation")){
+        if (calledFrom.equals("navigation")) {
             new GetUserInfoTask().execute();
         }
         //Some mocked data
@@ -195,7 +195,7 @@ public class ProfileSetup extends android.support.v4.app.FragmentActivity implem
     }
 
     private void loadUserData(User user) {
-        if(user == null)
+        if (user == null)
             return;
 
         Bundle mainBundle = new Bundle();
@@ -220,7 +220,7 @@ public class ProfileSetup extends android.support.v4.app.FragmentActivity implem
         vegetarianTypeBundle.putString(SingleFixedChoicePage.SIMPLE_DATA_KEY, user.getTypeOfVegan());
         mainBundle.putBundle(typeOfVegetarianPageKey, vegetarianTypeBundle);
 
-        String familyMembers = user.getPeopleInFamily() == 5 ? "5+": String.valueOf(user.getPeopleInFamily());
+        String familyMembers = user.getPeopleInFamily() == 5 ? "5+" : String.valueOf(user.getPeopleInFamily());
         familyMembersBundle.putString(SingleFixedChoicePage.SIMPLE_DATA_KEY, familyMembers);
         mainBundle.putBundle(numberHouseholdPageKey, familyMembersBundle);
 
@@ -274,9 +274,10 @@ public class ProfileSetup extends android.support.v4.app.FragmentActivity implem
         Log.i("BirthDay", birthDay.toString());
         Log.i("Budget", budget);
         Log.i("TypeOfVegan", typeOfVegan);
-        for (Ingredient i : allergies) {
-            Log.i("Allergy", String.valueOf(i.getIngredientId()));
-        }
+        if (allergies != null)
+            for (Ingredient i : allergies) {
+                Log.i("Allergy", String.valueOf(i.getIngredientId()));
+            }
         Log.i("PeopleInFamily", peopleInFamily);
 
         new UpdateUserInfoTask().execute(user);
@@ -461,10 +462,10 @@ public class ProfileSetup extends android.support.v4.app.FragmentActivity implem
 
         @Override
         protected Boolean doInBackground(User... params) {
-            try{
+            try {
                 userManager.updateUserInfo(params[0]);
                 return true;
-            }catch(Exception e){
+            } catch (Exception e) {
                 //TODO: error handling, throwing for debugging purposes
                 throw e;
                 //return false;
@@ -474,7 +475,7 @@ public class ProfileSetup extends android.support.v4.app.FragmentActivity implem
         @Override
         protected void onPostExecute(Boolean success) {
             //TODO: error handling, throwing for debugging purposes
-            if(success){
+            if (success) {
                 Intent intent = new Intent(getApplicationContext(), MainMenu.class);
                 ProfileSetup.this.finish();
                 startActivity(intent);
@@ -482,22 +483,22 @@ public class ProfileSetup extends android.support.v4.app.FragmentActivity implem
         }
     }
 
-    private class GetUserInfoTask extends AsyncTask<Void, Void, Boolean>{
+    private class GetUserInfoTask extends AsyncTask<Void, Void, Boolean> {
         User userInfo = null;
+
         @Override
         protected Boolean doInBackground(Void... params) {
             try {
                 userInfo = userManager.getUser();
                 return true;
-            }
-            catch(Exception e){
+            } catch (Exception e) {
                 throw e;
             }
         }
 
         @Override
         protected void onPostExecute(Boolean success) {
-            if(success){
+            if (success) {
                 loadUserData(userInfo);
             }
         }

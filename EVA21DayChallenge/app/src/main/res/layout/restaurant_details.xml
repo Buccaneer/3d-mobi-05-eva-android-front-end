@@ -27,7 +27,15 @@
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <ImageView
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:map="http://schemas.android.com/apk/res-auto"
+            android:name="com.google.android.gms.maps.MapFragment"
+            android:id="@+id/restaurantMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            map:liteMode="true"/>
+
+        <!--<ImageView
             android:id="@+id/restaurantMap"
             android:layout_width="match_parent"
             android:layout_height="200dp"
@@ -35,7 +43,7 @@
             android:contentDescription="Kaart"
             android:paddingBottom="1dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/map_screenshot"/>
+            android:src="@drawable/map_screenshot"/>-->
 
         <ScrollView
             xmlns:android="http://schemas.android.com/apk/res/android"

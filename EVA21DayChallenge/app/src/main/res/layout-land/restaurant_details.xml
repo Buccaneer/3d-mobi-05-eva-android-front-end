@@ -28,14 +28,14 @@
         android:orientation="horizontal"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <ImageView
-            android:id="@+id/restaurantMap"
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:map="http://schemas.android.com/apk/res-auto"
+            android:name="com.google.android.gms.maps.MapFragment"
+            android:id="@+id/restaurantMapFragment"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:contentDescription="Kaart"
-            android:scaleType="centerCrop"
-            android:src="@drawable/map_screenshot"/>
+            android:layout_height="match_parent"
+            map:liteMode="true"/>
 
         <ScrollView
             xmlns:android="http://schemas.android.com/apk/res/android"

@@ -25,7 +25,7 @@ public class Mock {
                     "     \"Latitude\": 51.0647155,  "  +
                     "     \"Description\": \"Vegetarische pizza's, schnitzels natuur of met broccoli, vegetarische\r\nnuggets, veggie balletjes, nasi goreng rollen, broccoli nuggets, veggie\r\nloempia's, groentenschijven, diverse veggieburgers.\",  "  +
                     "     \"Website\": \"http://www.redrooster.be\",  "  +
-                    "     \"Email\": \"\",  "  +
+                    "     \"Email\": \"janvanbraeckel1995@hotmail.com\",  "  +
                     "     \"Phone\": \"050/217541\",  "  +
                     "     \"Street\": \"Stationsstraat 15\",  "  +
                     "     \"Postal\": 8820,  "  +

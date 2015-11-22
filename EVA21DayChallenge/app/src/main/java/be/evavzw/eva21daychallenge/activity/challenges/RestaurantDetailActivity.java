@@ -7,11 +7,21 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import java.util.Comparator;
+import java.util.Map;
 
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.models.Restaurant;
@@ -29,9 +39,6 @@ public class RestaurantDetailActivity extends AppCompatActivity {
     private ChallengeManager challengeManager;
     Restaurant restaurant;
 
-    @Bind(R.id.restaurantMap)
-    ImageView restaurantMap;
-
     @Bind(R.id.restaurantTitle)
     TextView restaurantTitle;
 
@@ -43,6 +50,8 @@ public class RestaurantDetailActivity extends AppCompatActivity {
 
     @Bind(R.id.restaurantDescription)
     TextView restaurantDescription;
+
+    private GoogleMap googleMap;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,10 +69,20 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         final ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
-        Intent intent = getIntent();
-        restaurant = (Restaurant) intent.getSerializableExtra(RESTAURANT);
-        //new FetchRestaurantDetailsTask().execute();
-        updateChallenge(restaurant);
+        restaurant = (Restaurant) getIntent().getSerializableExtra(RESTAURANT);
+        googleMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.restaurantMapFragment)).getMap();
+
+        googleMap.getUiSettings().setMapToolbarEnabled(false);
+        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                return;
+            }
+        });
+
+        new FetchRestaurantDetailsTask().execute();
+
+        //updateChallenge(restaurant);
     }
 
     @Override
@@ -89,21 +108,41 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         restaurantTitle.setText(restaurant.getName());
 
         String address = "<b>" + getString(R.string.address) + "</b><br>";
+        address += "<a href=\"geo:0,0?q=" +
+                restaurant.getStreet().trim() + " " +
+                restaurant.getPostal().trim() + " " +
+                restaurant.getCity().trim() + "\" >";
+
         address += restaurant.getStreet().trim() + "<br>";
         address += restaurant.getPostal().trim() + " " + restaurant.getCity().trim();
+        address += "</a>";
 
         restaurantAddress.setText(Html.fromHtml(address));
+        restaurantAddress.setMovementMethod(LinkMovementMethod.getInstance());
 
         String properties = "<b>" + getString(R.string.properties) + "</b><br>";
-        properties += getString(R.string.phone) + " " + restaurant.getPhone() + "<br>";
-        properties += getString(R.string.email) + ": " + restaurant.getEmail() + "<br>";
-        properties += getString(R.string.website) + ": " + restaurant.getWebsite();
+        properties += getString(R.string.phone) + ": ";
+        properties += "<a href=\"tel:" + restaurant.getPhone() + "\">";
+        properties += restaurant.getPhone() + "</a><br>";
 
+        properties += getString(R.string.email) + ": ";
+        properties += "<a href=\"mailto:" + restaurant.getEmail() + "\">";
+        properties += restaurant.getEmail() + "</a><br>";
+
+        properties += getString(R.string.website) + ": ";
+        properties += "<a href=\"" + restaurant.getWebsite() + "\">";
+        properties += restaurant.getWebsite() + "</a>";
         restaurantProperties.setText(Html.fromHtml(properties));
+        restaurantProperties.setMovementMethod(LinkMovementMethod.getInstance());
 
         String description = "<b>" + getString(R.string.description) + "</b><br>";
         description += restaurant.getDescription();
         restaurantDescription.setText(Html.fromHtml(description));
+
+        LatLng latLng = new LatLng(restaurant.getLatitude(), restaurant.getLongitude());
+        googleMap.addMarker(new MarkerOptions().position(latLng).title(restaurant.getName()));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+
     }
 
     //A simple string comparator
@@ -119,7 +158,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         }
     }
 
-    private class FetchRestaurantDetailsTask extends AsyncTask<Void, Void, Restaurant>{
+    private class FetchRestaurantDetailsTask extends AsyncTask<Void, Void, Restaurant> {
 
         @Override
         protected Restaurant doInBackground(Void... params) {
