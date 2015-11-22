@@ -1,6 +1,7 @@
 package be.evavzw.eva21daychallenge.activity.challenges;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import java.util.Comparator;
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.activity.MainMenu;
 import be.evavzw.eva21daychallenge.models.RestaurantTemp;
+import be.evavzw.eva21daychallenge.security.RestaurantManager;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -26,6 +28,8 @@ public class RestaurantDetailActivity extends AppCompatActivity {
     public static final String RESTAURANT = "restaurant";
 
     RestaurantTemp restaurant;
+
+    private RestaurantManager restaurantManager;
 
     @Bind(R.id.restaurantMap)
     ImageView restaurantMap;
@@ -47,6 +51,8 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.restaurant_details);
         ButterKnife.bind(this);
+
+        restaurantManager =RestaurantManager.getInstance(getApplicationContext());
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.category_restaurant));
@@ -117,10 +123,32 @@ public class RestaurantDetailActivity extends AppCompatActivity {
 
     @OnClick(R.id.addChallenge)
     public void addChallenge(){
-        Intent intent = new Intent(RestaurantDetailActivity.this, MainMenu.class);
-        startActivity(intent);
+        new AddChallengeTask().execute();
+    }
 
-        this.finish();
+    private class AddChallengeTask extends AsyncTask<Void, Void, Boolean>{
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            try{
+                restaurantManager.addChallenge("Restaurant", restaurant.getRestaurantId());
+                return true;
+            }catch(Exception e){
+                //TODO: Exception handling
+                throw e;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean success) {
+            if(success){
+                Intent intent = new Intent(RestaurantDetailActivity.this, MainMenu.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
+                RestaurantDetailActivity.this.finish();
+            }
+        }
     }
 
 }

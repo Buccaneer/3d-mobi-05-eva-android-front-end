@@ -38,7 +38,7 @@
             android:src="@drawable/map_screenshot"/>
 
         <ScrollView
-            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/restaurantScrollView"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent">
@@ -48,18 +48,25 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/restaurantTitle"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/eva_oranje"
-                    android:paddingBottom="20dp"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:paddingTop="20dp"
-                    android:textColor="@color/eva_wit"
-                    android:textSize="@dimen/abc_text_size_medium_material"
-                    android:textStyle="bold"/>
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/restaurantTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/eva_oranje"
+                        android:paddingBottom="20dp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:paddingTop="20dp"
+                        android:textColor="@color/eva_wit"
+                        android:textSize="@dimen/abc_text_size_medium_material"
+                        android:textStyle="bold"/>
+
+                </RelativeLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -92,14 +99,22 @@
 
                 </LinearLayout>
 
+
             </LinearLayout>
 
         </ScrollView>
 
     </LinearLayout>
 
-
-
+    <android.support.design.widget.FloatingActionButton
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/addChallenge"
+        app:layout_anchor="@id/restaurantScrollView"
+        app:layout_anchorGravity="top|end|right"
+        android:layout_marginRight="5dp"
+        android:src="@android:drawable/btn_star_big_off"
+        android:clickable="true"/>
 
 </android.support.design.widget.CoordinatorLayout>
 
