@@ -2,6 +2,7 @@ package be.evavzw.eva21daychallenge.activity.challenges;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -19,11 +21,14 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 import be.evavzw.eva21daychallenge.R;
+import be.evavzw.eva21daychallenge.activity.MainMenu;
 import be.evavzw.eva21daychallenge.models.Ingredient;
 import be.evavzw.eva21daychallenge.models.Recipe;
 import be.evavzw.eva21daychallenge.models.RecipeProperty;
+import be.evavzw.eva21daychallenge.services.RecipeManager;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Activity which displays all information about a Recipe.
@@ -65,6 +70,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
     @Bind(R.id.description)
     TextView description;
 
+    private RecipeManager recipeManager;
+
     Recipe recipe;
 
     @Override
@@ -76,6 +83,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         ((NestedScrollView) findViewById(R.id.nestedScrollView)).addView(inflater.inflate(R.layout.recipe_challenge, null));
         ButterKnife.bind(this);
 
+        recipeManager = RecipeManager.getInstance(getApplicationContext());
         Intent intent = getIntent();
         recipe = (Recipe) intent.getSerializableExtra(RECIPE);
         updateChallenge(recipe);
@@ -206,5 +214,36 @@ public class RecipeDetailActivity extends AppCompatActivity {
             }
         }
     }
+
+    @OnClick(R.id.addChallenge)
+    public void addChallenge() {
+        new AddChallengeTask().execute();
+    }
+
+    private class AddChallengeTask extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            try {
+                recipeManager.addChallenge("Recipe", recipe.getRecipeId());
+                return true;
+            } catch (Exception e) {
+                //TODO: Exception handling
+                throw e;
+            }
+        }
+        @Override
+        protected void onPostExecute(Boolean success) {
+            if(success){
+                Intent intent = new Intent(RecipeDetailActivity.this, MainMenu.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
+                RecipeDetailActivity.this.finish();
+            }
+        }
+    }
+
+
 }
 

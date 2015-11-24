@@ -9,25 +9,24 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.Menu;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Comparator;
-import java.util.Map;
 
 import be.evavzw.eva21daychallenge.R;
+import be.evavzw.eva21daychallenge.activity.MainMenu;
 import be.evavzw.eva21daychallenge.models.Restaurant;
 import be.evavzw.eva21daychallenge.services.ChallengeManager;
+import be.evavzw.eva21daychallenge.services.RestaurantManager;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Activity which displays all information about a Restaurant.
@@ -37,6 +36,8 @@ public class RestaurantDetailActivity extends AppCompatActivity {
     public static final String RESTAURANT = "restaurant";
 
     private ChallengeManager challengeManager;
+    private RestaurantManager restaurantManager;
+
     Restaurant restaurant;
 
     @Bind(R.id.restaurantTitle)
@@ -59,6 +60,8 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         setContentView(R.layout.restaurant_details);
         ButterKnife.bind(this);
 
+
+        restaurantManager = RestaurantManager.getInstance(getApplicationContext());
         challengeManager = ChallengeManager.getInstance(getApplicationContext());
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -158,7 +161,37 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         }
     }
 
-    private class FetchRestaurantDetailsTask extends AsyncTask<Void, Void, Restaurant> {
+    @OnClick(R.id.addChallenge)
+    public void addChallenge(){
+        new AddChallengeTask().execute();
+    }
+
+    private class AddChallengeTask extends AsyncTask<Void, Void, Boolean>{
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            try{
+                restaurantManager.addChallenge("Restaurant", restaurant.getRestaurantId());
+                return true;
+            }catch(Exception e){
+                //TODO: Exception handling
+                throw e;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean success) {
+            if(success){
+                Intent intent = new Intent(RestaurantDetailActivity.this, MainMenu.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
+                RestaurantDetailActivity.this.finish();
+            }
+        }
+    }
+
+    private class FetchRestaurantDetailsTask extends AsyncTask<Void, Void, Restaurant>{
 
         @Override
         protected Restaurant doInBackground(Void... params) {

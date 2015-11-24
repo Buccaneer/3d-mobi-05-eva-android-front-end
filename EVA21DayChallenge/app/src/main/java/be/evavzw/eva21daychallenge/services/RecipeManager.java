@@ -5,6 +5,7 @@ import android.content.Context;
 import java.util.List;
 
 import be.evavzw.eva21daychallenge.models.Recipe;
+import be.evavzw.eva21daychallenge.rest.AddChallengeRestMethod;
 import be.evavzw.eva21daychallenge.rest.GetAllRecipesRestMethod;
 
 /**
@@ -40,5 +41,12 @@ public class RecipeManager {
      */
     public List<Recipe> getAllRecipes() {
         return new GetAllRecipesRestMethod(context).execute().getResource();
+    }
+
+    public void addChallenge(String type, int id) {
+        AddChallengeRestMethod addChallengeRestMethod = new AddChallengeRestMethod(context);
+        addChallengeRestMethod.setType(type);
+        addChallengeRestMethod.setId(id);
+        addChallengeRestMethod.execute();
     }
 }

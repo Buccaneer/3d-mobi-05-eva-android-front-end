@@ -1,16 +1,13 @@
 package be.evavzw.eva21daychallenge.activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ClipDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import be.evavzw.eva21daychallenge.R;
@@ -25,13 +22,14 @@ public class MainMenu extends RESTfulActivity {
     private int mProgressStatus = 0;
     private final double CUTOFF = 100.0 / 21.0;
     private Handler mHandler = new Handler();
-    @Bind(R.id.progressDaysRemaining)
-    ProgressBar progressBar;
+/*    @Bind(R.id.progressDaysRemaining)
+    ProgressBar progressBar;*/
     @Bind(R.id.textViewProgress)
     TextView textViewProgress;
     @Bind(R.id.drawer_layout)
     DrawerLayout main;
-
+@Bind(R.id.testView)
+ImageView view;
 
 
     @OnClick(R.id.button_challenge)
@@ -65,25 +63,35 @@ public class MainMenu extends RESTfulActivity {
         //NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         //navigationView.setNavigationItemSelectedListener(this);
 
-        progressBar.setProgress(100);
-        setProgress();
+      /*  progressBar.setProgress(100);
+        setProgress();*/
+
+
+
+        //hier moet getal komen per dag
+        String tekst = "boom" + 12;
+        int id = getResources().getIdentifier(tekst,"drawable", getPackageName());
+
 
         Glide.with(getApplicationContext())
-                .load(R.drawable.testje2)
-                .asBitmap()
-                .into(new SimpleTarget<Bitmap>(this.getResources().getDisplayMetrics().widthPixels, this.getResources().getDisplayMetrics().heightPixels) {
-                    @Override
-                    public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
-                        BitmapDrawable background = new BitmapDrawable(bitmap);
-                        main.setBackgroundDrawable(background);
-                    }
-                });
+                .load(id)
+                .centerCrop()
+               .into(new SimpleTarget<GlideDrawable>() {
+                         @Override
+                         public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+
+                             view.setImageDrawable(resource);
+                             resource.start();
+                             resource.setLoopCount(1);
 
 
+                         }
+                     }
+               );
     }
 
 
-    public void setProgress() {
+/*    public void setProgress() {
 
         if (progressBar != null) {
             new Thread(new Runnable() {
@@ -107,7 +115,7 @@ public class MainMenu extends RESTfulActivity {
                 }
             }).start();
         }
-    }
+    }*/
 
     //txvChallengeCountdown.setTypeface(Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/ArtistampMedium.ttf"));
 /*
@@ -117,25 +125,6 @@ public class MainMenu extends RESTfulActivity {
         int width = metrics.widthPixels;
   */
 
-
-
-/*    @OnClick(R.id.tileFAQ)
-    public void tileFAQClicked(){
-        //Intent intent = new Intent(this, FrequentlyAskedQuestions.class);
-        //startActivity(intent);
-    }
-
-    @OnClick(R.id.tileTipsTricks)
-    public void tileTipsTricksClicked(){
-        //Intent intent = new Intent(this, TipsTricks.class);
-        //startActivity(intent);
-    }
-
-    @OnClick(R.id.tileRecipes)
-    public void tileRecipesclicked(){
-        //Intent intent = new Intent(this, Recipes.class);
-        //startActivity(intent);
-    }*/
 
 
 }
