@@ -25,6 +25,11 @@ public class ChallengeManager
     private static ChallengeManager challengeManager;
     private DatabaseHelper helper;
     private Context context;
+    Dao<RecipeCategory, String> categoryDao;
+    Dao<RecipeChallenge, Integer> recipeChallengeDao;
+    Dao<Recipe, Integer> recipeDao;
+    Dao<Ingredient, Integer> ingredientDao;
+    Dao<RecipeProperty, Integer> recipePropertyDao;
 
     /**
      * Singleton class
@@ -45,17 +50,40 @@ public class ChallengeManager
     {
         this.context = context;
         helper = new DatabaseHelper(context);
+        try {
+            categoryDao = helper.getRecipeCategories();
+            recipeChallengeDao = helper.getRecipeChallenges();
+            recipeDao = helper.getRecipes();
+            ingredientDao = helper.getIngredients();
+            recipePropertyDao = helper.getRecipeProperties();
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public void refresh(Recipe recipe)
+    {
+        try
+        {
+            recipeDao.refresh(recipe);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public List<Recipe> getRecipesForCategory(String categoryName)
     {
         try
         {
-            Dao<RecipeCategory, String> categoryDao = helper.getRecipeCategories();
+            /*Dao<RecipeCategory, String> categoryDao = helper.getRecipeCategories();
             Dao<RecipeChallenge, Integer> recipeChallengeDao = helper.getRecipeChallenges();
             Dao<Recipe, Integer> recipeDao = helper.getRecipes();
             Dao<Ingredient, Integer> ingredientDao = helper.getIngredients();
-            Dao<RecipeProperty, Integer> recipePropertyDao = helper.getRecipeProperties();
+            Dao<RecipeProperty, Integer> recipePropertyDao = helper.getRecipeProperties();*/
             RecipeCategory category = categoryDao.queryForId(categoryName);
             // Category exists and has challenges -> return recipes from existing challenges
             if (category == null)
@@ -161,7 +189,8 @@ public class ChallengeManager
 
     public Restaurant getRestaurantDetails(int restaurantId)
     {
-        try
+        return new GetRestaurantDetailsRestMethod(context, restaurantId).execute().getResource();
+        /*try
         {
             Dao<Restaurant, Integer> dao = helper.getRestaurants();
             Restaurant restaurant = dao.queryForId(restaurantId);
@@ -174,6 +203,6 @@ public class ChallengeManager
         catch (SQLException e)
         {
             return null;
-        }
+        }*/
     }
 }

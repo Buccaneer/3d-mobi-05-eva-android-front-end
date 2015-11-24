@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -22,6 +23,7 @@ import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.models.Ingredient;
 import be.evavzw.eva21daychallenge.models.Recipe;
 import be.evavzw.eva21daychallenge.models.RecipeProperty;
+import be.evavzw.eva21daychallenge.services.ChallengeManager;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -78,6 +80,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         recipe = (Recipe) intent.getSerializableExtra(RECIPE);
+        ChallengeManager.getInstance(this).refresh(recipe);
         updateChallenge(recipe);
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
