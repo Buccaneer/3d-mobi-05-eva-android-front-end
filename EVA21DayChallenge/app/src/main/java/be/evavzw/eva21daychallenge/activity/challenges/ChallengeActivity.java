@@ -138,7 +138,7 @@ public class ChallengeActivity extends AppCompatActivity
         Adapter adapter = new Adapter(getSupportFragmentManager());
         adapter.addFragment(new RecipeListFragment(), getString(R.string.category_cooking));
         adapter.addFragment(restaurantListFragment, getString(R.string.category_restaurant));
-        adapter.addFragment(new RecipeListFragment(), getString(R.string.category_sugarfree));
+        adapter.addFragment(new SugarfreeChallenge(), getString(R.string.category_sugarfree));
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener()
         {

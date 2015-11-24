@@ -72,6 +72,7 @@ public class UpdateUserInfoRestMethod extends AbstractRestMethod{
         body.put("TypeOfVegan", user.getTypeOfVegan());
         JSONArray allergies = new JSONArray();
         ArrayList<Ingredient> all = user.getAllergies();
+        if(all != null)
         for(Ingredient i: all){
             allergies.put(i.getIngredientId());
         }

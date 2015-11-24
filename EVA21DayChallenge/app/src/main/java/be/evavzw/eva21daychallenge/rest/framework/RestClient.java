@@ -9,6 +9,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 
+import retrofit.http.PUT;
+
 /**
  * Handles the actual communication with the server, needs a valid {@link Request} to execute
  */
@@ -66,7 +68,13 @@ public class RestClient {
                     conn.setDoOutput(true);
                     conn.setFixedLengthStreamingMode(payload.length);
                     conn.getOutputStream().write(payload);
-                    status = conn.getResponseCode();
+                    break;
+                case PUT:
+                    byte[] body = request.getBody();
+                    conn.setDoOutput(true);
+                    conn.setRequestMethod("PUT");
+                    conn.getOutputStream().write(body);
+                    break;
                 default:
                     break;
             }
