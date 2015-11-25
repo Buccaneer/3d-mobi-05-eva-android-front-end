@@ -2,11 +2,14 @@ package be.evavzw.eva21daychallenge.services;
 
 import android.content.Context;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import be.evavzw.eva21daychallenge.models.Ingredient;
 import be.evavzw.eva21daychallenge.models.Recipe;
 import be.evavzw.eva21daychallenge.rest.AddChallengeRestMethod;
 import be.evavzw.eva21daychallenge.rest.GetAllRecipesRestMethod;
+import be.evavzw.eva21daychallenge.rest.GetNumberOfRecipesByIngredients;
 
 /**
  * Handles communication to retrieve {@link Recipe}s from the server
@@ -48,5 +51,11 @@ public class RecipeManager {
         addChallengeRestMethod.setType(type);
         addChallengeRestMethod.setId(id);
         addChallengeRestMethod.execute();
+    }
+
+    public int getNumberOfRecipes(ArrayList<Ingredient> ingredients) {
+        GetNumberOfRecipesByIngredients getNumberOfRecipesByIngredients = new GetNumberOfRecipesByIngredients(context);
+        getNumberOfRecipesByIngredients.setIngredients(ingredients);
+        return getNumberOfRecipesByIngredients.execute().getResource();
     }
 }

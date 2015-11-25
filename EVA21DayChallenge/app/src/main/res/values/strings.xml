@@ -89,4 +89,10 @@
     <string name="category_sugarfree_descr2">Er zijn verschillende soorten suikers en een groot aantal daarvan zijn verfijnd en bewerkt met dierlijke producten. Zo worden bijvoorbeeld resten van koeierbeenderen gebruikt om de witte kleur te geven.</string>
     <string name="category_sugarfree_descr3">We dagen je uit om een dag geen (of toch zo weinig mogelijk) suikers te eten. Dit wil zeggen dat frisdrank, snoep en dergelijke vermeden worden. </string>
     <string name="neemChallenge">Selecteer challenge</string>
+    <string name="CCC">Creative Cooking</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="numberOfRecipes">Aantal recepten gevonden:</string>
+    <string name="verder">Verder</string>
 </resources>
