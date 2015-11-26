@@ -22,8 +22,10 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -119,7 +121,9 @@ public class RestaurantListFragment extends ChallengeFragment implements
     private ChallengeManager challengeManager;
     private List<Restaurant> restaurants = new ArrayList<>();
     private RecyclerView rv;
-    private LinearLayout spinnerContainer;
+    private FrameLayout spinnerContainer;
+    private ProgressBar spinner;
+    private TextView notFound;
     private GoogleMap googleMap;
 
     @Nullable
@@ -132,7 +136,9 @@ public class RestaurantListFragment extends ChallengeFragment implements
         rv = (RecyclerView) layout.findViewById(R.id.restaurantList);
         rv.setLayoutManager(new LinearLayoutManager(rv.getContext()));
         //setupRecyclerView(rv);
-        spinnerContainer = (LinearLayout) layout.findViewById(R.id.list_spinner_container);
+        spinnerContainer = (FrameLayout) layout.findViewById(R.id.list_spinner_container);
+        spinner = (ProgressBar) layout.findViewById(R.id.list_spinner);
+        notFound = (TextView) layout.findViewById(R.id.not_found);
 
         //new FetchRestaurantsTask(rv).execute();
         //fetchChallenges();
@@ -671,9 +677,9 @@ public class RestaurantListFragment extends ChallengeFragment implements
     {
         List<Restaurant> list;
         RecyclerView recyclerView;
-        LinearLayout spinnerContainer;
+        FrameLayout spinnerContainer;
 
-        public FetchRestaurantsTask(RecyclerView recyclerView, LinearLayout spinnerContainer)
+        public FetchRestaurantsTask(RecyclerView recyclerView, FrameLayout spinnerContainer)
         {
             super();
             this.recyclerView = recyclerView;
@@ -684,6 +690,8 @@ public class RestaurantListFragment extends ChallengeFragment implements
         protected void onPreExecute()
         {
             spinnerContainer.setVisibility(View.VISIBLE);
+            spinner.setVisibility(View.VISIBLE);
+            notFound.setVisibility(View.INVISIBLE);
         }
 
         @Override
@@ -691,7 +699,6 @@ public class RestaurantListFragment extends ChallengeFragment implements
             //Log.e("Longitude", String.valueOf(objects[0]));
             //Log.e("Latitude", String.valueOf(objects[1]));
             try {
-                try {Thread.sleep(5000);} catch (InterruptedException e) {}
                 //TODO: enable in release
                 list = challengeManager.getRestaurantsByLocation(objects[0], objects[1]);
                 //list = challengeManager.getRestaurantsByLocationAndRadius(3.7007681,51.0310409, 10);
@@ -711,17 +718,20 @@ public class RestaurantListFragment extends ChallengeFragment implements
             if (isAdded()) //no callback if fragment is no longer added
             {
                 //setRefresh(false);
-                if (succeed)
+                if (succeed) //TODO: Remove negation after testing
                 {
                     Log.e("RecipeListFragment", "Post Execute called");
                     restaurants = list;
                     setupRecyclerView(recyclerView);
+                    spinnerContainer.setVisibility(View.GONE);
                 }
                 else
                 {
                     Log.e("qmlskdjf", "Post Execute Failed");
+                    spinner.setVisibility(View.INVISIBLE);
+                    notFound.setVisibility(View.VISIBLE);
+                    notFound.setText(R.string.no_restaurants_found);
                 }
-                spinnerContainer.setVisibility(View.GONE);
             }
         }
     }

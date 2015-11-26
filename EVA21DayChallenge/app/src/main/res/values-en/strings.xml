@@ -88,4 +88,6 @@
     <string name="category_sugarfree_descr3">We challenge you to avoid all (or as much as possible) products with sugar in it. This means no softdrinks, candy and so on.</string>
     <string name="category_sugarfree_descr2">There are different kinds of sugar and a lot of them are refined or produced with animal remains. For example, cow bones are used to give sugar his bright white color.</string>
     <string name="neemChallenge">Select Challenge</string>
+    <string name="no_recipes_found">No recipes were found.</string>
+    <string name="no_restaurants_found">No restaurants were found.</string>
 </resources>

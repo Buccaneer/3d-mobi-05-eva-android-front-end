@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -42,7 +43,9 @@ public class RecipeListFragment extends ChallengeFragment {
         RecyclerView rv = (RecyclerView) layout.findViewById(R.id.challengeList);
         rv.setLayoutManager(new LinearLayoutManager(rv.getContext()));
         FrameLayout spinnerContainer = (FrameLayout) layout.findViewById(R.id.list_spinner_container);
-        fetchChallenges(rv, spinnerContainer);
+        ProgressBar spinner = (ProgressBar) layout.findViewById(R.id.list_spinner);
+        TextView notFound = (TextView) layout.findViewById(R.id.not_found);
+        fetchChallenges(rv, spinnerContainer, spinner, notFound);
         return layout;
     }
 
@@ -189,8 +192,8 @@ public class RecipeListFragment extends ChallengeFragment {
     }
 
     //Method that fetches the Challenges then calls setupRecyclerView
-    private void fetchChallenges(RecyclerView rv, FrameLayout spinnerContainer) {
-        FetchChallengesTask fetch = new FetchChallengesTask(rv, spinnerContainer);
+    private void fetchChallenges(RecyclerView rv, FrameLayout spinnerContainer, ProgressBar spinner, TextView notFound) {
+        FetchChallengesTask fetch = new FetchChallengesTask(rv, spinnerContainer, spinner, notFound);
         fetch.execute();
 
         /** TIJDELIJK **/
@@ -228,22 +231,27 @@ public class RecipeListFragment extends ChallengeFragment {
         RecyclerView recyclerView;
         FrameLayout spinnerContainer;
         List<Recipe> recipes;
+        ProgressBar spinner;
+        TextView notFound;
 
-        public FetchChallengesTask(RecyclerView recyclerView, FrameLayout spinnerContainer) {
+        public FetchChallengesTask(RecyclerView recyclerView, FrameLayout spinnerContainer, ProgressBar spinner, TextView notFound) {
             super();
             this.recyclerView = recyclerView;
             this.spinnerContainer = spinnerContainer;
+            this.spinner = spinner;
+            this.notFound = notFound;
         }
 
         @Override
         protected void onPreExecute() {
             spinnerContainer.setVisibility(View.VISIBLE);
+            spinner.setVisibility(View.VISIBLE);
+            notFound.setVisibility(View.INVISIBLE);
         }
 
         @Override
         protected Boolean doInBackground(String... objects) {
             try {
-                Thread.sleep(5000);
                 recipes = challengeManager.getRecipesForCategory(Category.COOKING);
                 Log.e("RecipeListFragment", "Got recipes");
                 return true;
@@ -258,11 +266,17 @@ public class RecipeListFragment extends ChallengeFragment {
             if (isAdded()) //no callback if fragment is no longer added
             {
                 Log.e("RecipeListFragment", "Post Execute called");
-                if (succeed) {
+                if (succeed) { //TODO: Remove negation after testing
                     Log.e("RecipeListFragment", "Post Execute called and succeeded");
                     setupRecyclerView(recyclerView, recipes);
+                    spinnerContainer.setVisibility(View.GONE);
                 }
-                spinnerContainer.setVisibility(View.GONE);
+                else
+                {
+                    spinner.setVisibility(View.INVISIBLE);
+                    notFound.setVisibility(View.VISIBLE);
+                    notFound.setText(R.string.no_recipes_found);
+                }
             }
         }
     }

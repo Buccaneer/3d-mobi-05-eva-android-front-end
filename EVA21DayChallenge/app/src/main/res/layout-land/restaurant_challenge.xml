@@ -14,22 +14,27 @@
         android:layout_weight="1"
         map:liteMode="true"/>
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/list_spinner_container"
-        android:layout_weight="1"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
         android:visibility="gone" >
 
         <ProgressBar
             android:id="@+id/list_spinner"
             style="@android:style/Widget.DeviceDefault.ProgressBar.Large"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
         </ProgressBar>
-    </LinearLayout>
+
+        <TextView
+            android:id="@+id/not_found"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="invisible"/>
+    </FrameLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/restaurantList"
