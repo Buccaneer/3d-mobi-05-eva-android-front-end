@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="be.evavzw.eva21daychallenge">
+    package="be.evavzw.eva21daychallenge" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -54,9 +54,11 @@
             android:theme="@style/AppTheme.NoActionbar" />
         <activity
             android:name=".activity.profile_setup.ProfileSetup"
-            android:label="@string/title_activity_profile_setup"/>
+            android:label="@string/title_activity_profile_setup" />
 
-        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyDME7pDNnleZ3SrylhYIOleTNEek-dE5TQ"/>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDME7pDNnleZ3SrylhYIOleTNEek-dE5TQ" />
             android:label="@string/title_activity_profile_setup"
             android:theme="@style/AppTheme.NoActionbar" />
         <activity android:name=".activity.challenges.SugarfreeChallenge" >

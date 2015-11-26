@@ -74,7 +74,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
     TextView description;
 
     private RecipeManager recipeManager;
-
+    private ChallengeManager challengeManager;
+    boolean calledFromCCC = false;
     Recipe recipe;
 
     @Override
@@ -86,6 +87,13 @@ public class RecipeDetailActivity extends AppCompatActivity {
         ((NestedScrollView) findViewById(R.id.nestedScrollView)).addView(inflater.inflate(R.layout.recipe_challenge, null));
         ButterKnife.bind(this);
 
+        if(getIntent().getExtras() != null && getIntent().getExtras().containsKey("CALLED_FROM")){
+            if(getIntent().getExtras().getString("CALLED_FROM").equals("CCC")){
+                calledFromCCC=true;
+            }
+        }
+
+        challengeManager = ChallengeManager.getInstance(getApplicationContext());
         recipeManager = RecipeManager.getInstance(getApplicationContext());
         Intent intent = getIntent();
         recipe = (Recipe) intent.getSerializableExtra(RECIPE);
@@ -229,16 +237,21 @@ public class RecipeDetailActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Void... params) {
             try {
-                recipeManager.addChallenge("Recipe", recipe.getRecipeId());
+                if (calledFromCCC) {
+                    challengeManager.addChallenge("CreativeCooking", recipe.getRecipeId());
+                } else {
+                    challengeManager.addChallenge("Recipe", recipe.getRecipeId());
+                }
                 return true;
             } catch (Exception e) {
                 //TODO: Exception handling
                 throw e;
             }
         }
+
         @Override
         protected void onPostExecute(Boolean success) {
-            if(success){
+            if (success) {
                 Intent intent = new Intent(RecipeDetailActivity.this, MainMenu.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);

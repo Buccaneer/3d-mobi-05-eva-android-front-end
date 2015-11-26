@@ -20,4 +20,5 @@
     <color name="step_pager_selected_last_tab_color">@color/eva_donkergroen</color>
     <color name="step_pager_next_tab_color">#10000000</color>
     <color name="apptheme_color">#afbd1f</color>
+    <color name="black">#ffffff</color>
 </resources>

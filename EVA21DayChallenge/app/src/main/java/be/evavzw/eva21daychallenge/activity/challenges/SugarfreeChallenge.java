@@ -16,7 +16,7 @@ import com.bumptech.glide.Glide;
 
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.activity.MainMenu;
-import be.evavzw.eva21daychallenge.services.RestaurantManager;
+import be.evavzw.eva21daychallenge.services.ChallengeManager;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -27,7 +27,7 @@ import butterknife.OnClick;
  */
 public class SugarfreeChallenge extends ChallengeFragment{
 
-    private RestaurantManager restaurantManager;
+    private ChallengeManager challengeManager;
 
 private Context c;
 
@@ -38,7 +38,7 @@ private Context c;
         LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.activity_sugarfree_challenge, container, false);
         ImageView img = (ImageView) layout.findViewById(R.id.sugar_img);
         c = container.getContext().getApplicationContext();
-        restaurantManager =  RestaurantManager.getInstance(c);
+        challengeManager = ChallengeManager.getInstance(c);
         Glide.with(c)
                 .load(R.drawable.koe).into(img);
 
@@ -59,7 +59,7 @@ private Context c;
         @Override
         protected Boolean doInBackground(Void... params) {
             try{
-                restaurantManager.addChallenge("Suikervrij", 0);
+                challengeManager.addChallenge("Suikervrij", 0);
                 return true;
             }catch(Exception e){
                 //TODO: Exception handling

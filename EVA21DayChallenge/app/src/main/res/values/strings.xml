@@ -90,9 +90,13 @@
     <string name="category_sugarfree_descr3">We dagen je uit om een dag geen (of toch zo weinig mogelijk) suikers te eten. Dit wil zeggen dat frisdrank, snoep en dergelijke vermeden worden. </string>
     <string name="neemChallenge">Selecteer challenge</string>
     <string name="CCC">Creative Cooking</string>
+    <item type="id" name="recipeTag"/>
+    <item type="id" name="ingredientTag"/>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="numberOfRecipes">Aantal recepten gevonden:</string>
     <string name="verder">Verder</string>
+    <string name="title_activity_recipes_by_ingredient">RecipesByIngredient</string>
+    <string name="action_settings">Settings</string>
 </resources>

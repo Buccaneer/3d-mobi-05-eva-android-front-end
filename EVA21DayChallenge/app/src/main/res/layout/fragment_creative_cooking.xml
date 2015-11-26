@@ -5,36 +5,50 @@
     tools:context="be.evavzw.eva21daychallenge.activity.challenges.CreativeCookingFragment"
     android:weightSum="1">
 
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/selectListView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/numberOfRecipes"
-            android:text="@string/numberOfRecipes"
+            <TextView
+                android:id="@+id/numberOfRecipes"
+                android:text="@string/numberOfRecipes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/numberOfRecipesFound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/numberOfRecipes"
+                android:layout_toEndOf="@id/numberOfRecipes"
+                android:text=" 0"
+                android:freezesText="true"/>
+        </RelativeLayout>
+
+
+        <Button
+            android:text="@string/verder"
+            android:id="@+id/btnContinue"
+            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/numberOfRecipesFound"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/numberOfRecipes"
-            android:layout_toEndOf="@id/numberOfRecipes"
-            android:text=" 0"/>
-    </RelativeLayout>
+        <be.evavzw.eva21daychallenge.customComponent.SearchableCheckListView
+            android:id="@+id/checkListView"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 
-
-    <Button
-        android:text="@string/verder"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <be.evavzw.eva21daychallenge.customComponent.SearchableCheckListView
-        android:id="@+id/checkListView"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"/>
-
+    <LinearLayout
+        android:id="@+id/recipeListview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    </LinearLayout>
 
 </LinearLayout>
