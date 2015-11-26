@@ -15,6 +15,7 @@ import be.evavzw.eva21daychallenge.models.categories.*;
 import be.evavzw.eva21daychallenge.models.challenges.*;
 import be.evavzw.eva21daychallenge.rest.GetAllRecipesRestMethod;
 import be.evavzw.eva21daychallenge.rest.GetAllRestaurantsRestMethod;
+import be.evavzw.eva21daychallenge.rest.GetCurrentChallengeRestMethod;
 import be.evavzw.eva21daychallenge.rest.GetRestaurantDetailsRestMethod;
 
 /**
@@ -74,6 +75,15 @@ public class ChallengeManager
             e.printStackTrace();
         }
     }
+
+    //CHALLENGE METHODS
+
+    public Challenge getCurrentChallenge()
+    {
+        return new GetCurrentChallengeRestMethod(context).execute().getResource();
+    }
+
+    //RECIPE METHODS
 
     public List<Recipe> getRecipesForCategory(String categoryName)
     {
@@ -149,6 +159,8 @@ public class ChallengeManager
         }
     }
 
+    //TEXT METHODS
+
     public String getTextForCategory(String categoryName)
     {
         try
@@ -172,6 +184,8 @@ public class ChallengeManager
             return null;
         }
     }
+
+    //RESTAURANT METHODS
 
     public List<Restaurant> getRestaurantsByLocation(double longitude, double latitude)
     {

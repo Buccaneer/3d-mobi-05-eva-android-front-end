@@ -12,6 +12,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -40,7 +41,8 @@ public class RecipeListFragment extends ChallengeFragment {
         challengeManager = ChallengeManager.getInstance(getContext());
         RecyclerView rv = (RecyclerView) layout.findViewById(R.id.challengeList);
         rv.setLayoutManager(new LinearLayoutManager(rv.getContext()));
-        fetchChallenges(rv);
+        FrameLayout spinnerContainer = (FrameLayout) layout.findViewById(R.id.list_spinner_container);
+        fetchChallenges(rv, spinnerContainer);
         return layout;
     }
 
@@ -187,8 +189,8 @@ public class RecipeListFragment extends ChallengeFragment {
     }
 
     //Method that fetches the Challenges then calls setupRecyclerView
-    private void fetchChallenges(RecyclerView rv) {
-        FetchChallengesTask fetch = new FetchChallengesTask(rv);
+    private void fetchChallenges(RecyclerView rv, FrameLayout spinnerContainer) {
+        FetchChallengesTask fetch = new FetchChallengesTask(rv, spinnerContainer);
         fetch.execute();
 
         /** TIJDELIJK **/
@@ -224,21 +226,24 @@ public class RecipeListFragment extends ChallengeFragment {
      */
     private class FetchChallengesTask extends AsyncTask<String, String, Boolean> {
         RecyclerView recyclerView;
+        FrameLayout spinnerContainer;
         List<Recipe> recipes;
 
-        public FetchChallengesTask(RecyclerView recyclerView) {
+        public FetchChallengesTask(RecyclerView recyclerView, FrameLayout spinnerContainer) {
             super();
             this.recyclerView = recyclerView;
+            this.spinnerContainer = spinnerContainer;
         }
 
         @Override
         protected void onPreExecute() {
-
+            spinnerContainer.setVisibility(View.VISIBLE);
         }
 
         @Override
         protected Boolean doInBackground(String... objects) {
             try {
+                Thread.sleep(5000);
                 recipes = challengeManager.getRecipesForCategory(Category.COOKING);
                 Log.e("RecipeListFragment", "Got recipes");
                 return true;
@@ -250,10 +255,14 @@ public class RecipeListFragment extends ChallengeFragment {
 
         @Override
         protected void onPostExecute(Boolean succeed) {
-            Log.e("RecipeListFragment", "Post Execute called");
-            if (succeed) {
-                Log.e("RecipeListFragment", "Post Execute called and succeeded");
-                setupRecyclerView(recyclerView, recipes);
+            if (isAdded()) //no callback if fragment is no longer added
+            {
+                Log.e("RecipeListFragment", "Post Execute called");
+                if (succeed) {
+                    Log.e("RecipeListFragment", "Post Execute called and succeeded");
+                    setupRecyclerView(recyclerView, recipes);
+                }
+                spinnerContainer.setVisibility(View.GONE);
             }
         }
     }

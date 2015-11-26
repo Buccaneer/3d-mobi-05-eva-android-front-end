@@ -78,7 +78,6 @@ public class AddChallengeRestMethod extends AbstractRestMethod {
         return new Request(RestMethodFactory.Method.PUT, requestURI, header, body.toString().getBytes());
     }
 
-
     private Request buildNewRestaurantRequest() throws JSONException {
         URI requestURI = URI.create("http://evavzwrest.azurewebsites.net/api/Challenge");
         JSONObject body = new JSONObject();
