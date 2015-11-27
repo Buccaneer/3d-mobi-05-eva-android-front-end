@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.activity.MainMenu;
+import be.evavzw.eva21daychallenge.services.ChallengeManager;
 import be.evavzw.eva21daychallenge.services.RestaurantManager;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -23,10 +24,11 @@ import butterknife.OnClick;
 /**
  * Created by Annemie on 19/11/2015.
  */
-public class SugarfreeChallenge extends ChallengeFragment
+public class TextDetailFragment extends ChallengeFragment
 {
 
     private RestaurantManager restaurantManager;
+    private ChallengeManager challengeManager;
 
     private Context c;
 
@@ -38,6 +40,7 @@ public class SugarfreeChallenge extends ChallengeFragment
         ImageView img = (ImageView) layout.findViewById(R.id.sugar_img);
         c = container.getContext().getApplicationContext();
         restaurantManager = RestaurantManager.getInstance(c);
+        challengeManager = ChallengeManager.getInstance(c);
         Glide.with(c).load(R.drawable.koe).into(img);
         ButterKnife.bind(this, layout);
         return layout;
@@ -74,9 +77,10 @@ public class SugarfreeChallenge extends ChallengeFragment
         {
             if (success)
             {
-                Intent intent = new Intent(getActivity(), MainMenu.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                //challengeManager.getCurrentChallenge();
+                //Intent intent = new Intent(getActivity(), MainMenu.class);
+                //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                //startActivity(intent);
                 getActivity().finish();
             }
         }

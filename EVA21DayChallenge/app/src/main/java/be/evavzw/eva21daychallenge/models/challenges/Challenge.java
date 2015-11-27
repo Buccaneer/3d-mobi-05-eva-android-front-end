@@ -15,7 +15,7 @@ import be.evavzw.eva21daychallenge.models.categories.Category;
 /**
  * Created by Pieter-Jan on 14/11/2015.
  */
-public class Challenge implements Serializable
+public class Challenge implements Serializable, Comparable<Challenge>
 {
     public static final String ID_FIELD = "challenge_id";
 
@@ -52,5 +52,31 @@ public class Challenge implements Serializable
     public void setDate(Date date)
     {
         this.date = date;
+    }
+
+    public int getServerId()
+    {
+        return serverId;
+    }
+
+    public String getType()
+    {
+        return type;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public int getEarnings()
+    {
+        return earnings;
+    }
+
+    @Override
+    public int compareTo(Challenge another)
+    {
+        return date.compareTo(another.date);
     }
 }

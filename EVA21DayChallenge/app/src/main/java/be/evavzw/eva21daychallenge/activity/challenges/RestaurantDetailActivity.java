@@ -182,11 +182,11 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean success) {
             if(success){
-                Intent intent = new Intent(RestaurantDetailActivity.this, MainMenu.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                //Intent intent = new Intent(RestaurantDetailActivity.this, MainMenu.class);
+                //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                //startActivity(intent);
 
-                RestaurantDetailActivity.this.finish();
+                finish();
             }
         }
     }

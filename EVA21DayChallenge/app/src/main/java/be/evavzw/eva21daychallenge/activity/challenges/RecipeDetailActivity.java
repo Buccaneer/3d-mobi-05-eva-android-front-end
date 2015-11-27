@@ -239,11 +239,11 @@ public class RecipeDetailActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean success) {
             if(success){
-                Intent intent = new Intent(RecipeDetailActivity.this, MainMenu.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                //Intent intent = new Intent(RecipeDetailActivity.this, MainMenu.class);
+                //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                //startActivity(intent);
 
-                RecipeDetailActivity.this.finish();
+                finish();
             }
         }
     }

@@ -55,6 +55,7 @@ public class GetCurrentChallengeRestMethod extends AbstractRestMethod<Challenge>
     protected Challenge parseResponseBody(String responseBody) throws Exception
     {
         JSONObject obj = new JSONObject(responseBody);
+        if (obj.getString("Message") != null) return null;
         return new Challenge(obj);
     }
 }
