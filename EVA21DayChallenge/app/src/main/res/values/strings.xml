@@ -80,7 +80,7 @@
     <string name="category_sugarfree">Suikervrij</string>
     <string name="category_sugarfree_descr">Bij deze challenge is het de bedoeling dat je een hele dag lang suikervrij leeft.</string>
     <string name="checkin">Checkin</string>
-    <string name="menu_settings">Settings</string>
+    <string name="menu_settings">Instellingen</string>
     <string name="title_activity_about">Over</string>
     <string name="about1">De EVA 21 dagen challenge werd ontwikkeld in naam van EVA vzw.</string>
     <string name="about2">Deze app wil mensen aanzetten om 21 dagen plantaardig te eten om hen te overtuigen om minder dierlijke producten te gebruiken en meer alternatieven te nemen.</string>
@@ -92,11 +92,8 @@
     <string name="CCC">Creative Cooking</string>
     <item type="id" name="recipeTag"/>
     <item type="id" name="ingredientTag"/>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="numberOfRecipes">Aantal recepten gevonden:</string>
     <string name="verder">Verder</string>
     <string name="title_activity_recipes_by_ingredient">RecipesByIngredient</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Instellingen</string>
 </resources>
