@@ -33,6 +33,7 @@ import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.customComponent.SearchableCheckListView;
 import be.evavzw.eva21daychallenge.models.Ingredient;
 import be.evavzw.eva21daychallenge.models.Recipe;
+import be.evavzw.eva21daychallenge.models.Restaurant;
 import be.evavzw.eva21daychallenge.rest.GetNumberOfRecipesByIngredients;
 import be.evavzw.eva21daychallenge.services.RecipeManager;
 import butterknife.Bind;
@@ -41,6 +42,7 @@ import butterknife.OnClick;
 
 public class CreativeCookingFragment extends ChallengeFragment implements SearchableCheckListView.OnIngredientCheckedListener {
 
+    public static String currentView = "INGREDIENTS";
     private RecipeManager recipeManager;
     @Bind(R.id.numberOfRecipesFound)
     TextView recipesFound;
@@ -53,6 +55,7 @@ public class CreativeCookingFragment extends ChallengeFragment implements Search
     @Bind(R.id.recipeListview)
     LinearLayout recipeListView;
     private CustomAdapter listAdapter;
+    private List<Recipe> recipes;
 
     @Nullable
     @Override
@@ -71,12 +74,16 @@ public class CreativeCookingFragment extends ChallengeFragment implements Search
         recipeList.setAdapter(listAdapter);
 
         recipeListView.setVisibility(View.GONE);
+        selectListView.setVisibility(View.VISIBLE);
+
+        updateViews();
+        onActivityCreated(savedInstanceState);
         return layout;
     }
 
     @Override
     public void onChecked(ArrayList<Ingredient> chosenIngredients) {
-        if(task !=  null)
+        if (task != null)
             task.cancel(false);
 
         task = new GetNumberOfIngredientsTask();
@@ -99,19 +106,42 @@ public class CreativeCookingFragment extends ChallengeFragment implements Search
     }
 
     @OnClick(R.id.btnContinue)
-    public void btnContinueClicked(View v){
-        if(numberFound != 0){
+    public void btnContinueClicked(View v) {
+        if (numberFound != 0) {
             selectListView.setVisibility(View.GONE);
             recipeListView.setVisibility(View.VISIBLE);
+            currentView = "RECIPES";
             new GetRecipeListTask().execute(searchableCheckListView.getCheckedIngredients());
         }
     }
 
     @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-        if(savedInstanceState != null && savedInstanceState.containsKey("numberFound")){
-            recipesFound.setText(savedInstanceState.getString("numberFound"));
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey("numberFound")){
+                numberFound = Integer.parseInt(savedInstanceState.getString("numberFound").trim());
+                recipesFound.setText(savedInstanceState.getString("numberFound"));
+            }
+            if (savedInstanceState.containsKey("currentView")){
+                currentView = savedInstanceState.getString("currentView");
+                updateViews();
+            }
+            if(savedInstanceState.containsKey("recipesFound") && savedInstanceState.getSerializable("recipesFound") != null){
+                listAdapter.clear();
+                recipes = (List<Recipe>) savedInstanceState.getSerializable("recipesFound");
+                listAdapter.addAll(recipes);
+            }
+        }
+    }
+
+    private void updateViews(){
+        if(currentView.equals("RECIPES")){
+            selectListView.setVisibility(View.GONE);
+            recipeListView.setVisibility(View.VISIBLE);
+        }else{
+            selectListView.setVisibility(View.VISIBLE);
+            recipeListView.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -119,9 +149,20 @@ public class CreativeCookingFragment extends ChallengeFragment implements Search
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString("numberFound", recipesFound.getText().toString());
+        outState.putString("currentView", currentView);
+        if(recipes != null)
+            outState.putSerializable("recipesFound", (ArrayList) recipes);
     }
 
-    private class CustomAdapter extends ArrayAdapter<Recipe>{
+    public void onBackPressed() {
+        if(currentView.equals("RECIPES")){
+            currentView = "INGREDIENTS";
+            selectListView.setVisibility(View.VISIBLE);
+            recipeListView.setVisibility(View.GONE);
+        }
+    }
+
+    private class CustomAdapter extends ArrayAdapter<Recipe> {
         private ArrayList<Recipe> recipeList;
         private final TypedValue mTypedValue = new TypedValue();
         private int mBackground;
@@ -130,11 +171,11 @@ public class CreativeCookingFragment extends ChallengeFragment implements Search
             super(context, textViewResourceId, recipeList);
             context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
             mBackground = mTypedValue.resourceId;
-            this.recipeList= new ArrayList<>();
+            this.recipeList = new ArrayList<>();
             this.recipeList.addAll(recipeList);
         }
 
-        private class ViewHolder{
+        private class ViewHolder {
             public View mView;
             public ImageView mImageView;
             public TextView mTextView;
@@ -157,11 +198,12 @@ public class CreativeCookingFragment extends ChallengeFragment implements Search
 
                 convertView.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
-                        LinearLayout linearLayout = (LinearLayout)v;
+                        LinearLayout linearLayout = (LinearLayout) v;
                         Recipe recipe = (Recipe) linearLayout.getTag(R.id.recipeTag);
                         Intent intent = new Intent(getContext(), RecipeDetailActivity.class);
                         intent.putExtra(RecipeDetailActivity.RECIPE, recipe);
                         intent.putExtra("CALLED_FROM", "CCC");
+                        intent.putExtra("INGREDIENTS", (ArrayList) searchableCheckListView.getCheckedIngredients());
                         getContext().startActivity(intent);
                     }
                 });
@@ -227,23 +269,24 @@ public class CreativeCookingFragment extends ChallengeFragment implements Search
         }
     }
 
-    private class GetRecipeListTask extends AsyncTask<List<Ingredient>, Void, Boolean>{
+    private class GetRecipeListTask extends AsyncTask<List<Ingredient>, Void, Boolean> {
 
         private List<Recipe> foundRecipes;
 
         @Override
         protected Boolean doInBackground(List<Ingredient>... params) {
-            try{
+            try {
                 foundRecipes = recipeManager.getRecipesByIngredients(params[0]);
                 return true;
-            }catch (Exception e){
+            } catch (Exception e) {
                 throw e;
             }
         }
 
         @Override
         protected void onPostExecute(Boolean success) {
-            if(success && foundRecipes != null){
+            if (success && foundRecipes != null) {
+                recipes = foundRecipes;
                 listAdapter.clear();
                 listAdapter.addAll(foundRecipes);
             }

@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.activity.MainMenu;
@@ -227,6 +228,12 @@ public class RecipeDetailActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        CreativeCookingFragment.currentView = "INGREDIENTS";
+    }
+
     @OnClick(R.id.addChallenge)
     public void addChallenge() {
         new AddChallengeTask().execute();
@@ -238,7 +245,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
         protected Boolean doInBackground(Void... params) {
             try {
                 if (calledFromCCC) {
-                    challengeManager.addChallenge("CreativeCooking", recipe.getRecipeId());
+                    List<Ingredient> ingredients = (List<Ingredient>) getIntent().getExtras().get("INGREDIENTS");
+                    challengeManager.addChallenge("CreativeCooking", recipe.getRecipeId(), ingredients);
                 } else {
                     challengeManager.addChallenge("Recipe", recipe.getRecipeId());
                 }
@@ -252,10 +260,10 @@ public class RecipeDetailActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean success) {
             if (success) {
+                CreativeCookingFragment.currentView = "INGREDIENTS";
                 Intent intent = new Intent(RecipeDetailActivity.this, MainMenu.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-
                 RecipeDetailActivity.this.finish();
             }
         }

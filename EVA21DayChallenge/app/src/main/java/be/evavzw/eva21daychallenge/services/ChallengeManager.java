@@ -213,4 +213,12 @@ public class ChallengeManager
         addChallengeRestMethod.setId(id);
         addChallengeRestMethod.execute();
     }
+
+    public void addChallenge(String type, int id, List<Ingredient> ingredients) {
+        AddChallengeRestMethod addChallengeRestMethod = new AddChallengeRestMethod(context);
+        addChallengeRestMethod.setType(type);
+        addChallengeRestMethod.setId(id);
+        addChallengeRestMethod.setIngredientsForCreativeCookingChallenge(ingredients);
+        addChallengeRestMethod.execute();
+    }
 }
