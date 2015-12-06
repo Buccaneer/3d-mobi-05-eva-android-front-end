@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import be.evavzw.eva21daychallenge.activity.About;
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.activity.Login;
+import be.evavzw.eva21daychallenge.activity.MainMenu;
 import be.evavzw.eva21daychallenge.activity.profile_setup.ProfileSetup;
 import be.evavzw.eva21daychallenge.services.UserManager;
 
@@ -88,17 +89,27 @@ public abstract class RESTfulActivity extends AppCompatActivity implements Navig
         if (id == R.id.nav_logout) {
             userManager.invalidateToken();
             Intent intent = new Intent(getApplicationContext(), Login.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             this.finish();
-        }else if(id == R.id.nav_settings){
+        }else if(id == R.id.nav_challenges){
+            Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+            finish();
+            startActivity(intent);
+        }
+        else if(id == R.id.nav_settings){
             Intent intent = new Intent(getApplicationContext(), ProfileSetup.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("CALLED_FROM", "navigation");
             finish();
             startActivity(intent);
         }
         else if (id == R.id.nav_about) {
             Intent intent = new Intent(getApplicationContext(), About.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
+            finish();
         } /*else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {

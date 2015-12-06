@@ -170,11 +170,6 @@ public class ChallengeActivity extends AppCompatActivity
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
     /**
      * An adapter.
      */

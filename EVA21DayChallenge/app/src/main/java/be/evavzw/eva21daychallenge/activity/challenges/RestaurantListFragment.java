@@ -138,7 +138,16 @@ public class RestaurantListFragment extends ChallengeFragment implements
 
         setRetainInstance(true);
 
-        //TODO: enable in release, this asks for location
+
+
+        //new FetchRestaurantsTask(rv).execute();
+        return layout;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
         mRequestingLocationUpdates = false;
 
         buildGoogleApiClient();
@@ -151,13 +160,6 @@ public class RestaurantListFragment extends ChallengeFragment implements
             checkLocationSettings();
         }
 
-        //new FetchRestaurantsTask(rv).execute();
-        return layout;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
         android.support.v4.app.FragmentManager fm = getChildFragmentManager();
         fragment = (SupportMapFragment) fm.findFragmentById(R.id.restaurantMapFragment);
         if(fragment == null){
@@ -165,6 +167,8 @@ public class RestaurantListFragment extends ChallengeFragment implements
             fragment = SupportMapFragment.newInstance(options);
             fm.beginTransaction().replace(R.id.restaurantMapFragment, fragment).commit();
         }
+
+
     }
 
     private void askLocationPermission()
@@ -356,11 +360,9 @@ public class RestaurantListFragment extends ChallengeFragment implements
         LocationServices.FusedLocationApi.removeLocationUpdates(
                 mGoogleApiClient,
                 this
-        ).setResultCallback(new ResultCallback<Status>()
-        {
+        ).setResultCallback(new ResultCallback<Status>() {
             @Override
-            public void onResult(Status status)
-            {
+            public void onResult(Status status) {
                 mRequestingLocationUpdates = false;
             }
         });
@@ -377,6 +379,17 @@ public class RestaurantListFragment extends ChallengeFragment implements
     public void onResume()
     {
         super.onResume();
+        buildMap();
+        //TODO: enable in release
+        // Within {@code onPause()}, we pause location updates, but leave the
+        // connection to GoogleApiClient intact.  Here, we resume receiving
+        // location updates if the user has requested them.
+        if (mGoogleApiClient.isConnected() && mRequestingLocationUpdates) {
+            startLocationUpdates();
+        }
+    }
+
+    private void buildMap(){
         if(googleMap == null){
             googleMap = fragment.getMap();
             googleMap.getUiSettings().setMapToolbarEnabled(false);
@@ -386,14 +399,6 @@ public class RestaurantListFragment extends ChallengeFragment implements
                     return;
                 }
             });
-        }
-
-        //TODO: enable in release
-        // Within {@code onPause()}, we pause location updates, but leave the
-        // connection to GoogleApiClient intact.  Here, we resume receiving
-        // location updates if the user has requested them.
-        if (mGoogleApiClient.isConnected() && mRequestingLocationUpdates) {
-            startLocationUpdates();
         }
     }
 
@@ -436,6 +441,21 @@ public class RestaurantListFragment extends ChallengeFragment implements
         {
             mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable("RESTAURANTS", (ArrayList<Restaurant>) restaurants);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        if(savedInstanceState != null && savedInstanceState.containsKey("RESTAURANTS")){
+            restaurants = (List<Restaurant>) savedInstanceState.getSerializable("RESTAURANTS");
+            setupRecyclerView(rv);
+        }
+        super.onViewStateRestored(savedInstanceState);
     }
 
     /**
@@ -717,7 +737,7 @@ public class RestaurantListFragment extends ChallengeFragment implements
         protected void onPostExecute(Boolean succeed)
         {
             //setRefresh(false);
-            if (succeed)
+            if (!isDetached() && isAdded() && succeed)
             {
                 Log.e("RecipeListFragment", "Post Execute called");
                 restaurants = list;

@@ -9,7 +9,7 @@
     <string name="password">Password</string>
     <string name="confirmPassword">Confirm password</string>
     <string name="register">Register</string>
-    <string name="title_activity_main_menu">MainMenu</string>
+    <string name="title_activity_main_menu">Challenges</string>
     <string name="socialMediaLogin">Or log in with social media</string>
     <string name="logOut">Log out</string>
     <string name="com_facebook_loginview_log_in_button_long">Log in with Facebook</string>
@@ -94,5 +94,8 @@
     <string name="menu_settings">Settings</string>
     <string name="numberOfRecipes">Number of recipes found:</string>
     <string name="title_activity_recipes_by_ingredient">RecipesByIngredient</string>
-    <string name="verder">Continue</string>
+    <string name="verder">To recipes</string>
+    <string name="backToIngredients">Back to ingredients</string>
+    <string name="challenges">Challenges</string>
+    <string name="typeIngredient">Name ingredient</string>
 </resources>

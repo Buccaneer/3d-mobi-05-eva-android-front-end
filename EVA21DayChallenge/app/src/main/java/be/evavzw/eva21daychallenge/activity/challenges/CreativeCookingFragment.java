@@ -115,6 +115,13 @@ public class CreativeCookingFragment extends ChallengeFragment implements Search
         }
     }
 
+    @OnClick(R.id.btnBack)
+    public void btnBackClicked(View v){
+        selectListView.setVisibility(View.VISIBLE);
+        recipeListView.setVisibility(View.GONE);
+        currentView="INGREDIENTS";
+    }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -148,7 +155,8 @@ public class CreativeCookingFragment extends ChallengeFragment implements Search
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("numberFound", recipesFound.getText().toString());
+        if(recipesFound.getText() != null)
+            outState.putString("numberFound", recipesFound.getText().toString());
         outState.putString("currentView", currentView);
         if(recipes != null)
             outState.putSerializable("recipesFound", (ArrayList) recipes);

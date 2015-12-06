@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import be.evavzw.eva21daychallenge.models.Ingredient;
 import be.evavzw.eva21daychallenge.models.User;
@@ -69,20 +70,40 @@ public class UserInfoRestMethod extends AbstractRestMethod<User> {
                 user.setBudget(json.getString("Budget"));
             if (json.has("TypeOfVegan"))
                 user.setTypeOfVegan(json.getString("TypeOfVegan"));
-            if (json.has("Allergies")){
+            if (json.has("Allergies"))
                 user.setAllergies(filAllergiesList(json));
-            }
             if (json.has("PeopleInFamily"))
                 user.setPeopleInFamily(json.getInt("PeopleInFamily"));
             if (json.has("DoneSetup"))
                 user.setDoneSetup(json.getBoolean("DoneSetup"));
-
-            user.setHasRegistered(json.getBoolean("HasRegistered"));
+            if(json.has("HasRegistered"))
+                user.setHasRegistered(json.getBoolean("HasRegistered"));
+            if(json.has("ChallengesDone"))
+                user.setChallengesDone(json.getInt("ChallengesDone"));
+            if(json.has("Points"))
+                user.setPoints(json.getInt("Points"));
+            if(json.has("Badges"))
+                user.setBadges(fillBadgesList(json));
+            if(json.has("HasRequestedChallengeToday"))
+                user.setHasRequestedChallengeToday(json.getBoolean("HasRequestedChallengeToday"));
 
             return user;
 
         } catch (Exception ex) {
             throw new IllegalArgumentException("Could not retrieve the user data");
+        }
+    }
+
+    private List<String> fillBadgesList(JSONObject json) throws Exception{
+        try{
+            JSONArray array = json.getJSONArray("Badges");
+            ArrayList<String> badges = new ArrayList<>();
+            for(int i = 0; i < array.length(); i++){
+                badges.add(array.getString(i));
+            }
+            return badges;
+        }catch (Exception e){
+            throw e;
         }
     }
 

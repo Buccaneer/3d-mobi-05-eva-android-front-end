@@ -18,9 +18,12 @@
                 android:id="@+id/numberOfRecipes"
                 android:text="@string/numberOfRecipes"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"/>
 
             <TextView
+                android:layout_marginTop="5dp"
                 android:id="@+id/numberOfRecipesFound"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -34,9 +37,11 @@
         <Button
             android:text="@string/verder"
             android:id="@+id/btnContinue"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColor="@color/eva_donkergroen"
+            android:background="@color/eva_lichtgroen"/>
 
         <be.evavzw.eva21daychallenge.customComponent.SearchableCheckListView
             android:id="@+id/checkListView"
@@ -49,6 +54,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <Button
+            android:text="@string/backToIngredients"
+            android:id="@+id/btnBack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColor="@color/eva_donkergroen"
+            android:background="@color/eva_lichtgroen"/>
+
     </LinearLayout>
 
 </LinearLayout>

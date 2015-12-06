@@ -59,10 +59,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDME7pDNnleZ3SrylhYIOleTNEek-dE5TQ" />
-            android:label="@string/title_activity_profile_setup"
-            android:theme="@style/AppTheme.NoActionbar" />
-        <activity android:name=".activity.challenges.SugarfreeChallenge" >
-        </activity>
     </application>
 
 </manifest>

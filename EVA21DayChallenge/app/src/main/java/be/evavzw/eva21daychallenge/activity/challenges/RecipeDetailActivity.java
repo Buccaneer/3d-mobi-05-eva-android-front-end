@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -88,9 +89,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
         ((NestedScrollView) findViewById(R.id.nestedScrollView)).addView(inflater.inflate(R.layout.recipe_challenge, null));
         ButterKnife.bind(this);
 
-        if(getIntent().getExtras() != null && getIntent().getExtras().containsKey("CALLED_FROM")){
-            if(getIntent().getExtras().getString("CALLED_FROM").equals("CCC")){
-                calledFromCCC=true;
+        if (getIntent().getExtras() != null && getIntent().getExtras().containsKey("CALLED_FROM")) {
+            if (getIntent().getExtras().getString("CALLED_FROM").equals("CCC")) {
+                calledFromCCC = true;
             }
         }
 
@@ -112,6 +113,20 @@ public class RecipeDetailActivity extends AppCompatActivity {
         subtitle.setText(recipe.getName());
 
         loadBackdrop();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            if(calledFromCCC){
+                CreativeCookingFragment.currentView="INGREDIENTS";
+                this.finish();
+                return false;
+            }
+            return super.onOptionsItemSelected(item);
+        } else
+            return super.onOptionsItemSelected(item);
     }
 
     /**

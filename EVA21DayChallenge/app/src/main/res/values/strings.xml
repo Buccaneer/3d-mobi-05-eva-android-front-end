@@ -19,7 +19,7 @@
     <string name="password">Wachtwoord</string>
     <string name="confirmPassword">Bevestig paswoord</string>
     <string name="register">Registeren</string>
-    <string name="title_activity_main_menu">Hoofdmenu</string>
+    <string name="title_activity_main_menu">Challenges</string>
     <string name="socialMediaLogin">Of meld aan met social media</string>
     <string name="logOut">Uitloggen</string>
     <string name="com_facebook_loginview_log_in_button_long">Log in met Facebook</string>
@@ -93,7 +93,10 @@
     <item type="id" name="recipeTag"/>
     <item type="id" name="ingredientTag"/>
     <string name="numberOfRecipes">Aantal recepten gevonden:</string>
-    <string name="verder">Verder</string>
+    <string name="verder">Naar recepten</string>
     <string name="title_activity_recipes_by_ingredient">RecipesByIngredient</string>
     <string name="action_settings">Instellingen</string>
+    <string name="backToIngredients">Terug naar ingrediënten</string>
+    <string name="challenges">Challenges</string>
+    <string name="typeIngredient">Naam ingrediënt</string>
 </resources>
