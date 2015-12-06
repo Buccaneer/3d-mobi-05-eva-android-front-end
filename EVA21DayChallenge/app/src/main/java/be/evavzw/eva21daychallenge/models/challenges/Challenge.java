@@ -18,6 +18,15 @@ public class Challenge implements Serializable
     private int id;
 
     @DatabaseField
+    private boolean isDone;
+
+    @DatabaseField
+    private int earnings;
+
+    @DatabaseField
+    private String name;
+
+    @DatabaseField
     private Date date;
 
     Challenge() //for ormlite
@@ -32,5 +41,29 @@ public class Challenge implements Serializable
     public void setDate(Date date)
     {
         this.date = date;
+    }
+
+    public int getEarnings() {
+        return earnings;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public boolean isDone() {
+        return isDone;
+    }
+
+    public void setEarnings(int earnings) {
+        this.earnings = earnings;
+    }
+
+    public void setIsDone(boolean isDone) {
+        this.isDone = isDone;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

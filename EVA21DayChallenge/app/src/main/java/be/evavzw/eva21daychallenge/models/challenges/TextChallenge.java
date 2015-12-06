@@ -3,6 +3,8 @@ package be.evavzw.eva21daychallenge.models.challenges;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import org.json.JSONObject;
+
 import be.evavzw.eva21daychallenge.models.categories.*;
 
 /**
@@ -25,6 +27,10 @@ public class TextChallenge extends Challenge
     {
         this.category = category;
         this.text = text;
+    }
+
+    public TextChallenge(JSONObject object){
+
     }
 
     public String getText()

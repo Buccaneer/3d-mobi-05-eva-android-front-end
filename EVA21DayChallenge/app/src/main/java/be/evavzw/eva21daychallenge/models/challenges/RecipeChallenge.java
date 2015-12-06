@@ -3,6 +3,8 @@ package be.evavzw.eva21daychallenge.models.challenges;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 import be.evavzw.eva21daychallenge.models.categories.Category;
@@ -29,6 +31,10 @@ public class RecipeChallenge extends Challenge implements Serializable
     {
         this.category = category;
         this.recipe = recipe;
+    }
+
+    public RecipeChallenge(JSONObject object){
+
     }
 
     public Recipe getRecipe()
