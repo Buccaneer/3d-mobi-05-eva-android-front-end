@@ -65,6 +65,8 @@ public class SearchableCheckListView extends LinearLayout implements TextWatcher
         ingredientAdapter = new CustomAdapter(getContext(), R.layout.ingredient_info, new ArrayList<Ingredient>());
 
         ingredientText = new EditText(getContext());
+        ingredientText.setSingleLine();
+        ingredientText.setHint(getResources().getString(R.string.typeIngredient));
         addView(ingredientText);
 
         ingredientText.addTextChangedListener(this);
@@ -179,7 +181,7 @@ public class SearchableCheckListView extends LinearLayout implements TextWatcher
                             onIngredientCheckedListener.onChecked(new ArrayList<>(checkedIngredients.values()));
                         } else {
                             checkedIngredients.remove(ingredient.getIngredientId());
-                            if(ingredientText.length() == 0){
+                            if (ingredientText.length() == 0) {
                                 ingredientAdapter.clear();
                                 ingredientAdapter.addAll(checkedIngredients.values());
                                 ingredientAdapter.notifyDataSetChanged();
@@ -236,8 +238,11 @@ public class SearchableCheckListView extends LinearLayout implements TextWatcher
         @Override
         protected Boolean doInBackground(String... params) {
             try {
-                ingredients = ingredientManager.getIngredientsByName(params[0]);
-                return true;
+                if (params != null && params[0] != null && !params[0].equals("") && !params[0].trim().equals("")) {
+                    ingredients = ingredientManager.getIngredientsByName(params[0].trim());
+                    return true;
+                }
+                return false;
             } catch (Exception e) {
                 throw e;
                 //return false;

@@ -2,6 +2,7 @@ package be.evavzw.eva21daychallenge.models;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class User {
     private String userId;
@@ -16,6 +17,10 @@ public class User {
     private ArrayList<Ingredient> allergies;
     private int peopleInFamily;
     private boolean doneSetup;
+    private int challengesDone;
+    private int points;
+    private List<String> badges;
+    private boolean hasRequestedChallengeToday;
 
     public String getEmail() {
         return email;
@@ -27,6 +32,14 @@ public class User {
 
     public String getUserId() {
         return userId;
+    }
+
+    public List<String> getBadges() {
+        return badges;
+    }
+
+    public boolean getHasRequestedChallengeToday(){
+        return hasRequestedChallengeToday;
     }
 
     public void setEmail(String email) {
@@ -69,8 +82,16 @@ public class User {
         return lastName;
     }
 
+    public int getChallengesDone() {
+        return challengesDone;
+    }
+
     public String getTypeOfVegan() {
         return typeOfVegan;
+    }
+
+    public int getPoints() {
+        return points;
     }
 
     public ArrayList<Ingredient> getAllergies() {
@@ -111,5 +132,21 @@ public class User {
 
     public void setTypeOfVegan(String typeOfVegan) {
         this.typeOfVegan = typeOfVegan;
+    }
+
+    public void setChallengesDone(int challengesDone) {
+        this.challengesDone = challengesDone;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public void setBadges(List<String> badges) {
+        this.badges = badges;
+    }
+
+    public void setHasRequestedChallengeToday(boolean hasRequestedChallengeToday) {
+        this.hasRequestedChallengeToday = hasRequestedChallengeToday;
     }
 }

@@ -23,7 +23,6 @@ import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.activity.MainMenu;
 import be.evavzw.eva21daychallenge.models.Restaurant;
 import be.evavzw.eva21daychallenge.services.ChallengeManager;
-import be.evavzw.eva21daychallenge.services.RestaurantManager;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -36,7 +35,6 @@ public class RestaurantDetailActivity extends AppCompatActivity {
     public static final String RESTAURANT = "restaurant";
 
     private ChallengeManager challengeManager;
-    private RestaurantManager restaurantManager;
 
     Restaurant restaurant;
 
@@ -61,7 +59,6 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
 
-        restaurantManager = RestaurantManager.getInstance(getApplicationContext());
         challengeManager = ChallengeManager.getInstance(getApplicationContext());
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -171,7 +168,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Void... params) {
             try{
-                restaurantManager.addChallenge("Restaurant", restaurant.getRestaurantId());
+                challengeManager.addChallenge("Restaurant", restaurant.getRestaurantId());
                 return true;
             }catch(Exception e){
                 //TODO: Exception handling

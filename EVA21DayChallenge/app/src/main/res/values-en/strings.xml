@@ -9,7 +9,7 @@
     <string name="password">Password</string>
     <string name="confirmPassword">Confirm password</string>
     <string name="register">Register</string>
-    <string name="title_activity_main_menu">MainMenu</string>
+    <string name="title_activity_main_menu">Challenges</string>
     <string name="socialMediaLogin">Or log in with social media</string>
     <string name="logOut">Log out</string>
     <string name="com_facebook_loginview_log_in_button_long">Log in with Facebook</string>
@@ -85,7 +85,17 @@
     <string name="about1">The EVA 21 days challenge was developed for EVA vzw.</string>
     <string name="about2">This app wants to inspire people to eat more vegan for 21 days and convince them to use less animal-related products and more alternatives.</string>
     <string name="about3">If you want to read more about the goal of EVA, you can always go to their website.</string>
-    <string name="category_sugarfree_descr3">We challenge you to avoid all (or as much as possible) products with sugar in it. This means no softdrinks, candy and so on.</string>
+    <string name="category_sugarfree_descr3">We challenge you to avoid all (or as much as possible) products with sugar in it. This means no soft drinks, candy and so on.</string>
     <string name="category_sugarfree_descr2">There are different kinds of sugar and a lot of them are refined or produced with animal remains. For example, cow bones are used to give sugar his bright white color.</string>
     <string name="neemChallenge">Select Challenge</string>
+    <string name="CCC">Creative Cooking</string>
+    <string name="action_settings">Settings</string>
+    <string name="checkin">Check-in</string>
+    <string name="menu_settings">Settings</string>
+    <string name="numberOfRecipes">Number of recipes found:</string>
+    <string name="title_activity_recipes_by_ingredient">RecipesByIngredient</string>
+    <string name="verder">To recipes</string>
+    <string name="backToIngredients">Back to ingredients</string>
+    <string name="challenges">Challenges</string>
+    <string name="typeIngredient">Name ingredient</string>
 </resources>

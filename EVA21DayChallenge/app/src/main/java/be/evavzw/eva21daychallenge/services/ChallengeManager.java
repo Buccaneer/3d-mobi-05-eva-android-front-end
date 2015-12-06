@@ -13,6 +13,7 @@ import be.evavzw.eva21daychallenge.database.DatabaseHelper;
 import be.evavzw.eva21daychallenge.models.*;
 import be.evavzw.eva21daychallenge.models.categories.*;
 import be.evavzw.eva21daychallenge.models.challenges.*;
+import be.evavzw.eva21daychallenge.rest.AddChallengeRestMethod;
 import be.evavzw.eva21daychallenge.rest.GetAllRecipesRestMethod;
 import be.evavzw.eva21daychallenge.rest.GetAllRestaurantsRestMethod;
 import be.evavzw.eva21daychallenge.rest.GetRestaurantDetailsRestMethod;
@@ -204,5 +205,20 @@ public class ChallengeManager
         {
             return null;
         }*/
+    }
+
+    public void addChallenge(String type, int id) {
+        AddChallengeRestMethod addChallengeRestMethod = new AddChallengeRestMethod(context);
+        addChallengeRestMethod.setType(type);
+        addChallengeRestMethod.setId(id);
+        addChallengeRestMethod.execute();
+    }
+
+    public void addChallenge(String type, int id, List<Ingredient> ingredients) {
+        AddChallengeRestMethod addChallengeRestMethod = new AddChallengeRestMethod(context);
+        addChallengeRestMethod.setType(type);
+        addChallengeRestMethod.setId(id);
+        addChallengeRestMethod.setIngredientsForCreativeCookingChallenge(ingredients);
+        addChallengeRestMethod.execute();
     }
 }

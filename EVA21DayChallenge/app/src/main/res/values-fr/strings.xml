@@ -9,7 +9,7 @@
     <string name="password">Mot de passe</string>
     <string name="confirmPassword">Confirme le mot de passe</string>
     <string name="register">Inscription</string>
-    <string name="title_activity_main_menu">MainMenuFR</string>
+    <string name="title_activity_main_menu">Challenges</string>
     <string name="socialMediaLogin">Connexion avec les médias sociaux</string>
     <string name="logOut">Déconnecter</string>
     <string name="com_facebook_loginview_log_in_button_long">Connexion Facebook</string>
@@ -86,4 +86,16 @@
     <string name="about3"> Si vous souhaitez obtenir plus d’informations sur le travail d’EVA, alors vous pouvez toujours consulter leur site internet.</string>
     <string name="naarWebsite">Allez au site-web</string>
     <string name="neemChallenge">Sélectionner </string>
+    <string name="CCC">Creative Cooking</string>
+    <string name="action_settings">Paramètres</string>
+    <string name="checkin">Enregistrement</string>
+    <string name="category_sugarfree_descr2">Il existe différents types de sucre et beaucoup d\'entre eux sont affinés ou fabriqués avec des restes d\'animaux. Par exemple, os de vache sont utilisés pour donner sa couleur sucre blanc brillant.</string>
+    <string name="category_sugarfree_descr3">Nous vous défions d\'éviter toutes (ou autant que possible) produits avec du sucre. Cela signifie pas de boissons gazeuses, les bonbons et ainsi de suite.</string>
+    <string name="menu_settings">Paramètres</string>
+    <string name="numberOfRecipes">Nombre de recettes trouvées:</string>
+    <string name="title_activity_recipes_by_ingredient">RecipesByIngredient</string>
+    <string name="verder">Continuez à recettes</string>
+    <string name="backToIngredients"> Retournez aux ingrédients</string>
+    <string name="challenges">Challenges</string>
+    <string name="typeIngredient">Nom ingrédient</string>
 </resources>

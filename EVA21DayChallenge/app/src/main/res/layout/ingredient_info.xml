@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
->
+    android:orientation="vertical">
 
     <CheckBox
         android:id="@+id/checkBox1"
@@ -11,6 +10,5 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:layout_margin="6dip"/>
+        android:focusableInTouchMode="false"/>
 </RelativeLayout>

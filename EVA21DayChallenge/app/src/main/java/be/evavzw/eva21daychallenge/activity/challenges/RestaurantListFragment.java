@@ -42,6 +42,7 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -120,11 +121,11 @@ public class RestaurantListFragment extends ChallengeFragment implements
     private List<Restaurant> restaurants = new ArrayList<>();
     private RecyclerView rv;
     private GoogleMap googleMap;
+    private SupportMapFragment fragment;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
         LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.restaurant_challenge, container, false);
         //setupTitle(layout);
         challengeManager = ChallengeManager.getInstance(getContext());
@@ -137,7 +138,16 @@ public class RestaurantListFragment extends ChallengeFragment implements
 
         setRetainInstance(true);
 
-        //TODO: enable in release, this asks for location
+
+
+        //new FetchRestaurantsTask(rv).execute();
+        return layout;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
         mRequestingLocationUpdates = false;
 
         buildGoogleApiClient();
@@ -151,18 +161,14 @@ public class RestaurantListFragment extends ChallengeFragment implements
         }
 
         android.support.v4.app.FragmentManager fm = getChildFragmentManager();
-        SupportMapFragment fragment = (SupportMapFragment) fm.findFragmentById(R.id.restaurantChallengeMap);
-        googleMap = fragment.getMap();
-        googleMap.getUiSettings().setMapToolbarEnabled(false);
-        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                return;
-            }
-        });
+        fragment = (SupportMapFragment) fm.findFragmentById(R.id.restaurantMapFragment);
+        if(fragment == null){
+            GoogleMapOptions options = new GoogleMapOptions().liteMode(true);
+            fragment = SupportMapFragment.newInstance(options);
+            fm.beginTransaction().replace(R.id.restaurantMapFragment, fragment).commit();
+        }
 
-        //new FetchRestaurantsTask(rv).execute();
-        return layout;
+
     }
 
     private void askLocationPermission()
@@ -354,11 +360,9 @@ public class RestaurantListFragment extends ChallengeFragment implements
         LocationServices.FusedLocationApi.removeLocationUpdates(
                 mGoogleApiClient,
                 this
-        ).setResultCallback(new ResultCallback<Status>()
-        {
+        ).setResultCallback(new ResultCallback<Status>() {
             @Override
-            public void onResult(Status status)
-            {
+            public void onResult(Status status) {
                 mRequestingLocationUpdates = false;
             }
         });
@@ -375,12 +379,26 @@ public class RestaurantListFragment extends ChallengeFragment implements
     public void onResume()
     {
         super.onResume();
+        buildMap();
         //TODO: enable in release
         // Within {@code onPause()}, we pause location updates, but leave the
         // connection to GoogleApiClient intact.  Here, we resume receiving
         // location updates if the user has requested them.
         if (mGoogleApiClient.isConnected() && mRequestingLocationUpdates) {
             startLocationUpdates();
+        }
+    }
+
+    private void buildMap(){
+        if(googleMap == null){
+            googleMap = fragment.getMap();
+            googleMap.getUiSettings().setMapToolbarEnabled(false);
+            googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                @Override
+                public void onMapClick(LatLng latLng) {
+                    return;
+                }
+            });
         }
     }
 
@@ -423,6 +441,21 @@ public class RestaurantListFragment extends ChallengeFragment implements
         {
             mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable("RESTAURANTS", (ArrayList<Restaurant>) restaurants);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        if(savedInstanceState != null && savedInstanceState.containsKey("RESTAURANTS")){
+            restaurants = (List<Restaurant>) savedInstanceState.getSerializable("RESTAURANTS");
+            setupRecyclerView(rv);
+        }
+        super.onViewStateRestored(savedInstanceState);
     }
 
     /**
@@ -704,7 +737,7 @@ public class RestaurantListFragment extends ChallengeFragment implements
         protected void onPostExecute(Boolean succeed)
         {
             //setRefresh(false);
-            if (succeed)
+            if (!isDetached() && isAdded() && succeed)
             {
                 Log.e("RecipeListFragment", "Post Execute called");
                 restaurants = list;

@@ -68,7 +68,7 @@ ImageView view;
 
 
 
-        //hier moet getal komen per dag
+        //TODO: hier moet getal komen per dag
         String tekst = "boom" + 12;
         int id = getResources().getIdentifier(tekst,"drawable", getPackageName());
 

@@ -4,6 +4,9 @@
     <!--android:icon="@android:drawable/ic_menu_slideshow"-->
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_challenges"
+            android:title="@string/challenges" />
+        <item
             android:id="@+id/nav_recipes"
             android:title="@string/recipes" />
         <item

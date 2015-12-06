@@ -2,6 +2,7 @@ package be.evavzw.eva21daychallenge.rest;
 
 import android.content.Context;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import be.evavzw.eva21daychallenge.models.Ingredient;
 import be.evavzw.eva21daychallenge.rest.framework.AbstractRestMethod;
 import be.evavzw.eva21daychallenge.rest.framework.Request;
 import be.evavzw.eva21daychallenge.rest.framework.RestMethodFactory;
@@ -20,9 +22,11 @@ import be.evavzw.eva21daychallenge.rest.framework.RestMethodFactory;
  */
 public class AddChallengeRestMethod extends AbstractRestMethod {
 
+    private final URI REQURESTURI = URI.create("http://evavzwrest.azurewebsites.net/api/Challenge");
     private Context context;
     private String type;
     private int id;
+    private List<Ingredient> ingredientsForCreativeCookingChallenge;
 
     public AddChallengeRestMethod(Context context) {
         this.context = context;
@@ -34,6 +38,10 @@ public class AddChallengeRestMethod extends AbstractRestMethod {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setIngredientsForCreativeCookingChallenge(List<Ingredient> ingredientsForCreativeCookingChallenge) {
+        this.ingredientsForCreativeCookingChallenge = ingredientsForCreativeCookingChallenge;
     }
 
     @Override
@@ -51,6 +59,8 @@ public class AddChallengeRestMethod extends AbstractRestMethod {
                     return buildNewRecipeRequest();
                 case "Suikervrij":
                     return buildNewSuikervrijRequest();
+                case "CreativeCooking":
+                    return buildNewCreativeCookingRequest();
                 default:
                     return null;
             }
@@ -59,34 +69,45 @@ public class AddChallengeRestMethod extends AbstractRestMethod {
         }
     }
 
-    private Request buildNewSuikervrijRequest()throws JSONException {
-        URI requestURI = URI.create("http://evavzwrest.azurewebsites.net/api/Challenge");
+    private Request buildNewSuikervrijRequest() throws JSONException {
         JSONObject body = new JSONObject();
         body.put("Type", type);
         Map<String, List<String>> header = new HashMap<>();
         header.put("Content-Type", Arrays.asList("application/json"));
-        return new Request(RestMethodFactory.Method.PUT, requestURI, header, body.toString().getBytes());
+        return new Request(RestMethodFactory.Method.PUT, REQURESTURI, header, body.toString().getBytes());
     }
 
     private Request buildNewRecipeRequest() throws JSONException {
-        URI requestURI = URI.create("http://evavzwrest.azurewebsites.net/api/Challenge");
         JSONObject body = new JSONObject();
         body.put("Type", type);
         body.put("RecipeId", id);
         Map<String, List<String>> header = new HashMap<>();
         header.put("Content-Type", Arrays.asList("application/json"));
-        return new Request(RestMethodFactory.Method.PUT, requestURI, header, body.toString().getBytes());
+        return new Request(RestMethodFactory.Method.PUT, REQURESTURI, header, body.toString().getBytes());
     }
 
 
     private Request buildNewRestaurantRequest() throws JSONException {
-        URI requestURI = URI.create("http://evavzwrest.azurewebsites.net/api/Challenge");
         JSONObject body = new JSONObject();
         body.put("Type", type);
         body.put("RestaurantId", id);
         Map<String, List<String>> header = new HashMap<>();
         header.put("Content-Type", Arrays.asList("application/json"));
-        return new Request(RestMethodFactory.Method.PUT, requestURI, header, body.toString().getBytes());
+        return new Request(RestMethodFactory.Method.PUT, REQURESTURI, header, body.toString().getBytes());
+    }
+
+    private Request buildNewCreativeCookingRequest() throws JSONException {
+        JSONObject body = new JSONObject();
+        JSONArray array = new JSONArray();
+        body.put("Type", type);
+        for(Ingredient ingredient : ingredientsForCreativeCookingChallenge){
+            array.put(ingredient.getIngredientId());
+        }
+        body.put("IngredientsId", array);
+        body.put("RecipeId", id);
+        Map<String, List<String>> header = new HashMap<>();
+        header.put("Content-Type", Arrays.asList("application/json"));
+        return new Request(RestMethodFactory.Method.PUT, REQURESTURI, header, body.toString().getBytes());
     }
 
     @Override

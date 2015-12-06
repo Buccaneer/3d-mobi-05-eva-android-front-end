@@ -1,5 +1,6 @@
 package be.evavzw.eva21daychallenge.activity.challenges;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.evavzw.eva21daychallenge.R;
+import be.evavzw.eva21daychallenge.models.Ingredient;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -52,6 +55,7 @@ public class ChallengeActivity extends AppCompatActivity
 
     private SharedPreferences mPrefs;
     private RestaurantListFragment restaurantListFragment;
+    private CreativeCookingFragment creativeCookingFragment;
 
     /**
      * Saves the current Tab position on pause
@@ -97,7 +101,7 @@ public class ChallengeActivity extends AppCompatActivity
         final ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
         if (viewPager != null)
         {
             setupViewPager(viewPager);
@@ -135,11 +139,16 @@ public class ChallengeActivity extends AppCompatActivity
     private void setupViewPager(ViewPager viewPager)
     {
         this.restaurantListFragment = new RestaurantListFragment();
+        this.creativeCookingFragment = new CreativeCookingFragment();
+
         Adapter adapter = new Adapter(getSupportFragmentManager());
         adapter.addFragment(new RecipeListFragment(), getString(R.string.category_cooking));
         adapter.addFragment(restaurantListFragment, getString(R.string.category_restaurant));
         adapter.addFragment(new SugarfreeChallenge(), getString(R.string.category_sugarfree));
+        adapter.addFragment(creativeCookingFragment, getString(R.string.CCC));
+
         viewPager.setAdapter(adapter);
+
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener()
         {
             @Override
@@ -164,14 +173,16 @@ public class ChallengeActivity extends AppCompatActivity
     /**
      * An adapter.
      */
-    static class Adapter extends FragmentPagerAdapter
+    private class Adapter extends FragmentPagerAdapter
     {
         private final List<Fragment> mFragments = new ArrayList<>();
         private final List<String> mFragmentTitles = new ArrayList<>();
+        private FragmentManager fm;
 
         public Adapter(FragmentManager fm)
         {
             super(fm);
+            this.fm = fm;
         }
 
         public void addFragment(Fragment fragment, String title)

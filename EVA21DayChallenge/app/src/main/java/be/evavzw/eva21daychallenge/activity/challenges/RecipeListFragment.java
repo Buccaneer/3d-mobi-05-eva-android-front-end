@@ -24,20 +24,23 @@ import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.models.categories.Category;
 import be.evavzw.eva21daychallenge.models.Recipe;
 import be.evavzw.eva21daychallenge.services.ChallengeManager;
+import be.evavzw.eva21daychallenge.services.RecipeManager;
 
 /**
  * This Fragment is used to display a list of recipes
  */
 public class RecipeListFragment extends ChallengeFragment {
 
-    ChallengeManager challengeManager;
-    List<Recipe> recipes;
+    private ChallengeManager challengeManager;
+    private RecipeManager recipeManager;
+    private List<Recipe> recipes;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.list, container, false);
         challengeManager = ChallengeManager.getInstance(getContext());
+        recipeManager = RecipeManager.getInstance(getContext());
         RecyclerView rv = (RecyclerView) layout.findViewById(R.id.challengeList);
         rv.setLayoutManager(new LinearLayoutManager(rv.getContext()));
         fetchChallenges(rv);

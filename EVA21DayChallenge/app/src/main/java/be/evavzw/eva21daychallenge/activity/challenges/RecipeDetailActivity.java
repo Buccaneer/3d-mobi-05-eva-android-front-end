@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +21,7 @@ import com.bumptech.glide.Glide;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.activity.MainMenu;
@@ -74,7 +76,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
     TextView description;
 
     private RecipeManager recipeManager;
-
+    private ChallengeManager challengeManager;
+    boolean calledFromCCC = false;
     Recipe recipe;
 
     @Override
@@ -86,6 +89,13 @@ public class RecipeDetailActivity extends AppCompatActivity {
         ((NestedScrollView) findViewById(R.id.nestedScrollView)).addView(inflater.inflate(R.layout.recipe_challenge, null));
         ButterKnife.bind(this);
 
+        if (getIntent().getExtras() != null && getIntent().getExtras().containsKey("CALLED_FROM")) {
+            if (getIntent().getExtras().getString("CALLED_FROM").equals("CCC")) {
+                calledFromCCC = true;
+            }
+        }
+
+        challengeManager = ChallengeManager.getInstance(getApplicationContext());
         recipeManager = RecipeManager.getInstance(getApplicationContext());
         Intent intent = getIntent();
         recipe = (Recipe) intent.getSerializableExtra(RECIPE);
@@ -103,6 +113,20 @@ public class RecipeDetailActivity extends AppCompatActivity {
         subtitle.setText(recipe.getName());
 
         loadBackdrop();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            if(calledFromCCC){
+                CreativeCookingFragment.currentView="INGREDIENTS";
+                this.finish();
+                return false;
+            }
+            return super.onOptionsItemSelected(item);
+        } else
+            return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -219,6 +243,12 @@ public class RecipeDetailActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        CreativeCookingFragment.currentView = "INGREDIENTS";
+    }
+
     @OnClick(R.id.addChallenge)
     public void addChallenge() {
         new AddChallengeTask().execute();
@@ -229,20 +259,26 @@ public class RecipeDetailActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Void... params) {
             try {
-                recipeManager.addChallenge("Recipe", recipe.getRecipeId());
+                if (calledFromCCC) {
+                    List<Ingredient> ingredients = (List<Ingredient>) getIntent().getExtras().get("INGREDIENTS");
+                    challengeManager.addChallenge("CreativeCooking", recipe.getRecipeId(), ingredients);
+                } else {
+                    challengeManager.addChallenge("Recipe", recipe.getRecipeId());
+                }
                 return true;
             } catch (Exception e) {
                 //TODO: Exception handling
                 throw e;
             }
         }
+
         @Override
         protected void onPostExecute(Boolean success) {
-            if(success){
+            if (success) {
+                CreativeCookingFragment.currentView = "INGREDIENTS";
                 Intent intent = new Intent(RecipeDetailActivity.this, MainMenu.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-
                 RecipeDetailActivity.this.finish();
             }
         }
