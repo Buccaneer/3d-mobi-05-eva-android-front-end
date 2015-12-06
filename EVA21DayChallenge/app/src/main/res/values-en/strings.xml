@@ -98,6 +98,8 @@
     <string name="backToIngredients">Back to ingredients</string>
     <string name="challenges">Challenges</string>
     <string name="typeIngredient">Name ingredient</string>
-    <string name="loggingIn">Logging you in...</string>
+    <string name="loggingIn">Logging you in…</string>
     <string name="viewDag">day done</string>
+    <string name="no_recipes_found">No recipes were found.</string>
+    <string name="no_restaurants_found">No restaurants were found.</string>
 </resources>

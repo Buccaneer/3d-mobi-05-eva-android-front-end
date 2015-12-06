@@ -13,7 +13,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 
 import java.util.ArrayList;
@@ -144,8 +143,9 @@ public class ChallengeActivity extends AppCompatActivity
         Adapter adapter = new Adapter(getSupportFragmentManager());
         adapter.addFragment(new RecipeListFragment(), getString(R.string.category_cooking));
         adapter.addFragment(restaurantListFragment, getString(R.string.category_restaurant));
-        adapter.addFragment(new SugarfreeChallenge(), getString(R.string.category_sugarfree));
+        adapter.addFragment(new TextDetailFragment(), getString(R.string.category_sugarfree));
         adapter.addFragment(creativeCookingFragment, getString(R.string.CCC));
+
 
         viewPager.setAdapter(adapter);
 

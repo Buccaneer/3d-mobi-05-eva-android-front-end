@@ -86,7 +86,6 @@ public class AddChallengeRestMethod extends AbstractRestMethod {
         return new Request(RestMethodFactory.Method.PUT, REQURESTURI, header, body.toString().getBytes());
     }
 
-
     private Request buildNewRestaurantRequest() throws JSONException {
         JSONObject body = new JSONObject();
         body.put("Type", type);

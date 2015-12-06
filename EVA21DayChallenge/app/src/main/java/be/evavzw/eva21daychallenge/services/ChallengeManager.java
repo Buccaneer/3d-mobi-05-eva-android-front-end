@@ -4,9 +4,11 @@ import android.content.Context;
 import android.util.Log;
 
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.DeleteBuilder;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import be.evavzw.eva21daychallenge.database.DatabaseHelper;
@@ -16,6 +18,7 @@ import be.evavzw.eva21daychallenge.models.challenges.*;
 import be.evavzw.eva21daychallenge.rest.AddChallengeRestMethod;
 import be.evavzw.eva21daychallenge.rest.GetAllRecipesRestMethod;
 import be.evavzw.eva21daychallenge.rest.GetAllRestaurantsRestMethod;
+import be.evavzw.eva21daychallenge.rest.GetCurrentChallengeRestMethod;
 import be.evavzw.eva21daychallenge.rest.GetRestaurantDetailsRestMethod;
 
 /**
@@ -28,6 +31,8 @@ public class ChallengeManager
     private Context context;
     Dao<RecipeCategory, String> categoryDao;
     Dao<RecipeChallenge, Integer> recipeChallengeDao;
+    Dao<RestaurantChallenge, Integer> restaurantChallengeDao;
+    Dao<TextChallenge, Integer> textChallengeDao;
     Dao<Recipe, Integer> recipeDao;
     Dao<Ingredient, Integer> ingredientDao;
     Dao<RecipeProperty, Integer> recipePropertyDao;
@@ -51,9 +56,12 @@ public class ChallengeManager
     {
         this.context = context;
         helper = new DatabaseHelper(context);
-        try {
+        try
+        {
             categoryDao = helper.getRecipeCategories();
             recipeChallengeDao = helper.getRecipeChallenges();
+            restaurantChallengeDao = helper.getRestaurantChallenges();
+            textChallengeDao = helper.getTextChallenges();
             recipeDao = helper.getRecipes();
             ingredientDao = helper.getIngredients();
             recipePropertyDao = helper.getRecipeProperties();
@@ -75,6 +83,93 @@ public class ChallengeManager
             e.printStackTrace();
         }
     }
+
+    //CHALLENGE METHODS
+    public void addChallenge(String type, int id) {
+        AddChallengeRestMethod addChallengeRestMethod = new AddChallengeRestMethod(context);
+        addChallengeRestMethod.setType(type);
+        addChallengeRestMethod.setId(id);
+        addChallengeRestMethod.execute();
+    }
+
+    public Challenge getCurrentChallenge()
+    {
+        try
+        {
+            // NOT EFFICIENT! Model is sort of horrible anyway due to lack of inheritance strategies in ORMLite
+            List<Challenge> challenges = new ArrayList<>();
+            challenges.addAll(recipeChallengeDao.queryForAll());
+            challenges.addAll(restaurantChallengeDao.queryForAll());
+            challenges.addAll(textChallengeDao.queryForAll());
+            Collections.sort(challenges, Collections.reverseOrder());
+            if (challenges.size() > 0) return challenges.get(0);
+            Challenge c = new GetCurrentChallengeRestMethod(context).execute().getResource();
+            setCurrentChallenge(c);
+            return c;
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return new GetCurrentChallengeRestMethod(context).execute().getResource();
+    }
+
+    private void setCurrentChallenge(Challenge challenge)
+    {
+        try
+        {
+            if (challenge instanceof RecipeChallenge)
+            {
+                RecipeChallenge newChallenge = (RecipeChallenge) challenge;
+                recipeChallengeDao.create(newChallenge);
+            }
+            else if (challenge instanceof RestaurantChallenge)
+            {
+                RestaurantChallenge newChallenge = (RestaurantChallenge) challenge;
+                restaurantChallengeDao.create(newChallenge);
+            }
+            else if (challenge instanceof TextChallenge)
+            {
+                TextChallenge newChallenge = (TextChallenge) challenge;
+                textChallengeDao.create(newChallenge);
+            }
+            else
+            {
+                throw new IllegalArgumentException("Could not recognize challenge type.");
+            }
+            deleteRedundantChallenges();
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void deleteRedundantChallenges()
+    {
+        try
+        {
+            DeleteBuilder<RecipeChallenge, Integer> deleteRecipeChallenges = recipeChallengeDao.deleteBuilder();
+            deleteRecipeChallenges.where().isNull("date");
+            deleteRecipeChallenges.delete();
+
+            DeleteBuilder<RestaurantChallenge, Integer> deleteRestaurantChallenges = restaurantChallengeDao.deleteBuilder();
+            deleteRestaurantChallenges.where().isNull("date");
+            deleteRestaurantChallenges.delete();
+
+            DeleteBuilder<TextChallenge, Integer> deleteTextChallenges = textChallengeDao.deleteBuilder();
+            deleteTextChallenges.where().isNull("date");
+            deleteTextChallenges.delete();
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+
+    //RECIPE METHODS
 
     public List<Recipe> getRecipesForCategory(String categoryName)
     {
@@ -150,6 +245,8 @@ public class ChallengeManager
         }
     }
 
+    //TEXT METHODS
+
     public String getTextForCategory(String categoryName)
     {
         try
@@ -173,6 +270,8 @@ public class ChallengeManager
             return null;
         }
     }
+
+    //RESTAURANT METHODS
 
     public List<Restaurant> getRestaurantsByLocation(double longitude, double latitude)
     {
@@ -205,13 +304,6 @@ public class ChallengeManager
         {
             return null;
         }*/
-    }
-
-    public void addChallenge(String type, int id) {
-        AddChallengeRestMethod addChallengeRestMethod = new AddChallengeRestMethod(context);
-        addChallengeRestMethod.setType(type);
-        addChallengeRestMethod.setId(id);
-        addChallengeRestMethod.execute();
     }
 
     public void addChallenge(String type, int id, List<Ingredient> ingredients) {

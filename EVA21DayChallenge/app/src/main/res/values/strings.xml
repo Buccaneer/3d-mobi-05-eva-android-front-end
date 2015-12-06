@@ -99,6 +99,8 @@
     <string name="backToIngredients">Terug naar ingrediënten</string>
     <string name="challenges">Challenges</string>
     <string name="typeIngredient">Naam ingrediënt</string>
-    <string name="loggingIn">Aan het inloggen...</string>
+    <string name="loggingIn">Aan het inloggen…</string>
     <string name="viewDag">dag gedaan</string>
+    <string name="no_recipes_found">Er werden geen recepten gevonden.</string>
+    <string name="no_restaurants_found">Er werden geen restaurants gevonden.</string>
 </resources>
