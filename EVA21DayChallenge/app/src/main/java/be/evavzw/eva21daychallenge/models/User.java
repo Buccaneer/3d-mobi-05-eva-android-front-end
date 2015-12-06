@@ -17,7 +17,7 @@ public class User {
     private ArrayList<Ingredient> allergies;
     private int peopleInFamily;
     private boolean doneSetup;
-    private int challengesDone;
+    private int challengesDone = 0;
     private int points;
     private List<String> badges;
     private boolean hasRequestedChallengeToday;

@@ -38,7 +38,7 @@
     <string name="notAuthorized">Uw gebruiker heeft is niet geauthoriseerd, probeer opnieuw in te loggen</string>
     <string name="passwordsNotEqual">Wachtwoorden komen niet overeen</string>
     <string name="close">Sluiten</string>
-    <string name="viewDagen"> dagen</string>
+    <string name="viewDagen">dagen gedaan</string>
     <string name="slogan">Maakt het plantaardig</string>
     <string name="category_cooking">Koken</string>
     <string name="category_restaurant">Uit eten</string>
@@ -100,4 +100,5 @@
     <string name="challenges">Challenges</string>
     <string name="typeIngredient">Naam ingrediënt</string>
     <string name="loggingIn">Aan het inloggen...</string>
+    <string name="viewDag">dag gedaan</string>
 </resources>

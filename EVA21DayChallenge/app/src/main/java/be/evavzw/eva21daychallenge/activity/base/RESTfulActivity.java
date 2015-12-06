@@ -100,7 +100,6 @@ public abstract class RESTfulActivity extends AppCompatActivity implements Navig
         }
         else if(id == R.id.nav_settings){
             Intent intent = new Intent(getApplicationContext(), ProfileSetup.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("CALLED_FROM", "navigation");
             finish();
             startActivity(intent);

@@ -3,6 +3,7 @@ package be.evavzw.eva21daychallenge.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -33,6 +34,9 @@ public class About extends RESTfulActivity {
 
         Glide.with(getApplicationContext())
                 .load(R.drawable.varkentje).into(img);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(getResources().getString(R.string.title_activity_about));
 
     }
 

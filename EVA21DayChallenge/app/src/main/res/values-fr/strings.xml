@@ -40,7 +40,7 @@
     <string name="passwordsNotEqual">Les mots de passe ne sont pas égaux</string>
     <string name="close">Fermer</string>
     <string name="slogan">Explorer la nature</string>
-    <string name="viewDagen">jours</string>
+    <string name="viewDagen">jours complétez</string>
     <string name="address">Adresse</string>
     <string name="category_restaurant">Manger à l\'extérieur</string>
     <string name="description">Description</string>
@@ -99,4 +99,5 @@
     <string name="challenges">Challenges</string>
     <string name="typeIngredient">Nom ingrédient</string>
     <string name="loggingIn">En train de vous connecter...</string>
+    <string name="viewDag">jour complétez</string>
 </resources>
