@@ -1,6 +1,7 @@
 package be.evavzw.eva21daychallenge.activity;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -35,6 +36,7 @@ import java.util.Map;
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.activity.base.RESTfulActivity;
 import be.evavzw.eva21daychallenge.activity.profile_setup.ProfileSetup;
+import be.evavzw.eva21daychallenge.customComponent.SplashDialog;
 import be.evavzw.eva21daychallenge.services.UserManager;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -59,6 +61,7 @@ public class Login extends RESTfulActivity {
     LinearLayout login;
     @Bind(R.id.blaadjes_achtergrond)
     ImageView img;
+    private Dialog splashDialog;
 
     //For custom progress circle
     private AnimationDrawable frameAnimation;
@@ -102,7 +105,6 @@ public class Login extends RESTfulActivity {
         loadBackground();
 
 
-
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,8 +123,8 @@ public class Login extends RESTfulActivity {
 
     //Needed for portrait/landscape background
     private void loadBackground() {
-        int orientation=this.getResources().getConfiguration().orientation;
-        if(orientation== Configuration.ORIENTATION_PORTRAIT){
+        int orientation = this.getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
             Glide.with(getApplicationContext())
                     .load(R.drawable.achtergrond_login)
                     .asBitmap()
@@ -133,8 +135,7 @@ public class Login extends RESTfulActivity {
                             login.setBackgroundDrawable(background);
                         }
                     });
-        }
-        else{
+        } else {
             Glide.with(getApplicationContext()).load(R.drawable.landscapeachtergrond).asBitmap().into(new SimpleTarget<Bitmap>(this.getResources().getDisplayMetrics().widthPixels, this.getResources().getDisplayMetrics().heightPixels) {
                 @Override
                 public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
@@ -202,6 +203,7 @@ public class Login extends RESTfulActivity {
         // Add listeners for when the page is started
         webView.setWebViewClient(new WebViewClient() {
             private boolean doneYet = false;
+
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
@@ -217,7 +219,7 @@ public class Login extends RESTfulActivity {
                         String token = getToken(url);
                         if (token != null) {
                             // Once the user entered his credentials and is redirected back to our site, close the alert and start the Register service
-                          //  alertDialog.dismiss();
+                            //  alertDialog.dismiss();
                             RegisterExternalLoginTask rel = new RegisterExternalLoginTask();
                             rel.execute(token, cookies);
                         }
@@ -230,7 +232,7 @@ public class Login extends RESTfulActivity {
                         if (token != null) {
                             // Once the user entered his credentials and is redirected back to our site, close the alert and start the Register service
                             alertDialog.dismiss();
-                            userManager.login(new Token(token,""));
+                            userManager.login(new Token(token, ""));
                             Intent intent = new Intent(getApplicationContext(), MainMenu.class);
                             Login.this.finish();
                             startActivity(intent);
@@ -334,8 +336,10 @@ public class Login extends RESTfulActivity {
             }
         }
     }
-    public static String usedLastTime ="";
-    private class NavigateToExternalLoginProviderTask extends AsyncTask<String,Void,String> {
+
+    public static String usedLastTime = "";
+
+    private class NavigateToExternalLoginProviderTask extends AsyncTask<String, Void, String> {
 
         @Override
         protected void onPreExecute() {
@@ -409,6 +413,15 @@ public class Login extends RESTfulActivity {
     private class CheckIfCurrentTokenIsValidTask extends AsyncTask<Void, Void, Boolean> {
 
         @Override
+        protected void onPreExecute() {
+            if (userManager.isTokenPresent()) {
+                splashDialog = new SplashDialog(Login.this, R.style.AppTheme_NoOverlay);
+                splashDialog.setCancelable(false);
+                splashDialog.show();
+            }
+        }
+
+        @Override
         protected Boolean doInBackground(Void... params) {
             try {
                 return userManager.isTokenPresent() && userManager.isTokenValid();
@@ -430,6 +443,9 @@ public class Login extends RESTfulActivity {
 //                Intent intent = new Intent(getApplicationContext(), MainMenu.class);
 //                Login.this.finish();
 //                startActivity(intent);
+            } else {
+                if (splashDialog != null)
+                    splashDialog.dismiss();
             }
         }
     }
@@ -440,17 +456,19 @@ public class Login extends RESTfulActivity {
             try {
                 return userManager.getUser().hasDoneSetup();
             } catch (Exception e) {
+                if (splashDialog != null)
+                    splashDialog.dismiss();
                 throw e;
             }
         }
 
         @Override
         protected void onPostExecute(Boolean doneSetup) {
-            if(doneSetup){
+            if (doneSetup) {
                 Intent intent = new Intent(getApplicationContext(), MainMenu.class);
                 Login.this.finish();
                 startActivity(intent);
-            }else{
+            } else {
                 Intent intent = new Intent(getApplicationContext(), ProfileSetup.class);
                 Login.this.finish();
                 startActivity(intent);

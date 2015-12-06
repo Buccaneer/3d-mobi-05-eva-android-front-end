@@ -98,4 +98,5 @@
     <string name="backToIngredients">Back to ingredients</string>
     <string name="challenges">Challenges</string>
     <string name="typeIngredient">Name ingredient</string>
+    <string name="loggingIn">Logging you in...</string>
 </resources>
