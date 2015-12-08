@@ -16,6 +16,7 @@ import be.evavzw.eva21daychallenge.models.challenges.RestaurantChallenge;
 import be.evavzw.eva21daychallenge.models.challenges.TextChallenge;
 import be.evavzw.eva21daychallenge.rest.framework.AbstractRestMethod;
 import be.evavzw.eva21daychallenge.rest.framework.Request;
+import be.evavzw.eva21daychallenge.rest.framework.RestMethodFactory;
 
 /**
  * Created by Annemie on 6/12/2015.
@@ -35,7 +36,11 @@ public class GetChallengesFromUser extends AbstractRestMethod<List<Challenge>> {
 
     @Override
     protected Request buildRequest() {
-        return null;
+        try{
+            return new Request(RestMethodFactory.Method.GET, USERCHALLENGEURI, new byte[]{});
+        }catch (Exception e){
+            throw new IllegalArgumentException("Can't build request", e);
+        }
     }
 
     @Override

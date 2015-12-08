@@ -60,6 +60,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDME7pDNnleZ3SrylhYIOleTNEek-dE5TQ" />
 
+        <activity android:name=".activity.challenges.ChallengeHistoryActivity" >
+        </activity>
     </application>
 
 </manifest>

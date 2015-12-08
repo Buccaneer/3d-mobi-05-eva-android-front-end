@@ -31,25 +31,10 @@ public class RestaurantChallenge extends Challenge {
         this.restaurant = restaurant;
     }
 
-    public RestaurantChallenge(JSONObject object) throws JSONException {
-        if (object.has("ChallengeId")) {
-
-        }
-        if (object.has("Date")) {
-            //setDate(object.);
-        }
-        if (object.has("Done")) {
-            setIsDone(object.getBoolean("Done"));
-        }
-        if (object.has("Name")) {
-            setName(object.getString("Name"));
-        }
-        if (object.has("Earnings")) {
-            setEarnings(object.getInt("Earnings"));
-        }
-        if (object.has("Type")) {
-            this.category = new RestaurantCategory(object.getString("Type"));
-        }
+    public RestaurantChallenge(JSONObject object) throws Exception {
+        super(object);
+        if(object.has("Restaurant"))
+            restaurant = new Restaurant(object.getJSONObject("Restaurant"));
     }
 
     public Restaurant getRestaurant() {

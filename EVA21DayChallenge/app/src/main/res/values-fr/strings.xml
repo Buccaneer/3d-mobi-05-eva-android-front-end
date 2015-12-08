@@ -100,4 +100,7 @@
     <string name="typeIngredient">Nom ingrédient</string>
     <string name="loggingIn">En train de vous connecter...</string>
     <string name="viewDag">jour complétez</string>
+    <string name="challengeHistory">Histoire challenge</string>
+    <string name="no_recipes_found">Aucune recette n\'a été trouvé. </string>
+    <string name="no_restaurants_found">Aucun restaurant n\'a été trouvé.</string>
 </resources>

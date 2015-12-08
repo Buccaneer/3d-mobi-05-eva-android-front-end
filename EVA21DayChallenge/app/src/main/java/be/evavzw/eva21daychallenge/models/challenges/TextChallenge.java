@@ -29,8 +29,8 @@ public class TextChallenge extends Challenge
         this.text = text;
     }
 
-    public TextChallenge(JSONObject object){
-
+    public TextChallenge(JSONObject object) throws Exception{
+        super(object);
     }
 
     public String getText()

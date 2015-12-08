@@ -103,4 +103,5 @@
     <string name="viewDag">dag gedaan</string>
     <string name="no_recipes_found">Er werden geen recepten gevonden.</string>
     <string name="no_restaurants_found">Er werden geen restaurants gevonden.</string>
+    <string name="challengeHistory">Challenge geschiedenis</string>
 </resources>

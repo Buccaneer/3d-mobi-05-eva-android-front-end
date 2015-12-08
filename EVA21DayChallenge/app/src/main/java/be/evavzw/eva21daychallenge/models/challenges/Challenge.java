@@ -35,10 +35,10 @@ public class Challenge implements Serializable, Comparable<Challenge>
     private Date date;
 
     @DatabaseField
-    private String type, name;
+    private String type;
 
     @DatabaseField
-    private int earnings, serverId;
+    private int serverId;
 
     Challenge() //for ormlite
     {
@@ -51,6 +51,7 @@ public class Challenge implements Serializable, Comparable<Challenge>
         type = jsonObject.getString("Type");
         earnings = jsonObject.getInt("Earnings");
         name = jsonObject.getString("Name");
+        isDone = jsonObject.getBoolean("Done");
     }
 
     public Date getDate()
