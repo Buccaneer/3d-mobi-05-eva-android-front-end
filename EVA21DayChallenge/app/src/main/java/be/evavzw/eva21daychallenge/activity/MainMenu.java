@@ -19,11 +19,19 @@ import be.evavzw.eva21daychallenge.activity.base.RESTfulActivity;
 import be.evavzw.eva21daychallenge.activity.challenges.ChallengeActivity;
 import be.evavzw.eva21daychallenge.models.User;
 import be.evavzw.eva21daychallenge.services.UserManager;
+import be.evavzw.eva21daychallenge.activity.challenges.RecipeDetailActivity;
+import be.evavzw.eva21daychallenge.activity.challenges.RestaurantDetailActivity;
+import be.evavzw.eva21daychallenge.models.challenges.Challenge;
+import be.evavzw.eva21daychallenge.models.challenges.RecipeChallenge;
+import be.evavzw.eva21daychallenge.models.challenges.RestaurantChallenge;
+import be.evavzw.eva21daychallenge.models.challenges.TextChallenge;
+import be.evavzw.eva21daychallenge.services.ChallengeManager;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainMenu extends RESTfulActivity {
+public class MainMenu extends RESTfulActivity
+{
 
     private int mProgressStatus = 0;
     private final double CUTOFF = 100.0 / 21.0;
@@ -32,26 +40,33 @@ public class MainMenu extends RESTfulActivity {
         ProgressBar progressBar;*/
     @Bind(R.id.textViewProgress)
     TextView textViewProgress;
+
     @Bind(R.id.textViewDagen)
     TextView textViewDagen;
-    @Bind(R.id.testView)
-    ImageView view;
+
     private UserManager userManager;
 
+    @Bind(R.id.drawer_layout)
+    DrawerLayout main;
+
+    @Bind(R.id.testView)
+    ImageView view;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.setContentResId(R.layout.activity_main_menu);
         super.onCreate(savedInstanceState);
 
         userManager = UserManager.getInstance(getApplicationContext());
 
         ButterKnife.bind(this);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        //      Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
 
-       /* FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,13 +79,36 @@ public class MainMenu extends RESTfulActivity {
         //NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         //navigationView.setNavigationItemSelectedListener(this);
 
-      /*  progressBar.setProgress(100);
+        /*progressBar.setProgress(100);
         setProgress();*/
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(getResources().getString(R.string.title_activity_main_menu));
 
         new FetchUserTask().execute();
+
+        //hier moet getal komen per dag
+        String tekst = "boom" + 12;
+        int id = getResources().getIdentifier(tekst, "drawable", getPackageName());
+
+
+        Glide.with(getApplicationContext())
+                .load(id)
+                .centerCrop()
+                .into(new SimpleTarget<GlideDrawable>()
+                      {
+                          @Override
+                          public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation)
+                          {
+
+                              view.setImageDrawable(resource);
+                              resource.start();
+                              resource.setLoopCount(1);
+
+
+                          }
+                      }
+                );
     }
 
     @OnClick(R.id.button_challenge)
