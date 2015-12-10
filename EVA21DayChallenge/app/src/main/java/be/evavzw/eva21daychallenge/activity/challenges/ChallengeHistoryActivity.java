@@ -4,17 +4,19 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
+import org.w3c.dom.Text;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,41 +57,43 @@ public class ChallengeHistoryActivity extends AppCompatActivity {
         return super.onSupportNavigateUp();
     }
 
-    private void setupRecyclerView(List<Challenge> challenges){
+    private void setupRecyclerView(List<Challenge> challenges) {
         historyView.setAdapter(new CardViewRecyclerViewAdapter(getApplicationContext(), challenges));
     }
 
-    private static class CardViewRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+    private static class CardViewRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-        private final TypedValue mTypedValue = new TypedValue();
-        private int mBackground;
         private List<Challenge> mChallenges;
+        private Context context;
 
-        private static class ViewHolder extends RecyclerView.ViewHolder{
+        private static class ViewHolder extends RecyclerView.ViewHolder {
             public Challenge mChallenge;
             public final View mView;
-            public final TextView mTextView;
+            public final TextView mChallengeCardName;
+            public final ImageView mChallengeCardImage;
+            public final TextView mChallengeCardDetails;
 
-            public ViewHolder(View view){
+            public ViewHolder(View view) {
                 super(view);
                 mView = view;
-                mTextView = (TextView) view.findViewById(R.id.challengeCardText);
+                mChallengeCardName = (TextView) view.findViewById(R.id.challengeCardName);
+                mChallengeCardImage = (ImageView) view.findViewById(R.id.challengeCardImage);
+                mChallengeCardDetails = (TextView) view.findViewById(R.id.challengeCardDetails);
             }
 
             @Override
             public String toString() {
-                return super.toString() + " '" + mTextView.getText();
+                return super.toString() + " '" + mChallengeCardName.getText();
             }
         }
 
-        public Challenge getValueAt(int position){
+        public Challenge getValueAt(int position) {
             return mChallenges.get(position);
         }
 
-        public CardViewRecyclerViewAdapter(Context context, List<Challenge> challenges){
-            context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
-            mBackground = mTypedValue.resourceId;
+        public CardViewRecyclerViewAdapter(Context context, List<Challenge> challenges) {
             this.mChallenges = challenges;
+            this.context = context;
 
             mChallenges.add(0, mChallenges.get(0));
         }
@@ -102,16 +106,51 @@ public class ChallengeHistoryActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holderr, int position) {
-            final ViewHolder holder= (ViewHolder) holderr;
+            final ViewHolder holder = (ViewHolder) holderr;
             holder.mChallenge = mChallenges.get(position);
-            holder.mTextView.setText(mChallenges.get(position).getName());
+            holder.mChallengeCardName.setText(splitstring(holder.mChallenge.getType()) + " " + context.getString(R.string.challenge));
 
-            holder.mView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            StringBuilder builder = new StringBuilder();
+            SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+            String date = format.format(holder.mChallenge.getDate());
+            builder.append(context.getString(R.string.date)).append(" ").append(date);
+            builder.append("\n").append(context.getString(R.string.challengeDone)).append(" ").append(holder.mChallenge.isDone() ? context.getString(R.string.yes) : context.getString(R.string.no));
+            if (holder.mChallenge.isDone()) {
+                builder.append("\n").append(context.getString(R.string.earnedPoints)).append(" ").append(holder.mChallenge.getEarnings());
+            } else {
+                builder.append("\n").append(context.getString(R.string.earnedPoints)).append(" ").append(0);
+            }
 
-                }
-            });
+            holder.mChallengeCardDetails.setText(builder.toString());
+
+            switch (holder.mChallenge.getType()) {
+                case "Restaurant":
+                    Glide.with(context)
+                            .load(R.drawable.restaurant)
+                            .centerCrop()
+                            .into(holder.mChallengeCardImage);
+                    break;
+                case "Recipe":
+                case "CreativeCooking":
+                    Glide.with(context)
+                            .load(R.drawable.recipe)
+                            .centerCrop()
+                            .into(holder.mChallengeCardImage);
+                    break;
+                case "Suikervrij":
+                    Glide.with(context)
+                            .load(R.drawable.nosugar)
+                            .fitCenter()
+                            .into(holder.mChallengeCardImage);
+                    break;
+            }
+
+//            holder.mView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    //TODO Eventueel onclick voor details?
+//                }
+//            });
         }
 
         @Override
@@ -120,24 +159,36 @@ public class ChallengeHistoryActivity extends AppCompatActivity {
         }
     }
 
-    private class FetchChallengeHistoryTask extends AsyncTask<Void, Void, Boolean>{
+    private static String splitstring(String s) {
+        return s.replaceAll(
+                String.format("%s|%s|%s",
+                        "(?<=[A-Z])(?=[A-Z][a-z])",
+                        "(?<=[^A-Z])(?=[A-Z])",
+                        "(?<=[A-Za-z])(?=[^A-Za-z])"
+                ),
+                " "
+        );
+    }
+
+
+    private class FetchChallengeHistoryTask extends AsyncTask<Void, Void, Boolean> {
 
         private List<Challenge> challenges = new ArrayList<>();
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            try{
+            try {
                 challenges = challengeManager.getChallengesFromUser();
                 return true;
-            }catch (Exception e){
+            } catch (Exception e) {
                 throw e;
             }
         }
 
         @Override
         protected void onPostExecute(Boolean success) {
-            if(success){
-                if(!challenges.isEmpty())
+            if (success) {
+                if (!challenges.isEmpty())
                     setupRecyclerView(challenges);
             }
         }

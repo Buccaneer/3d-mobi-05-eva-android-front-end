@@ -104,4 +104,11 @@
     <string name="no_recipes_found">Er werden geen recepten gevonden.</string>
     <string name="no_restaurants_found">Er werden geen restaurants gevonden.</string>
     <string name="challengeHistory">Challenge geschiedenis</string>
+    <string name="typeOfChallenge">Type challenge:</string>
+    <string name="date">Datum:</string>
+    <string name="yes">ja</string>
+    <string name="no">nee</string>
+    <string name="challengeDone">Challenge afgewerkt:</string>
+    <string name="earnedPoints">Verdiende punten:</string>
+    <string name="challenge">challenge</string>
 </resources>

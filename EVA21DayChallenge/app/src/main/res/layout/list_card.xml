@@ -3,19 +3,42 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_gravity="center"
     android:layout_width="fill_parent"
-    android:layout_height="200dp"
-    card_view:cardCornerRadius="4dp"
-    android:clickable="true"
-    android:paddingBottom="4dp"
-    android:paddingTop="4dp"
+    android:layout_height="wrap_content"
+    card_view:cardCornerRadius="2dp"
+    android:layout_margin="4dp"
     android:foreground="?android:attr/selectableItemBackground">
+    <!--android:clickable="true" om ripple effect te krijgen op click-->
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-        <TextView
-            android:id="@+id/challengeCardText"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/challengeCardImage"
             android:layout_width="fill_parent"
+            android:layout_height="100dp"/>
+        <TextView
+            android:id="@+id/challengeCardName"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/challengeCardImage"
+            android:layout_alignRight="@+id/challengeCardImage"
+            android:layout_alignBottom="@id/challengeCardImage"
+            android:textSize="22sp"
+            android:textColor="@android:color/white"
+            android:background="#41545454"/>
+        <View
+            android:id="@+id/challengeCardDivider"
+            android:layout_below="@id/challengeCardName"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="#d2032d18"/>
+        <TextView
+            android:id="@+id/challengeCardDetails"
+            android:padding="5dp"
+            android:layout_below="@id/challengeCardDivider"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>
 </android.support.v7.widget.CardView>
