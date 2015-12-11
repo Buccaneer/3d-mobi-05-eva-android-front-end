@@ -1,6 +1,7 @@
 package be.evavzw.eva21daychallenge.activity.challenges;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import com.bumptech.glide.Glide;
 
 import org.w3c.dom.Text;
 
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -133,7 +135,7 @@ public class ChallengeHistoryActivity extends AppCompatActivity {
                 case "Recipe":
                 case "CreativeCooking":
                     Glide.with(context)
-                            .load(R.drawable.recipe)
+                            .load(Uri.parse(holder.mChallenge.getThumbnail()))
                             .centerCrop()
                             .into(holder.mChallengeCardImage);
                     break;

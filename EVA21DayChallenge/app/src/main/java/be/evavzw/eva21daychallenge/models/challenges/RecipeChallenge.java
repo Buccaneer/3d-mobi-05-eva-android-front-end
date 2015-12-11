@@ -7,8 +7,8 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 
-import be.evavzw.eva21daychallenge.models.categories.Category;
 import be.evavzw.eva21daychallenge.models.Recipe;
+import be.evavzw.eva21daychallenge.models.categories.Category;
 import be.evavzw.eva21daychallenge.models.categories.RecipeCategory;
 
 /**

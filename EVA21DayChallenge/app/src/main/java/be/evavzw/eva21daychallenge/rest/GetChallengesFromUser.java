@@ -71,7 +71,6 @@ public class GetChallengesFromUser extends AbstractRestMethod<List<Challenge>> {
 
             if (challenge != null)
                 challenges.add(challenge);
-
         }
 
         return challenges;
