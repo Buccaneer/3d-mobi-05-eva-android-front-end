@@ -60,7 +60,7 @@ public class RecipeListFragment extends ChallengeFragment {
     /**
      * A custom Adapter with two types of ViewHolders
      */
-    public static class SimpleStringRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static class SimpleStringRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         private final TypedValue mTypedValue = new TypedValue();
         private int mBackground;

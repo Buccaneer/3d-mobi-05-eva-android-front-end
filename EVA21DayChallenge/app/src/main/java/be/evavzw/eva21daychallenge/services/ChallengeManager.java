@@ -18,14 +18,14 @@ import be.evavzw.eva21daychallenge.models.challenges.*;
 import be.evavzw.eva21daychallenge.rest.AddChallengeRestMethod;
 import be.evavzw.eva21daychallenge.rest.GetAllRecipesRestMethod;
 import be.evavzw.eva21daychallenge.rest.GetAllRestaurantsRestMethod;
+import be.evavzw.eva21daychallenge.rest.GetChallengesFromUser;
 import be.evavzw.eva21daychallenge.rest.GetCurrentChallengeRestMethod;
 import be.evavzw.eva21daychallenge.rest.GetRestaurantDetailsRestMethod;
 
 /**
  * Handles communication to retrieve {@link Recipe}s from the server
  */
-public class ChallengeManager
-{
+public class ChallengeManager {
     private static ChallengeManager challengeManager;
     private DatabaseHelper helper;
     private Context context;
@@ -43,21 +43,17 @@ public class ChallengeManager
      * @param context
      * @return instance of itself
      */
-    public static ChallengeManager getInstance(Context context)
-    {
-        if (challengeManager == null)
-        {
+    public static ChallengeManager getInstance(Context context) {
+        if (challengeManager == null) {
             challengeManager = new ChallengeManager(context);
         }
         return challengeManager;
     }
 
-    private ChallengeManager(Context context)
-    {
+    private ChallengeManager(Context context) {
         this.context = context;
         helper = new DatabaseHelper(context);
-        try
-        {
+        try {
             categoryDao = helper.getRecipeCategories();
             recipeChallengeDao = helper.getRecipeChallenges();
             restaurantChallengeDao = helper.getRestaurantChallenges();
@@ -65,21 +61,15 @@ public class ChallengeManager
             recipeDao = helper.getRecipes();
             ingredientDao = helper.getIngredients();
             recipePropertyDao = helper.getRecipeProperties();
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void refresh(Recipe recipe)
-    {
-        try
-        {
+    public void refresh(Recipe recipe) {
+        try {
             recipeDao.refresh(recipe);
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -92,10 +82,8 @@ public class ChallengeManager
         addChallengeRestMethod.execute();
     }
 
-    public Challenge getCurrentChallenge()
-    {
-        try
-        {
+    public Challenge getCurrentChallenge() {
+        try {
             // NOT EFFICIENT! Model is sort of horrible anyway due to lack of inheritance strategies in ORMLite
             List<Challenge> challenges = new ArrayList<>();
             challenges.addAll(recipeChallengeDao.queryForAll());
@@ -106,50 +94,35 @@ public class ChallengeManager
             Challenge c = new GetCurrentChallengeRestMethod(context).execute().getResource();
             setCurrentChallenge(c);
             return c;
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return new GetCurrentChallengeRestMethod(context).execute().getResource();
     }
 
-    private void setCurrentChallenge(Challenge challenge)
-    {
-        try
-        {
-            if (challenge instanceof RecipeChallenge)
-            {
+    private void setCurrentChallenge(Challenge challenge) {
+        try {
+            if (challenge instanceof RecipeChallenge) {
                 RecipeChallenge newChallenge = (RecipeChallenge) challenge;
                 recipeChallengeDao.create(newChallenge);
-            }
-            else if (challenge instanceof RestaurantChallenge)
-            {
+            } else if (challenge instanceof RestaurantChallenge) {
                 RestaurantChallenge newChallenge = (RestaurantChallenge) challenge;
                 restaurantChallengeDao.create(newChallenge);
-            }
-            else if (challenge instanceof TextChallenge)
-            {
+            } else if (challenge instanceof TextChallenge) {
                 TextChallenge newChallenge = (TextChallenge) challenge;
                 textChallengeDao.create(newChallenge);
-            }
-            else
-            {
+            } else {
                 throw new IllegalArgumentException("Could not recognize challenge type.");
             }
             deleteRedundantChallenges();
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
     }
 
-    private void deleteRedundantChallenges()
-    {
-        try
-        {
+    private void deleteRedundantChallenges() {
+        try {
             DeleteBuilder<RecipeChallenge, Integer> deleteRecipeChallenges = recipeChallengeDao.deleteBuilder();
             deleteRecipeChallenges.where().isNull("date");
             deleteRecipeChallenges.delete();
@@ -161,9 +134,7 @@ public class ChallengeManager
             DeleteBuilder<TextChallenge, Integer> deleteTextChallenges = textChallengeDao.deleteBuilder();
             deleteTextChallenges.where().isNull("date");
             deleteTextChallenges.delete();
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -171,10 +142,8 @@ public class ChallengeManager
 
     //RECIPE METHODS
 
-    public List<Recipe> getRecipesForCategory(String categoryName)
-    {
-        try
-        {
+    public List<Recipe> getRecipesForCategory(String categoryName) {
+        try {
             /*Dao<RecipeCategory, String> categoryDao = helper.getRecipeCategories();
             Dao<RecipeChallenge, Integer> recipeChallengeDao = helper.getRecipeChallenges();
             Dao<Recipe, Integer> recipeDao = helper.getRecipes();
@@ -182,15 +151,13 @@ public class ChallengeManager
             Dao<RecipeProperty, Integer> recipePropertyDao = helper.getRecipeProperties();*/
             RecipeCategory category = categoryDao.queryForId(categoryName);
             // Category exists and has challenges -> return recipes from existing challenges
-            if (category == null)
-            {
+            if (category == null) {
                 Log.e("ChallengeManager", "Category not found, getting recipes from server");
                 category = new RecipeCategory(categoryName);
                 categoryDao.create(category);
                 List<RecipeChallenge> challenges = new ArrayList<>();
                 List<Recipe> recipes = new GetAllRecipesRestMethod(context).execute().getResource();
-                for (Recipe recipe : recipes)
-                {
+                for (Recipe recipe : recipes) {
                     RecipeChallenge challenge = new RecipeChallenge(category, recipe);
                     recipeChallengeDao.create(challenge);
 
@@ -204,14 +171,11 @@ public class ChallengeManager
                 }
                 category.setChallenges(challenges);
                 return recipes;
-            }
-            else if (category.getChallenges() == null || category.getChallenges().size() == 0)
-            {
+            } else if (category.getChallenges() == null || category.getChallenges().size() == 0) {
                 Log.e("ChallengeManager", "Category found but no challenges, getting recipes from server");
                 List<RecipeChallenge> challenges = new ArrayList<>();
                 List<Recipe> recipes = new GetAllRecipesRestMethod(context).execute().getResource();
-                for (Recipe recipe : recipes)
-                {
+                for (Recipe recipe : recipes) {
                     RecipeChallenge challenge = new RecipeChallenge(category, recipe);
                     recipeChallengeDao.create(challenge);
 
@@ -225,21 +189,16 @@ public class ChallengeManager
                 }
                 category.setChallenges(challenges);
                 return recipes;
-            }
-            else
-            {
+            } else {
                 Log.e("ChallengeManager", "Category found with challenges, getting recipes from DB");
                 List<Recipe> recipes = new ArrayList<>();
-                for (Challenge c : category.getChallenges())
-                {
+                for (Challenge c : category.getChallenges()) {
                     RecipeChallenge r = (RecipeChallenge) c;
                     recipes.add(r.getRecipe());
                 }
                 return recipes;
             }
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
@@ -247,48 +206,38 @@ public class ChallengeManager
 
     //TEXT METHODS
 
-    public String getTextForCategory(String categoryName)
-    {
-        try
-        {
+    public String getTextForCategory(String categoryName) {
+        try {
             Dao<TextCategory, String> dao = helper.getTextCategories();
             TextCategory category = dao.queryForId(categoryName);
             // Category exists and has challenges -> return recipes from existing challenges
-            if (category != null && category.getChallenges() != null && category.getChallenges().size() > 0)
-            {
+            if (category != null && category.getChallenges() != null && category.getChallenges().size() > 0) {
                 TextChallenge challenge = (TextChallenge) category.getChallenges().toArray()[0];
                 return challenge.getText();
-            }
-            else
-            {
+            } else {
                 //category = new Category(new GetAllRecipesRestMethod())
                 return null; // TODO AFTER RETROFIT
             }
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             return null;
         }
     }
 
     //RESTAURANT METHODS
 
-    public List<Restaurant> getRestaurantsByLocation(double longitude, double latitude)
-    {
+    public List<Restaurant> getRestaurantsByLocation(double longitude, double latitude) {
         GetAllRestaurantsRestMethod byLocationRestMethod = new GetAllRestaurantsRestMethod(context);
         byLocationRestMethod.setCoordinates(longitude, latitude);
         return byLocationRestMethod.execute().getResource();
     }
 
-    public List<Restaurant> getRestaurantsByLocationAndRadius(double longitude, double latitude, int radius)
-    {
+    public List<Restaurant> getRestaurantsByLocationAndRadius(double longitude, double latitude, int radius) {
         GetAllRestaurantsRestMethod byLocationRestMethod = new GetAllRestaurantsRestMethod(context);
         byLocationRestMethod.setCoordinatesAndDistance(longitude, latitude, radius);
         return byLocationRestMethod.execute().getResource();
     }
 
-    public Restaurant getRestaurantDetails(int restaurantId)
-    {
+    public Restaurant getRestaurantDetails(int restaurantId) {
         return new GetRestaurantDetailsRestMethod(context, restaurantId).execute().getResource();
         /*try
         {
@@ -312,5 +261,9 @@ public class ChallengeManager
         addChallengeRestMethod.setId(id);
         addChallengeRestMethod.setIngredientsForCreativeCookingChallenge(ingredients);
         addChallengeRestMethod.execute();
+    }
+
+    public List<Challenge> getChallengesFromUser() {
+        return new GetChallengesFromUser(context).execute().getResource();
     }
 }

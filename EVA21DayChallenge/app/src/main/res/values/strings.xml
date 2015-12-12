@@ -35,7 +35,7 @@
     <string name="emailInvalid">Dit is geen geldig e-mail adres</string>
     <string name="emailTaken">Het e-mail is al in gebruik</string>
     <string name="error500">Er is iets verkeerd gegaan, probeer opnieuw a.u.b.</string>
-    <string name="notAuthorized">Uw gebruiker heeft is niet geauthoriseerd, probeer opnieuw in te loggen</string>
+    <string name="notAuthorized">Uw gebruiker is niet geauthoriseerd, probeer opnieuw in te loggen</string>
     <string name="passwordsNotEqual">Wachtwoorden komen niet overeen</string>
     <string name="close">Sluiten</string>
     <string name="viewDagen">dagen gedaan</string>
@@ -103,4 +103,13 @@
     <string name="viewDag">dag gedaan</string>
     <string name="no_recipes_found">Er werden geen recepten gevonden.</string>
     <string name="no_restaurants_found">Er werden geen restaurants gevonden.</string>
+    <string name="challengeHistory">Challenge geschiedenis</string>
+    <string name="typeOfChallenge">Type challenge:</string>
+    <string name="date">Datum:</string>
+    <string name="yes">ja</string>
+    <string name="no">nee</string>
+    <string name="challengeDone">Challenge afgewerkt:</string>
+    <string name="earnedPoints">Verdiende punten:</string>
+    <string name="challenge">challenge</string>
+    <string name="no_challenges_found">Er zijn geen voorgaande challenges gevonden.</string>
 </resources>

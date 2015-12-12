@@ -3,6 +3,9 @@ package be.evavzw.eva21daychallenge.models.challenges;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import be.evavzw.eva21daychallenge.models.categories.Category;
 import be.evavzw.eva21daychallenge.models.Restaurant;
 import be.evavzw.eva21daychallenge.models.categories.RecipeCategory;
@@ -12,9 +15,8 @@ import be.evavzw.eva21daychallenge.models.categories.RestaurantCategory;
  * Created by Pieter-Jan on 14/11/2015.
  */
 @DatabaseTable(tableName = "restaurant_challenges")
-public class RestaurantChallenge extends Challenge
-{
-    @DatabaseField(foreign = true, foreignAutoRefresh = true, maxForeignAutoRefreshLevel=3)
+public class RestaurantChallenge extends Challenge {
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, maxForeignAutoRefreshLevel = 3)
     private Restaurant restaurant;
 
     @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = Category.ID_FIELD_NAME)
@@ -24,19 +26,22 @@ public class RestaurantChallenge extends Challenge
     {
     }
 
-    public RestaurantChallenge(RestaurantCategory category, Restaurant restaurant)
-    {
+    public RestaurantChallenge(RestaurantCategory category, Restaurant restaurant) {
         this.category = category;
         this.restaurant = restaurant;
     }
 
-    public Restaurant getRestaurant()
-    {
+    public RestaurantChallenge(JSONObject object) throws Exception {
+        super(object);
+        if(object.has("Restaurant"))
+            restaurant = new Restaurant(object.getJSONObject("Restaurant"));
+    }
+
+    public Restaurant getRestaurant() {
         return restaurant;
     }
 
-    public RestaurantCategory getCategory()
-    {
+    public RestaurantCategory getCategory() {
         return category;
     }
 

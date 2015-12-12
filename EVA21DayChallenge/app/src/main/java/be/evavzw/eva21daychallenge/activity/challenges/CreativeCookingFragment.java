@@ -155,19 +155,11 @@ public class CreativeCookingFragment extends ChallengeFragment implements Search
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if(recipesFound.getText() != null)
+        if(recipesFound!= null && recipesFound.getText() != null)
             outState.putString("numberFound", recipesFound.getText().toString());
         outState.putString("currentView", currentView);
         if(recipes != null)
             outState.putSerializable("recipesFound", (ArrayList) recipes);
-    }
-
-    public void onBackPressed() {
-        if(currentView.equals("RECIPES")){
-            currentView = "INGREDIENTS";
-            selectListView.setVisibility(View.VISIBLE);
-            recipeListView.setVisibility(View.GONE);
-        }
     }
 
     private class CustomAdapter extends ArrayAdapter<Recipe> {

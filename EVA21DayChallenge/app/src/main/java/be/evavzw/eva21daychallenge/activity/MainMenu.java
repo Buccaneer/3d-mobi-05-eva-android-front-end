@@ -17,15 +17,9 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.activity.base.RESTfulActivity;
 import be.evavzw.eva21daychallenge.activity.challenges.ChallengeActivity;
+import be.evavzw.eva21daychallenge.activity.challenges.ChallengeHistoryActivity;
 import be.evavzw.eva21daychallenge.models.User;
 import be.evavzw.eva21daychallenge.services.UserManager;
-import be.evavzw.eva21daychallenge.activity.challenges.RecipeDetailActivity;
-import be.evavzw.eva21daychallenge.activity.challenges.RestaurantDetailActivity;
-import be.evavzw.eva21daychallenge.models.challenges.Challenge;
-import be.evavzw.eva21daychallenge.models.challenges.RecipeChallenge;
-import be.evavzw.eva21daychallenge.models.challenges.RestaurantChallenge;
-import be.evavzw.eva21daychallenge.models.challenges.TextChallenge;
-import be.evavzw.eva21daychallenge.services.ChallengeManager;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -86,29 +80,6 @@ public class MainMenu extends RESTfulActivity
         toolbar.setTitle(getResources().getString(R.string.title_activity_main_menu));
 
         new FetchUserTask().execute();
-
-        //hier moet getal komen per dag
-        String tekst = "boom" + 12;
-        int id = getResources().getIdentifier(tekst, "drawable", getPackageName());
-
-
-        Glide.with(getApplicationContext())
-                .load(id)
-                .centerCrop()
-                .into(new SimpleTarget<GlideDrawable>()
-                      {
-                          @Override
-                          public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation)
-                          {
-
-                              view.setImageDrawable(resource);
-                              resource.start();
-                              resource.setLoopCount(1);
-
-
-                          }
-                      }
-                );
     }
 
     @OnClick(R.id.button_challenge)
@@ -117,39 +88,11 @@ public class MainMenu extends RESTfulActivity
         startActivity(intent);
     }
 
-/*    public void setProgress() {
-
-        if (progressBar != null) {
-            new Thread(new Runnable() {
-                public void run() {
-                    while (mProgressStatus <= 60) {
-                        mProgressStatus += 1;
-                        // Update the progress bar
-                        mHandler.post(new Runnable() {
-                            public void run() {
-                                progressBar.setProgress(mProgressStatus);
-                                int progress = (int) (mProgressStatus/CUTOFF);
-                                textViewProgress.setText(String.valueOf(progress));
-                            }
-                        });
-                        try {
-                            Thread.sleep(50);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }).start();
-        }
-    }*/
-
-    //txvChallengeCountdown.setTypeface(Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/ArtistampMedium.ttf"));
-/*
-        DisplayMetrics metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int height = metrics.heightPixels;
-        int width = metrics.widthPixels;
-  */
+    @OnClick(R.id.button_challengeHistory)
+    public void challengeHistory(){
+        Intent intent = new Intent(this, ChallengeHistoryActivity.class);
+        startActivity(intent);
+    }
 
     private void setupMenu(User user) {
         textViewProgress.setText(user.getChallengesDone() + " ");

@@ -153,5 +153,4 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper
         }
         return restaurantDao;
     }
-
 }
