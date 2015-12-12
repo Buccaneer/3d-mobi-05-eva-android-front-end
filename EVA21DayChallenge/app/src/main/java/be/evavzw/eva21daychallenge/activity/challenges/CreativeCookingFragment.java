@@ -11,18 +11,22 @@ import android.app.Fragment;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.vision.Frame;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,6 +60,8 @@ public class CreativeCookingFragment extends ChallengeFragment implements Search
     LinearLayout recipeListView;
     private CustomAdapter listAdapter;
     private List<Recipe> recipes;
+    private ListView recipeList;
+    private ProgressBar recipeProgressBar;
 
     @Nullable
     @Override
@@ -67,14 +73,24 @@ public class CreativeCookingFragment extends ChallengeFragment implements Search
         recipeManager = RecipeManager.getInstance(getContext());
         ((SearchableCheckListView) layout.findViewById(R.id.checkListView)).setOnIngredientCheckedListener(this);
 
-        ListView recipeList = new ListView(getContext());
+        recipeList = new ListView(getContext());
+        recipeList.setVisibility(View.GONE);
+
         listAdapter = new CustomAdapter(getContext(), R.layout.list_description, new ArrayList<Recipe>());
 
-        recipeListView.addView(recipeList);
+
+        recipeProgressBar = new ProgressBar(getContext(), null, android.R.attr.progressBarStyleLarge);
+        recipeProgressBar.setIndeterminate(true);
+
+        FrameLayout frameLayout = new FrameLayout(getContext());
+        frameLayout.addView(recipeList);
+        frameLayout.addView(recipeProgressBar);
+
         recipeList.setAdapter(listAdapter);
 
-        recipeListView.setVisibility(View.GONE);
+        recipeList.setVisibility(View.GONE);
         selectListView.setVisibility(View.VISIBLE);
+        recipeListView.addView(frameLayout);
 
         updateViews();
         onActivityCreated(savedInstanceState);
@@ -91,6 +107,7 @@ public class CreativeCookingFragment extends ChallengeFragment implements Search
             numberFound = 0;
             recipesFound.setText(" 0");
         } else {
+            searchableCheckListView.setProgress(true);
             task.execute(chosenIngredients);
         }
     }
@@ -120,6 +137,8 @@ public class CreativeCookingFragment extends ChallengeFragment implements Search
         selectListView.setVisibility(View.VISIBLE);
         recipeListView.setVisibility(View.GONE);
         currentView="INGREDIENTS";
+        recipeList.setVisibility(View.GONE);
+        recipeProgressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -190,28 +209,28 @@ public class CreativeCookingFragment extends ChallengeFragment implements Search
                         Context.LAYOUT_INFLATER_SERVICE);
                 convertView = vi.inflate(R.layout.list_description, null);
 
-                holder = new ViewHolder();
-                holder.mImageView = (ImageView) convertView.findViewById(R.id.categoryAvatar);
-                convertView.setTag(holder);
+            holder = new ViewHolder();
+            holder.mImageView = (ImageView) convertView.findViewById(R.id.categoryAvatar);
+            convertView.setTag(holder);
 
-                holder.mTextView = (TextView) convertView.findViewById(R.id.categoryDescription);
+            holder.mTextView = (TextView) convertView.findViewById(R.id.categoryDescription);
 
-                convertView.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        LinearLayout linearLayout = (LinearLayout) v;
-                        Recipe recipe = (Recipe) linearLayout.getTag(R.id.recipeTag);
-                        Intent intent = new Intent(getContext(), RecipeDetailActivity.class);
-                        intent.putExtra(RecipeDetailActivity.RECIPE, recipe);
-                        intent.putExtra("CALLED_FROM", "CCC");
-                        intent.putExtra("INGREDIENTS", (ArrayList) searchableCheckListView.getCheckedIngredients());
-                        getContext().startActivity(intent);
-                    }
-                });
-            } else {
-                holder = (ViewHolder) convertView.getTag();
-            }
+            convertView.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    LinearLayout linearLayout = (LinearLayout) v;
+                    Recipe recipe = (Recipe) linearLayout.getTag(R.id.recipeTag);
+                    Intent intent = new Intent(getContext(), RecipeDetailActivity.class);
+                    intent.putExtra(RecipeDetailActivity.RECIPE, recipe);
+                    intent.putExtra("CALLED_FROM", "CCC");
+                    intent.putExtra("INGREDIENTS", (ArrayList) searchableCheckListView.getCheckedIngredients());
+                    getContext().startActivity(intent);
+                }
+            });
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
 
-            convertView.setBackgroundResource(mBackground);
+        convertView.setBackgroundResource(mBackground);
             holder.mTextView.setBackgroundResource(R.color.tw__transparent);
             holder.mTextView.setTextColor(Color.BLACK);
 
@@ -262,6 +281,7 @@ public class CreativeCookingFragment extends ChallengeFragment implements Search
 
         @Override
         protected void onPostExecute(Boolean success) {
+            searchableCheckListView.setProgress(false);
             if (success) {
                 if (recipesFound.getText().length() != 0)
                     updateNumberOfRecipes(nrOfRecipes);
@@ -285,6 +305,8 @@ public class CreativeCookingFragment extends ChallengeFragment implements Search
 
         @Override
         protected void onPostExecute(Boolean success) {
+            recipeList.setVisibility(View.VISIBLE);
+            recipeProgressBar.setVisibility(View.GONE);
             if (success && foundRecipes != null) {
                 recipes = foundRecipes;
                 listAdapter.clear();

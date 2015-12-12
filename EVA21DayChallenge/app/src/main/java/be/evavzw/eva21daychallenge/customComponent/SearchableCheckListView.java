@@ -8,14 +8,18 @@ import android.text.Editable;
 import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,6 +44,8 @@ public class SearchableCheckListView extends LinearLayout implements TextWatcher
     private HashMap<Integer, Ingredient> checkedIngredients;
     private int ingredientTextLength = 0;
     private OnIngredientCheckedListener onIngredientCheckedListener;
+    private ProgressBar ingredientProgress;
+    private TextView nothingFound;
 
     public SearchableCheckListView(Context context) {
         super(context);
@@ -69,12 +75,34 @@ public class SearchableCheckListView extends LinearLayout implements TextWatcher
         ingredientText.setHint(getResources().getString(R.string.typeIngredient));
         addView(ingredientText);
 
+        ingredientProgress = new ProgressBar(getContext(), null, android.R.attr.progressBarStyleHorizontal);
+        ingredientProgress.setIndeterminate(true);
+        ingredientProgress.setVisibility(INVISIBLE);
+        ingredientProgress.setMinimumHeight(5);
+
+        addView(ingredientProgress);
+
         ingredientText.addTextChangedListener(this);
 
         ingredientList = new ListView(getContext());
         ingredientList.setAdapter(ingredientAdapter);
 
-        addView(ingredientList);
+        nothingFound = new TextView(getContext());
+        nothingFound.setVisibility(GONE);
+        nothingFound.setText(R.string.no_ingredients_found);
+        nothingFound.setGravity(Gravity.CENTER);
+
+        FrameLayout frameLayout = new FrameLayout(getContext());
+
+        frameLayout.addView(ingredientList);
+        frameLayout.addView(nothingFound);
+
+        addView(frameLayout);
+
+        if (checkedIngredients != null && checkedIngredients.isEmpty() && ingredientText != null && ingredientText.getText().toString().isEmpty()) {
+            nothingFound.setVisibility(VISIBLE);
+            ingredientList.setVisibility(GONE);
+        }
     }
 
     public List<Ingredient> getCheckedIngredients() {
@@ -95,10 +123,15 @@ public class SearchableCheckListView extends LinearLayout implements TextWatcher
     public void afterTextChanged(Editable s) {
         ingredientTextLength = s.toString().length();
         if (ingredientTextLength != 0) {
+            ingredientProgress.setVisibility(VISIBLE);
             new GetIngredientsByNameTask().execute(s.toString());
         } else {
             ingredientAdapter.clear();
             ingredientAdapter.addAll(checkedIngredients.values());
+            if (checkedIngredients.isEmpty()) {
+                nothingFound.setVisibility(VISIBLE);
+                ingredientList.setVisibility(GONE);
+            }
         }
     }
 
@@ -123,6 +156,14 @@ public class SearchableCheckListView extends LinearLayout implements TextWatcher
 
         ingredientAdapter.clear();
         ingredientAdapter.addAll(checkedIngredients.values());
+    }
+
+    public void setProgress(boolean flag) {
+        ingredientProgress.setVisibility(flag ? VISIBLE : INVISIBLE);
+    }
+
+    private ListView getListView() {
+        return ingredientList;
     }
 
     @Override
@@ -185,6 +226,10 @@ public class SearchableCheckListView extends LinearLayout implements TextWatcher
                                 ingredientAdapter.clear();
                                 ingredientAdapter.addAll(checkedIngredients.values());
                                 ingredientAdapter.notifyDataSetChanged();
+                                if (checkedIngredients.isEmpty()) {
+                                    nothingFound.setVisibility(VISIBLE);
+                                    getListView().setVisibility(GONE);
+                                }
                             }
                             onIngredientCheckedListener.onChecked(new ArrayList<>(checkedIngredients.values()));
                         }
@@ -234,7 +279,6 @@ public class SearchableCheckListView extends LinearLayout implements TextWatcher
 
         private List<Ingredient> ingredients = new ArrayList<>();
 
-
         @Override
         protected Boolean doInBackground(String... params) {
             try {
@@ -251,9 +295,17 @@ public class SearchableCheckListView extends LinearLayout implements TextWatcher
 
         @Override
         protected void onPostExecute(Boolean success) {
+            ingredientProgress.setVisibility(INVISIBLE);
             if (success) {
                 ingredientAdapter.clear();
                 ingredientAdapter.addAll(ingredients);
+            }
+            if (ingredients.isEmpty()) {
+                nothingFound.setVisibility(VISIBLE);
+                ingredientList.setVisibility(GONE);
+            } else {
+                nothingFound.setVisibility(GONE);
+                ingredientList.setVisibility(VISIBLE);
             }
         }
     }
