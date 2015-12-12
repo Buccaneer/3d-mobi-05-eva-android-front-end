@@ -103,4 +103,13 @@
     <string name="challengeHistory">Histoire challenge</string>
     <string name="no_recipes_found">Aucune recette n\'a été trouvé. </string>
     <string name="no_restaurants_found">Aucun restaurant n\'a été trouvé.</string>
+    <string name="no">non</string>
+    <string name="no_challenges_found">Aucun défis précédents ont été trouvées.</string>
+    <string name="no_ingredients_found">Aucun ingrédients ont été trouvées.</string>
+    <string name="yes">oui</string>
+    <string name="typeOfChallenge">Type de défi:</string>
+    <string name="challenge">défi</string>
+    <string name="challengeDone">Défi terminé</string>
+    <string name="date">Date:</string>
+    <string name="earnedPoints">Points gagnés:</string>
 </resources>

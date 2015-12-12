@@ -103,4 +103,13 @@
     <string name="no_recipes_found">No recipes were found.</string>
     <string name="no_restaurants_found">No restaurants were found.</string>
     <string name="challengeHistory">Challenge history</string>
+    <string name="no_challenges_found">No previous challanges have been found.</string>
+    <string name="no">no</string>
+    <string name="no_ingredients_found">No ingredients have been found.</string>
+    <string name="typeOfChallenge">Type of challenge:</string>
+    <string name="yes">yes</string>
+    <string name="challenge">challenge</string>
+    <string name="challengeDone">Challenge finished</string>
+    <string name="date">Date:</string>
+    <string name="earnedPoints">Earned points:</string>
 </resources>
