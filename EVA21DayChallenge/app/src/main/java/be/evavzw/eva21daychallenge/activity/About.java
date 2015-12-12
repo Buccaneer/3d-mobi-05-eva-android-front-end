@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -38,6 +39,15 @@ public class About extends RESTfulActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(getResources().getString(R.string.title_activity_about));
 
+        toolbar.inflateMenu(R.menu.menu_with_actions);
+        toolbar.getMenu().findItem(R.id.nav_badges).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent intent = new Intent(getApplicationContext(), BadgesActivity.class);
+                startActivity(intent);
+                return true;
+            }
+        });
     }
 
     @OnClick(R.id.button_website)

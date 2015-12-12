@@ -113,4 +113,22 @@
     <string name="challenge">challenge</string>
     <string name="no_challenges_found">Er zijn geen voorgaande challenges gevonden.</string>
     <string name="no_ingredients_found">Geen ingrediënten gevonden.</string>
+    <string name="badges">Badges</string>
+    <string name="badgeDescriptionPlaceholder">Druk op een badge om de beschrijving te krijgen.</string>
+    <string name="badgeCreatieveling">Creatieveling</string>
+    <string name="badgeExplorer">Verkenner</string>
+    <string name="badgeSugarrush">Suiker kick</string>
+    <string name="badgeGastronoom">Gastronoom</string>
+    <string name="badgeGenieter">Genieter</string>
+    <string name="badgeTrotseGebruiker">Trotse gebruiker</string>
+    <string name="badgeStarter">Starter</string>
+    <string name="badgeDoorzetter">Doorzetter</string>
+    <string name="badgeCreatievelingDescription">Gebruik zaken uit je koelkast om een recept te maken.</string>
+    <string name="badgeExplorerDescription">Maak een aantal recepten uit een andere regio.</string>
+    <string name="badgeSugarrushDescription">Eet een ganse dag geen suiker.</string>
+    <string name="badgeGastronoomDescription">Ga 3 keer op restaurant en eet iets veganistisch.</string>
+    <string name="badgeGenieterDescription">Ga voor de eerste keer naar een restaurant en eet iets veganistisch.</string>
+    <string name="badgeTrotseGebruikerDescription">Vraag 10 dagen op een rij een challenge aan en voltooi hem.</string>
+    <string name="badgeStarterDescription">Voltooi je eerste challenge.</string>
+    <string name="badgeDoorzetterDescription">Voltooi 21 dagen.</string>
 </resources>

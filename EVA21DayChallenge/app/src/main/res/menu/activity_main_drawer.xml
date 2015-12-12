@@ -6,19 +6,19 @@
         <item
             android:id="@+id/nav_challenges"
             android:title="@string/challenges" />
-        <item
+       <!-- <item
             android:id="@+id/nav_recipes"
             android:title="@string/recipes" />
         <item
             android:id="@+id/nav_restaurants"
-            android:title="@string/restaurants" />
+            android:title="@string/restaurants" />-->
     </group>
 
     <item android:title="@string/info">
         <menu>
-            <item
+           <!-- <item
                 android:id="@+id/nav_FAQ"
-                android:title="@string/FAQ" />
+                android:title="@string/FAQ" />-->
             <item
                 android:id="@+id/nav_about"
                 android:title="@string/about" />

@@ -112,4 +112,22 @@
     <string name="challengeDone">Challenge finished</string>
     <string name="date">Date:</string>
     <string name="earnedPoints">Earned points:</string>
+    <string name="badgeDescriptionPlaceholder">Press a badge to see the description.</string>
+    <string name="badges">Badges</string>
+    <string name="badgeDoorzetter">Go-getter</string>
+    <string name="badgeCreatieveling">Creative mind</string>
+    <string name="badgeExplorer">Explorer</string>
+    <string name="badgeGastronoom">Gastronomist</string>
+    <string name="badgeGenieter">Enjoyer</string>
+    <string name="badgeStarter">Starter</string>
+    <string name="badgeSugarrush">Sugar rush</string>
+    <string name="badgeTrotseGebruiker">Proud user</string>
+    <string name="badgeCreatievelingDescription">Use things from your refrigerator to make a recipe.</string>
+    <string name="badgeDoorzetterDescription">Complete 21 days.</string>
+    <string name="badgeExplorerDescription">Make a number of recipes from another region.</string>
+    <string name="badgeGastronoomDescription">Go to a restaurant 3 times and eat something vegan.</string>
+    <string name="badgeGenieterDescription">Go to a restaurant for the first time and eat vegan.</string>
+    <string name="badgeStarterDescription">Complete your first challenge.</string>
+    <string name="badgeSugarrushDescription">Don\'t eat sugar for a whole day.</string>
+    <string name="badgeTrotseGebruikerDescription">Choose a challenge 10 days in a row and complete them.</string>
 </resources>

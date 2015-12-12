@@ -55,9 +55,10 @@
         <activity
             android:name=".activity.profile_setup.ProfileSetup"
             android:label="@string/title_activity_profile_setup" />
-        <activity android:name=".activity.challenges.ChallengeHistoryActivity"
+        <activity
+            android:name=".activity.challenges.ChallengeHistoryActivity"
             android:label="@string/challengeHistory"
-            android:parentActivityName=".activity.MainMenu">
+            android:parentActivityName=".activity.MainMenu" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.MainMenu" />
@@ -66,6 +67,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDME7pDNnleZ3SrylhYIOleTNEek-dE5TQ" />
+
+        <activity android:name=".activity.BadgesActivity" >
+        </activity>
     </application>
 
 </manifest>

@@ -1,10 +1,11 @@
 package be.evavzw.eva21daychallenge.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class User {
+public class User implements Serializable{
     private String userId;
     private String email;
     private String password;
