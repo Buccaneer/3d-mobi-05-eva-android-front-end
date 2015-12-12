@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -33,6 +34,12 @@ public class ChallengeHistoryActivity extends AppCompatActivity {
     @Bind(R.id.historyList)
     RecyclerView historyView;
 
+    @Bind(R.id.historyProgress)
+    ProgressBar historyProgress;
+
+    @Bind(R.id.historyNothingFound)
+    TextView historyNothingFound;
+
     private ChallengeManager challengeManager;
 
     @Override
@@ -48,8 +55,6 @@ public class ChallengeHistoryActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        getSupportActionBar().setTitle(getString(R.string.challengeHistory));
-
         new FetchChallengeHistoryTask().execute();
     }
 
@@ -61,6 +66,8 @@ public class ChallengeHistoryActivity extends AppCompatActivity {
 
     private void setupRecyclerView(List<Challenge> challenges) {
         historyView.setAdapter(new CardViewRecyclerViewAdapter(getApplicationContext(), challenges));
+        historyView.setVisibility(View.VISIBLE);
+        historyProgress.setVisibility(View.GONE);
     }
 
     private static class CardViewRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -96,8 +103,6 @@ public class ChallengeHistoryActivity extends AppCompatActivity {
         public CardViewRecyclerViewAdapter(Context context, List<Challenge> challenges) {
             this.mChallenges = challenges;
             this.context = context;
-
-            mChallenges.add(0, mChallenges.get(0));
         }
 
         @Override
@@ -192,6 +197,10 @@ public class ChallengeHistoryActivity extends AppCompatActivity {
             if (success) {
                 if (!challenges.isEmpty())
                     setupRecyclerView(challenges);
+                else{
+                    historyNothingFound.setVisibility(View.VISIBLE);
+                    historyProgress.setVisibility(View.GONE);
+                }
             }
         }
     }
