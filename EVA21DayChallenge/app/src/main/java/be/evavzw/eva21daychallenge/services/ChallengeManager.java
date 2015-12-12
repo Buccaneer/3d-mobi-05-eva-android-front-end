@@ -5,6 +5,8 @@ import android.util.Log;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.DeleteBuilder;
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ import be.evavzw.eva21daychallenge.models.*;
 import be.evavzw.eva21daychallenge.models.categories.*;
 import be.evavzw.eva21daychallenge.models.challenges.*;
 import be.evavzw.eva21daychallenge.rest.AddChallengeRestMethod;
+import be.evavzw.eva21daychallenge.rest.FinishCurrentChallengeRestMethod;
 import be.evavzw.eva21daychallenge.rest.GetAllRecipesRestMethod;
 import be.evavzw.eva21daychallenge.rest.GetAllRestaurantsRestMethod;
 import be.evavzw.eva21daychallenge.rest.GetCurrentChallengeRestMethod;
@@ -92,19 +95,62 @@ public class ChallengeManager
         addChallengeRestMethod.execute();
     }
 
-    public Challenge getCurrentChallenge()
+    public void addChallenge(String type, int id, List<Ingredient> ingredients) {
+        AddChallengeRestMethod addChallengeRestMethod = new AddChallengeRestMethod(context);
+        addChallengeRestMethod.setType(type);
+        addChallengeRestMethod.setId(id);
+        addChallengeRestMethod.setIngredientsForCreativeCookingChallenge(ingredients);
+        addChallengeRestMethod.execute();
+    }
+
+    public void finishCurrentChallenge()
     {
+        Challenge currentChallenge = getCurrentChallenge();
+        int serverId = currentChallenge.getServerId();
+        new FinishCurrentChallengeRestMethod(context, serverId).execute();
         try
         {
+            DeleteBuilder<RecipeChallenge, Integer> deleteRecipeChallenges = recipeChallengeDao.deleteBuilder();
+            deleteRecipeChallenges.where().eq("isCurrentChallenge", true);
+            deleteRecipeChallenges.delete();
+
+            DeleteBuilder<RestaurantChallenge, Integer> deleteRestaurantChallenges = restaurantChallengeDao.deleteBuilder();
+            deleteRestaurantChallenges.where().eq("isCurrentChallenge", true);
+            deleteRestaurantChallenges.delete();
+
+            DeleteBuilder<TextChallenge, Integer> deleteTextChallenges = textChallengeDao.deleteBuilder();
+            deleteTextChallenges.where().eq("isCurrentChallenge", true);
+            deleteTextChallenges.delete();
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Looks for current challenge in cache, if not found it requests the server.
+     * Returns null if no current challenge is set.
+     *
+     * @return Challenge currentChallenge or null
+     */
+    public Challenge getCurrentChallenge()
+    {
+        try {
             // NOT EFFICIENT! Model is sort of horrible anyway due to lack of inheritance strategies in ORMLite
             List<Challenge> challenges = new ArrayList<>();
             challenges.addAll(recipeChallengeDao.queryForAll());
-            challenges.addAll(restaurantChallengeDao.queryForAll());
+            //challenges.addAll(restaurantChallengeDao.queryForAll());
             challenges.addAll(textChallengeDao.queryForAll());
-            Collections.sort(challenges, Collections.reverseOrder());
-            if (challenges.size() > 0) return challenges.get(0);
+            for (Challenge c : challenges)
+            {
+                if (c.isCurrentChallenge())
+                {
+                    return c;
+                }
+            }
             Challenge c = new GetCurrentChallengeRestMethod(context).execute().getResource();
-            setCurrentChallenge(c);
+            if (c != null) setCurrentChallenge(c);
             return c;
         }
         catch (SQLException e)
@@ -116,17 +162,25 @@ public class ChallengeManager
 
     private void setCurrentChallenge(Challenge challenge)
     {
+        deleteRedundantChallenges();
+        challenge.setIsCurrentChallenge(true);
         try
         {
             if (challenge instanceof RecipeChallenge)
             {
                 RecipeChallenge newChallenge = (RecipeChallenge) challenge;
                 recipeChallengeDao.create(newChallenge);
+                Recipe recipe = newChallenge.getRecipe();
+                recipeDao.createIfNotExists(recipe);
+                for (Ingredient i : recipe.getIngredients())
+                    ingredientDao.createIfNotExists(i);
+                for (RecipeProperty p : recipe.getProperties())
+                    recipePropertyDao.createIfNotExists(p);
             }
             else if (challenge instanceof RestaurantChallenge)
             {
-                RestaurantChallenge newChallenge = (RestaurantChallenge) challenge;
-                restaurantChallengeDao.create(newChallenge);
+                //RestaurantChallenge newChallenge = (RestaurantChallenge) challenge;
+                //restaurantChallengeDao.create(newChallenge);
             }
             else if (challenge instanceof TextChallenge)
             {
@@ -137,13 +191,11 @@ public class ChallengeManager
             {
                 throw new IllegalArgumentException("Could not recognize challenge type.");
             }
-            deleteRedundantChallenges();
         }
         catch (SQLException e)
         {
             e.printStackTrace();
         }
-
     }
 
     private void deleteRedundantChallenges()
@@ -306,11 +358,4 @@ public class ChallengeManager
         }*/
     }
 
-    public void addChallenge(String type, int id, List<Ingredient> ingredients) {
-        AddChallengeRestMethod addChallengeRestMethod = new AddChallengeRestMethod(context);
-        addChallengeRestMethod.setType(type);
-        addChallengeRestMethod.setId(id);
-        addChallengeRestMethod.setIngredientsForCreativeCookingChallenge(ingredients);
-        addChallengeRestMethod.execute();
-    }
 }

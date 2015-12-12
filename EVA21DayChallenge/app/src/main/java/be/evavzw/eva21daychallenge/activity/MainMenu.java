@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,6 +19,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.activity.base.RESTfulActivity;
 import be.evavzw.eva21daychallenge.activity.challenges.ChallengeActivity;
+import be.evavzw.eva21daychallenge.activity.challenges.TextDetailActivity;
 import be.evavzw.eva21daychallenge.models.User;
 import be.evavzw.eva21daychallenge.services.UserManager;
 import be.evavzw.eva21daychallenge.activity.challenges.RecipeDetailActivity;
@@ -45,12 +48,16 @@ public class MainMenu extends RESTfulActivity
     TextView textViewDagen;
 
     private UserManager userManager;
+    private ChallengeManager challengeManager;
 
     @Bind(R.id.drawer_layout)
     DrawerLayout main;
 
     @Bind(R.id.testView)
     ImageView view;
+
+    @Bind(R.id.button_challenge)
+    Button challengeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -59,6 +66,7 @@ public class MainMenu extends RESTfulActivity
         super.onCreate(savedInstanceState);
 
         userManager = UserManager.getInstance(getApplicationContext());
+        challengeManager = ChallengeManager.getInstance(getApplicationContext());
 
         ButterKnife.bind(this);
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -113,8 +121,7 @@ public class MainMenu extends RESTfulActivity
 
     @OnClick(R.id.button_challenge)
     public void pickChallenge() {
-        Intent intent = new Intent(MainMenu.this, ChallengeActivity.class);
-        startActivity(intent);
+        new FetchChallengeTask().execute();
     }
 
 /*    public void setProgress() {
@@ -213,5 +220,50 @@ public class MainMenu extends RESTfulActivity
             }
         }
     }
+
+    private class FetchChallengeTask extends AsyncTask<Void, Void, Boolean> {
+
+        Challenge c;
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            try {
+                c = challengeManager.getCurrentChallenge();
+                return true;
+            } catch (Exception e) {
+                throw e;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean success) {
+            if (c == null)
+            {
+                Intent intent = new Intent(MainMenu.this, ChallengeActivity.class);
+                startActivity(intent);
+            } else if (c instanceof RecipeChallenge) {
+                RecipeChallenge rc = (RecipeChallenge) c;
+                Intent intent = new Intent(MainMenu.this, RecipeDetailActivity.class);
+                intent.putExtra(RecipeDetailActivity.RECIPE, rc.getRecipe());
+                intent.putExtra(RecipeDetailActivity.CURRENT, true);
+                startActivity(intent);
+            } else if (c instanceof RestaurantChallenge) {
+                RestaurantChallenge rc = (RestaurantChallenge) c;
+                Intent intent = new Intent(MainMenu.this, RestaurantDetailActivity.class);
+                intent.putExtra(RestaurantDetailActivity.RESTAURANT, rc.getRestaurant());
+                intent.putExtra(RestaurantDetailActivity.CURRENT, true);
+                startActivity(intent);
+            } else if (c instanceof TextChallenge) {
+                Intent intent = new Intent(MainMenu.this, TextDetailActivity.class);
+                startActivity(intent);
+            } else
+            {
+                Log.e("Main Menu", "Challenge was not recognized.");
+                //do nothing
+            }
+        }
+    }
+
+
 
 }

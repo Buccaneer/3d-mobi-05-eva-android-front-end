@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -41,6 +42,7 @@ import butterknife.OnClick;
 public class RecipeDetailActivity extends AppCompatActivity {
 
     public static final String RECIPE = "recipe";
+    public static final String CURRENT = "current";
 
     @Bind(R.id.collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbar;
@@ -75,9 +77,13 @@ public class RecipeDetailActivity extends AppCompatActivity {
     @Bind(R.id.description)
     TextView description;
 
+    @Bind(R.id.addChallenge)
+    FloatingActionButton addChallenge;
+
     private RecipeManager recipeManager;
     private ChallengeManager challengeManager;
     boolean calledFromCCC = false;
+    private boolean current = false;
     Recipe recipe;
 
     @Override
@@ -89,9 +95,14 @@ public class RecipeDetailActivity extends AppCompatActivity {
         ((NestedScrollView) findViewById(R.id.nestedScrollView)).addView(inflater.inflate(R.layout.recipe_challenge, null));
         ButterKnife.bind(this);
 
-        if (getIntent().getExtras() != null && getIntent().getExtras().containsKey("CALLED_FROM")) {
-            if (getIntent().getExtras().getString("CALLED_FROM").equals("CCC")) {
+        if (getIntent().getExtras() != null) {
+            if (getIntent().getExtras().containsKey("CALLED_FROM") && getIntent().getExtras().getString("CALLED_FROM").equals("CCC")) {
                 calledFromCCC = true;
+            }
+            current = getIntent().getBooleanExtra(CURRENT, false);
+            if (current)
+            {
+                addChallenge.setImageDrawable(getResources().getDrawable(R.drawable.apptheme_btn_check_on_focused_holo_light));
             }
         }
 
@@ -251,7 +262,11 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
     @OnClick(R.id.addChallenge)
     public void addChallenge() {
-        new AddChallengeTask().execute();
+        if (!current) {
+            new AddChallengeTask().execute();
+        } else {
+            new FinishChallengeTask().execute();
+        }
     }
 
     private class AddChallengeTask extends AsyncTask<Void, Void, Boolean> {
@@ -284,6 +299,25 @@ public class RecipeDetailActivity extends AppCompatActivity {
         }
     }
 
+    private class FinishChallengeTask extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            try {
+                challengeManager.finishCurrentChallenge();
+                return true;
+            } catch (Exception e) {
+                throw e;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean success) {
+            if (success) {
+                finish();
+            }
+        }
+    }
 
 }
 

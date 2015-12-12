@@ -1,6 +1,7 @@
 package be.evavzw.eva21daychallenge.activity.challenges;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import com.bumptech.glide.Glide;
 
 import be.evavzw.eva21daychallenge.R;
+import be.evavzw.eva21daychallenge.activity.MainMenu;
 import be.evavzw.eva21daychallenge.services.ChallengeManager;
 
 import butterknife.ButterKnife;
@@ -73,10 +75,10 @@ public class TextDetailFragment extends ChallengeFragment
         {
             if (success)
             {
-                //challengeManager.getCurrentChallenge();
-                //Intent intent = new Intent(getActivity(), MainMenu.class);
-                //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                //startActivity(intent);
+                challengeManager.getCurrentChallenge();
+                Intent intent = new Intent(getActivity(), MainMenu.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
                 getActivity().finish();
             }
         }

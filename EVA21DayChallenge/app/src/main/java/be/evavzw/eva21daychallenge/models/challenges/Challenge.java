@@ -2,15 +2,12 @@ package be.evavzw.eva21daychallenge.models.challenges;
 
 import com.j256.ormlite.field.DatabaseField;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import be.evavzw.eva21daychallenge.models.categories.Category;
 
 /**
  * Created by Pieter-Jan on 14/11/2015.
@@ -31,6 +28,11 @@ public class Challenge implements Serializable, Comparable<Challenge>
     @DatabaseField
     private int earnings, serverId;
 
+    @DatabaseField
+    private boolean isCurrentChallenge;
+
+    private int minutesLeft;
+
     Challenge() //for ormlite
     {
     }
@@ -42,6 +44,7 @@ public class Challenge implements Serializable, Comparable<Challenge>
         type = jsonObject.getString("Type");
         earnings = jsonObject.getInt("Earnings");
         name = jsonObject.getString("Name");
+        minutesLeft = jsonObject.getInt("TimeToAccept");
     }
 
     public Date getDate()
@@ -52,6 +55,16 @@ public class Challenge implements Serializable, Comparable<Challenge>
     public void setDate(Date date)
     {
         this.date = date;
+    }
+
+    public boolean isCurrentChallenge()
+    {
+        return isCurrentChallenge;
+    }
+
+    public void setIsCurrentChallenge(boolean isCurrentChallenge)
+    {
+        this.isCurrentChallenge = isCurrentChallenge;
     }
 
     public int getServerId()
@@ -69,6 +82,16 @@ public class Challenge implements Serializable, Comparable<Challenge>
         return name;
     }
 
+    public int getMinutesLeft()
+    {
+        return minutesLeft;
+    }
+
+    public void setMinutesLeft(int minutesLeft)
+    {
+        this.minutesLeft = minutesLeft;
+    }
+
     public int getEarnings()
     {
         return earnings;
@@ -77,6 +100,12 @@ public class Challenge implements Serializable, Comparable<Challenge>
     @Override
     public int compareTo(Challenge another)
     {
+        if (date == null ^ another.date == null) {
+            return (date == null) ? -1 : 1;
+        }
+        if (date == null) {
+            return 0;
+        }
         return date.compareTo(another.date);
     }
 }
