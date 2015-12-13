@@ -459,11 +459,12 @@ public class RestaurantListFragment extends ChallengeFragment implements
 
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+
         if(savedInstanceState != null && savedInstanceState.containsKey("RESTAURANTS")){
             restaurants = (List<Restaurant>) savedInstanceState.getSerializable("RESTAURANTS");
             setupRecyclerView(rv);
         }
-        super.onViewStateRestored(savedInstanceState);
     }
 
     /**

@@ -137,6 +137,12 @@ public class Register extends RESTfulActivity {
         confirmPasswordEditText.setText("testje");
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+    }
+
     class RegisterTask extends AsyncTask<String, String, Boolean> {
 
         @Override

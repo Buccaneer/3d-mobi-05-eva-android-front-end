@@ -137,4 +137,5 @@
     <string name="level5">Niveau actuel: 5 (Bouton)</string>
     <string name="level4">Niveau actuel: 4 (Feuille)</string>
     <string name="level6">Niveau actuel: 6 (Fleur)</string>
+    <string name="emailRequired">Adresse email est requis</string>
 </resources>

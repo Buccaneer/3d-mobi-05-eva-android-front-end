@@ -85,12 +85,6 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         //updateChallenge(restaurant);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_with_actions, menu);
-        return true;
-    }
-
     private String toUpperCase(String s) {
         return Character.toUpperCase(s.charAt(0)) + s.substring(1);
     }

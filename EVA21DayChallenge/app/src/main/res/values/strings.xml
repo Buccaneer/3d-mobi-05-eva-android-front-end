@@ -138,4 +138,5 @@
     <string name="level5">Huidig niveau: 5 (Knop)</string>
     <string name="level6">Huidig niveau: 6 (Bloem)</string>
     <string name="points">punten</string>
+    <string name="emailRequired">E-mail is verplicht</string>
 </resources>

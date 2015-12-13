@@ -137,4 +137,5 @@
     <string name="level4">Current level: 4 (Leaf)</string>
     <string name="level5">Current level: 5 (Bud)</string>
     <string name="level6">Current level: 6 (Flower)</string>
+    <string name="emailRequired">Email is required</string>
 </resources>

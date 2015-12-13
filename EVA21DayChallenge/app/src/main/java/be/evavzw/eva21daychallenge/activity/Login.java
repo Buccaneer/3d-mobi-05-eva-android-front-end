@@ -155,7 +155,7 @@ public class Login extends RESTfulActivity {
 
     @OnClick(R.id.createAccount)
     public void createAccountOnClick(View v) {
-        Intent intent = new Intent(v.getContext(), Register.class);
+        Intent intent = new Intent(this, Register.class);
         startActivity(intent);
     }
 
