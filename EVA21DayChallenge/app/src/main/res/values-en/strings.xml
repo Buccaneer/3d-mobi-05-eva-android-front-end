@@ -102,4 +102,5 @@
     <string name="viewDag">day done</string>
     <string name="no_recipes_found">No recipes were found.</string>
     <string name="no_restaurants_found">No restaurants were found.</string>
+    <string name="finished_challenge">Finished</string>
 </resources>

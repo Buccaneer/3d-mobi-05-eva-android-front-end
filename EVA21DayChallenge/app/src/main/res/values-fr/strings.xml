@@ -100,4 +100,5 @@
     <string name="typeIngredient">Nom ingrédient</string>
     <string name="loggingIn">En train de vous connecter...</string>
     <string name="viewDag">jour complétez</string>
+    <string name="finished_challenge">Fini</string>
 </resources>

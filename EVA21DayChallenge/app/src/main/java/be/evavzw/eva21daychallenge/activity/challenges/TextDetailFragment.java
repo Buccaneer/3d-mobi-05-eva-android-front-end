@@ -75,7 +75,6 @@ public class TextDetailFragment extends ChallengeFragment
         {
             if (success)
             {
-                challengeManager.getCurrentChallenge();
                 Intent intent = new Intent(getActivity(), MainMenu.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
