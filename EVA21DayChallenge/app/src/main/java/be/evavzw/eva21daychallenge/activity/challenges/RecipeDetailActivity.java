@@ -160,12 +160,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
         Glide.with(this).load(recipe.getImage()).centerCrop().into(imageView);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_with_actions, menu);
-        return true;
-    }
-
     private String toUpperCase(String s) {
         return Character.toUpperCase(s.charAt(0)) + s.substring(1);
     }

@@ -165,12 +165,21 @@ public class RegisterRestMethod extends AbstractRestMethod<Void> {
         }
 
         public RegisterRestMethod build() {
+
             if (!p1.equals(p2)) {
                 Map<String, List<String>> errors = new HashMap<>();
                 List<String> errorDetails = new ArrayList<>();
                 String message = context.getResources().getString(R.string.passwordsNotEqual);
                 errorDetails.add(message);
                 errors.put("confirmPassword", errorDetails);
+                throw new RegisterFailedException(errors);
+            }
+            if(s_email.isEmpty()){
+                Map<String, List<String>> errors = new HashMap<>();
+                List<String> errorDetails = new ArrayList<>();
+                String message = context.getResources().getString(R.string.emailRequired);
+                errorDetails.add(message);
+                errors.put("email", errorDetails);
                 throw new RegisterFailedException(errors);
             }
 

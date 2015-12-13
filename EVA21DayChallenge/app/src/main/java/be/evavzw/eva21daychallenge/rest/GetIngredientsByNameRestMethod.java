@@ -41,9 +41,14 @@ public class GetIngredientsByNameRestMethod extends AbstractRestMethod<List<Ingr
             Request r = new Request(RestMethodFactory.Method.GET, ingredientURI, null, null);
             return r;
         } catch (Exception ex) {
-            throw new IllegalArgumentException("Cannot build request see nested exception.", ex);
+            try{
+                URI ingredientURI = URI.create("http://evavzwrest.azurewebsites.net/api/Ingredient?name=stopmethettebreken");
+                Request r = new Request(RestMethodFactory.Method.GET, ingredientURI, null, null);
+                return r;
+            }catch(Exception e){
+                throw new IllegalArgumentException("Cannot build request see nested exception.", ex);
+            }
         }
-
     }
 
     @Override

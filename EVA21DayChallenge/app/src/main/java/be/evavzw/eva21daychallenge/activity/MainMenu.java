@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,11 +29,6 @@ import butterknife.OnClick;
 public class MainMenu extends RESTfulActivity
 {
 
-    private int mProgressStatus = 0;
-    private final double CUTOFF = 100.0 / 21.0;
-    private Handler mHandler = new Handler();
-    /*    @Bind(R.id.progressDaysRemaining)
-        ProgressBar progressBar;*/
     @Bind(R.id.textViewProgress)
     TextView textViewProgress;
 
@@ -39,9 +36,6 @@ public class MainMenu extends RESTfulActivity
     TextView textViewDagen;
 
     private UserManager userManager;
-
-    @Bind(R.id.drawer_layout)
-    DrawerLayout main;
 
     @Bind(R.id.testView)
     ImageView view;
@@ -55,29 +49,19 @@ public class MainMenu extends RESTfulActivity
         userManager = UserManager.getInstance(getApplicationContext());
 
         ButterKnife.bind(this);
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
-
-
-        //NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        //navigationView.setNavigationItemSelectedListener(this);
-
-        /*progressBar.setProgress(100);
-        setProgress();*/
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(getResources().getString(R.string.title_activity_main_menu));
+
+        toolbar.inflateMenu(R.menu.menu_with_actions);
+        toolbar.getMenu().findItem(R.id.nav_badges).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent intent = new Intent(getApplicationContext(), BadgesActivity.class);
+                startActivity(intent);
+                return true;
+            }
+        });
 
         new FetchUserTask().execute();
     }
