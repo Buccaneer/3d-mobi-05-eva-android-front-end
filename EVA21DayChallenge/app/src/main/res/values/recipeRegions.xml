@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="recipe_regions">
+        <item>@string/afrikaans</item>
+        <item>@string/oosters</item>
+        <item>@string/westers</item>
+        <item>@string/zuidAmerikaans</item>
+    </string-array>
+</resources>

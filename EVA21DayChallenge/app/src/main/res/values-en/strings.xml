@@ -138,4 +138,11 @@
     <string name="level5">Current level: 5 (Bud)</string>
     <string name="level6">Current level: 6 (Flower)</string>
     <string name="emailRequired">Email is required</string>
+    <string name="afrikaans">African</string>
+    <string name="category_regionRecipe">Regional recipe</string>
+    <string name="oosters">Eastern</string>
+    <string name="region">Region:</string>
+    <string name="regionRecipeDescription">In this challenge you have to cook something from another region. First select a region and then cook something delicious!</string>
+    <string name="westers">Western</string>
+    <string name="zuidAmerikaans">South American</string>
 </resources>

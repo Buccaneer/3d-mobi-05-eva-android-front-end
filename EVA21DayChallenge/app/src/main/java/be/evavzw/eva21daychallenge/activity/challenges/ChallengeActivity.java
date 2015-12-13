@@ -138,7 +138,7 @@ public class ChallengeActivity extends AppCompatActivity
         adapter.addFragment(restaurantListFragment, getString(R.string.category_restaurant));
         adapter.addFragment(new TextDetailFragment(), getString(R.string.category_sugarfree));
         adapter.addFragment(creativeCookingFragment, getString(R.string.CCC));
-
+        adapter.addFragment(new RegionRecipeFragment(), getString(R.string.category_regionRecipe));
 
         viewPager.setAdapter(adapter);
 

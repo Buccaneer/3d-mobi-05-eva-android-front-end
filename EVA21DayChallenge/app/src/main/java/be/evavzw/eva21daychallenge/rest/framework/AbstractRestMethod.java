@@ -1,6 +1,7 @@
 package be.evavzw.eva21daychallenge.rest.framework;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.Arrays;
 import java.util.List;
@@ -120,6 +121,7 @@ public abstract class AbstractRestMethod<T> implements RestMethod<T> {
             throw new Exception(message);
         } else {
             String message = getContext().getResources().getString(R.string.error500);
+            Log.wtf("error", responseBody);
             throw new Exception(message);
         }
     }

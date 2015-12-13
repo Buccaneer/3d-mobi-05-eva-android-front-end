@@ -219,12 +219,12 @@ public class UserManager implements RequestSigner {
         if (!u.isRegistered()) {
             // Make a new Rest Method which handles the registering of external users
             new RegisterExternalRestMethod(context).setEmail(u.getEmail()).setCookie(cookie).execute();
-            u = getUser();
+            //u = getUser();
 
             // For some reason the account doesn't get confirmed if it's the first time registering, so call it again if it's not confirmed
-            if (!u.isRegistered()) {
-                new RegisterExternalRestMethod(context).setEmail(u.getEmail()).setCookie(cookie).execute();
-            }
+//            if (!u.isRegistered()) {
+//                new RegisterExternalRestMethod(context).setEmail(u.getEmail()).setCookie(cookie).execute();
+//            }
         }
     }
 

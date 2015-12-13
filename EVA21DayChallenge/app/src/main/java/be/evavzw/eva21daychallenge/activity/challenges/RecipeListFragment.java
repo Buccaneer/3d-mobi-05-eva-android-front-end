@@ -171,9 +171,9 @@ public class RecipeListFragment extends ChallengeFragment {
 
                 // TODO : Fix performantie / Out of memory
                 Glide.with(holder.mImageView.getContext())
-                        .load("" /*holder.mRestaurant.getImage()*/)
-                        .placeholder(R.drawable.cook_green)
-                        .thumbnail(0.2f)
+                        .load(holder.mRecipe.getImage())
+//                        .placeholder(R.drawable.cook_green)
+//                        .thumbnail(0.2f)
                         .into(holder.mImageView);
 
             } else if (holderr instanceof Description) {

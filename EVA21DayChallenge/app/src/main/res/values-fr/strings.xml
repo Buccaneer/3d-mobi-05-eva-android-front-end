@@ -138,4 +138,11 @@
     <string name="level4">Niveau actuel: 4 (Feuille)</string>
     <string name="level6">Niveau actuel: 6 (Fleur)</string>
     <string name="emailRequired">Adresse email est requis</string>
+    <string name="afrikaans">Africain</string>
+    <string name="category_regionRecipe">Recette régionale</string>
+    <string name="oosters">Oriental</string>
+    <string name="region">Région:</string>
+    <string name="regionRecipeDescription"> Dans ce défi que vous avez à faire cuire quelque chose d\'une autre région. Tout d\'abord, sélectionnez une région, puis faire cuire quelque chose de délicieux!</string>
+    <string name="westers">Western</string>
+    <string name="zuidAmerikaans">Amérique du Sud </string>
 </resources>

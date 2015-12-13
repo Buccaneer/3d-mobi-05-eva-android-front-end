@@ -139,6 +139,7 @@ public class ChallengeHistoryActivity extends AppCompatActivity {
                     break;
                 case "Recipe":
                 case "CreativeCooking":
+                case "RegionRecipe":
                     Glide.with(context)
                             .load(Uri.parse(holder.mChallenge.getThumbnail()))
                             .centerCrop()
@@ -197,7 +198,7 @@ public class ChallengeHistoryActivity extends AppCompatActivity {
             if (success) {
                 if (!challenges.isEmpty())
                     setupRecyclerView(challenges);
-                else{
+                else {
                     historyNothingFound.setVisibility(View.VISIBLE);
                     historyProgress.setVisibility(View.GONE);
                 }

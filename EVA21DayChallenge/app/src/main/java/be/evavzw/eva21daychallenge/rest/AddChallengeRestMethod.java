@@ -61,6 +61,8 @@ public class AddChallengeRestMethod extends AbstractRestMethod {
                     return buildNewSuikervrijRequest();
                 case "CreativeCooking":
                     return buildNewCreativeCookingRequest();
+                case "RegionRecipe":
+                    return buildRegionRecipeRequest();
                 default:
                     return null;
             }
@@ -103,6 +105,15 @@ public class AddChallengeRestMethod extends AbstractRestMethod {
             array.put(ingredient.getIngredientId());
         }
         body.put("IngredientsId", array);
+        body.put("RecipeId", id);
+        Map<String, List<String>> header = new HashMap<>();
+        header.put("Content-Type", Arrays.asList("application/json"));
+        return new Request(RestMethodFactory.Method.PUT, REQURESTURI, header, body.toString().getBytes());
+    }
+
+    private Request buildRegionRecipeRequest() throws JSONException{
+        JSONObject body = new JSONObject();
+        body.put("Type", type);
         body.put("RecipeId", id);
         Map<String, List<String>> header = new HashMap<>();
         header.put("Content-Type", Arrays.asList("application/json"));

@@ -77,7 +77,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
     private RecipeManager recipeManager;
     private ChallengeManager challengeManager;
-    boolean calledFromCCC = false;
+    String calledFrom = "";
     Recipe recipe;
 
     @Override
@@ -91,7 +91,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
         if (getIntent().getExtras() != null && getIntent().getExtras().containsKey("CALLED_FROM")) {
             if (getIntent().getExtras().getString("CALLED_FROM").equals("CCC")) {
-                calledFromCCC = true;
+                calledFrom = "CCC";
+            }if(getIntent().getExtras().getString("CALLED_FROM").equals("RegionRecipe")){
+                calledFrom= "RegionRecipe";
             }
         }
 
@@ -119,7 +121,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            if(calledFromCCC){
+            if(calledFrom.equals("CCC")){
                 CreativeCookingFragment.currentView="INGREDIENTS";
                 this.finish();
                 return false;
@@ -253,10 +255,12 @@ public class RecipeDetailActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Void... params) {
             try {
-                if (calledFromCCC) {
+                if (calledFrom.equals("CCC")) {
                     List<Ingredient> ingredients = (List<Ingredient>) getIntent().getExtras().get("INGREDIENTS");
                     challengeManager.addChallenge("CreativeCooking", recipe.getRecipeId(), ingredients);
-                } else {
+                } else if (calledFrom.equals("RegionRecipe")) {
+                    challengeManager.addChallenge("RegionRecipe", recipe.getRecipeId());
+                }else{
                     challengeManager.addChallenge("Recipe", recipe.getRecipeId());
                 }
                 return true;

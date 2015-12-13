@@ -20,6 +20,7 @@ import be.evavzw.eva21daychallenge.rest.GetAllRecipesRestMethod;
 import be.evavzw.eva21daychallenge.rest.GetAllRestaurantsRestMethod;
 import be.evavzw.eva21daychallenge.rest.GetChallengesFromUser;
 import be.evavzw.eva21daychallenge.rest.GetCurrentChallengeRestMethod;
+import be.evavzw.eva21daychallenge.rest.GetRecipesByRegionRestMethod;
 import be.evavzw.eva21daychallenge.rest.GetRestaurantDetailsRestMethod;
 
 /**
@@ -265,5 +266,11 @@ public class ChallengeManager {
 
     public List<Challenge> getChallengesFromUser() {
         return new GetChallengesFromUser(context).execute().getResource();
+    }
+
+    public List<Recipe> getRecipesByRegion(String region) {
+        GetRecipesByRegionRestMethod getRecipesByRegion = new GetRecipesByRegionRestMethod(context);
+        getRecipesByRegion.setRegion(region);
+        return getRecipesByRegion.execute().getResource();
     }
 }

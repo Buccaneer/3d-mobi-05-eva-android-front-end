@@ -139,4 +139,11 @@
     <string name="level6">Huidig niveau: 6 (Bloem)</string>
     <string name="points">punten</string>
     <string name="emailRequired">E-mail is verplicht</string>
+    <string name="regionRecipeDescription">Bij deze challenge moet je iets koken uit een andere regio. Selecteer eerst een regio en kook dan iets lekkers!</string>
+    <string name="oosters">Oosters</string>
+    <string name="afrikaans">Afrikaans</string>
+    <string name="westers">Westers</string>
+    <string name="zuidAmerikaans">Zuid-Amerikaans</string>
+    <string name="category_regionRecipe">Regio recept</string>
+    <string name="region">Regio:</string>
 </resources>

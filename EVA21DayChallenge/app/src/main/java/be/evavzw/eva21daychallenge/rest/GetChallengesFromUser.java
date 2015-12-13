@@ -63,6 +63,7 @@ public class GetChallengesFromUser extends AbstractRestMethod<List<Challenge>> {
                     challenge = new CreativeCookingChallenge(row);
                     break;
                 case "Recipe":
+                case "RegionRecipe":
                     challenge = new RecipeChallenge(row);
                     break;
                 default:
