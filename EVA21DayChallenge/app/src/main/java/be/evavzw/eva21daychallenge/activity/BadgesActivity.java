@@ -2,12 +2,14 @@ package be.evavzw.eva21daychallenge.activity;
 
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
+import android.graphics.PorterDuff;
 import android.os.AsyncTask;
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -43,6 +45,16 @@ public class BadgesActivity extends AppCompatActivity {
     TextView badgeName;
     @Bind(R.id.badgeDescription)
     TextView badgeDescription;
+    @Bind(R.id.badgeScrollview)
+    ScrollView badgeScrollview;
+    @Bind(R.id.badgeProgress)
+    ProgressBar badgeProgress;
+    @Bind(R.id.userPoints)
+    TextView userPoints;
+    @Bind(R.id.userProgress)
+    ProgressBar userProgress;
+    @Bind(R.id.userLevel)
+    TextView userLevel;
 
     private UserManager userManager;
     private User user;
@@ -64,12 +76,21 @@ public class BadgesActivity extends AppCompatActivity {
             if (savedInstanceState.containsKey("user")) {
                 user = (User) savedInstanceState.getSerializable("user");
             }
+            if (savedInstanceState.containsKey("name")) {
+                badgeName.setText(savedInstanceState.getString("name"));
+            }
+            if (savedInstanceState.containsKey("description")) {
+                badgeDescription.setText(savedInstanceState.getString("description"));
+            }
         }
 
         if (user == null)
             new FetchUserTask().execute();
-        else
-            setupBadges(user);
+        else {
+            setupScreen(user);
+            badgeProgress.setVisibility(View.GONE);
+            badgeScrollview.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -78,7 +99,7 @@ public class BadgesActivity extends AppCompatActivity {
         return true;
     }
 
-    private void setupBadges(User user) {
+    private void setupScreen(User user) {
         this.user = user;
         ColorMatrix matrix = new ColorMatrix();
         matrix.setSaturation(0);
@@ -134,11 +155,54 @@ public class BadgesActivity extends AppCompatActivity {
             badgeStarter.setColorFilter(filter);
         if (!badges.contains("doorzetter"))
             badgeDoorzetter.setColorFilter(filter);
+
+        int max = 0;
+        int currentPoints = 0;
+        if (badges.contains("level1")) {
+            userLevel.setText(R.string.level1);
+            max = 5;
+            currentPoints = user.getPoints();
+        }
+        if (badges.contains("level2")) {
+            userLevel.setText(R.string.level2);
+            max = 10;
+            currentPoints = user.getPoints() - 5;
+        }
+        if (badges.contains("level3")) {
+            userLevel.setText(R.string.level3);
+            max = 20;
+            currentPoints = user.getPoints() - 10;
+        }
+        if (badges.contains("level4")) {
+            userLevel.setText(R.string.level4);
+            max = 32;
+            currentPoints = user.getPoints() - 20;
+        }
+        if (badges.contains("level5")) {
+            userLevel.setText(R.string.level5);
+            max = 50;
+            currentPoints = user.getPoints() - 32;
+        }
+        if (badges.contains("level6")) {
+            userLevel.setText(R.string.level6);
+            max = 50;
+            currentPoints = 50;
+        }
+
+        userProgress.setMax(max);
+        userProgress.setProgress(currentPoints);
+        userPoints.setText(currentPoints + "/" + max + " " + getString(R.string.points));
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putSerializable("user", user);
+        if (!badgeName.getText().toString().isEmpty()) {
+            outState.putString("name", badgeName.getText().toString());
+        }
+        if (!badgeDescription.getText().equals(getString(R.string.badgeDescriptionPlaceholder))) {
+            outState.putString("description", badgeDescription.getText().toString());
+        }
         super.onSaveInstanceState(outState);
     }
 
@@ -206,8 +270,10 @@ public class BadgesActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Boolean success) {
+            badgeProgress.setVisibility(View.GONE);
+            badgeScrollview.setVisibility(View.VISIBLE);
             if (success) {
-                setupBadges(user);
+                setupScreen(user);
             }
         }
     }

@@ -6,10 +6,47 @@
     android:orientation="vertical"
     tools:context="be.evavzw.eva21daychallenge.activity.BadgesActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="vertical"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp">
+
+        <TextView
+            android:id="@+id/userLevel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ProgressBar
+                android:id="@+id/userProgress"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_centerInParent="true" />
+
+            <TextView
+                android:id="@+id/userPoints"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="#00000000"
+                android:textColor="#ffffff" />
+        </RelativeLayout>
+    </LinearLayout>
+
     <ScrollView
+        android:id="@+id/badgeScrollview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="90dp">
+        android:paddingBottom="90dp"
+        android:paddingTop="50dp"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,19 +67,19 @@
                     android:layout_weight="1" />
 
                 <ImageView
+                    android:id="@+id/badgeTrotsegebruiker"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <ImageView
                     android:id="@+id/badgeDoorzetter"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
                 <ImageView
-                    android:id="@+id/badgeExplorer"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:id="@+id/badgeGastronoom"
+                    android:id="@+id/badgeGenieter"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
@@ -56,7 +93,7 @@
                 android:weightSum="4">
 
                 <ImageView
-                    android:id="@+id/badgeGenieter"
+                    android:id="@+id/badgeGastronoom"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
@@ -74,7 +111,7 @@
                     android:layout_weight="1" />
 
                 <ImageView
-                    android:id="@+id/badgeTrotsegebruiker"
+                    android:id="@+id/badgeExplorer"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
@@ -91,22 +128,33 @@
             android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="3dp"
-            android:background="@color/eva_grijs"/>
+            android:background="@color/eva_grijs" />
+
         <TextView
             android:id="@+id/badgeName"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:layout_below="@id/divider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/divider"
             android:gravity="center_horizontal"
-            android:textStyle="bold"/>
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/badgeDescription"
-            android:layout_below="@id/badgeName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/badgeName"
             android:gravity="center_horizontal"
-            android:text="@string/badgeDescriptionPlaceholder"/>
+            android:text="@string/badgeDescriptionPlaceholder" />
     </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/badgeProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminate="true"
+        android:paddingBottom="90dp"
+        android:theme="?android:progressBarStyleLarge" />
 </RelativeLayout>

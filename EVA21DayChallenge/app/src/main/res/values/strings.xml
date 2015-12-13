@@ -124,11 +124,18 @@
     <string name="badgeStarter">Starter</string>
     <string name="badgeDoorzetter">Doorzetter</string>
     <string name="badgeCreatievelingDescription">Gebruik zaken uit je koelkast om een recept te maken.</string>
-    <string name="badgeExplorerDescription">Maak een aantal recepten uit een andere regio.</string>
+    <string name="badgeExplorerDescription">Maak een recept uit een andere regio.</string>
     <string name="badgeSugarrushDescription">Eet een ganse dag geen suiker.</string>
     <string name="badgeGastronoomDescription">Ga 3 keer op restaurant en eet iets veganistisch.</string>
     <string name="badgeGenieterDescription">Ga voor de eerste keer naar een restaurant en eet iets veganistisch.</string>
     <string name="badgeTrotseGebruikerDescription">Vraag 10 dagen op een rij een challenge aan en voltooi hem.</string>
     <string name="badgeStarterDescription">Voltooi je eerste challenge.</string>
     <string name="badgeDoorzetterDescription">Voltooi 21 dagen.</string>
+    <string name="level1">Huidig niveau: 1 (Zaadje)</string>
+    <string name="level2">Huidig niveau: 2 (Wortel)</string>
+    <string name="level3">Huidig niveau: 3 (Stengel)</string>
+    <string name="level4">Huidig niveau: 4 (Blaadje)</string>
+    <string name="level5">Huidig niveau: 5 (Knop)</string>
+    <string name="level6">Huidig niveau: 6 (Bloem)</string>
+    <string name="points">punten</string>
 </resources>
