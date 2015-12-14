@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import be.evavzw.eva21daychallenge.R;
+import be.evavzw.eva21daychallenge.customComponent.MagicTextView;
 import be.evavzw.eva21daychallenge.models.User;
 import be.evavzw.eva21daychallenge.services.UserManager;
 import butterknife.Bind;
@@ -50,7 +51,7 @@ public class BadgesActivity extends AppCompatActivity {
     @Bind(R.id.badgeProgress)
     ProgressBar badgeProgress;
     @Bind(R.id.userPoints)
-    TextView userPoints;
+    MagicTextView userPoints;
     @Bind(R.id.userProgress)
     ProgressBar userProgress;
     @Bind(R.id.userLevel)
