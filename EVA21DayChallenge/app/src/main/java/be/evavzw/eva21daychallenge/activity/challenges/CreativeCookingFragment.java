@@ -241,9 +241,7 @@ public class CreativeCookingFragment extends ChallengeFragment implements Search
             convertView.setTag(R.id.recipeTag, recipe);
 
             Glide.with(holder.mImageView.getContext())
-                    .load("" /*holder.mRestaurant.getImage()*/)
-                    .placeholder(R.drawable.cook_green)
-                    .thumbnail(0.2f)
+                    .load(recipe.getImage())
                     .into(holder.mImageView);
 
             return convertView;

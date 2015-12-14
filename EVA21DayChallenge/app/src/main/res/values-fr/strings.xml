@@ -40,7 +40,7 @@
     <string name="passwordsNotEqual">Les mots de passe ne sont pas égaux</string>
     <string name="close">Fermer</string>
     <string name="slogan">Explorer la nature</string>
-    <string name="viewDagen">jours complétez</string>
+    <string name="viewDagen">défis complétez</string>
     <string name="address">Adresse</string>
     <string name="category_restaurant">Manger à l\'extérieur</string>
     <string name="description">Description</string>
@@ -99,7 +99,7 @@
     <string name="challenges">Challenges</string>
     <string name="typeIngredient">Nom ingrédient</string>
     <string name="loggingIn">En train de vous connecter...</string>
-    <string name="viewDag">jour complétez</string>
+    <string name="viewDag">défi complétez</string>
     <string name="challengeHistory">Histoire challenge</string>
     <string name="no_recipes_found">Aucune recette n\'a été trouvé. </string>
     <string name="no_restaurants_found">Aucun restaurant n\'a été trouvé.</string>
@@ -132,7 +132,7 @@
     <string name="badgeTrotseGebruikerDescription">Choisissez 10 jours d\'affilée un défi et le compléter. </string>
     <string name="points">points</string>
     <string name="level1">Niveau actuel: 1 (Graine)</string>
-    <string name="level2">Niveau actuel: 2 (Carotte)</string>
+    <string name="level2">Niveau actuel: 2 (Racine)</string>
     <string name="level3">Niveau actuel: 3 (Tige)</string>
     <string name="level5">Niveau actuel: 5 (Bouton)</string>
     <string name="level4">Niveau actuel: 4 (Feuille)</string>

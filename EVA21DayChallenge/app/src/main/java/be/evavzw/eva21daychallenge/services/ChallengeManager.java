@@ -175,7 +175,12 @@ public class ChallengeManager {
             {
                 TextChallenge newChallenge = (TextChallenge) challenge;
                 textChallengeDao.create(newChallenge);
-            } else {
+            }else if(challenge instanceof RegionRecipeChallenge){
+
+            }else if(challenge instanceof CreativeCookingChallenge){
+
+            }
+            else {
                 throw new IllegalArgumentException("Could not recognize challenge type.");
             }
         }

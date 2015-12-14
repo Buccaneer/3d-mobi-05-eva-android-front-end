@@ -99,7 +99,7 @@
     <string name="challenges">Challenges</string>
     <string name="typeIngredient">Name ingredient</string>
     <string name="loggingIn">Logging you in…</string>
-    <string name="viewDag">day done</string>
+    <string name="viewDag">challenge done</string>
     <string name="no_recipes_found">No recipes were found.</string>
     <string name="no_restaurants_found">No restaurants were found.</string>
     <string name="challengeHistory">Challenge history</string>
@@ -132,7 +132,7 @@
     <string name="badgeTrotseGebruikerDescription">Choose a challenge 10 days in a row and complete them.</string>
     <string name="points">points</string>
     <string name="level1">Current level: 1 (Seed)</string>
-    <string name="level2">Current level: 2 (Carrot)</string>
+    <string name="level2">Current level: 2 (Root)</string>
     <string name="level3">Current level: 3 (Stem)</string>
     <string name="level4">Current level: 4 (Leaf)</string>
     <string name="level5">Current level: 5 (Bud)</string>

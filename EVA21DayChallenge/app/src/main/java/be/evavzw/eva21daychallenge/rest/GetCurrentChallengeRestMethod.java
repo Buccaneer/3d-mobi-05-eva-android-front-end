@@ -10,7 +10,9 @@ import java.net.URI;
 import be.evavzw.eva21daychallenge.exceptions.RegisterFailedException;
 import be.evavzw.eva21daychallenge.models.Recipe;
 import be.evavzw.eva21daychallenge.models.challenges.Challenge;
+import be.evavzw.eva21daychallenge.models.challenges.CreativeCookingChallenge;
 import be.evavzw.eva21daychallenge.models.challenges.RecipeChallenge;
+import be.evavzw.eva21daychallenge.models.challenges.RegionRecipeChallenge;
 import be.evavzw.eva21daychallenge.models.challenges.RestaurantChallenge;
 import be.evavzw.eva21daychallenge.models.challenges.TextChallenge;
 import be.evavzw.eva21daychallenge.rest.framework.AbstractRestMethod;
@@ -92,12 +94,13 @@ public class GetCurrentChallengeRestMethod extends AbstractRestMethod<Challenge>
         if (type.equals("Restaurant")) {
             return new RestaurantChallenge(obj);
         }
-        // TODO: ensure challenges other than Recipe work as well
         if (type.equals("Suikervrij")) {
             return new TextChallenge(obj);
-        }
+        }if(type.equals("RegionRecipe")){
+        return new RegionRecipeChallenge(obj);
+    }
         if (type.equals("CreativeCooking")) {
-            throw new UnsupportedOperationException("TODO");
+            return new CreativeCookingChallenge(obj);
         }
         return null;
     }

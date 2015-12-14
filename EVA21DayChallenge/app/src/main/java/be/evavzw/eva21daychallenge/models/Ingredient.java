@@ -1,5 +1,7 @@
 package be.evavzw.eva21daychallenge.models;
 
+import android.util.Log;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -11,13 +13,12 @@ import java.io.Serializable;
  * Ingredients for a {@link Recipe}
  */
 @DatabaseTable(tableName = "ingredients")
-public class Ingredient implements Serializable
-{
+public class Ingredient implements Serializable {
     @DatabaseField(id = true)
     private int ingredientId;
 
     @DatabaseField
-    private String name, prefix, postfix;
+    private String name = "", prefix = "", postfix = "";
 
     @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = Recipe.ID_FIELD)
     private Recipe recipe;
@@ -26,8 +27,7 @@ public class Ingredient implements Serializable
     {
     }
 
-    public Ingredient(Recipe recipe, int ingredientId, String name, String prefix, String postfix)
-    {
+    public Ingredient(Recipe recipe, int ingredientId, String name, String prefix, String postfix) {
         this.recipe = recipe;
         this.ingredientId = ingredientId;
         this.name = name;
@@ -41,8 +41,7 @@ public class Ingredient implements Serializable
      * @param jsonObject content for this class
      * @throws Exception
      */
-    public Ingredient(Recipe recipe, JSONObject jsonObject) throws Exception
-    {
+    public Ingredient(Recipe recipe, JSONObject jsonObject) throws Exception {
         this.recipe = recipe;
         parseJson(jsonObject);
     }
@@ -53,31 +52,30 @@ public class Ingredient implements Serializable
      * @param jsonObject JSON passed by {@link Recipe}
      * @throws Exception
      */
-    private void parseJson(JSONObject jsonObject) throws Exception
-    {
-        ingredientId = jsonObject.getJSONObject("Ingredient").getInt("IngredientId");
-        name = jsonObject.getJSONObject("Ingredient").getString("Name");
-        prefix = jsonObject.getString("Prefix");
-        postfix = jsonObject.getString("Postfix");
+    private void parseJson(JSONObject jsonObject) throws Exception {
+        if (jsonObject.has("Ingredient")) {
+            ingredientId = jsonObject.getJSONObject("Ingredient").getInt("IngredientId");
+            name = jsonObject.getJSONObject("Ingredient").getString("Name");
+        }
+        if (jsonObject.has("Prefix"))
+            prefix = jsonObject.getString("Prefix");
+        if (jsonObject.has("Postfix"))
+            postfix = jsonObject.getString("Postfix");
     }
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-    public int getIngredientId()
-    {
+    public int getIngredientId() {
         return ingredientId;
     }
 
-    public String getPrefix()
-    {
+    public String getPrefix() {
         return prefix;
     }
 
-    public String getPostfix()
-    {
+    public String getPostfix() {
         return postfix;
     }
 

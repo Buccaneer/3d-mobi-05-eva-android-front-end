@@ -20,11 +20,14 @@ import be.evavzw.eva21daychallenge.activity.base.RESTfulActivity;
 import be.evavzw.eva21daychallenge.activity.challenges.ChallengeActivity;
 import be.evavzw.eva21daychallenge.activity.challenges.ChallengeHistoryActivity;
 import be.evavzw.eva21daychallenge.activity.challenges.RecipeDetailActivity;
+import be.evavzw.eva21daychallenge.activity.challenges.RegionRecipeFragment;
 import be.evavzw.eva21daychallenge.activity.challenges.RestaurantDetailActivity;
 import be.evavzw.eva21daychallenge.activity.challenges.TextDetailActivity;
 import be.evavzw.eva21daychallenge.models.User;
 import be.evavzw.eva21daychallenge.models.challenges.Challenge;
+import be.evavzw.eva21daychallenge.models.challenges.CreativeCookingChallenge;
 import be.evavzw.eva21daychallenge.models.challenges.RecipeChallenge;
+import be.evavzw.eva21daychallenge.models.challenges.RegionRecipeChallenge;
 import be.evavzw.eva21daychallenge.models.challenges.RestaurantChallenge;
 import be.evavzw.eva21daychallenge.models.challenges.TextChallenge;
 import be.evavzw.eva21daychallenge.services.ChallengeManager;
@@ -187,7 +190,21 @@ public class MainMenu extends RESTfulActivity
             } else if (c instanceof TextChallenge) {
                 Intent intent = new Intent(MainMenu.this, TextDetailActivity.class);
                 startActivity(intent);
-            } else
+            } else if (c instanceof RegionRecipeChallenge) {
+                RegionRecipeChallenge rrc = (RegionRecipeChallenge) c;
+                Intent intent = new Intent(MainMenu.this, RecipeDetailActivity.class);
+                intent.putExtra(RecipeDetailActivity.RECIPE, rrc.getRecipe());
+                intent.putExtra(RecipeDetailActivity.CURRENT, true);
+                startActivity(intent);
+
+            }else if (c instanceof CreativeCookingChallenge) {
+                CreativeCookingChallenge rrc = (CreativeCookingChallenge) c;
+                Intent intent = new Intent(MainMenu.this, RecipeDetailActivity.class);
+                intent.putExtra(RecipeDetailActivity.RECIPE, rrc.getRecipe());
+                intent.putExtra(RecipeDetailActivity.CURRENT, true);
+                startActivity(intent);
+
+            }else
             {
                 Log.e("Main Menu", "Challenge was not recognized.");
                 //do nothing
