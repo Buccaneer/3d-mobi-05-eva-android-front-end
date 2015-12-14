@@ -132,10 +132,12 @@ public class Register extends RESTfulActivity {
 	//hidden button for demo
     @OnClick(R.id.hidden_button)
     public void showText(View v) {
-        emailEditText.setText("fien@eva.be");
-        passwordEditText.setText("testje");
-        confirmPasswordEditText.setText("testje");
-    }
+            emailEditText.setText("jens@hogent.be");
+            passwordEditText.setText("jenshogent");
+        confirmPasswordEditText.setText("jenshogent");
+        }
+
+
 
     @Override
     public void onBackPressed() {

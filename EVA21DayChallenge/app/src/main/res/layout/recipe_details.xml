@@ -77,7 +77,7 @@
         app:layout_anchor="@id/appbar"
         app:layout_anchorGravity="bottom|right|end"
         android:layout_marginRight="5dp"
-        android:src="@android:drawable/ic_menu_add"
+        android:src="@android:drawable/ic_input_add"
         android:clickable="true"/>
 
 </android.support.design.widget.CoordinatorLayout>

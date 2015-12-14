@@ -91,18 +91,26 @@
                 android:layout_height="wrap_content"
                 android:text="@string/slogan"
                 android:textSize="20sp" />
+            <View
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:layout_height="1dp"
+                android:background="#afc137" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
                 <TextView
                     android:id="@+id/textViewProgress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="20dp"
-                    android:textSize="40sp"
-                    android:text="qsdf"
+                    android:layout_marginTop="10dp"
+                    android:paddingBottom="5dp"
+                    android:textSize="30sp"
+
                     />
                 <TextView
 
@@ -111,7 +119,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="5dp"
-                    android:textSize="40sp" />
+                    android:textSize="30sp" />
             </LinearLayout>
             <!--
                     <ProgressBar

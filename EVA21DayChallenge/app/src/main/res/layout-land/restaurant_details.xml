@@ -114,7 +114,7 @@
         app:layout_anchor="@id/restaurantScrollView"
         app:layout_anchorGravity="top|end|right"
         android:layout_marginRight="5dp"
-        android:src="@android:drawable/btn_star_big_off"
+        android:src="@android:drawable/ic_input_add"
         android:clickable="true"/>
 
 </android.support.design.widget.CoordinatorLayout>

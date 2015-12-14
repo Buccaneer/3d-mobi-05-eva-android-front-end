@@ -109,7 +109,7 @@
         app:layout_anchor="@id/restaurantMapFragment"
         app:layout_anchorGravity="bottom|right|end"
         android:layout_marginRight="5dp"
-        android:src="@android:drawable/btn_star_big_off"
+        android:src="@android:drawable/ic_input_add"
         android:clickable="true"/>
 
 </android.support.design.widget.CoordinatorLayout>
