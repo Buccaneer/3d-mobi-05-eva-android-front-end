@@ -169,7 +169,7 @@ public abstract class AbstractRestMethod<T> implements RestMethod<T> {
      * @param headers http response headers
      * @return encoding type (UTF-8) in our case
      */
-    private String getCharacterEncoding(Map<String, List<String>> headers) {
+    protected String getCharacterEncoding(Map<String, List<String>> headers) {
         return DEFAULT_ENCODING;
     }
 }

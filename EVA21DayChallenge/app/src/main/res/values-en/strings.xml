@@ -109,7 +109,7 @@
     <string name="typeOfChallenge">Type of challenge:</string>
     <string name="yes">yes</string>
     <string name="challenge">challenge</string>
-    <string name="challengeDone">Challenge finished</string>
+    <string name="challengeDone">Challenge finished:</string>
     <string name="date">Date:</string>
     <string name="earnedPoints">Earned points:</string>
     <string name="badgeDescriptionPlaceholder">Press a badge to see the description.</string>
@@ -145,4 +145,5 @@
     <string name="regionRecipeDescription">In this challenge you have to cook something from another region. First select a region and then cook something delicious!</string>
     <string name="westers">Western</string>
     <string name="zuidAmerikaans">South American</string>
+    <string name="finished_challenge">Finished</string>
 </resources>

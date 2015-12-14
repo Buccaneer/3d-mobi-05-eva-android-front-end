@@ -146,4 +146,5 @@
     <string name="zuidAmerikaans">Zuid-Amerikaans</string>
     <string name="category_regionRecipe">Regio recept</string>
     <string name="region">Regio:</string>
+    <string name="finished_challenge">Klaar</string>
 </resources>

@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -38,9 +39,11 @@ import butterknife.OnClick;
 /**
  * Activity which displays all information about a Recipe.
  */
-public class RecipeDetailActivity extends AppCompatActivity {
+public class RecipeDetailActivity extends AppCompatActivity
+{
 
     public static final String RECIPE = "recipe";
+    public static final String CURRENT = "current";
 
     @Bind(R.id.collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbar;
@@ -75,13 +78,19 @@ public class RecipeDetailActivity extends AppCompatActivity {
     @Bind(R.id.description)
     TextView description;
 
+    @Bind(R.id.addChallenge)
+    FloatingActionButton addChallenge;
+
     private RecipeManager recipeManager;
     private ChallengeManager challengeManager;
+
     String calledFrom = "";
+    private boolean current = false;
     Recipe recipe;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_details);
 
@@ -89,11 +98,24 @@ public class RecipeDetailActivity extends AppCompatActivity {
         ((NestedScrollView) findViewById(R.id.nestedScrollView)).addView(inflater.inflate(R.layout.recipe_challenge, null));
         ButterKnife.bind(this);
 
-        if (getIntent().getExtras() != null && getIntent().getExtras().containsKey("CALLED_FROM")) {
-            if (getIntent().getExtras().getString("CALLED_FROM").equals("CCC")) {
-                calledFrom = "CCC";
-            }if(getIntent().getExtras().getString("CALLED_FROM").equals("RegionRecipe")){
-                calledFrom= "RegionRecipe";
+        if (getIntent().getExtras() != null)
+        {
+            if (getIntent().getExtras().containsKey("CALLED_FROM"))
+            {
+                if (getIntent().getExtras().getString("CALLED_FROM").equals("CCC"))
+                {
+                    calledFrom = "CCC";
+                }
+                if (getIntent().getExtras().getString("CALLED_FROM").equals("RegionRecipe"))
+                {
+                    calledFrom = "RegionRecipe";
+                }
+
+            }
+            current = getIntent().getBooleanExtra(CURRENT, false);
+            if (current)
+            {
+                addChallenge.setImageDrawable(getResources().getDrawable(R.drawable.apptheme_btn_check_on_focused_holo_light));
             }
         }
 
@@ -118,37 +140,49 @@ public class RecipeDetailActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         int id = item.getItemId();
-        if (id == android.R.id.home) {
-            if(calledFrom.equals("CCC")){
-                CreativeCookingFragment.currentView="INGREDIENTS";
+        if (id == android.R.id.home)
+        {
+            if (calledFrom.equals("CCC"))
+            {
+                CreativeCookingFragment.currentView = "INGREDIENTS";
                 this.finish();
                 return false;
             }
             return super.onOptionsItemSelected(item);
-        } else
+        }
+        else
             return super.onOptionsItemSelected(item);
     }
 
     /**
      * This listener ensures the toolbar only shows the Title when collapsed
      */
-    private void addOffsetListener() {
+
+    private void addOffsetListener()
+    {
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener()
+        {
             boolean isShow = false;
             int scrollRange = -1;
 
             @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (scrollRange == -1) {
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset)
+            {
+                if (scrollRange == -1)
+                {
                     scrollRange = appBarLayout.getTotalScrollRange();
                 }
-                if (scrollRange + verticalOffset == 0) {
+                if (scrollRange + verticalOffset == 0)
+                {
                     collapsingToolbar.setTitle(recipe.getName());
                     isShow = true;
-                } else if (isShow) {
+                }
+                else if (isShow)
+                {
                     collapsingToolbar.setTitle("");
                     isShow = false;
                 }
@@ -157,16 +191,19 @@ public class RecipeDetailActivity extends AppCompatActivity {
     }
 
     //Loads the image in the CollapsingToolbar
-    private void loadBackdrop() {
+    private void loadBackdrop()
+    {
         final ImageView imageView = (ImageView) findViewById(R.id.backdrop);
         Glide.with(this).load(recipe.getImage()).centerCrop().into(imageView);
     }
 
-    private String toUpperCase(String s) {
+    private String toUpperCase(String s)
+    {
         return Character.toUpperCase(s.charAt(0)) + s.substring(1);
     }
 
-    private String toLowerCase(String s) {
+    private String toLowerCase(String s)
+    {
         return Character.toLowerCase(s.charAt(0)) + s.substring(1);
     }
 
@@ -175,11 +212,13 @@ public class RecipeDetailActivity extends AppCompatActivity {
      *
      * @param recipe
      */
-    private void updateChallenge(Recipe recipe) {
+    private void updateChallenge(Recipe recipe)
+    {
         //INGREDIENTS
         String[] ingredients = new String[recipe.getIngredients().size()];
         int counter = 0;
-        for (Ingredient i : recipe.getIngredients()) {
+        for (Ingredient i : recipe.getIngredients())
+        {
             //ingredients[counter++] = (i.getQuantity() > 0 ? i.getQuantity() + " " + (i.getUnit().trim().equals("") ? "" : i.getUnit().trim() + " ") : "") + toLowerCase(i.getName().trim());
             //String quantity = i.getQuantity();
             //ingredients[counter++] = (quantity != null && quantity.trim().length() > 0 ? i.getQuantity() + " " + (i.getUnit().trim().equals("") ? "" : i.getUnit().trim() + " ") : "") + toLowerCase(i.getName().trim());
@@ -188,7 +227,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
         Arrays.sort(ingredients, new Vergelijker());
         String ingredients1 = "";
         String ingredients2 = "";
-        for (int i = 0; i < ingredients.length; i++) {
+        for (int i = 0; i < ingredients.length; i++)
+        {
             if (i % 2 == 0)
                 ingredients1 += "• " + ingredients[i] + (i < ingredients.length - 2 ? "\n" : "");
             else
@@ -200,13 +240,15 @@ public class RecipeDetailActivity extends AppCompatActivity {
         //INFO
         String[] info = new String[recipe.getProperties().size()];
         counter = 0;
-        for (RecipeProperty p : recipe.getProperties()) {
+        for (RecipeProperty p : recipe.getProperties())
+        {
             info[counter++] = toUpperCase(p.getType().trim()) + ": " + toUpperCase(p.getValue().trim());
         }
         Arrays.sort(info, new Vergelijker());
         String info1 = "";
         String info2 = "";
-        for (int i = 0; i < info.length; i++) {
+        for (int i = 0; i < info.length; i++)
+        {
             if (i % 2 == 0)
                 info1 += info[i] + (i < info.length - 2 ? "\n" : "");
             else
@@ -220,59 +262,88 @@ public class RecipeDetailActivity extends AppCompatActivity {
         desc = desc.replaceAll("\\n", "");
         String[] descArray = desc.split("\\.");
         String formatted = "";
-        for (int i = 0; i < descArray.length; i++) {
+        for (int i = 0; i < descArray.length; i++)
+        {
             formatted += i + 1 + ". " + toUpperCase(descArray[i].trim()) + ".\n";
         }
         description.setText(formatted);
     }
 
     //A simple String comparator
-    private class Vergelijker implements Comparator<String> {
-        public int compare(String o1, String o2) {
-            if (o1.length() > o2.length()) {
+    private class Vergelijker implements Comparator<String>
+    {
+        public int compare(String o1, String o2)
+        {
+            if (o1.length() > o2.length())
+            {
                 return 1;
-            } else if (o1.length() < o2.length()) {
+            }
+            else if (o1.length() < o2.length())
+            {
                 return -1;
-            } else {
+            }
+            else
+            {
                 return 0;
             }
         }
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
         super.onBackPressed();
         CreativeCookingFragment.currentView = "INGREDIENTS";
     }
 
     @OnClick(R.id.addChallenge)
-    public void addChallenge() {
-        new AddChallengeTask().execute();
+    public void addChallenge()
+    {
+        if (!current)
+        {
+            new AddChallengeTask().execute();
+        }
+        else
+        {
+            new FinishChallengeTask().execute();
+        }
     }
 
-    private class AddChallengeTask extends AsyncTask<Void, Void, Boolean> {
+    private class AddChallengeTask extends AsyncTask<Void, Void, Boolean>
+    {
 
         @Override
-        protected Boolean doInBackground(Void... params) {
-            try {
-                if (calledFrom.equals("CCC")) {
+        protected Boolean doInBackground(Void... params)
+        {
+            try
+            {
+                if (calledFrom.equals("CCC"))
+                {
                     List<Ingredient> ingredients = (List<Ingredient>) getIntent().getExtras().get("INGREDIENTS");
                     challengeManager.addChallenge("CreativeCooking", recipe.getRecipeId(), ingredients);
-                } else if (calledFrom.equals("RegionRecipe")) {
+                }
+                else if (calledFrom.equals("RegionRecipe"))
+                {
                     challengeManager.addChallenge("RegionRecipe", recipe.getRecipeId());
-                }else{
+                }
+                else
+                {
                     challengeManager.addChallenge("Recipe", recipe.getRecipeId());
                 }
                 return true;
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 //TODO: Exception handling
                 throw e;
             }
         }
 
         @Override
-        protected void onPostExecute(Boolean success) {
-            if (success) {
+        protected void onPostExecute(Boolean success)
+        {
+            if (success)
+            {
                 CreativeCookingFragment.currentView = "INGREDIENTS";
                 Intent intent = new Intent(RecipeDetailActivity.this, MainMenu.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -282,6 +353,32 @@ public class RecipeDetailActivity extends AppCompatActivity {
         }
     }
 
+    private class FinishChallengeTask extends AsyncTask<Void, Void, Boolean>
+    {
+
+        @Override
+        protected Boolean doInBackground(Void... params)
+        {
+            try
+            {
+                challengeManager.finishCurrentChallenge();
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean success)
+        {
+            if (success)
+            {
+                finish();
+            }
+        }
+    }
 
 }
 

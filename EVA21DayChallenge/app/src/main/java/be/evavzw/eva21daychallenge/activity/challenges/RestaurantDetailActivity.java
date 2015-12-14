@@ -3,6 +3,7 @@ package be.evavzw.eva21daychallenge.activity.challenges;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -33,6 +34,7 @@ import butterknife.OnClick;
  */
 public class RestaurantDetailActivity extends AppCompatActivity {
     public static final String RESTAURANT = "restaurant";
+    public static final String CURRENT = "current";
 
     private ChallengeManager challengeManager;
 
@@ -50,7 +52,11 @@ public class RestaurantDetailActivity extends AppCompatActivity {
     @Bind(R.id.restaurantDescription)
     TextView restaurantDescription;
 
+    @Bind(R.id.addChallenge)
+    FloatingActionButton addChallenge;
+
     private GoogleMap googleMap;
+    private boolean current = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,18 +76,24 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
 
         restaurant = (Restaurant) getIntent().getSerializableExtra(RESTAURANT);
+        current = getIntent().getBooleanExtra(CURRENT, false);
+        if (current)
+        {
+            addChallenge.setImageDrawable(getResources().getDrawable(R.drawable.apptheme_btn_check_on_focused_holo_light));
+        }
         googleMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.restaurantMapFragment)).getMap();
 
         googleMap.getUiSettings().setMapToolbarEnabled(false);
-        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener()
+        {
             @Override
-            public void onMapClick(LatLng latLng) {
+            public void onMapClick(LatLng latLng)
+            {
                 return;
             }
         });
 
         new FetchRestaurantDetailsTask().execute();
-
         //updateChallenge(restaurant);
     }
 
@@ -154,7 +166,11 @@ public class RestaurantDetailActivity extends AppCompatActivity {
 
     @OnClick(R.id.addChallenge)
     public void addChallenge(){
-        new AddChallengeTask().execute();
+        if (!current) {
+            new AddChallengeTask().execute();
+        } else {
+            new FinishChallengeTask().execute();
+        }
     }
 
     private class AddChallengeTask extends AsyncTask<Void, Void, Boolean>{
@@ -173,10 +189,29 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean success) {
             if(success){
-                //Intent intent = new Intent(RestaurantDetailActivity.this, MainMenu.class);
-                //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                //startActivity(intent);
+                Intent intent = new Intent(RestaurantDetailActivity.this, MainMenu.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
+        }
+    }
 
+    private class FinishChallengeTask extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            try {
+                challengeManager.finishCurrentChallenge();
+                return true;
+            } catch (Exception e) {
+                throw e;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean success) {
+            if (success) {
                 finish();
             }
         }

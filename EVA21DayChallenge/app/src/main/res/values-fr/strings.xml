@@ -109,7 +109,7 @@
     <string name="yes">oui</string>
     <string name="typeOfChallenge">Type de défi:</string>
     <string name="challenge">défi</string>
-    <string name="challengeDone">Défi terminé</string>
+    <string name="challengeDone">Défi terminé:</string>
     <string name="date">Date:</string>
     <string name="earnedPoints">Points gagnés:</string>
     <string name="badgeDescriptionPlaceholder"> Appuyez sur un badge afin d\'obtenir la description .</string>
@@ -145,4 +145,5 @@
     <string name="regionRecipeDescription"> Dans ce défi que vous avez à faire cuire quelque chose d\'une autre région. Tout d\'abord, sélectionnez une région, puis faire cuire quelque chose de délicieux!</string>
     <string name="westers">Western</string>
     <string name="zuidAmerikaans">Amérique du Sud </string>
+    <string name="finished_challenge">Fini</string>
 </resources>

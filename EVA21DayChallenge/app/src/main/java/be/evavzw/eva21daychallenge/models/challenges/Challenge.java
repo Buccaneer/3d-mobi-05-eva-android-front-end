@@ -38,6 +38,11 @@ public class Challenge implements Serializable, Comparable<Challenge> {
     @DatabaseField
     private String thumbnail;
 
+    @DatabaseField
+    private boolean isCurrentChallenge;
+
+    private int minutesLeft;
+
     Challenge() //for ormlite
     {
     }
@@ -51,6 +56,7 @@ public class Challenge implements Serializable, Comparable<Challenge> {
         isDone = jsonObject.getBoolean("Done");
         if (jsonObject.has("Thumbnail"))
             thumbnail = jsonObject.getString("Thumbnail");
+        minutesLeft = jsonObject.getInt("TimeToAccept");
     }
 
     public Date getDate() {
@@ -77,7 +83,18 @@ public class Challenge implements Serializable, Comparable<Challenge> {
         this.name = name;
     }
 
-    public int getServerId() {
+    public boolean isCurrentChallenge()
+    {
+        return isCurrentChallenge;
+    }
+
+    public void setIsCurrentChallenge(boolean isCurrentChallenge)
+    {
+        this.isCurrentChallenge = isCurrentChallenge;
+    }
+
+    public int getServerId()
+    {
         return serverId;
     }
 
@@ -89,7 +106,18 @@ public class Challenge implements Serializable, Comparable<Challenge> {
         return name;
     }
 
-    public int getEarnings() {
+    public int getMinutesLeft()
+    {
+        return minutesLeft;
+    }
+
+    public void setMinutesLeft(int minutesLeft)
+    {
+        this.minutesLeft = minutesLeft;
+    }
+
+    public int getEarnings()
+    {
         return earnings;
     }
 
@@ -98,7 +126,14 @@ public class Challenge implements Serializable, Comparable<Challenge> {
     }
 
     @Override
-    public int compareTo(Challenge another) {
+    public int compareTo(Challenge another)
+    {
+        if (date == null ^ another.date == null) {
+            return (date == null) ? -1 : 1;
+        }
+        if (date == null) {
+            return 0;
+        }
         return date.compareTo(another.date);
     }
 }

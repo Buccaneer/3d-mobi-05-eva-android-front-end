@@ -3,12 +3,9 @@ package be.evavzw.eva21daychallenge.models.challenges;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import org.json.JSONException;
 import org.json.JSONObject;
-
 import be.evavzw.eva21daychallenge.models.categories.Category;
 import be.evavzw.eva21daychallenge.models.Restaurant;
-import be.evavzw.eva21daychallenge.models.categories.RecipeCategory;
 import be.evavzw.eva21daychallenge.models.categories.RestaurantCategory;
 
 /**
@@ -31,13 +28,15 @@ public class RestaurantChallenge extends Challenge {
         this.restaurant = restaurant;
     }
 
-    public RestaurantChallenge(JSONObject object) throws Exception {
-        super(object);
-        if(object.has("Restaurant"))
-            restaurant = new Restaurant(object.getJSONObject("Restaurant"));
+    public RestaurantChallenge(JSONObject jsonObject) throws Exception
+    {
+        super(jsonObject);
+        if(jsonObject.has("Restaurant"))
+            restaurant = new Restaurant(jsonObject.getJSONObject("Restaurant"));
     }
 
-    public Restaurant getRestaurant() {
+    public Restaurant getRestaurant()
+    {
         return restaurant;
     }
 

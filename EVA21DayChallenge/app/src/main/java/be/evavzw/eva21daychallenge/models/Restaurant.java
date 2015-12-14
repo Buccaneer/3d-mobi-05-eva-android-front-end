@@ -47,6 +47,8 @@ public class Restaurant implements Serializable {
             postal = jsonObject.getString("Postal");
         if (jsonObject.has("City"))
             city = jsonObject.getString("City");
+        if (jsonObject.has("RestaurantId"))
+            restaurantId = jsonObject.getInt("RestaurantId");
         if (jsonObject.has("Id"))
             restaurantId = jsonObject.getInt("Id");
         if (jsonObject.has("Latitude"))
