@@ -1,0 +1,65 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/pageTitle"
+        style="@style/WizardPageTitle" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:scrollbarStyle="outsideOverlay">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/WizardFormLabel"
+                android:text="@string/givenname" />
+
+            <EditText
+                android:id="@+id/givenname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:saveEnabled="false"
+                android:inputType="textCapWords"
+                android:hint="@string/givenname"
+                android:layout_marginBottom="16dp" />
+
+            <TextView
+                style="@style/WizardFormLabel"
+                android:text="@string/surname" />
+
+            <EditText
+                android:id="@+id/surname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:saveEnabled="false"
+                android:inputType="textCapWords"
+                android:hint="@string/surname"
+                android:layout_marginBottom="16dp" />
+
+            <TextView
+                style="@style/WizardFormLabel"
+                android:text="@string/yourAge" />
+
+            <EditText
+                android:id="@+id/agePicker"
+                android:focusable="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:saveEnabled="false"
+                android:inputType="number"
+                android:hint="@string/yourAge"
+                android:layout_marginBottom="16dp" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

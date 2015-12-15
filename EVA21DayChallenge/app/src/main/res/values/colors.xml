@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <color name="background">#FF303030</color>
-    <color name="title_background">#FF101010</color>
-    <color name="selected">#FF2A7997</color>
-    <color name="android_default_text_gray">#6d6d6d</color>
     <color name="eva_wit">#ffffff</color>
     <color name="eva_lichtgrijs">#eeeeee</color>
     <color name="eva_lichtgroen">#afbd1f</color>
@@ -14,5 +9,11 @@
     <color name="eva_blauw">#006890</color>
     <color name="eva_turquoise">#006c67</color>
     <color name="eva_geel">#f1de01</color>
-
+    <color name="review_green">#afbd1f</color>
+    <color name="step_pager_previous_tab_color">#10000000</color>
+    <color name="step_pager_selected_tab_color">#ffffff</color>
+    <color name="step_pager_selected_last_tab_color">@color/eva_donkergroen</color>
+    <color name="step_pager_next_tab_color">#10000000</color>
+    <color name="apptheme_color">#afbd1f</color>
+    <color name="black">#ffffff</color>
 </resources>

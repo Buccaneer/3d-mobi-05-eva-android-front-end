@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="evavzw.be.eva21daychallenge" >
+    package="be.evavzw.eva21daychallenge" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/eva_logo"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-
         <activity
             android:name=".activity.Login"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme.NoActionbar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,16 +24,7 @@
             android:name=".activity.Register"
             android:label="@string/title_activity_register"
             android:parentActivityName=".activity.Login"
-            android:theme="@style/AppTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.Login" />
-        </activity>
-        <activity
-            android:name=".activity.SignIn"
-            android:label="@string/title_activity_sign_in"
-            android:parentActivityName=".activity.Login"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.Login" />
@@ -42,12 +33,47 @@
             android:name=".activity.challenges.ChallengeActivity"
             android:label="@string/title_activity_challenge"
             android:parentActivityName=".activity.MainMenu"
-            android:theme="@style/AppTheme">
-        </activity>
+            android:theme="@style/AppTheme.Challenges" />
+        <activity
+            android:name=".activity.challenges.RecipeDetailActivity"
+            android:label="@string/title_activity_challenge"
+            android:parentActivityName=".activity.challenges.ChallengeActivity"
+            android:theme="@style/AppTheme.Challenges" />
+        <activity
+            android:name=".activity.challenges.RestaurantDetailActivity"
+            android:label="@string/title_activity_challenge"
+            android:parentActivityName=".activity.challenges.ChallengeActivity"
+            android:theme="@style/AppTheme.Challenges" />
+        <activity
+            android:name=".activity.challenges.TextDetailActivity"
+            android:label="@string/title_activity_challenge"
+            android:parentActivityName=".activity.MainMenu"
+            android:theme="@style/AppTheme.Challenges" />
         <activity
             android:name=".activity.MainMenu"
             android:label="@string/title_activity_main_menu"
-            android:theme="@style/AppTheme.NoActionbar">
+            android:theme="@style/AppTheme.NoActionbar" />
+        <activity
+            android:name=".activity.About"
+            android:label="@string/about"
+            android:theme="@style/AppTheme.NoActionbar" />
+        <activity
+            android:name=".activity.profile_setup.ProfileSetup"
+            android:label="@string/title_activity_profile_setup" />
+        <activity
+            android:name=".activity.challenges.ChallengeHistoryActivity"
+            android:label="@string/challengeHistory"
+            android:parentActivityName=".activity.MainMenu" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.MainMenu" />
+        </activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDME7pDNnleZ3SrylhYIOleTNEek-dE5TQ" />
+
+        <activity android:name=".activity.BadgesActivity" >
         </activity>
     </application>
 

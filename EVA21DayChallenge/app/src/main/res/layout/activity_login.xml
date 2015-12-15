@@ -1,65 +1,174 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Login"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+   android:id="@+id/loginScreen"
+
+   >
+
+<!--
+    <ImageView
+        android:id="@+id/loginScreen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+-->
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/logoPosition">
+        style="@style/logoPosition"
+        android:orientation="vertical">
+
         <ImageView android:id="@+id/eva_logo"
             android:src="@drawable/eva_logo"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"/>
+            android:layout_width="wrap_content"
+            android:layout_marginBottom="15dp"/>
+
+        <Button android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:background="@color/tw__transparent"
+            android:id="@+id/hidden_button1"
+            android:layout_gravity="center_horizontal"/>
+
+        <Button android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:background="@color/tw__transparent"
+            android:id="@+id/hidden_button"
+            android:layout_gravity="center_horizontal"/>
+
+        <Button android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:background="@color/tw__transparent"
+            android:id="@+id/hidden_button2"
+            android:layout_gravity="center_horizontal"/>
+
     </LinearLayout>
 
-    <LinearLayout
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginLeft="40dp"
+    android:layout_marginRight="40dp"
+    android:background="@drawable/round_corners">
+
+    <EditText
+        android:id="@+id/email"
+        android:hint="@string/email"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/createAccount"
-            android:text="@string/createAccount"
-            android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_height="1dp"
+        android:background="#afc137" />
+
+    <EditText
+        android:id="@+id/password"
+        android:hint="@string/password"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"/>
+
+</LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="27dp"
+        android:layout_marginRight="27dp"
+
+       >
+
+        <ImageView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAllCaps="false"
-            android:layout_weight="1"/>
+            android:id="@+id/blaadjes_achtergrond"
+            android:visibility="invisible"
+            android:elevation="1dp"
+            android:layout_centerInParent="true"
+
+            />
+<!--   <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+             android:elevation="1dp">
+
+        </LinearLayout>-->
 
         <Button
             android:id="@+id/signIn"
             android:text="@string/signIn"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/createAccount"
+            android:stateListAnimator="@null"
             android:textAllCaps="false"
-            android:layout_weight="1" />
-    </LinearLayout>
+            android:layout_margin="10dp"
+            />
 
-    <TextView
-        android:text="@string/socialMediaLogin"
+
+
+    </RelativeLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:layout_gravity="center"
-        style="@style/socialButton"/>
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center_horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/passwoordVergeten"
+            android:textColor="#afc137"
+            android:layout_weight="1"
+           android:paddingRight="10dp"/>
+        <TextView
+            android:id="@+id/createAccount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/createAccount"
+            android:textColor="#afc137"
+            android:layout_weight="1"
+            android:paddingLeft="10dp"/>
+    </LinearLayout>
 
-    <evavzw.be.eva21daychallenge.customComponent.LoginButton
+    <View
+        android:layout_width="fill_parent"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_gravity="center"
+        android:layout_height="1dp"
+        android:background="#afc137" />
+
+    <be.evavzw.eva21daychallenge.customComponent.LoginButton
         android:background="@drawable/facebookbutton"
         android:id="@+id/loginFacebookButton"
         android:layout_width="184dp"
         android:layout_height="37dp"
-        style="@style/socialButton"/>
+        style="@style/socialButton" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/loginGoogleButton"
         android:layout_width="191dp"
         android:layout_height="44dp"
-        style="@style/socialButton"/>
+        style="@style/socialButton" />
 
-    <evavzw.be.eva21daychallenge.customComponent.TwitterButton
+    <be.evavzw.eva21daychallenge.customComponent.TwitterButton
         android:id="@+id/loginTwitterButton"
         android:layout_width="184dp"
         android:layout_height="37dp"
         style="@style/socialButton"/>
 </LinearLayout>
+
