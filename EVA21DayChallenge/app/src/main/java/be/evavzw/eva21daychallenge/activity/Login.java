@@ -146,27 +146,6 @@ public class Login extends RESTfulActivity {
         }
     }
 
-    //hidden button for demo
-    @OnClick(R.id.hidden_button)
-    public void showText(View v) {
-        emailEditText.setText("fien@eva.be");
-        passwordEditText.setText("testje");
-    }
-
-    //hidden button for demo
-    @OnClick(R.id.hidden_button1)
-    public void showT(View v) {
-        emailEditText.setText("joeri@hogent.be");
-        passwordEditText.setText("joerihogent");
-    }
-
-    //hidden button for demo
-    @OnClick(R.id.hidden_button2)
-    public void showTekst(View v) {
-        emailEditText.setText("jens@hogent.be");
-        passwordEditText.setText("jenshogent");
-    }
-
     @OnClick(R.id.createAccount)
     public void createAccountOnClick(View v) {
         Intent intent = new Intent(this, Register.class);

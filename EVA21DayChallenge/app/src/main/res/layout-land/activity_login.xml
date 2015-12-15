@@ -1,76 +1,61 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="fill_parent">
 
     <LinearLayout
+        android:id="@+id/loginScreen"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".Login"
         android:gravity="center_horizontal"
-        android:id="@+id/loginScreen">
+        android:orientation="vertical"
+        tools:context=".Login">
 
         <LinearLayout
+            style="@style/logoPosition"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/logoPosition">
-            <ImageView android:id="@+id/eva_logo"
-                android:src="@drawable/eva_logo"
-                android:layout_height="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/eva_logo"
                 android:layout_width="wrap_content"
-                android:layout_marginBottom="15dp"/>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:src="@drawable/eva_logo" />
 
             <!--
             -->
         </LinearLayout>
-        <Button android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:background="@color/tw__transparent"
-            android:id="@+id/hidden_button1"
-            android:layout_gravity="center_horizontal"/>
-
-        <Button android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:background="@color/tw__transparent"
-            android:id="@+id/hidden_button"
-            android:layout_gravity="center_horizontal"/>
-
-        <Button android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:background="@color/tw__transparent"
-            android:id="@+id/hidden_button2"
-            android:layout_gravity="center_horizontal"/>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:background="@drawable/round_corners">
+            android:background="@drawable/round_corners"
+            android:orientation="vertical">
 
             <EditText
                 android:id="@+id/email"
-                android:hint="@string/email"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/email"
                 android:inputType="textEmailAddress"
 
                 />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_gravity="center"
                 android:layout_height="1dp"
+                android:layout_gravity="center"
                 android:background="#afc137" />
 
             <EditText
                 android:id="@+id/password"
-                android:hint="@string/password"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"/>
+                android:hint="@string/password"
+                android:inputType="textPassword" />
 
         </LinearLayout>
 
@@ -83,12 +68,12 @@
             >
 
             <ImageView
+                android:id="@+id/blaadjes_achtergrond"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/blaadjes_achtergrond"
-                android:visibility="invisible"
-                android:elevation="1dp"
                 android:layout_centerInParent="true"
+                android:elevation="1dp"
+                android:visibility="invisible"
 
                 />
             <!--   <LinearLayout
@@ -101,14 +86,12 @@
 
             <Button
                 android:id="@+id/signIn"
-                android:text="@string/signIn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:stateListAnimator="@null"
-                android:textAllCaps="false"
                 android:layout_margin="10dp"
-                />
-
+                android:stateListAnimator="@null"
+                android:text="@string/signIn"
+                android:textAllCaps="false" />
 
 
         </RelativeLayout>
@@ -116,59 +99,62 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
-            android:gravity="center_horizontal">
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/passwoordVergeten"
-                android:textColor="#afc137"
                 android:layout_weight="1"
-                android:paddingRight="10dp"/>
+                android:paddingRight="10dp"
+                android:text="@string/passwoordVergeten"
+                android:textColor="#afc137" />
+
             <TextView
                 android:id="@+id/createAccount"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/createAccount"
-                android:textColor="#afc137"
                 android:layout_weight="1"
-                android:paddingLeft="10dp"/>
+                android:paddingLeft="10dp"
+                android:text="@string/createAccount"
+                android:textColor="#afc137" />
         </LinearLayout>
 
         <View
             android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:layout_gravity="center"
-            android:layout_height="1dp"
             android:background="#afc137" />
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
             <be.evavzw.eva21daychallenge.customComponent.LoginButton
-                android:background="@drawable/facebookbutton"
                 android:id="@+id/loginFacebookButton"
+                style="@style/socialButton"
                 android:layout_width="184dp"
                 android:layout_height="37dp"
-                style="@style/socialButton"/>
+                android:background="@drawable/facebookbutton" />
 
             <com.google.android.gms.common.SignInButton
                 android:id="@+id/loginGoogleButton"
+                style="@style/socialButton"
                 android:layout_width="191dp"
                 android:layout_height="44dp"
-                android:layout_marginTop="7dp"
-                style="@style/socialButton"/>
+                android:layout_marginTop="7dp" />
 
             <be.evavzw.eva21daychallenge.customComponent.TwitterButton
                 android:id="@+id/loginTwitterButton"
+                style="@style/socialButton"
                 android:layout_width="184dp"
-                android:layout_height="37dp"
-                style="@style/socialButton"/>
+                android:layout_height="37dp" />
         </LinearLayout>
 
     </LinearLayout>
