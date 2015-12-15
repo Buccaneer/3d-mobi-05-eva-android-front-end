@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -288,8 +289,7 @@ public class SearchableCheckListView extends LinearLayout implements TextWatcher
                 }
                 return false;
             } catch (Exception e) {
-                throw e;
-                //return false;
+                return false;
             }
         }
 

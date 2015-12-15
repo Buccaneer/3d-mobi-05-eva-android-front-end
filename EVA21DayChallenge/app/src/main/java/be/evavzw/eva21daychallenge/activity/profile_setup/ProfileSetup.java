@@ -16,6 +16,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -466,9 +467,13 @@ public class ProfileSetup extends android.support.v4.app.FragmentActivity implem
                 userManager.updateUserInfo(params[0]);
                 return true;
             } catch (Exception e) {
-                //TODO: error handling, throwing for debugging purposes
-                throw e;
-                //return false;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), R.string.error500, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return false;
             }
         }
 
@@ -492,7 +497,13 @@ public class ProfileSetup extends android.support.v4.app.FragmentActivity implem
                 userInfo = userManager.getUser();
                 return true;
             } catch (Exception e) {
-                throw e;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(),R.string.error500, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return false;
             }
         }
 

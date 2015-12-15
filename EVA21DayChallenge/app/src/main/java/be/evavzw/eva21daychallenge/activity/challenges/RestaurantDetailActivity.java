@@ -11,6 +11,7 @@ import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -181,8 +182,13 @@ public class RestaurantDetailActivity extends AppCompatActivity {
                 challengeManager.addChallenge("Restaurant", restaurant.getRestaurantId());
                 return true;
             }catch(Exception e){
-                //TODO: Exception handling
-                throw e;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(),R.string.error500, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return false;
             }
         }
 
@@ -205,7 +211,13 @@ public class RestaurantDetailActivity extends AppCompatActivity {
                 challengeManager.finishCurrentChallenge();
                 return true;
             } catch (Exception e) {
-                throw e;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), R.string.error500, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return false;
             }
         }
 

@@ -87,7 +87,8 @@ public class RestClient {
             response = new Response(conn.getResponseCode(), conn.getHeaderFields(), body);
             response.status = status;
         } catch (IOException e) {
-            e.printStackTrace();
+           e.printStackTrace();
+            throw new IllegalArgumentException("U heeft geen internet");
         } finally {
             if (conn != null)
                 conn.disconnect();

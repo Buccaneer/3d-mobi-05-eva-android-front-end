@@ -24,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.vision.Frame;
@@ -273,7 +274,13 @@ public class CreativeCookingFragment extends ChallengeFragment implements Search
                 nrOfRecipes = recipeManager.getNumberOfRecipes(params[0]);
                 return true;
             } catch (Exception e) {
-                throw e;
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getContext(), R.string.error500, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return false;
             }
         }
 
@@ -297,7 +304,13 @@ public class CreativeCookingFragment extends ChallengeFragment implements Search
                 foundRecipes = recipeManager.getRecipesByIngredients(params[0]);
                 return true;
             } catch (Exception e) {
-                throw e;
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getContext(),R.string.error500, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return false;
             }
         }
 

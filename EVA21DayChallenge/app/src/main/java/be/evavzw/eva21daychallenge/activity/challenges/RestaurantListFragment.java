@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -742,7 +743,13 @@ public class RestaurantListFragment extends ChallengeFragment implements
             }
             catch (Exception ex)
             {
-                throw ex;
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getContext(), R.string.error500, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return false;
             }
         }
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.Button;
+import android.widget.Toast;
 
 import be.evavzw.eva21daychallenge.R;
 import be.evavzw.eva21daychallenge.services.ChallengeManager;
@@ -51,7 +52,13 @@ public class TextDetailActivity extends AppCompatActivity
                 challengeManager.finishCurrentChallenge();
                 return true;
             } catch (Exception e) {
-                throw e;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), R.string.error500, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return false;
             }
         }
 

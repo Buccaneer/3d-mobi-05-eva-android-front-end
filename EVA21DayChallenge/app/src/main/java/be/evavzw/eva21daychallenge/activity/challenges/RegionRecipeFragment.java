@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -244,7 +245,13 @@ public class RegionRecipeFragment extends ChallengeFragment implements AdapterVi
                 recipes = challengeManager.getRecipesByRegion(params[0]);
                 return true;
             } catch (Exception e) {
-                throw e;
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getContext(), R.string.error500, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return false;
             }
         }
 

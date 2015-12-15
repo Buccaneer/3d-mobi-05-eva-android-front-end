@@ -346,7 +346,6 @@ public class Login extends RESTfulActivity {
                 Intent intent = new Intent(getApplicationContext(), MainMenu.class);
                 Login.this.finish();
                 startActivity(intent);
-
             }
         }
     }
@@ -472,7 +471,13 @@ public class Login extends RESTfulActivity {
             } catch (Exception e) {
                 if (splashDialog != null)
                     splashDialog.dismiss();
-                throw e;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(),R.string.error500, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return false;
             }
         }
 
